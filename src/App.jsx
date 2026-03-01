@@ -1368,7 +1368,7 @@ export default function App() {
       <div className="headerRow">
         <div className="brand">
           <div className="brandTitle">1040 Paydays</div>
-          <div className="brandTag">Plan your savings one payday at a time.</div>
+          <div className="brandTag">Plan your savings one payday at a time with our paycheck compound interest calculator.</div>
           <div className="brandDesc">There are roughly 1,040 biweekly paydays in a 40-year career. Plan your savings one payday at a time. Turn any savings goal into a payday plan you can stick to.</div>
           <div className="trustLine">NO ACCOUNT • CLEAR ESTIMATES • BUILT FOR CLARITY</div>
         </div>
