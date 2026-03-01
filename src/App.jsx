@@ -76,7 +76,7 @@ function computeProjection({
   });
 
   for (let i = 1; i <= totalPeriods; i++) {
-    // optional one-time windfall (tax refund / bonus) at the chosen payday
+    // optional one-time windfall (tax refund / bonus/ lump sum) at the chosen payday
     if (Number.isFinite(windfallAmount) && windfallAmount > 0 && windfallAtPeriod === i) {
       balance += windfallAmount;
       totalContrib += windfallAmount;
