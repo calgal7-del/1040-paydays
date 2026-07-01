@@ -148,14 +148,40 @@ export default function App() {
       <div className="navRight"><select value={currency} onChange={e=>setCurrency(e.target.value)}>{Object.keys(currencies).map(k=><option key={k} value={k}>{currencies[k].flag} {k} {currencies[k].symbol}</option>)}</select><button className="menu">☰</button></div>
     </header>
 
-    <main className="layout">
-      <section className="story">
-        <div className="accent" />
-        <h1>You only get about <strong>1,040</strong> paydays.</h1>
-        <p className="tagline">Make every one count.</p>
-        <ul className="promises"><li>📅 <span>One payday<br/>at a time.</span></li><li>↗ <span>See the power of<br/>consistency.</span></li><li>◎ <span>Build the future<br/>you deserve.</span></li></ul>
-        <div className="hourglass" aria-hidden="true"><div className="hgTop"></div><div className="hgMid"></div><div className="hgBottom"></div></div>
-      </section>
+   <main className="layout">
+  <section className="story">
+    <div className="accent" />
+
+    <h1>
+      You only get about <strong>1,040</strong> paydays.
+    </h1>
+
+    <p className="tagline">Make every one count.</p>
+
+    <ul className="promises">
+      <li>
+        📅 <span>One payday<br />at a time.</span>
+      </li>
+      <li>
+        ↗ <span>See the power of<br />consistency.</span>
+      </li>
+      <li>
+        ◎ <span>Build the future<br />you deserve.</span>
+      </li>
+    </ul>
+
+    <div className="hero-message">
+      <h2>Your future isn't built all at once.</h2>
+      <p>
+        It's built one payday at a time.
+      </p>
+    </div>
+  </section>
+
+  <section className="calculator">
+    {/* Keep all of your existing calculator code exactly as it is below this point */}
+  </section>
+</main>
 
       <section className="calculator card">
         {[
