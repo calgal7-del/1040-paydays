@@ -1,10 +1,4 @@
 import { PAY_FREQUENCIES } from './constants'
-import {
-  calculateFutureValue,
-  calculateContributionTotal,
-  calculateGrowth,
-  calculateMonthlyIncome,
-} from './compoundInterest'
 
 function toNumber(value) {
   return Number(String(value).replace(/[^0-9.-]/g, '')) || 0
@@ -12,6 +6,37 @@ function toNumber(value) {
 
 function clamp(value, min, max) {
   return Math.min(Math.max(toNumber(value), min), max)
+}
+
+function getMonthlyBenefits(form) {
+  return Object.keys(form)
+    .filter((key) =>
+      [
+        'cppQpp',
+        'oas',
+        'socialSecurity',
+        'statePension',
+        'workplacePension',
+        'agePension',
+        'superannuationIncome',
+        'inss',
+        'privatePension',
+        'epfEps',
+        'npsIncome',
+        'basicPension',
+        'enterpriseAnnuity',
+        'nationalPension',
+        'employeesPension',
+        'publicPension',
+        'employerPension',
+        'cpfLife',
+        'nzSuper',
+        'kiwiSaver',
+        'olderPersonsGrant',
+        'retirementAnnuity',
+      ].includes(key)
+    )
+    .reduce((total, key) => total + Math.max(0, toNumber(form[key])), 0)
 }
 
 export function buildProjection(form) {
@@ -23,13 +48,13 @@ export function buildProjection(form) {
   const contributionIncrease = clamp(form.contributionIncrease, 0, 25)
   const retirementTaxRate = clamp(form.retirementTaxRate, 0, 60)
   const withdrawalYears = clamp(form.withdrawalYears, 1, 60)
-  const governmentBenefit = Math.max(0, toNumber(form.governmentBenefit))
-  const employerPension = Math.max(0, toNumber(form.employerPension))
 
   const frequency = form.frequency || 'Biweekly'
   const periodsPerYear = PAY_FREQUENCIES[frequency] || 26
   const years = Math.max(0, retireAge - currentAge)
   const periods = Math.round(years * periodsPerYear)
+
+  const periodicRate = Math.pow(1 + expectedReturn / 100, 1 / periodsPerYear) - 1
 
   let balance = startingBalance
   let totalFutureContributions = 0
@@ -37,7 +62,6 @@ export function buildProjection(form) {
 
   const points = []
   const interval = Math.max(1, Math.round(periods / 80))
-  const periodicRate = Math.pow(1 + expectedReturn / 100, 1 / periodsPerYear) - 1
 
   for (let payday = 0; payday <= periods; payday += 1) {
     if (payday > 0) {
@@ -64,30 +88,12 @@ export function buildProjection(form) {
   }
 
   const totalContributions = startingBalance + totalFutureContributions
-  const finalBalance = calculateFutureValue({
-    startingBalance,
-    contribution,
-    periods,
-    annualReturn: expectedReturn,
-    periodsPerYear,
-  })
+  const growth = Math.max(0, balance - totalContributions)
+  const monthlyBenefits = getMonthlyBenefits(form)
 
-  const adjustedFinalBalance =
-    contributionIncrease > 0 ? balance : finalBalance
-
-  const growth = calculateGrowth(adjustedFinalBalance, totalContributions)
-
-  const monthlyBenefits = governmentBenefit + employerPension
-
-  const estimatedMonthlyIncome = calculateMonthlyIncome({
-    finalBalance: adjustedFinalBalance,
-    withdrawalYears,
-    retirementTaxRate,
-    monthlyBenefits,
-  })
-
-  const multiplier =
-    totalContributions > 0 ? adjustedFinalBalance / totalContributions : 0
+  const grossMonthly = balance / (withdrawalYears * 12)
+  const afterTaxMonthly = grossMonthly * (1 - retirementTaxRate / 100)
+  const estimatedMonthlyIncome = afterTaxMonthly + monthlyBenefits
 
   return {
     startingBalance,
@@ -98,8 +104,6 @@ export function buildProjection(form) {
     contributionIncrease,
     retirementTaxRate,
     withdrawalYears,
-    governmentBenefit,
-    employerPension,
     monthlyBenefits,
     frequency,
     periodsPerYear,
@@ -107,10 +111,10 @@ export function buildProjection(form) {
     periods,
     paydaysRemaining: periods,
     totalContributions,
-    finalBalance: adjustedFinalBalance,
+    finalBalance: balance,
     growth,
     estimatedMonthlyIncome,
-    multiplier,
+    multiplier: totalContributions > 0 ? balance / totalContributions : 0,
     points,
   }
 }
