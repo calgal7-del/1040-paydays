@@ -178,11 +178,6 @@ export default function App() {
     </div>
   </section>
 
-  <section className="calculator">
-    {/* Keep all of your existing calculator code exactly as it is below this point */}
-  </section>
-</main>
-
       <section className="calculator card">
         {[
           ['Starting investment','start','$'], ['I add every payday','contribution','$'], ['Pay frequency','frequency','select'], ['Current age','age',''], ['Expected annual return','rate','%'], ['Retiring at age','retireAge','']
