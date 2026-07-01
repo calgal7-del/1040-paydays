@@ -2,33 +2,30 @@
 
 :root {
   --navy: #071936;
-  --navy-2: #102847;
+  --navy2: #0d2344;
   --blue: #1768ff;
   --gold: #f5b84b;
   --teal: #0b91a3;
   --ink: #071936;
   --muted: #64748b;
-  --soft: #f5f8fc;
-  --line: #d9e5f3;
+  --soft: #f7fbff;
+  --line: #d8e4f2;
   --white: #ffffff;
-  --danger: #b42318;
-  --success: #087443;
+  --danger: #dc2626;
+  --success: #0f9f6e;
+  --shadow-soft: 0 16px 45px rgba(7, 25, 54, 0.08);
+  --shadow-card: 0 24px 70px rgba(7, 25, 54, 0.12);
   --radius: 24px;
-  --shadow: 0 24px 70px rgba(7, 25, 54, 0.12);
 }
 
 * {
   box-sizing: border-box;
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
 body {
   margin: 0;
   font-family: Inter, system-ui, sans-serif;
-  background: linear-gradient(180deg, #f7fbff 0%, #ffffff 42%, #f6f9fd 100%);
+  background: linear-gradient(180deg, #f7fbff 0%, #ffffff 48%, #f5f8fc 100%);
   color: var(--ink);
 }
 
@@ -47,22 +44,18 @@ a {
   text-decoration: none;
 }
 
-.appShell {
-  min-height: 100vh;
-}
-
 .navbar {
-  position: sticky;
-  top: 0;
-  z-index: 20;
   height: 76px;
+  padding: 0 2.2rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 5vw;
-  background: rgba(255, 255, 255, 0.88);
+  background: rgba(255, 255, 255, 0.92);
+  border-bottom: 1px solid var(--line);
   backdrop-filter: blur(18px);
-  border-bottom: 1px solid rgba(217, 229, 243, 0.9);
+  position: sticky;
+  top: 0;
+  z-index: 50;
 }
 
 .brand {
@@ -70,75 +63,74 @@ a {
   align-items: baseline;
   gap: 0.35rem;
   font-weight: 900;
-  letter-spacing: -0.04em;
 }
 
 .brandNumber {
-  font-size: 1.45rem;
-  color: var(--navy);
+  font-size: 1.65rem;
+  letter-spacing: -0.05em;
 }
 
 .brandText {
-  font-size: 0.82rem;
-  letter-spacing: 0.12em;
   color: var(--blue);
+  letter-spacing: 0.12em;
+  font-size: 0.85rem;
 }
 
 .navLinks {
   display: flex;
-  align-items: center;
-  gap: 1.7rem;
-  color: var(--muted);
-  font-size: 0.95rem;
-  font-weight: 700;
+  gap: 2rem;
+  font-weight: 800;
+  color: #4f6077;
 }
 
-.navLinks a:hover {
+.navLinks a:first-child {
   color: var(--navy);
+  border-bottom: 3px solid var(--blue);
+  padding-bottom: 0.4rem;
 }
 
 .navActions {
   display: flex;
-  gap: 0.75rem;
+  gap: 0.8rem;
   align-items: center;
 }
 
 .currencyDropdown {
   border: 1px solid var(--line);
   border-radius: 999px;
-  padding: 0.65rem 0.9rem;
-  background: var(--white);
+  padding: 0.65rem 1rem;
+  background: white;
+  font-weight: 900;
   color: var(--navy);
-  font-weight: 800;
 }
 
 .mobileMenu {
-  display: none;
-  border: 0;
-  background: var(--navy);
-  color: white;
-  border-radius: 999px;
   width: 42px;
   height: 42px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--navy);
+  color: white;
+  display: none;
 }
 
 .mainLayout {
-  width: min(1500px, 92vw);
-  margin: 2.5rem auto 0;
+  width: min(1500px, calc(100% - 3rem));
+  margin: 1.4rem auto 0;
 }
 
 .topGrid {
   display: grid;
-  grid-template-columns: 0.9fr 1.12fr 0.98fr;
-  gap: 1.35rem;
+  grid-template-columns: 0.9fr 1.28fr 1fr;
+  gap: 1.3rem;
   align-items: stretch;
 }
 
 .bottomGrid {
-  margin-top: 1.35rem;
+  margin-top: 1.3rem;
   display: grid;
-  grid-template-columns: minmax(0, 1.65fr) minmax(320px, 0.75fr);
-  gap: 1.35rem;
+  grid-template-columns: 1.55fr 0.75fr;
+  gap: 1.3rem;
   align-items: start;
 }
 
@@ -147,104 +139,118 @@ a {
 .graphCard,
 .journalCard,
 .newsletterCard {
-  background: rgba(255, 255, 255, 0.88);
-  border: 1px solid rgba(217, 229, 243, 0.95);
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid var(--line);
   border-radius: var(--radius);
-  box-shadow: var(--shadow);
+  box-shadow: var(--shadow-soft);
 }
 
 .hero {
   padding: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: auto -20% 16% 30%;
+  height: 180px;
+  background: radial-gradient(circle, rgba(23, 104, 255, 0.09), transparent 70%);
+  pointer-events: none;
 }
 
 .heroKicker,
 .cardHeader p,
-.projectionTop p,
 .graphHeader p,
 .journalHeader p,
-.newsletterCard p {
-  margin: 0 0 0.5rem;
+.newsletterCard p,
+.projectionTop p {
+  margin: 0 0 0.55rem;
   text-transform: uppercase;
   letter-spacing: 0.12em;
   font-size: 0.72rem;
-  font-weight: 900;
+  font-weight: 950;
   color: var(--blue);
 }
 
 .hero h1 {
   margin: 0;
-  font-size: clamp(2.6rem, 5vw, 5.5rem);
-  line-height: 0.92;
-  letter-spacing: -0.07em;
+  font-size: clamp(3.2rem, 5vw, 5.4rem);
+  line-height: 0.9;
+  letter-spacing: -0.08em;
+  position: relative;
+  z-index: 1;
 }
 
 .hero h1 span {
   display: block;
-  font-family: 'Playfair Display', serif;
-  font-size: 1.35em;
+  font-family: "Playfair Display", serif;
   color: var(--blue);
-  letter-spacing: -0.08em;
+  font-size: 1.25em;
 }
 
 .heroLead {
-  margin: 1.35rem 0 1.65rem;
+  margin: 1.2rem 0 1.7rem;
   font-size: 1.25rem;
-  line-height: 1.3;
-  font-weight: 800;
-  color: var(--navy);
+  line-height: 1.25;
+  font-weight: 900;
 }
 
 .heroInsights {
   display: grid;
-  gap: 0.9rem;
+  gap: 1rem;
+  position: relative;
+  z-index: 1;
 }
 
 .heroInsight {
   display: grid;
-  grid-template-columns: 32px 1fr;
-  gap: 0.8rem;
+  grid-template-columns: 38px 1fr;
+  gap: 0.85rem;
   align-items: start;
 }
 
 .heroInsight span {
-  width: 32px;
-  height: 32px;
+  width: 38px;
+  height: 38px;
   display: grid;
   place-items: center;
   border-radius: 50%;
-  background: rgba(23, 104, 255, 0.09);
+  background: rgba(23, 104, 255, 0.1);
   color: var(--blue);
   font-weight: 900;
 }
 
 .heroInsight p {
   margin: 0;
-  color: var(--muted);
+  color: #52677f;
   line-height: 1.45;
 }
 
 .thisPaydayCard {
-  margin-top: 1.5rem;
-  padding: 1.1rem;
+  margin-top: 1.6rem;
+  padding: 1.15rem;
   border: 1px solid var(--line);
   border-radius: 18px;
-  background: linear-gradient(135deg, #ffffff, #f7fbff);
+  background: rgba(255, 255, 255, 0.84);
+  position: relative;
+  z-index: 1;
 }
 
 .thisPaydayCard p {
-  margin: 0 0 0.2rem;
-  color: var(--muted);
-  font-weight: 700;
+  margin: 0 0 0.25rem;
+  font-weight: 900;
 }
 
 .thisPaydayCard strong {
   color: var(--blue);
-  font-size: 1.45rem;
+  font-size: 1.55rem;
   font-style: italic;
 }
 
 .calculatorCard {
-  padding: 1.6rem;
+  padding: 1.75rem;
 }
 
 .cardHeader h2,
@@ -253,21 +259,21 @@ a {
 .newsletterCard h2 {
   margin: 0;
   font-size: 1.55rem;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.045em;
 }
 
 .calculatorGrid {
-  margin-top: 1.4rem;
+  margin-top: 1.6rem;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
+  gap: 1.25rem 1.15rem;
 }
 
 label {
   display: grid;
-  gap: 0.45rem;
+  gap: 0.48rem;
   font-size: 0.78rem;
-  font-weight: 900;
+  font-weight: 950;
   color: var(--navy);
 }
 
@@ -275,12 +281,12 @@ input,
 select {
   width: 100%;
   border: 1px solid var(--line);
-  border-radius: 15px;
-  padding: 0.82rem 0.95rem;
+  border-radius: 14px;
+  padding: 0.86rem 1rem;
   background: #fbfdff;
-  color: var(--navy);
   outline: none;
-  font-weight: 700;
+  font-weight: 800;
+  color: var(--navy);
 }
 
 input:focus,
@@ -299,27 +305,25 @@ select:focus {
   border: 0;
   background: transparent;
   color: var(--blue);
-  font-size: 0.8rem;
   padding: 0;
+  font-size: 0.8rem;
 }
 
 .tooltipBubble {
   position: absolute;
-  left: 50%;
   bottom: 130%;
+  left: 50%;
   transform: translateX(-50%);
-  width: 230px;
+  width: 235px;
   padding: 0.8rem;
-  border-radius: 14px;
   background: var(--navy);
   color: white;
-  font-size: 0.76rem;
+  border-radius: 14px;
+  font-size: 0.75rem;
   line-height: 1.4;
-  font-weight: 600;
   opacity: 0;
   pointer-events: none;
-  transition: 0.18s ease;
-  z-index: 30;
+  z-index: 99;
 }
 
 .tooltipWrap:hover .tooltipBubble,
@@ -332,7 +336,7 @@ select:focus {
   border: 0;
   background: transparent;
   color: var(--blue);
-  font-weight: 900;
+  font-weight: 950;
 }
 
 .advancedSection {
@@ -340,12 +344,7 @@ select:focus {
   padding: 1rem;
   border: 1px solid var(--line);
   border-radius: 18px;
-  background: var(--soft);
-}
-
-.advancedSection h3,
-.benefitsSection h4 {
-  margin: 0 0 1rem;
+  background: #f7fbff;
 }
 
 .advancedGrid {
@@ -357,59 +356,37 @@ select:focus {
 .benefitsSection {
   margin-top: 1rem;
   display: grid;
-  gap: 0.85rem;
+  gap: 0.8rem;
 }
 
-.advancedDisclaimer,
-.projectionDisclaimer {
-  margin: 1rem 0 0;
-  color: #8aa0b8;
+.advancedDisclaimer {
+  color: var(--muted);
   font-size: 0.78rem;
-  line-height: 1.45;
 }
 
 .primaryButton {
-  width: min(82%, 360px);
+  width: min(82%, 400px);
   margin: 1.35rem auto 0;
   display: block;
   border: 0;
-  border-radius: 999px;
-  padding: 1rem 1.25rem;
-  background: linear-gradient(135deg, #f8ca70, var(--gold));
-  color: #442b00;
+  border-radius: 16px;
+  padding: 1.08rem 1.3rem;
+  background: linear-gradient(135deg, #ffd36d, var(--gold));
+  color: #4a2f00;
   font-weight: 950;
-  box-shadow: 0 16px 34px rgba(245, 184, 75, 0.35);
-}
-
-.secondaryButton {
-  border: 0;
-  border-radius: 999px;
-  padding: 0.85rem 1rem;
-  background: var(--navy);
-  color: white;
-  font-weight: 900;
-}
-
-.ghostButton {
-  border: 0;
-  background: transparent;
-  font-weight: 900;
-}
-
-.dangerText {
-  color: var(--danger);
+  font-size: 1rem;
+  box-shadow: 0 18px 38px rgba(245, 184, 75, 0.35);
 }
 
 .projectionCard {
-  position: relative;
-  overflow: hidden;
   padding: 1.7rem;
   border-radius: var(--radius);
   background:
-    radial-gradient(circle at 90% 0%, rgba(245, 184, 75, 0.22), transparent 30%),
-    linear-gradient(160deg, #071936, #102847 70%, #071936);
+    radial-gradient(circle at 88% 8%, rgba(245, 184, 75, 0.35), transparent 18%),
+    linear-gradient(160deg, #06142c 0%, #0a1f3d 70%, #071936 100%);
   color: white;
-  box-shadow: 0 28px 80px rgba(7, 25, 54, 0.34);
+  box-shadow: 0 28px 80px rgba(7, 25, 54, 0.32);
+  overflow: hidden;
 }
 
 .projectionTop p {
@@ -417,78 +394,106 @@ select:focus {
 }
 
 .projectionTop span {
-  color: #b7c6d8;
-  font-weight: 700;
+  color: #c0cce0;
+  font-weight: 800;
 }
 
 .futureValue {
   display: block;
-  margin-top: 1rem;
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(2.5rem, 5vw, 4.6rem);
-  line-height: 0.95;
+  margin: 1rem 0 0.8rem;
+  font-family: "Playfair Display", serif;
   color: var(--gold);
-  letter-spacing: -0.05em;
+  font-size: clamp(2.8rem, 5vw, 4.65rem);
+  line-height: 0.92;
+  letter-spacing: -0.06em;
 }
 
 .miniSparkline {
-  opacity: 0.78;
-  margin: 0.6rem 0 1.1rem;
+  opacity: 0.88;
+  margin: 0.3rem 0 1rem;
 }
 
 .projectionStats {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 0.8rem;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
 }
 
 .projectionStats div {
-  padding: 0.9rem;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.06);
+  padding: 0.85rem;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.13);
+  background: rgba(255,255,255,0.055);
 }
 
 .projectionStats span {
   display: block;
-  color: #b7c6d8;
-  font-size: 0.72rem;
+  color: #b8c6db;
+  font-size: 0.74rem;
   font-weight: 800;
 }
 
 .projectionStats strong {
   display: block;
   margin-top: 0.25rem;
-  font-size: 1rem;
+  font-size: 1.06rem;
+}
+
+.projectionDisclaimer {
+  margin-top: 1rem;
+  color: #aebbd0;
+  font-size: 0.78rem;
+  line-height: 1.45;
 }
 
 .graphCard {
-  padding: 1.5rem;
+  padding: 1.6rem;
 }
 
-.graphHeader,
-.journalHeader {
+.graphHeader {
   display: flex;
   justify-content: space-between;
-  gap: 1rem;
   align-items: start;
+  gap: 1rem;
 }
 
-.graphLegend {
+.graphToggle {
   display: flex;
-  gap: 1rem;
-  font-size: 0.82rem;
+  gap: 0.45rem;
+}
+
+.graphToggle button {
+  border: 1px solid var(--line);
+  background: white;
+  color: var(--navy);
+  border-radius: 12px;
+  padding: 0.72rem 0.95rem;
   font-weight: 900;
 }
 
+.graphToggle .active {
+  background: var(--blue);
+  color: white;
+  border-color: var(--blue);
+}
+
+.graphLegend {
+  margin: 1.15rem 0 0.7rem;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  font-weight: 900;
+  font-size: 0.82rem;
+}
+
 .graphLegend span::before {
-  content: '';
+  content: "";
   display: inline-block;
-  width: 22px;
+  width: 26px;
   height: 4px;
-  margin-right: 0.4rem;
-  vertical-align: middle;
   border-radius: 999px;
+  margin-right: 0.45rem;
+  vertical-align: middle;
 }
 
 .legendBalance::before {
@@ -499,50 +504,55 @@ select:focus {
   background: var(--teal);
 }
 
+.legendGrowth::before {
+  background: rgba(23, 104, 255, 0.18);
+}
+
 .graphCanvas {
-  margin-top: 1rem;
-  overflow: hidden;
-  border-radius: 20px;
-  background: linear-gradient(180deg, #fbfdff, #f3f7fc);
   border: 1px solid var(--line);
+  border-radius: 20px;
+  background: linear-gradient(180deg, #fbfdff, #f4f8fd);
+  overflow: hidden;
 }
 
 .graphCanvas svg {
-  width: 100%;
   display: block;
+  width: 100%;
 }
 
 .gridLine {
-  stroke: #dce7f4;
-  stroke-width: 1;
+  stroke: #dce7f3;
 }
 
 .axisLabel {
-  fill: #6c8098;
+  fill: #64748b;
   font-size: 13px;
-  font-weight: 700;
+  font-weight: 800;
+}
+
+.growthArea {
+  fill: url(#graphFill);
 }
 
 .balanceLine {
   fill: none;
   stroke: var(--blue);
-  stroke-width: 5;
+  stroke-width: 6;
   stroke-linecap: round;
-  filter: drop-shadow(0 8px 14px rgba(23, 104, 255, 0.25));
+  filter: drop-shadow(0 8px 16px rgba(23,104,255,0.22));
 }
 
 .contributionLine {
   fill: none;
   stroke: var(--teal);
   stroke-width: 3;
-  stroke-dasharray: 6 8;
+  stroke-dasharray: 7 8;
   stroke-linecap: round;
-  opacity: 0.9;
 }
 
 .drawLine {
-  stroke-dasharray: 1600;
-  stroke-dashoffset: 1600;
+  stroke-dasharray: 1800;
+  stroke-dashoffset: 1800;
   animation: drawGraph 1.5s ease forwards;
 }
 
@@ -552,92 +562,141 @@ select:focus {
   }
 }
 
-.graphCallout circle {
-  fill: var(--gold);
-  stroke: white;
-  stroke-width: 3;
-}
-
-.calloutBox {
-  width: 170px;
-  padding: 0.65rem;
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.96);
-  border: 1px solid var(--line);
-  box-shadow: 0 14px 30px rgba(7, 25, 54, 0.12);
-}
-
-.calloutBox strong {
-  display: block;
-  color: var(--navy);
-  font-size: 0.78rem;
-}
-
-.calloutBox span {
-  display: block;
-  margin-top: 0.2rem;
-  color: var(--muted);
-  font-size: 0.68rem;
-  line-height: 1.25;
-}
-
-.endDot {
+.calloutDot {
   fill: var(--gold);
   stroke: white;
   stroke-width: 4;
 }
 
+.calloutDot.freedom {
+  fill: var(--teal);
+}
+
+.calloutBox {
+  width: 160px;
+  padding: 0.7rem;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.97);
+  border: 1px solid var(--line);
+  box-shadow: 0 14px 34px rgba(7,25,54,0.12);
+}
+
+.calloutBox strong {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--blue);
+}
+
+.calloutBox.compounding strong {
+  color: #d88b00;
+}
+
+.calloutBox.freedom strong {
+  color: var(--teal);
+}
+
+.calloutBox span {
+  display: block;
+  margin-top: 0.2rem;
+  font-size: 0.68rem;
+  line-height: 1.25;
+  color: var(--muted);
+}
+
+.endDot {
+  fill: var(--gold);
+  stroke: white;
+  stroke-width: 5;
+}
+
 .finalLabel {
   fill: var(--navy);
-  font-size: 15px;
-  font-weight: 900;
+  font-size: 16px;
+  font-weight: 950;
+}
+
+.graphNote {
+  margin: 1rem 0 0;
+  color: var(--muted);
+  font-size: 0.78rem;
 }
 
 .rightRail {
   display: grid;
-  gap: 1.35rem;
+  gap: 1.3rem;
 }
 
 .journalCard,
 .newsletterCard {
-  padding: 1.35rem;
+  padding: 1.45rem;
+}
+
+.journalHeader {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
 }
 
 .emptyJournal {
   margin-top: 1rem;
-  padding: 1rem;
+  padding: 1.25rem;
   border-radius: 18px;
-  background: var(--soft);
-  color: var(--muted);
+  background: #f5f8fc;
+  border: 1px dashed #bcd1ea;
+  text-align: center;
 }
 
 .emptyJournal strong {
-  color: var(--navy);
+  display: block;
+  margin-bottom: 0.45rem;
+}
+
+.journalInputRow,
+.newsletterForm {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.65rem;
+}
+
+.secondaryButton {
+  border: 0;
+  border-radius: 14px;
+  padding: 0.88rem 1.05rem;
+  background: var(--navy);
+  color: white;
+  font-weight: 950;
+}
+
+.snapshotList {
+  margin-top: 1rem;
+}
+
+.snapshotItem {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 0.6rem;
+  padding: 0.7rem 0;
+  border-top: 1px solid var(--line);
+}
+
+.snapshotItem button {
+  border: 0;
+  background: transparent;
+  color: var(--danger);
+  font-weight: 900;
 }
 
 .latestSnapshot {
   margin-top: 1rem;
   padding: 1rem;
+  background: #f7fbff;
   border-radius: 18px;
-  background: var(--soft);
-}
-
-.latestSnapshot span {
-  color: var(--muted);
-  font-size: 0.78rem;
-  font-weight: 900;
 }
 
 .latestSnapshot strong {
   display: block;
-  margin-top: 0.3rem;
   font-size: 1.8rem;
-  color: var(--navy);
-}
-
-.latestSnapshot p {
-  margin: 0.25rem 0;
-  color: var(--muted);
 }
 
 .positiveChange {
@@ -652,48 +711,11 @@ select:focus {
   font-weight: 900;
 }
 
-.journalInputRow,
-.newsletterForm {
-  margin-top: 1rem;
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 0.65rem;
-}
-
-.snapshotList {
-  margin-top: 1rem;
-  display: grid;
-  gap: 0.55rem;
-}
-
-.snapshotItem {
-  display: grid;
-  grid-template-columns: 1fr auto auto;
-  gap: 0.5rem;
-  align-items: center;
-  padding: 0.65rem 0;
-  border-top: 1px solid var(--line);
-  font-size: 0.85rem;
-}
-
-.snapshotItem button {
-  border: 0;
-  background: transparent;
-  color: var(--danger);
-  font-weight: 900;
-}
-
 .newsletterCard span {
   display: block;
-  margin-top: 0.7rem;
+  margin-top: 0.6rem;
   color: var(--muted);
   line-height: 1.45;
-}
-
-.successMessage {
-  display: block;
-  margin-top: 0.75rem;
-  color: var(--success);
 }
 
 .newsletterCard small {
@@ -702,39 +724,46 @@ select:focus {
   color: var(--muted);
 }
 
+.successMessage {
+  display: block;
+  margin-top: 0.7rem;
+  color: var(--success);
+}
+
 .footer {
-  width: min(1500px, 92vw);
-  margin: 3rem auto 2rem;
-  padding: 2rem;
-  border-radius: var(--radius);
+  margin-top: 1.5rem;
+  padding: 1.3rem 2rem;
   background: var(--navy);
   color: white;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 1rem;
+}
+
+.footerBrand strong {
+  font-size: 1.4rem;
 }
 
 .footerBrand p,
 .footerDisclaimer p,
 .footerBottom {
-  color: #b7c6d8;
+  color: #b8c6db;
+  margin: 0.25rem 0 0;
+  font-size: 0.86rem;
 }
 
 .footerLinks {
-  margin: 1rem 0;
   display: flex;
-  flex-wrap: wrap;
   gap: 1rem;
   font-weight: 800;
 }
 
 .footerBottom {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.12);
-  padding-top: 1rem;
-  margin-top: 1rem;
+  text-align: right;
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1150px) {
   .topGrid,
   .bottomGrid {
     grid-template-columns: 1fr;
@@ -753,30 +782,13 @@ select:focus {
   }
 }
 
-@media (max-width: 720px) {
+@media (max-width: 760px) {
   .navbar {
     padding: 0 1rem;
   }
 
   .mainLayout {
-    width: min(100% - 1.2rem, 1500px);
-    margin-top: 1rem;
-  }
-
-  .topGrid,
-  .bottomGrid,
-  .rightRail {
-    gap: 1rem;
-  }
-
-  .hero,
-  .calculatorCard,
-  .projectionCard,
-  .graphCard,
-  .journalCard,
-  .newsletterCard,
-  .footer {
-    border-radius: 20px;
+    width: calc(100% - 1rem);
   }
 
   .calculatorGrid,
@@ -784,39 +796,47 @@ select:focus {
   .projectionStats,
   .rightRail,
   .journalInputRow,
-  .newsletterForm {
+  .newsletterForm,
+  .footer {
     grid-template-columns: 1fr;
+  }
+
+  .hero,
+  .calculatorCard,
+  .projectionCard,
+  .graphCard,
+  .journalCard,
+  .newsletterCard {
+    border-radius: 20px;
+  }
+
+  .graphHeader {
+    flex-direction: column;
+  }
+
+  .graphLegend {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .graphCanvas {
+    overflow-x: auto;
+  }
+
+  .graphCanvas svg {
+    min-width: 720px;
+  }
+
+  .calloutBox,
+  .graphCallout {
+    display: none;
   }
 
   .primaryButton {
     width: 100%;
   }
 
-  .graphHeader,
-  .journalHeader,
   .footerBottom {
-    flex-direction: column;
-  }
-
-  .graphCallout {
-    display: none;
-  }
-}
-
-@media (max-height: 520px) and (orientation: landscape) {
-  .topGrid {
-    grid-template-columns: 0.9fr 1.25fr;
-  }
-
-  .projectionCard {
-    grid-column: 1 / -1;
-  }
-
-  .hero h1 {
-    font-size: 2.4rem;
-  }
-
-  .calculatorGrid {
-    grid-template-columns: repeat(3, 1fr);
+    text-align: left;
   }
 }
