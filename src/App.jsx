@@ -1,156 +1,223 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800;900&family=Playfair+Display:wght@700;800;900&display=swap');
+import { useMemo, useState, useEffect } from 'react'
+import './App.css'
 
-:root {
-  --navy: #071936;
-  --navy-2: #08213f;
-  --blue: #1768ff;
-  --teal: #0b91a3;
-  --gold: #e59a08;
-  --gold-2: #ffbf3f;
-  --ink: #071936;
-  --muted: #60748e;
-  --line: #d8e3f1;
-  --soft: #f4f8fd;
-  --card: rgba(255,255,255,.92);
-  --shadow: 0 18px 45px rgba(7, 25, 54, .10);
+const currencies = {
+  CAD: { flag: '🇨🇦', symbol: '$', name: 'Canadian dollars' },
+  USD: { flag: '🇺🇸', symbol: '$', name: 'US dollars' },
+  GBP: { flag: '🇬🇧', symbol: '£', name: 'pounds' },
+  EUR: { flag: '🇪🇺', symbol: '€', name: 'euros' },
+  AUD: { flag: '🇦🇺', symbol: '$', name: 'Australian dollars' },
 }
 
-* { box-sizing: border-box; }
-body { margin: 0; font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: var(--ink); background: radial-gradient(circle at 20% 0%, #fff 0, #f2f7fd 38%, #edf4fb 100%); }
-button, input, select { font: inherit; }
-button { cursor: pointer; }
-.site { min-height: 100vh; }
-.topbar { height: 72px; padding: 0 34px; display: flex; align-items: center; justify-content: space-between; color: #fff; background: linear-gradient(90deg, #041428, #082743); box-shadow: 0 12px 26px rgba(4, 20, 40, .18); position: sticky; top: 0; z-index: 10; }
-.logo { font-family: Playfair Display, serif; font-size: 26px; font-weight: 900; letter-spacing: 3px; line-height: .8; }
-.logo span { display: block; font-family: Inter, sans-serif; font-size: 12px; letter-spacing: 7px; color: #82b2ff; margin-top: 10px; }
-.topbar nav { display: flex; gap: 32px; height: 100%; align-items: center; }
-.topbar nav button, .navRight button { background: none; border: 0; color: #fff; font-weight: 800; }
-.topbar nav button.active { color: #fff; border-bottom: 3px solid var(--blue); height: 100%; }
-.navRight { display: flex; gap: 14px; align-items: center; }
-.navRight select { background: rgba(255,255,255,.08); color: #fff; border: 1px solid rgba(255,255,255,.28); border-radius: 9px; padding: 12px 18px; font-weight: 800; }
-.navRight option { color: var(--ink); }
-.menu { font-size: 24px; }
-
-.layout { max-width: 1500px; margin: 0 auto; padding: 24px 34px 32px; display: grid; grid-template-columns: 285px minmax(560px, 1fr) 455px; gap: 24px; align-items: start; }
-.card { background: var(--card); border: 1px solid rgba(183, 199, 221, .72); border-radius: 18px; box-shadow: var(--shadow); backdrop-filter: blur(16px); }
-.accent { width: 42px; height: 4px; background: var(--blue); border-radius: 10px; margin-bottom: 20px; }
-.story { padding: 8px 0 0; }
-.story h1 { font-family: Playfair Display, serif; margin: 0; font-size: clamp(52px, 4.6vw, 78px); line-height: .9; letter-spacing: -2px; }
-.story h1 strong { display: block; color: var(--blue); font-size: 1.28em; line-height: .82; }
-.tagline { margin: 20px 0 24px; font-size: 21px; line-height: 1.25; color: var(--ink); }
-.tagline span { color: var(--blue); font-weight: 900; }
-.insights { display: grid; gap: 18px; margin-top: 28px; }
-.insight { display: grid; grid-template-columns: 54px 1fr; gap: 16px; align-items: start; }
-.insightIcon { width: 52px; height: 52px; border-radius: 999px; display: grid; place-items: center; font-size: 20px; font-weight: 900; }
-.insightIcon.blue { color: var(--blue); background: #eaf2ff; }
-.insightIcon.teal, .insightIcon.green { color: var(--teal); background: #e8f7f5; }
-.insightIcon.gold { color: var(--gold); background: #fff3d8; }
-.insight p { margin: 0; line-height: 1.28; font-size: 14.5px; font-weight: 800; }
-.insight b { color: var(--blue); }
-.insight small { display: block; margin-top: 6px; color: var(--muted); font-weight: 600; }
-.futureNote { margin-top: 28px; padding: 22px; display: grid; grid-template-columns: 52px 1fr; gap: 16px; border: 1px solid #cbdaf0; border-radius: 16px; background: rgba(255,255,255,.62); }
-.futureNote > span { width: 52px; height: 52px; border: 2px solid var(--blue); color: var(--blue); display: grid; place-items: center; border-radius: 999px; font-size: 31px; }
-.futureNote h2 { font-family: Playfair Display, serif; margin: 0 0 12px; font-size: 24px; line-height: 1.05; }
-.futureNote h2 span { color: var(--blue); }
-.futureNote p { margin: 0 0 8px; }
-.futureNote strong { color: var(--blue); font-size: 28px; font-style: italic; font-family: Playfair Display, serif; }
-
-.mainStack { display: grid; gap: 16px; }
-.calculator { padding: 26px; }
-.calculator h2 { font-family: Playfair Display, serif; font-size: 28px; margin: 0 0 22px; display: flex; gap: 12px; align-items: center; }
-.calculator h2 > span { color: var(--blue); }
-.calculator h2 span:first-child { color: var(--gold); font-family: Inter, sans-serif; }
-.fieldGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px 24px; }
-label > span { display: flex; gap: 8px; align-items: center; font-size: 13px; font-weight: 900; margin-bottom: 8px; }
-label small { color: #8aa0be; }
-input, select { width: 100%; border: 1px solid #cbd8e8; border-radius: 8px; background: #fff; color: var(--ink); padding: 13px 15px; outline: none; font-weight: 800; min-height: 48px; }
-input:focus, select:focus { border-color: var(--blue); box-shadow: 0 0 0 4px rgba(23,104,255,.10); }
-.inputWrap { display: flex; align-items: center; gap: 10px; border: 1px solid #cbd8e8; border-radius: 8px; background: #fff; min-height: 48px; padding: 0 14px; }
-.inputWrap input { border: 0; box-shadow: none; padding-left: 0; min-height: auto; }
-.inputWrap b { font-size: 18px; }
-.advanced { margin: 18px 0 14px; background: none; border: 0; padding: 0; color: var(--blue); font-weight: 900; }
-.ctaRow { display: flex; gap: 12px; }
-.primary { flex: 1; border: 0; min-height: 54px; border-radius: 8px; color: #fff; font-size: 19px; font-weight: 900; background: linear-gradient(180deg, #f0b531, #d18300); box-shadow: 0 16px 25px rgba(216, 131, 0, .26); }
-.reset { border: 1px solid #cbd8e8; border-radius: 8px; padding: 0 18px; background: #fff; color: var(--ink); font-weight: 900; }
-.privacyLine { display: flex; justify-content: space-between; align-items: center; color: var(--muted); margin-top: 16px; font-size: 13px; font-weight: 700; }
-.privacyLine button, .sectionHead button { border: 0; background: none; color: var(--blue); font-weight: 900; }
-
-.darkCard { min-height: 420px; position: relative; overflow: hidden; padding: 28px; background: radial-gradient(circle at 90% 34%, rgba(255,191,63,.22), transparent 30%), linear-gradient(145deg, #061328, #08213f); color: #fff; box-shadow: 0 24px 55px rgba(4, 20, 40, .25); }
-.darkCopy { position: relative; z-index: 2; max-width: 330px; }
-.darkCard h3 { margin: 0 0 10px; font-family: Playfair Display, serif; font-size: 23px; }
-.bigNumber { display: block; margin: 0 0 12px; font-family: Playfair Display, serif; font-size: clamp(56px, 5.2vw, 78px); line-height: .95; color: var(--gold-2); text-shadow: 0 10px 24px rgba(255, 191, 63, .18); }
-.darkCard p { margin: 0 0 16px; font-weight: 700; color: rgba(255,255,255,.92); }
-.darkMetrics { border-top: 1px solid rgba(255,255,255,.20); border-bottom: 1px solid rgba(255,255,255,.20); padding: 16px 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 18px 0; }
-.darkMetrics div + div { border-left: 1px solid rgba(255,255,255,.18); padding-left: 12px; }
-.darkMetrics span, .darkMetrics small { display: block; color: rgba(255,255,255,.82); font-size: 12px; font-weight: 800; }
-.darkMetrics b { display: block; margin-top: 8px; font-size: 20px; }
-.darkCard h4 { margin: 20px 0 10px; color: var(--blue); font-size: 21px; }
-.darkCard button { border: 1px solid rgba(255,255,255,.35); background: rgba(255,255,255,.04); color: #fff; border-radius: 8px; padding: 12px 22px; font-weight: 900; }
-.goldCurve { position: absolute; right: 18px; bottom: 18px; width: 52%; max-width: 330px; fill: #fff; color: var(--gold-2); opacity: .98; }
-
-.chart { padding: 22px; position: relative; }
-.tabs { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
-.tabs div { display: flex; gap: 8px; }
-.tabs button { border: 1px solid #d5e0ef; background: #fff; padding: 10px 16px; border-radius: 8px; font-weight: 900; }
-.tabs button.active { background: var(--blue); border-color: var(--blue); color: #fff; box-shadow: 0 8px 16px rgba(23,104,255,.16); }
-.legend { display: flex; justify-content: center; gap: 42px; font-weight: 900; font-size: 13px; margin-bottom: 10px; }
-.legend span::before { content: ''; display: inline-block; width: 22px; height: 3px; margin-right: 8px; vertical-align: middle; border-radius: 5px; background: currentColor; }
-.balance { color: var(--ink); } .growth { color: var(--blue); } .contrib { color: var(--teal); }
-.chartFrame { min-height: 330px; }
-.chartFrame svg { width: 100%; height: auto; display: block; overflow: visible; }
-.drawLine { stroke-dasharray: 1500; stroke-dashoffset: 1500; animation: draw 1.55s ease forwards; }
-.growthLine { animation-delay: .12s; } .contribLine { animation-delay: .24s; }
-.chartArea { opacity: 0; animation: fadeIn .9s ease .8s forwards; }
-.callout { opacity: 0; animation: rise .6s ease 1.1s forwards; }
-.callout.gold { animation-delay: 1.35s; }
-.exploreMilestones { position: absolute; right: 22px; bottom: 20px; border: 0; background: none; color: var(--blue); font-weight: 900; }
-.chartFoot { color: var(--muted); font-size: 13px; font-weight: 700; margin-top: 8px; }
-
-.side { display: grid; gap: 16px; }
-.journal, .mailing { padding: 20px; }
-.sectionHead { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
-.sectionHead h3, .mailing h3 { margin: 0; font-family: Playfair Display, serif; font-size: 21px; }
-.latest { display: grid; grid-template-columns: 1.2fr 1fr .8fr; gap: 10px; align-items: center; padding: 14px; border: 1px solid #dbe5f2; border-radius: 10px; }
-.latest span { font-weight: 900; font-size: 13px; }
-.latest small { color: var(--muted); font-weight: 700; }
-.latest strong { font-size: 20px; justify-self: end; }
-.latest b { justify-self: end; color: #0a9b73; }
-.latest b.down { color: #d74343; }
-.latest b small { display: block; color: var(--muted); font-size: 11px; }
-.historyList { margin: 12px 0; }
-.historyList p { display: flex; justify-content: space-between; margin: 0; padding: 9px 4px; border-bottom: 1px solid #eef2f7; color: #465d7a; font-size: 13px; }
-.journalActions { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
-.journalActions button { border: 1px solid #d5e0ef; background: #fff; border-radius: 8px; padding: 10px 8px; font-weight: 900; font-size: 12px; }
-button.danger, .danger { color: #df3838; border-color: #f1b6b6 !important; background: #fffafa !important; }
-.mailing { position: relative; overflow: hidden; }
-.mailing h3 span { color: var(--blue); }
-.mailing p { color: var(--muted); margin: 6px 0 14px; }
-.mailing form { display: grid; grid-template-columns: 1fr 122px; gap: 12px; }
-.mailing button { background: var(--blue); color: #fff; border: 0; border-radius: 8px; font-weight: 900; }
-.mailing small { display: block; margin-top: 10px; color: var(--muted); }
-.joined { padding: 14px; color: #0a9b73; background: #e9fbf5; border-radius: 10px; font-weight: 900; }
-
-.drawerBackdrop { position: fixed; inset: 0; background: rgba(4, 18, 38, .42); z-index: 30; display: flex; justify-content: flex-end; }
-.drawer { width: min(440px, 92vw); background: #fff; height: 100%; padding: 28px; box-shadow: -18px 0 40px rgba(0,0,0,.18); overflow: auto; animation: slideIn .22s ease; }
-.close { float: right; border: 0; background: #eef4fb; width: 36px; height: 36px; border-radius: 999px; font-size: 22px; }
-.drawer h2 { font-family: Playfair Display, serif; font-size: 30px; }
-.breakdown p, .milestones p { display: flex; justify-content: space-between; gap: 18px; border-bottom: 1px solid #eef2f7; padding: 12px 0; }
-
-@keyframes draw { to { stroke-dashoffset: 0; } }
-@keyframes fadeIn { to { opacity: 1; } }
-@keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes slideIn { from { transform: translateX(24px); opacity: .8; } to { transform: translateX(0); opacity: 1; } }
-
-@media (max-width: 1180px) {
-  .layout { grid-template-columns: 1fr; }
-  .story { max-width: 650px; }
-  .side { grid-template-columns: 1fr; }
+const freqMap = {
+  Daily: 365,
+  Weekly: 52,
+  Biweekly: 26,
+  'Semi-monthly': 24,
+  Monthly: 12,
+  Yearly: 1,
 }
-@media (max-width: 760px) {
-  .topbar nav { display: none; }
-  .layout { padding: 18px; }
-  .fieldGrid { grid-template-columns: 1fr; }
-  .darkMetrics, .latest, .journalActions, .mailing form { grid-template-columns: 1fr; }
-  .bigNumber { font-size: 54px; }
-  .tabs, .privacyLine { align-items: flex-start; gap: 12px; flex-direction: column; }
+
+const clamp = (n, min, max) => Math.min(Math.max(Number(n) || 0, min), max)
+const parseMoney = (v) => Number(String(v).replace(/[^0-9.]/g, '')) || 0
+
+function money(value, currency = 'CAD', decimals = 0) {
+  const symbol = currencies[currency]?.symbol || '$'
+  const amount = Number(value || 0)
+  return `${symbol}${amount.toLocaleString(undefined, { maximumFractionDigits: decimals, minimumFractionDigits: decimals })}`
 }
+
+function buildProjection({ start, contribution, frequency, age, retireAge, rate }) {
+  const periodsPerYear = freqMap[frequency] || 26
+  const years = Math.max(0, retireAge - age)
+  const periods = Math.round(years * periodsPerYear)
+  const periodicRate = Math.pow(1 + rate / 100, 1 / periodsPerYear) - 1
+  let balance = start
+  const points = []
+  const interval = Math.max(1, Math.round(periods / 60))
+
+  for (let i = 0; i <= periods; i += 1) {
+    if (i > 0) balance = balance * (1 + periodicRate) + contribution
+    if (i % interval === 0 || i === periods) {
+      const totalContrib = start + contribution * i
+      points.push({
+        payday: i,
+        balance,
+        growth: Math.max(0, balance - totalContrib),
+        contributions: totalContrib,
+      })
+    }
+  }
+  const totalContributions = start + contribution * periods
+  const finalBalance = balance
+  const growth = Math.max(0, finalBalance - totalContributions)
+  return { years, periods, totalContributions, finalBalance, growth, points }
+}
+
+function Sparkline() {
+  return <svg className="spark" viewBox="0 0 280 150" aria-hidden="true">
+    <defs><linearGradient id="sparkFill" x1="0" y1="0" x2="0" y2="1"><stop stopColor="#1b66ff" stopOpacity=".55"/><stop offset="1" stopColor="#1b66ff" stopOpacity="0"/></linearGradient></defs>
+    <path d="M14 130 C45 118 62 116 80 106 C102 94 118 97 139 78 C164 53 181 58 203 42 C232 22 247 12 268 10 L268 144 L14 144 Z" fill="url(#sparkFill)"/>
+    <path d="M14 130 C45 118 62 116 80 106 C102 94 118 97 139 78 C164 53 181 58 203 42 C232 22 247 12 268 10" fill="none" stroke="#2e78ff" strokeWidth="5" strokeLinecap="round"/>
+    <circle cx="268" cy="10" r="8" fill="#0b2a4a" stroke="#fff" strokeWidth="5"/>
+  </svg>
+}
+
+function MainChart({ points, currency }) {
+  const max = Math.max(...points.map(p => p.balance), 1)
+  const coords = points.map((p, idx) => {
+    const x = 30 + (idx / Math.max(points.length - 1, 1)) * 720
+    const yB = 330 - (p.balance / max) * 300
+    const yG = 330 - (p.growth / max) * 300
+    const yC = 330 - (p.contributions / max) * 300
+    return { ...p, x, yB, yG, yC }
+  })
+  const line = key => coords.map((p, i) => `${i ? 'L' : 'M'} ${p.x.toFixed(1)} ${p[key].toFixed(1)}`).join(' ')
+  const area = `${line('yB')} L 750 330 L 30 330 Z`
+  const last = coords[coords.length - 1] || coords[0]
+  const mid = coords[Math.floor(coords.length * .65)] || last
+  return <div className="chartFrame">
+    <svg viewBox="0 0 790 370" role="img" aria-label="Projection chart">
+      <defs><linearGradient id="balFill" x1="0" y1="0" x2="0" y2="1"><stop stopColor="#1f6cff" stopOpacity=".24"/><stop offset="1" stopColor="#1f6cff" stopOpacity="0"/></linearGradient></defs>
+      {[0, .25, .5, .75, 1].map((t, i) => <g key={i}><line x1="30" x2="750" y1={330 - t*300} y2={330 - t*300} stroke="#d9e5f3"/><text x="8" y={335 - t*300} fontSize="14" fill="#24405f">{t === 0 ? '$0' : money(max*t, currency).replace(/\.0+$/,'')}</text></g>)}
+      <path d={area} fill="url(#balFill)"/>
+      <path d={line('yB')} fill="none" stroke="#071936" strokeWidth="4" strokeLinecap="round"/>
+      <path d={line('yG')} fill="none" stroke="#1768ff" strokeWidth="4" strokeLinecap="round"/>
+      <path d={line('yC')} fill="none" stroke="#0b91a3" strokeWidth="3" strokeDasharray="5 5" strokeLinecap="round"/>
+      <circle cx={last.x} cy={last.yB} r="7" fill="#071936"/>
+      <circle cx={last.x} cy={last.yG} r="7" fill="#1768ff"/>
+      <circle cx={last.x} cy={last.yC} r="7" fill="#0b91a3"/>
+      <text x="30" y="360" fontSize="14" fill="#24405f">Now</text>
+      <text x="220" y="360" fontSize="14" fill="#24405f">#260</text>
+      <text x="400" y="360" fontSize="14" fill="#24405f">#520</text>
+      <text x="580" y="360" fontSize="14" fill="#24405f">#780</text>
+      <text x="718" y="360" fontSize="14" fill="#24405f">#1040</text>
+      <g className="tooltip" transform={`translate(${Math.min(mid.x - 80, 560)} ${Math.max(mid.yB - 95, 35)})`}>
+        <rect width="180" height="94" rx="14" fill="#fff" stroke="#d9e5f3" filter="drop-shadow(0 10px 20px rgba(7,25,54,.12))"/>
+        <text x="16" y="25" fontWeight="800" fontSize="14" fill="#071936">PAYDAY #{Math.round(mid.payday)}</text>
+        <text x="16" y="48" fontSize="13" fill="#071936">Balance</text><text x="105" y="48" fontWeight="800" fontSize="13" fill="#071936">{money(mid.balance, currency)}</text>
+        <text x="16" y="68" fontSize="13" fill="#071936">Growth</text><text x="105" y="68" fontWeight="800" fontSize="13" fill="#071936">{money(mid.growth, currency)}</text>
+        <text x="16" y="88" fontSize="13" fill="#071936">Contributions</text><text x="105" y="88" fontWeight="800" fontSize="13" fill="#071936">{money(mid.contributions, currency)}</text>
+      </g>
+    </svg>
+  </div>
+}
+
+function Drawer({ title, open, onClose, children }) {
+  if (!open) return null
+  return <div className="drawerBackdrop" onClick={onClose}>
+    <aside className="drawer" onClick={e => e.stopPropagation()}>
+      <button className="close" onClick={onClose}>×</button>
+      <h2>{title}</h2>
+      {children}
+    </aside>
+  </div>
+}
+
+export default function App() {
+  const [currency, setCurrency] = useState(() => localStorage.getItem('paydays.currency') || 'CAD')
+  const [tab, setTab] = useState('Graph')
+  const [mode, setMode] = useState('By Paydays')
+  const [drawer, setDrawer] = useState(null)
+  const [history, setHistory] = useState(() => JSON.parse(localStorage.getItem('paydays.history.v1') || '[]'))
+  const [form, setForm] = useState({ start: '25000', contribution: '250', frequency: 'Biweekly', rate: '7.0', age: '35', retireAge: '65', updateBalance: '' })
+  const start = clamp(parseMoney(form.start), 0, 25000000)
+  const contribution = Math.max(0, parseMoney(form.contribution))
+  const age = clamp(form.age, 16, 99)
+  const retireAge = Math.max(age, clamp(form.retireAge, 16, 99))
+  const rate = clamp(form.rate, 0, 20)
+  const projection = useMemo(() => buildProjection({ start, contribution, frequency: form.frequency, age, retireAge, rate }), [start, contribution, form.frequency, age, retireAge, rate])
+  const lower = buildProjection({ start, contribution, frequency: form.frequency, age, retireAge, rate: Math.max(0, rate - 2) })
+  const higher = buildProjection({ start, contribution, frequency: form.frequency, age, retireAge, rate: rate + 2 })
+
+  useEffect(() => localStorage.setItem('paydays.currency', currency), [currency])
+  useEffect(() => localStorage.setItem('paydays.history.v1', JSON.stringify(history)), [history])
+
+  const update = (key, value) => setForm(f => ({ ...f, [key]: value }))
+  const saveBalance = () => {
+    const value = parseMoney(form.updateBalance)
+    if (!value) return
+    setHistory(h => [{ date: new Date().toLocaleDateString(undefined, { month:'short', day:'numeric', year:'numeric' }), payday: Math.min(1040, Math.max(0, 1040 - projection.periods)), balance: value }, ...h].slice(0, 20))
+  }
+  const clearData = () => { localStorage.removeItem('paydays.history.v1'); setHistory([]) }
+
+  return <div className="site">
+    <header className="topbar">
+      <div className="logo">1040<span>PAYDAYS</span></div>
+      <nav><button>Calculator</button><button onClick={()=>setDrawer('How it works')}>How it works</button><button onClick={()=>setTab('Compare')}>Compare</button><button onClick={()=>setDrawer('Learn')}>Learn⌄</button></nav>
+      <div className="navRight"><select value={currency} onChange={e=>setCurrency(e.target.value)}>{Object.keys(currencies).map(k=><option key={k} value={k}>{currencies[k].flag} {k} {currencies[k].symbol}</option>)}</select><button className="menu">☰</button></div>
+    </header>
+
+   <main className="layout">
+  <section className="story">
+    <div className="accent" />
+
+    <h1>
+      You only get about <strong>1,040</strong> paydays.
+    </h1>
+
+    <p className="tagline">Make every one count.</p>
+
+    <ul className="promises">
+      <li>
+        📅 <span>One payday<br />at a time.</span>
+      </li>
+      <li>
+        ↗ <span>See the power of<br />consistency.</span>
+      </li>
+      <li>
+        ◎ <span>Build the future<br />you deserve.</span>
+      </li>
+    </ul>
+
+    <div className="hero-message">
+      <h2>Your future isn't built all at once.</h2>
+      <p>
+        It's built one payday at a time.
+      </p>
+    </div>
+  </section>
+
+      <section className="calculator card">
+        {[
+          ['Starting investment','start','$'], ['I add every payday','contribution','$'], ['Pay frequency','frequency','select'], ['Current age','age',''], ['Expected annual return','rate','%'], ['Retiring at age','retireAge','']
+        ].map(([label,key,type]) => <label key={key}><span>{label} <small>ⓘ</small></span>{type==='select'?<select value={form.frequency} onChange={e=>update('frequency',e.target.value)}>{Object.keys(freqMap).map(f=><option key={f}>{f}</option>)}</select>:<div className="inputWrap"><b>{type==='$'?'$':''}</b><input value={form[key]} onChange={e=>update(key,e.target.value)} />{type==='%'?<b>%</b>:null}</div>}</label>)}
+        <button className="advanced">› Advanced assumptions (optional)</button>
+        <button className="primary" onClick={()=>setTab('Graph')}>▣ Calculate projection →</button>
+        <div className="privacyLine">🔒 No account needed · Saved on your device <button onClick={()=>setDrawer('Privacy')}>Privacy settings</button></div>
+      </section>
+
+      <section className="projection card darkCard">
+        <div><h3>YOUR PAYDAY #1040</h3><strong>{money(projection.finalBalance, currency)}</strong><p>{projection.periods.toLocaleString()} paydays to go</p><span>Until age {retireAge}</span><button onClick={()=>setDrawer('Breakdown')}>View breakdown →</button></div><Sparkline />
+      </section>
+
+      <section className="metrics card">
+        <div><i>▣</i><strong>{money(projection.totalContributions, currency)}</strong><b>Total contributions</b><span>Starting balance + future contributions</span></div>
+        <div><i>↗</i><strong>{money(projection.growth, currency)}</strong><b>Investment growth</b><span>From compounding over time</span></div>
+        <div><i>◷</i><strong>{projection.periods.toLocaleString()}</strong><b>Paydays remaining</b><span>Until age {retireAge}</span></div>
+      </section>
+
+      <section className="chart card">
+        <div className="tabs"><div>{['Graph','Breakdown','Compare'].map(t=><button key={t} className={tab===t?'active':''} onClick={()=>setTab(t)}>{t}</button>)}</div><div>{['By Paydays','By Years'].map(t=><button key={t} className={mode===t?'active':''} onClick={()=>setMode(t)}>{t}</button>)}</div></div>
+        <div className="legend"><span className="balance">Balance</span><span className="growth">Growth</span><span className="contrib">Contributions</span></div>
+        {tab==='Compare' ? <div className="compareCards"><div><span>Lower return · {Math.max(0,rate-2)}%</span><strong>{money(lower.finalBalance,currency)}</strong><p>{projection.periods.toLocaleString()} paydays</p></div><div><span>Current plan · {rate}%</span><strong>{money(projection.finalBalance,currency)}</strong><p>{projection.periods.toLocaleString()} paydays</p></div><div><span>Higher return · {rate+2}%</span><strong>{money(higher.finalBalance,currency)}</strong><p>{projection.periods.toLocaleString()} paydays</p></div></div> : <MainChart points={projection.points} currency={currency}/>}        
+        <div className="chartFoot">Values in today’s dollars · After fees & inflation</div>
+      </section>
+
+      <aside className="side">
+        <section className="update card"><h3>It’s payday. Make it count.</h3><p>Enter your latest account balance to keep your projection accurate.</p><div className="updateRow"><div className="inputWrap"><b>{currencies[currency].symbol}</b><input placeholder="123,456.78" value={form.updateBalance} onChange={e=>update('updateBalance', e.target.value.replace(/[^0-9.]/g,''))}/></div><button onClick={saveBalance}>Update balance</button></div><span>🔒 Stored locally · Private to you</span></section>
+        <section className="history card"><div className="historyHead"><h3>Recent history</h3><button onClick={()=>setDrawer('History')}>View all history →</button></div>{history.length===0?<div className="empty">▤<strong>No history yet</strong><p>Your balance updates will appear here.</p></div>:history.slice(0,4).map((h,i)=><div className="historyItem" key={i}><span className="dot"/><span>{h.date}</span><span>Payday #{h.payday}</span><strong>{money(h.balance,currency)}</strong></div>)}</section>
+      </aside>
+    </main>
+
+    <footer><span>🛡 Your data stays private. Always.</span><span>© 2025 1040 Paydays</span><nav><button onClick={()=>setDrawer('Privacy')}>Privacy</button><button onClick={()=>setDrawer('Terms')}>Terms</button><button onClick={()=>setDrawer('Disclaimer')}>Disclaimer</button><button onClick={()=>setDrawer('Contact')}>Contact</button></nav></footer>
+
+    <Drawer title={drawer} open={!!drawer} onClose={()=>setDrawer(null)}>
+      {drawer==='Breakdown' && <div className="breakdown"><p>Starting investment <b>{money(start,currency)}</b></p><p>Future contributions <b>{money(projection.totalContributions-start,currency)}</b></p><p>Investment growth <b>{money(projection.growth,currency)}</b></p><hr/><p>Projected balance <b>{money(projection.finalBalance,currency)}</b></p></div>}
+      {drawer==='Privacy' && <div><p>Your saved data stays on this device. 1040 Paydays does not require an account and does not upload your saved balances.</p><button className="danger" onClick={clearData}>Clear saved data</button></div>}
+      {drawer==='History' && <div>{history.length===0?<p>No saved paydays yet.</p>:history.map((h,i)=><p key={i}>{h.date} — Payday #{h.payday} — <b>{money(h.balance,currency)}</b></p>)}</div>}
+      {!['Breakdown','Privacy','History'].includes(drawer) && <p>This section is ready for your guide content, articles, and plain-language explanations.</p>}
+    </Drawer>
+  </div>
+}
+
