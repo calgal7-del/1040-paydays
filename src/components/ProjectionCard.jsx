@@ -8,11 +8,12 @@ export default function ProjectionCard({
   projection,
   currency,
   hasRevealed,
+  onOpenBreakdown,
 }) {
   return (
     <section className={`projectionCard ${hasRevealed ? 'revealed' : ''}`}>
       <div className="projectionTop">
-        <p>Your future</p>
+        <p>Your future ✧</p>
         <span>Built one payday at a time.</span>
       </div>
 
@@ -24,12 +25,13 @@ export default function ProjectionCard({
         <svg viewBox="0 0 320 120">
           <defs>
             <linearGradient id="sparkGold" x1="0" x2="1" y1="0" y2="0">
-              <stop offset="0%" stopColor="#7dd3fc" />
+              <stop offset="0%" stopColor="#72d0ff" />
               <stop offset="100%" stopColor="#f5b84b" />
             </linearGradient>
           </defs>
+
           <path
-            d="M10 98 C55 92 74 82 104 74 C139 64 156 70 186 46 C220 19 256 34 310 12"
+            d="M10 92 C54 88 86 76 115 69 C151 60 173 65 203 44 C234 21 264 30 310 10"
             fill="none"
             stroke="url(#sparkGold)"
             strokeWidth="6"
@@ -64,9 +66,17 @@ export default function ProjectionCard({
         </div>
       </div>
 
+      <button
+        className="breakdownButton"
+        type="button"
+        onClick={onOpenBreakdown}
+      >
+        View full breakdown →
+      </button>
+
       <p className="projectionDisclaimer">
-        Projection only. Not financial advice. Actual returns, taxes,
-        fees, inflation and government benefits may vary.
+        Projection only. Not financial advice. Actual returns, taxes, fees,
+        inflation and government benefits may vary.
       </p>
     </section>
   )
