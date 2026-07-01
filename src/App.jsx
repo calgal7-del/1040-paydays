@@ -1,179 +1,364 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import './App.css'
 
 const AGE_MIN = 16
 const AGE_MAX = 99
-const MAX_START = 25000000
-const FREQ = { Daily:365, Weekly:52, Biweekly:26, 'Semi-monthly':24, Monthly:12, Yearly:1 }
-const CURRENCIES = {
-  CAD:{symbol:'$', label:'CAD', flag:'🇨🇦'}, USD:{symbol:'$', label:'USD', flag:'🇺🇸'}, GBP:{symbol:'£', label:'GBP', flag:'🇬🇧'}, EUR:{symbol:'€', label:'EUR', flag:'🇪🇺'}, AUD:{symbol:'$', label:'AUD', flag:'🇦🇺'}
-}
-const STORAGE_KEY = 'paydays-history-v1'
+const MAX_STARTING_BALANCE = 25000000
+const MAX_CONTRIBUTION = 1000000
+const MAX_RETURN = 25
 
-function clamp(n,min,max){ return Math.min(max, Math.max(min, Number.isFinite(n)?n:min)) }
-function money(n, currency='CAD', compact=false){
-  const c=CURRENCIES[currency] || CURRENCIES.CAD
-  if(compact && Math.abs(n)>=1000000) return c.symbol+(n/1000000).toFixed(n>=10000000?0:2).replace(/\.00$/,'')+'M'
-  if(compact && Math.abs(n)>=1000) return c.symbol+Math.round(n/1000)+'k'
-  return c.symbol + Math.round(n).toLocaleString()
+const FREQUENCIES = [
+  { label: 'Daily', value: 'daily', periods: 365 },
+  { label: 'Weekly', value: 'weekly', periods: 52 },
+  { label: 'Biweekly', value: 'biweekly', periods: 26 },
+  { label: 'Semi-monthly', value: 'semimonthly', periods: 24 },
+  { label: 'Monthly', value: 'monthly', periods: 12 },
+  { label: 'Yearly', value: 'yearly', periods: 1 },
+]
+
+const CURRENCIES = [
+  { code: 'CAD', symbol: '$', flag: '🇨🇦', label: 'Canadian dollar' },
+  { code: 'USD', symbol: '$', flag: '🇺🇸', label: 'US dollar' },
+  { code: 'GBP', symbol: '£', flag: '🇬🇧', label: 'British pound' },
+  { code: 'EUR', symbol: '€', flag: '🇪🇺', label: 'Euro' },
+  { code: 'AUD', symbol: '$', flag: '🇦🇺', label: 'Australian dollar' },
+]
+
+const defaultForm = {
+  starting: '25000',
+  contribution: '250',
+  frequency: 'biweekly',
+  currentAge: '35',
+  retireAge: '65',
+  annualReturn: '7.0',
 }
-function parseMoney(value){ return Number(String(value).replace(/[^0-9.]/g,'')) || 0 }
-function yearsToPaydays(age, retire, frequency){ return Math.max(0, Math.round((retire-age) * FREQ[frequency])) }
-function calcProjection(form){
-  const starting = clamp(parseMoney(form.starting),0,MAX_START)
-  const contribution = Math.max(0, parseMoney(form.contribution))
-  const age = clamp(Number(form.age),AGE_MIN,AGE_MAX)
-  const retire = clamp(Number(form.retire),age,AGE_MAX)
-  const periods = yearsToPaydays(age, retire, form.frequency)
-  const annual = clamp(Number(form.returnRate),0,20) / 100
-  const rate = Math.pow(1+annual,1/FREQ[form.frequency])-1
-  let balance = starting, futureContrib = 0
-  const points=[]
-  const step = Math.max(1, Math.round(periods/80))
-  for(let i=0;i<=periods;i++){
-    if(i>0){ balance = balance*(1+rate) + contribution; futureContrib += contribution }
-    if(i%step===0 || i===periods) points.push({payday:i,balance,growth:Math.max(0,balance-starting-futureContrib),contributions:starting+futureContrib})
+
+const storageKey = 'paydays1040_v1'
+const historyKey = 'paydays1040_history_v1'
+const privacyKey = 'paydays1040_privacy_v1'
+
+function clampNumber(value, fallback = 0) {
+  const parsed = Number(String(value).replace(/[^0-9.-]/g, ''))
+  return Number.isFinite(parsed) ? parsed : fallback
+}
+
+function currencyForLocale() {
+  const country = (navigator.language || 'en-CA').split('-')[1]
+  if (country === 'US') return 'USD'
+  if (country === 'GB') return 'GBP'
+  if (['IE', 'FR', 'DE', 'ES', 'IT', 'NL', 'PT'].includes(country)) return 'EUR'
+  if (country === 'AU') return 'AUD'
+  return 'CAD'
+}
+
+function safeLoad(key, fallback) {
+  try {
+    const raw = localStorage.getItem(key)
+    return raw ? JSON.parse(raw) : fallback
+  } catch {
+    return fallback
   }
-  const totalContrib = starting + futureContrib
-  return {starting, contribution, age, retire, periods, annual, balance, futureContrib, totalContrib, growth:Math.max(0,balance-totalContrib), points}
-}
-function Icon({type}){
-  const common={width:22,height:22,viewBox:'0 0 24 24',fill:'none',stroke:'currentColor',strokeWidth:2,strokeLinecap:'round',strokeLinejoin:'round'}
-  const paths={
-    calendar:<><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></>,
-    chart:<><path d="M3 17l6-6 4 4 8-10"/><path d="M14 5h7v7"/></>,
-    target:<><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></>,
-    wallet:<><path d="M20 7H5a2 2 0 0 0 0 4h15v8H5a3 3 0 0 1-3-3V6a3 3 0 0 1 3-3h13v4"/><path d="M16 14h.01"/></>,
-    pie:<><path d="M12 2v10h10"/><path d="M20.49 15A9 9 0 1 1 9 3.51"/></>,
-    lock:<><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></>,
-    shield:<><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/></>,
-    mail:<><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></>,
-    menu:<><path d="M4 6h16M4 12h16M4 18h16"/></>,
-    info:<><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></>,
-    close:<><path d="M18 6L6 18M6 6l12 12"/></>,
-    check:<><path d="M20 6L9 17l-5-5"/></>,
-    trash:<><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/></>,
-    download:<><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 21h14"/></>,
-    zoom:<><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></>
-  }
-  return <svg {...common}>{paths[type]}</svg>
 }
 
-export default function App(){
-  const [currency,setCurrency] = useState(()=>localStorage.getItem('paydays-currency') || 'CAD')
-  const [form,setForm] = useState({starting:'25000', contribution:'250', frequency:'Biweekly', age:'35', retire:'65', returnRate:'7.0'})
-  const [applied,setApplied] = useState(form)
-  const [tab,setTab] = useState('graph')
-  const [view,setView] = useState('paydays')
-  const [drawer,setDrawer] = useState(null)
-  const [privacyOpen,setPrivacyOpen] = useState(false)
-  const [mobileCalcOpen,setMobileCalcOpen] = useState(false)
-  const [history,setHistory] = useState(()=>{ try{return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []}catch{return []} })
-  const [remember,setRemember] = useState(()=>localStorage.getItem('paydays-remember') !== 'false')
-  const result = useMemo(()=>calcProjection(applied),[applied])
-  const draft = useMemo(()=>calcProjection(form),[form])
-  const maxY = Math.max(...result.points.map(p=>p.balance))*1.08 || 1
-  const invalid = validate(form)
-  const c = CURRENCIES[currency]
-  const progress = Math.round(((1040-result.periods)/1040)*100)
-  const currentPayday = Math.max(0,1040-result.periods)
-  function setField(k,v){ setForm(f=>({...f,[k]:v})) }
-  function calculate(){ if(!validate(form)){ setApplied({...form, starting:String(draft.starting), age:String(draft.age), retire:String(draft.retire)}) } }
-  function saveBalance(){
-    const balance=parseMoney(document.getElementById('balance-update')?.value || '0')
-    const entry={id:Date.now(), date:new Date().toLocaleDateString(undefined,{month:'short',day:'numeric',year:'numeric'}), payday:currentPayday, age:result.age, balance}
-    const next=[entry,...history].slice(0,12)
-    setHistory(next); if(remember)localStorage.setItem(STORAGE_KEY,JSON.stringify(next)); setDrawer('history')
+function safeSave(key, value) {
+  try {
+    localStorage.setItem(key, JSON.stringify(value))
+  } catch {
+    // ignore private-mode storage failures
   }
-  function clearData(){ localStorage.removeItem(STORAGE_KEY); localStorage.removeItem('paydays-currency'); localStorage.removeItem('paydays-remember'); setHistory([]); setRemember(false); setPrivacyOpen(false) }
-  function changeCurrency(v){ setCurrency(v); localStorage.setItem('paydays-currency',v) }
+}
 
-  return <div className="app-shell">
-    <header className="topbar">
-      <div className="brand"><strong>1040</strong><span>PAYDAYS</span></div>
-      <nav className="nav"><button className="active" onClick={()=>scrollToId('calculator')}>Calculator</button><button onClick={()=>setDrawer('how')}>How it works</button><button onClick={()=>setTab('compare')}>Compare</button><button onClick={()=>setDrawer('learn')}>Learn</button></nav>
-      <div className="header-actions"><select aria-label="Currency" value={currency} onChange={e=>changeCurrency(e.target.value)}>{Object.entries(CURRENCIES).map(([k,v])=><option key={k} value={k}>{v.flag} {v.symbol} {v.label}</option>)}</select><button className="icon-button" onClick={()=>setDrawer('menu')}><Icon type="menu"/></button></div>
-    </header>
+function formatMoney(value, currency) {
+  const { code, symbol } = currency
+  const absolute = Math.abs(value || 0)
+  const rounded = absolute >= 1000000 ? 0 : 0
+  return `${value < 0 ? '-' : ''}${symbol}${absolute.toLocaleString(undefined, {
+    maximumFractionDigits: rounded,
+    minimumFractionDigits: 0,
+  })}`
+}
 
-    <main className="layout">
-      <aside className="hero-copy">
-        <div className="accent-line" />
-        <h1>You only get about <span>1,040</span> paydays.</h1>
-        <p className="hero-sub">Make every one count.</p>
-        <ul className="promise-list">
-          <li><span><Icon type="calendar"/></span>One payday<br/>at a time.</li>
-          <li><span><Icon type="chart"/></span>See the power of<br/>consistency.</li>
-          <li><span><Icon type="target"/></span>Build the future<br/>you deserve.</li>
-        </ul>
-        <div className="hourglass" aria-hidden="true"><div className="glass top"></div><div className="sand"></div><div className="glass bottom"></div></div>
+function formatCompact(value, currency) {
+  const { symbol } = currency
+  const absolute = Math.abs(value || 0)
+  if (absolute >= 1000000) return `${symbol}${(absolute / 1000000).toFixed(2)}M`
+  if (absolute >= 1000) return `${symbol}${Math.round(absolute / 1000)}k`
+  return `${symbol}${Math.round(absolute).toLocaleString()}`
+}
+
+function validate(form) {
+  const starting = clampNumber(form.starting)
+  const contribution = clampNumber(form.contribution)
+  const currentAge = clampNumber(form.currentAge)
+  const retireAge = clampNumber(form.retireAge)
+  const annualReturn = clampNumber(form.annualReturn)
+  const errors = {}
+  if (starting < 0 || starting > MAX_STARTING_BALANCE) errors.starting = 'Starting investment must be between $0 and $25,000,000.'
+  if (contribution < 0 || contribution > MAX_CONTRIBUTION) errors.contribution = 'Contribution must be between $0 and $1,000,000.'
+  if (currentAge < AGE_MIN || currentAge > AGE_MAX) errors.currentAge = 'Age must be between 16 and 99.'
+  if (retireAge < AGE_MIN || retireAge > AGE_MAX) errors.retireAge = 'Retiring age must be between 16 and 99.'
+  if (retireAge < currentAge) errors.retireAge = 'Retiring age cannot be lower than your current age.'
+  if (annualReturn < 0 || annualReturn > MAX_RETURN) errors.annualReturn = 'Expected return must be between 0% and 25%.'
+  return errors
+}
+
+function calculate(form) {
+  const starting = clampNumber(form.starting)
+  const contribution = clampNumber(form.contribution)
+  const currentAge = clampNumber(form.currentAge)
+  const retireAge = clampNumber(form.retireAge)
+  const annualReturn = clampNumber(form.annualReturn) / 100
+  const frequency = FREQUENCIES.find((f) => f.value === form.frequency) || FREQUENCIES[2]
+  const years = Math.max(0, retireAge - currentAge)
+  const totalPeriods = Math.round(years * frequency.periods)
+  const periodRate = frequency.periods ? Math.pow(1 + annualReturn, 1 / frequency.periods) - 1 : 0
+
+  let balance = starting
+  const points = []
+  const sampleEvery = Math.max(1, Math.floor(totalPeriods / 48))
+  for (let p = 0; p <= totalPeriods; p += 1) {
+    const paidIn = starting + contribution * p
+    const growth = Math.max(0, balance - paidIn)
+    if (p === 0 || p % sampleEvery === 0 || p === totalPeriods) {
+      points.push({ payday: p, age: currentAge + p / frequency.periods, balance, contributions: paidIn, growth })
+    }
+    if (p < totalPeriods) balance = balance * (1 + periodRate) + contribution
+  }
+
+  const futureContributions = contribution * totalPeriods
+  const totalContributions = starting + futureContributions
+  const investmentGrowth = Math.max(0, balance - totalContributions)
+  return { starting, contribution, currentAge, retireAge, annualReturn, frequency, years, totalPeriods, balance, futureContributions, totalContributions, investmentGrowth, points }
+}
+
+function getPath(points, key, width, height, maxY) {
+  if (!points.length || maxY <= 0) return ''
+  return points.map((point, i) => {
+    const x = points.length === 1 ? 0 : (i / (points.length - 1)) * width
+    const y = height - (point[key] / maxY) * height
+    return `${i === 0 ? 'M' : 'L'} ${x.toFixed(2)} ${y.toFixed(2)}`
+  }).join(' ')
+}
+
+function getArea(path, width, height) {
+  if (!path) return ''
+  return `${path} L ${width} ${height} L 0 ${height} Z`
+}
+
+function Drawer({ title, open, onClose, children }) {
+  return (
+    <div className={`drawerLayer ${open ? 'show' : ''}`} aria-hidden={!open}>
+      <button className="scrim" onClick={onClose} aria-label="Close panel" />
+      <aside className="drawer" role="dialog" aria-modal="true" aria-label={title}>
+        <div className="drawerHead">
+          <h2>{title}</h2>
+          <button className="ghostIcon" onClick={onClose}>×</button>
+        </div>
+        {children}
       </aside>
-
-      <section className="content-grid">
-        <section className="calculator card" id="calculator">
-          <Field label="Starting investment" help="Max $25,000,000"><MoneyInput value={form.starting} onChange={v=>setField('starting',v)} currency={c.symbol}/></Field>
-          <Field label="I add every payday"><MoneyInput value={form.contribution} onChange={v=>setField('contribution',v)} currency={c.symbol}/></Field>
-          <Field label="Pay frequency"><select value={form.frequency} onChange={e=>setField('frequency',e.target.value)}>{Object.keys(FREQ).map(x=><option key={x}>{x}</option>)}</select></Field>
-          <Field label="Current age" help="16 – 99"><input type="number" min={AGE_MIN} max={AGE_MAX} value={form.age} onChange={e=>setField('age',e.target.value)}/></Field>
-          <Field label="Expected annual return" help="After fees & inflation"><input value={form.returnRate} onChange={e=>setField('returnRate',e.target.value.replace('%',''))}/></Field>
-          <Field label="Retiring at age" help="16 – 99"><input type="number" min={AGE_MIN} max={AGE_MAX} value={form.retire} onChange={e=>setField('retire',e.target.value)}/></Field>
-          <button className="advanced" onClick={()=>setDrawer('advanced')}>▸ Advanced assumptions (optional)</button>
-          {invalid && <div className="validation">{invalid}</div>}
-          <button className="primary" disabled={!!invalid} onClick={calculate}><Icon type="calendar"/>Calculate projection <span>→</span></button>
-          <footer><Icon type="lock"/> No account needed · Saved on your device <button onClick={()=>setPrivacyOpen(true)}>Privacy settings</button></footer>
-        </section>
-
-        <section className="projection-card">
-          <div><p>Your Payday #1040</p><h2>{money(result.balance,currency)}</h2><strong>{result.periods.toLocaleString()} paydays to go</strong><span>Until age {result.retire}</span><button onClick={()=>setDrawer('breakdown')}>View breakdown →</button></div>
-          <MiniLine points={result.points} maxY={maxY}/>
-        </section>
-
-        <section className="metrics card-row">
-          <Metric icon="wallet" value={money(result.totalContrib,currency)} title="Total contributions" text="Starting balance + future contributions" />
-          <Metric icon="chart" value={money(result.growth,currency)} title="Investment growth" text={`From compounding over ${result.retire}`} />
-          <Metric icon="pie" value={result.periods.toLocaleString()} title="Paydays remaining" text={`Until age ${result.retire}`} />
-        </section>
-
-        <section className="graph-card card">
-          <div className="tabs"><button className={tab==='graph'?'active':''} onClick={()=>setTab('graph')}>Graph</button><button className={tab==='breakdown'?'active':''} onClick={()=>setTab('breakdown')}>Breakdown</button><button className={tab==='compare'?'active':''} onClick={()=>setTab('compare')}>Compare</button><span></span><button className={view==='paydays'?'active pill':''} onClick={()=>setView('paydays')}>By Paydays</button><button className={view==='years'?'pill active':''} onClick={()=>setView('years')}>By Years</button></div>
-          <div className="legend"><span className="balance">Balance</span><span className="growth">Growth</span><span className="contrib">Contributions</span></div>
-          {tab==='graph' && <Chart points={result.points} maxY={maxY} currency={currency} view={view}/>} 
-          {tab==='breakdown' && <Breakdown result={result} currency={currency}/>} 
-          {tab==='compare' && <Compare base={form} currency={currency}/>} 
-          <p className="graph-note">Values in today’s dollars · After fees & inflation</p>
-        </section>
-
-        <section className="update card">
-          <div><h3>Update today's balance</h3><p>Enter your latest account balance to keep your projection accurate.</p></div>
-          <div className="update-row"><MoneyInput id="balance-update" value="123456.78" currency={c.symbol}/><button onClick={saveBalance}>Update balance</button></div>
-          <small><Icon type="lock"/> Saved locally · Private to you</small>
-        </section>
-
-        <section className="history card">
-          <header><h3>Recent history</h3><button onClick={()=>setDrawer('history')}>View all history →</button></header>
-          <div className="timeline">{(history.length?history:sampleHistory()).slice(0,4).map((h,i)=><div className="history-row" key={h.id||i}><span></span><p>{h.date}</p><p>Payday #{h.payday}</p><strong>{money(h.balance,currency)}</strong></div>)}</div>
-        </section>
-      </section>
-    </main>
-
-    <footer className="site-footer"><span><Icon type="shield"/> Your data stays private. Always.</span><span>© 2025 1040 Paydays</span><button onClick={()=>setPrivacyOpen(true)}>Privacy</button><button onClick={()=>setDrawer('terms')}>Terms</button><button onClick={()=>setDrawer('disclaimer')}>Disclaimer</button><button onClick={()=>setDrawer('contact')}>Contact</button></footer>
-
-    {drawer && <Drawer type={drawer} close={()=>setDrawer(null)} result={result} currency={currency} history={history} clearData={clearData}/>} 
-    {privacyOpen && <Modal title="Privacy settings" close={()=>setPrivacyOpen(false)}><label className="check"><input type="checkbox" checked={remember} onChange={e=>{setRemember(e.target.checked); localStorage.setItem('paydays-remember',String(e.target.checked))}}/> Remember my payday history on this device</label><button className="danger" onClick={clearData}>Clear saved data</button><p className="muted">Your information stays in your browser. No account is required.</p></Modal>}
-  </div>
+    </div>
+  )
 }
 
-function Field({label,help,children}){return <label className="field"><span>{label} <i>ⓘ</i></span>{children}{help && <small>{help}</small>}</label>}
-function MoneyInput({value,onChange,currency,id}){return <div className="money"><span>{currency}</span><input id={id} value={value} onChange={e=>onChange?.(e.target.value)} /></div>}
-function Metric({icon,value,title,text}){return <article><div className="metric-icon"><Icon type={icon}/></div><div><h3>{value}</h3><b>{title}</b><p>{text}</p></div></article>}
-function validate(f){const s=parseMoney(f.starting), a=Number(f.age), r=Number(f.retire), ret=Number(f.returnRate); if(s>MAX_START)return 'Starting investment cannot exceed $25,000,000.'; if(a<16||a>99)return 'Current age must be between 16 and 99.'; if(r<16||r>99)return 'Retiring age must be between 16 and 99.'; if(r<a)return 'Retiring age cannot be below current age.'; if(ret<0||ret>20)return 'Expected annual return must be between 0% and 20%.'; return ''}
-function sampleHistory(){return[{date:'May 24, 2025',payday:198,balance:123456.78},{date:'May 10, 2025',payday:196,balance:120342.21},{date:'Apr 26, 2025',payday:194,balance:118220.11},{date:'Apr 12, 2025',payday:192,balance:115119.62}]}
-function scrollToId(id){document.getElementById(id)?.scrollIntoView({behavior:'smooth',block:'start'})}
-function MiniLine({points,maxY}){const d=path(points,maxY,260,130,'balance'); return <svg className="mini" viewBox="0 0 260 130"><path d={d} fill="none" stroke="#6da1ff" strokeWidth="4"/><circle cx="250" cy="14" r="7" fill="#0b63ff" stroke="#fff" strokeWidth="3"/></svg>}
-function path(points,maxY,w,h,key){ if(!points.length)return ''; return points.map((p,i)=>`${i?'L':'M'} ${(i/(points.length-1))*w} ${h-(p[key]/maxY)*h}`).join(' ') }
-function areaPath(points,maxY,w,h,key){return `${path(points,maxY,w,h,key)} L ${w} ${h} L 0 ${h} Z`}
-function Chart({points,maxY,currency,view}){const w=900,h=330; const labels=[0,.25,.5,.75,1]; const last=points[points.length-1]; return <div className="chart-wrap"><svg viewBox={`0 0 ${w} ${h}`} className="chart" role="img"><defs><linearGradient id="fill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#2f80ff" stopOpacity=".32"/><stop offset="1" stopColor="#2f80ff" stopOpacity=".03"/></linearGradient></defs>{[0,.25,.5,.75,1].map((v,i)=><line key={i} x1="50" x2={w-20} y1={20+(h-70)*v} y2={20+(h-70)*v} stroke="#dce7f4"/>)}<path d={areaPath(points,maxY,w-90,h-70,'balance')} transform="translate(50 20)" fill="url(#fill)"/><path d={path(points,maxY,w-90,h-70,'balance')} transform="translate(50 20)" fill="none" stroke="#071b3c" strokeWidth="5"/><path d={path(points,maxY,w-90,h-70,'growth')} transform="translate(50 20)" fill="none" stroke="#0b63ff" strokeWidth="4"/><path d={path(points,maxY,w-90,h-70,'contributions')} transform="translate(50 20)" fill="none" stroke="#0090a5" strokeWidth="3" strokeDasharray="6 6"/><circle cx={w-35} cy={20+(h-70)-(last.balance/maxY)*(h-70)} r="8" fill="#071b3c"/><foreignObject x="500" y="95" width="190" height="120"><div className="tooltip"><b>PAYDAY #{last.payday}</b><p>Balance <strong>{money(last.balance,currency)}</strong></p><p>Growth <strong>{money(last.growth,currency)}</strong></p><p>Contributions <strong>{money(last.contributions,currency)}</strong></p></div></foreignObject>{labels.map((v,i)=><text key={i} x={50+i*(w-90)/4} y={h-15} textAnchor="middle">{i===0?'Now':view==='paydays'?'#'+Math.round(last.payday*v):Math.round(30*v)+'y'}</text>)}{[0,.25,.5,.75,1].map((v,i)=><text key={'y'+i} x="10" y={25+(h-70)*(1-v)}>{money(maxY*v,currency,true)}</text>)}</svg><div className="chart-tools"><button><Icon type="zoom"/></button><button><Icon type="zoom"/></button><button><Icon type="download"/></button></div></div>}
-function Breakdown({result,currency}){return <div className="breakdown-table"><h3>Projection breakdown</h3>{[['Starting investment',result.starting],['Future contributions',result.futureContrib],['Total contributions',result.totalContrib],['Investment growth',result.growth],['Projected balance',result.balance]].map(([k,v])=><p key={k}><span>{k}</span><strong>{money(v,currency)}</strong></p>)}</div>}
-function Compare({base,currency}){const low=calcProjection({...base,returnRate:String(Math.max(0,Number(base.returnRate)-2))}); const mid=calcProjection(base); const high=calcProjection({...base,returnRate:String(Number(base.returnRate)+2)}); return <div className="compare-grid">{[['Lower return',low],['Current plan',mid],['Higher return',high]].map(([k,r])=><article key={k}><p>{k}</p><h3>{money(r.balance,currency)}</h3><small>{r.periods} paydays</small></article>)}</div>}
-function Drawer({type,close,result,currency,history,clearData}){return <div className="drawer-backdrop" onClick={close}><aside className="drawer" onClick={e=>e.stopPropagation()}><button className="drawer-close" onClick={close}><Icon type="close"/></button>{type==='breakdown'&&<Breakdown result={result} currency={currency}/>} {type==='history'&&<><h2>Payday history</h2>{(history.length?history:sampleHistory()).map((h,i)=><div className="drawer-row" key={i}><span>{h.date}</span><b>Payday #{h.payday}</b><strong>{money(h.balance,currency)}</strong></div>)}</>} {type==='how'&&<Content title="How it works" text="Enter your starting balance, what you add each payday, your age, and your expected return. 1040 Paydays shows how contributions and compounding may grow over your working life."/>} {type==='learn'&&<Content title="Learn" text="Guides, savings strategies, and payday investing articles will live here."/>} {type==='advanced'&&<Content title="Advanced assumptions" text="Future version: contribution increases, inflation, fees, taxes, and employer match."/>} {['menu','terms','disclaimer','contact'].includes(type)&&<Content title={type[0].toUpperCase()+type.slice(1)} text="This section is ready for your content."/>}</aside></div>}
-function Content({title,text}){return <><h2>{title}</h2><p className="drawer-text">{text}</p></>}
-function Modal({title,close,children}){return <div className="drawer-backdrop" onClick={close}><div className="modal" onClick={e=>e.stopPropagation()}><button className="drawer-close" onClick={close}><Icon type="close"/></button><h2>{title}</h2>{children}</div></div>}
+export default function App() {
+  const [form, setForm] = useState(() => safeLoad(storageKey, defaultForm))
+  const [currencyCode, setCurrencyCode] = useState(() => safeLoad('paydays1040_currency', currencyForLocale()))
+  const [activeTab, setActiveTab] = useState('graph')
+  const [periodView, setPeriodView] = useState('paydays')
+  const [drawer, setDrawer] = useState(null)
+  const [remember, setRemember] = useState(() => safeLoad(privacyKey, { remember: true }).remember)
+  const [history, setHistory] = useState(() => safeLoad(historyKey, [
+    { date: 'May 24, 2025', payday: 198, balance: 123456.78 },
+    { date: 'May 10, 2025', payday: 196, balance: 120342.21 },
+    { date: 'Apr 26, 2025', payday: 194, balance: 118220.11 },
+    { date: 'Apr 12, 2025', payday: 192, balance: 115119.62 },
+  ]))
+  const [updateBalance, setUpdateBalance] = useState('123456.78')
+
+  const errors = useMemo(() => validate(form), [form])
+  const isValid = Object.keys(errors).length === 0
+  const result = useMemo(() => calculate(form), [form])
+  const currency = CURRENCIES.find((c) => c.code === currencyCode) || CURRENCIES[0]
+
+  useEffect(() => {
+    if (remember) safeSave(storageKey, form)
+  }, [form, remember])
+  useEffect(() => safeSave('paydays1040_currency', currencyCode), [currencyCode])
+  useEffect(() => safeSave(privacyKey, { remember }), [remember])
+  useEffect(() => { if (remember) safeSave(historyKey, history) }, [history, remember])
+
+  const updateField = (field, value) => setForm((prev) => ({ ...prev, [field]: value }))
+  const submit = (event) => {
+    event?.preventDefault()
+    if (!isValid) return
+    setDrawer('breakdown')
+  }
+  const saveBalance = () => {
+    const value = clampNumber(updateBalance)
+    if (!value) return
+    const today = new Date().toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })
+    const payday = Math.max(0, Math.round(result.totalPeriods - result.totalPeriods * 0.78))
+    const newItem = { date: today, payday, balance: value }
+    setHistory((prev) => [newItem, ...prev].slice(0, 12))
+    setDrawer('saved')
+  }
+  const clearData = () => {
+    localStorage.removeItem(storageKey)
+    localStorage.removeItem(historyKey)
+    localStorage.removeItem(privacyKey)
+    setForm(defaultForm)
+    setHistory([])
+    setRemember(false)
+    setDrawer(null)
+  }
+
+  const maxY = Math.max(result.balance, result.totalContributions, result.investmentGrowth) * 1.12 || 1
+  const svgW = 900
+  const svgH = 360
+  const balancePath = getPath(result.points, 'balance', svgW, svgH, maxY)
+  const growthPath = getPath(result.points, 'growth', svgW, svgH, maxY)
+  const contributionsPath = getPath(result.points, 'contributions', svgW, svgH, maxY)
+  const finalPoint = result.points[result.points.length - 1] || { balance: 0, growth: 0, contributions: 0, payday: 0 }
+  const yTicks = [maxY * .25, maxY * .5, maxY * .75, maxY]
+
+  return (
+    <div className="siteShell">
+      <header className="topbar">
+        <a className="logo" href="#top" aria-label="1040 Paydays home"><span>1040</span><small>PAYDAYS</small></a>
+        <nav className="nav">
+          <button className="active" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Calculator</button>
+          <button onClick={() => setDrawer('how')}>How it works</button>
+          <button onClick={() => setActiveTab('compare')}>Compare</button>
+          <button onClick={() => setDrawer('learn')}>Learn</button>
+        </nav>
+        <div className="topActions">
+          <select aria-label="Currency" value={currencyCode} onChange={(e) => setCurrencyCode(e.target.value)}>
+            {CURRENCIES.map((c) => <option key={c.code} value={c.code}>{c.flag} {c.symbol} {c.code}</option>)}
+          </select>
+          <button className="menuBtn" onClick={() => setDrawer('menu')}>☰</button>
+        </div>
+      </header>
+
+      <main id="top" className="mainGrid">
+        <section className="heroPanel">
+          <span className="accentLine" />
+          <h1>You only get about <strong>1,040</strong> paydays.</h1>
+          <p className="heroSub">Make every one count.</p>
+          <div className="heroBullets">
+            <div><span>▣</span> One payday at a time.</div>
+            <div><span>⌁</span> See the power of consistency.</div>
+            <div><span>◎</span> Build the future you deserve.</div>
+          </div>
+          <div className="hourglassWatermark" aria-hidden="true">
+            <div className="hgTop" /><div className="hgMid" /><div className="hgBottom" />
+          </div>
+        </section>
+
+        <section className="contentGrid">
+          <form className="card calculator" onSubmit={submit}>
+            <div className="field"><label>Starting investment <i>ⓘ</i></label><input value={form.starting} onChange={(e) => updateField('starting', e.target.value)} inputMode="decimal" /><small>{errors.starting || 'Max $25,000,000'}</small></div>
+            <div className="field"><label>I add every payday <i>ⓘ</i></label><input value={form.contribution} onChange={(e) => updateField('contribution', e.target.value)} inputMode="decimal" /><small>{errors.contribution || ' '}</small></div>
+            <div className="field"><label>Pay frequency <i>ⓘ</i></label><select value={form.frequency} onChange={(e) => updateField('frequency', e.target.value)}>{FREQUENCIES.map((f) => <option key={f.value} value={f.value}>{f.label}</option>)}</select></div>
+            <div className="field"><label>Current age <i>ⓘ</i></label><input value={form.currentAge} onChange={(e) => updateField('currentAge', e.target.value)} inputMode="numeric" /><small>{errors.currentAge || '16 – 99'}</small></div>
+            <div className="field"><label>Expected annual return <i>ⓘ</i></label><input value={form.annualReturn} onChange={(e) => updateField('annualReturn', e.target.value)} inputMode="decimal" /><small>{errors.annualReturn || 'After fees & inflation'}</small></div>
+            <div className="field"><label>Retiring at age <i>ⓘ</i></label><input value={form.retireAge} onChange={(e) => updateField('retireAge', e.target.value)} inputMode="numeric" /><small>{errors.retireAge || '16 – 99'}</small></div>
+            <button className="advanced" type="button" onClick={() => setDrawer('advanced')}>▸ Advanced assumptions (optional)</button>
+            <button className="primary calcBtn" disabled={!isValid}>▦ Calculate projection <span>→</span></button>
+            <div className="privacyLine"><span>♙</span> No account needed · Saved on your device <button type="button" onClick={() => setDrawer('privacy')}>Privacy settings</button></div>
+          </form>
+
+          <section className="projectionCard">
+            <div>
+              <p>YOUR PAYDAY #1040</p>
+              <h2>{formatMoney(result.balance, currency)}</h2>
+              <strong>{result.totalPeriods.toLocaleString()} paydays to go</strong>
+              <span>Until age {result.retireAge}</span>
+              <button onClick={() => setDrawer('breakdown')}>View breakdown →</button>
+            </div>
+            <svg viewBox="0 0 420 220" preserveAspectRatio="none" aria-hidden="true">
+              <defs><linearGradient id="heroFill" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stopColor="#2470ff" stopOpacity=".45"/><stop offset="1" stopColor="#2470ff" stopOpacity="0"/></linearGradient></defs>
+              <path d={getArea(balancePath, svgW, svgH).replaceAll(String(svgW), '420').replaceAll(String(svgH), '220')} fill="url(#heroFill)" opacity=".32" />
+              <path d={balancePath.replaceAll(String(svgW), '420').replaceAll(String(svgH), '220')} fill="none" stroke="#4f8bff" strokeWidth="5" strokeLinecap="round" />
+              <circle cx="406" cy="24" r="8" fill="#0b1f3f" stroke="#fff" strokeWidth="4" />
+            </svg>
+          </section>
+
+          <section className="metricStrip">
+            <article><span>▱</span><b>{formatMoney(result.totalContributions, currency)}</b><strong>Total contributions</strong><small>Starting balance + future contributions</small></article>
+            <article><span>↗</span><b>{formatMoney(result.investmentGrowth, currency)}</b><strong>Investment growth</strong><small>From compounding over {result.retireAge}</small></article>
+            <article><span>◔</span><b>{result.totalPeriods.toLocaleString()}</b><strong>Paydays remaining</strong><small>Until age {result.retireAge}</small></article>
+          </section>
+
+          <section className="chartCard card">
+            <div className="tabs"><button className={activeTab === 'graph' ? 'active' : ''} onClick={() => setActiveTab('graph')}>Graph</button><button className={activeTab === 'breakdown' ? 'active' : ''} onClick={() => setActiveTab('breakdown')}>Breakdown</button><button className={activeTab === 'compare' ? 'active' : ''} onClick={() => setActiveTab('compare')}>Compare</button><div className="period"><button className={periodView === 'paydays' ? 'active' : ''} onClick={() => setPeriodView('paydays')}>By Paydays</button><button className={periodView === 'years' ? 'active' : ''} onClick={() => setPeriodView('years')}>By Years</button></div></div>
+            {activeTab === 'compare' ? (
+              <div className="compareGrid">
+                {[.05, Number(form.annualReturn) / 100, .09].map((rate, i) => {
+                  const scenario = calculate({ ...form, annualReturn: String((rate * 100).toFixed(1)) })
+                  return <article key={i}><span>{i === 0 ? 'Lower return' : i === 1 ? 'Current plan' : 'Higher return'}</span><b>{formatMoney(scenario.balance, currency)}</b><small>{scenario.totalPeriods.toLocaleString()} paydays</small></article>
+                })}
+              </div>
+            ) : activeTab === 'breakdown' ? (
+              <div className="breakdownInline"><h3>Projection breakdown</h3><p>Starting investment <b>{formatMoney(result.starting, currency)}</b></p><p>Future contributions <b>{formatMoney(result.futureContributions, currency)}</b></p><p>Investment growth <b>{formatMoney(result.investmentGrowth, currency)}</b></p><p className="total">Projected balance <b>{formatMoney(result.balance, currency)}</b></p></div>
+            ) : (
+              <>
+                <div className="legend"><span className="l1">Balance</span><span className="l2">Growth</span><span className="l3">Contributions</span></div>
+                <div className="chartWrap">
+                  <svg viewBox={`0 0 ${svgW} ${svgH}`} preserveAspectRatio="none" role="img" aria-label="Projection chart">
+                    <defs><linearGradient id="mainFill" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stopColor="#2f78ff" stopOpacity=".28"/><stop offset="1" stopColor="#2f78ff" stopOpacity="0"/></linearGradient></defs>
+                    {yTicks.map((tick) => <line key={tick} x1="0" x2={svgW} y1={svgH - (tick / maxY) * svgH} y2={svgH - (tick / maxY) * svgH} className="gridLine" />)}
+                    <path d={getArea(balancePath, svgW, svgH)} fill="url(#mainFill)" />
+                    <path d={balancePath} className="balanceLine" />
+                    <path d={growthPath} className="growthLine" />
+                    <path d={contributionsPath} className="contribLine" />
+                    <circle cx={svgW} cy={svgH - (finalPoint.balance / maxY) * svgH} r="7" className="endDot" />
+                  </svg>
+                  <div className="yLabels"><span>{formatCompact(maxY, currency)}</span><span>{formatCompact(maxY * .75, currency)}</span><span>{formatCompact(maxY * .5, currency)}</span><span>{formatCompact(maxY * .25, currency)}</span><span>{formatMoney(0, currency)}</span></div>
+                  <div className="xLabels"><span>Now</span><span>{periodView === 'paydays' ? '#260' : '25%'}</span><span>{periodView === 'paydays' ? '#520' : '50%'}</span><span>{periodView === 'paydays' ? '#780' : '75%'}</span><span>#1040</span></div>
+                  <div className="tooltip"><b>PAYDAY #{Math.min(1040, result.totalPeriods)}</b><p>Balance <strong>{formatMoney(finalPoint.balance, currency)}</strong></p><p>Growth <strong>{formatMoney(finalPoint.growth, currency)}</strong></p><p>Contributions <strong>{formatMoney(finalPoint.contributions, currency)}</strong></p></div>
+                </div>
+                <div className="chartNote">Values in today’s dollars · After fees & inflation</div>
+              </>
+            )}
+          </section>
+
+          <aside className="sideStack">
+            <section className="card updateCard">
+              <h3>Update today's balance</h3>
+              <p>Enter your latest account balance to keep your projection accurate.</p>
+              <div className="inlineInput"><input value={updateBalance} onChange={(e) => setUpdateBalance(e.target.value)} /><button onClick={saveBalance}>Update balance</button></div>
+              <small>♙ Saved locally · Private to you</small>
+            </section>
+            <section className="card historyCard">
+              <div className="sectionHead"><h3>Recent history</h3><button onClick={() => setDrawer('history')}>View all history →</button></div>
+              <ol>{history.slice(0, 4).map((item, i) => <li key={`${item.date}-${i}`}><span>{item.date}</span><em>Payday #{item.payday}</em><b>{formatMoney(item.balance, currency)}</b></li>)}</ol>
+            </section>
+          </aside>
+        </section>
+      </main>
+
+      <footer className="footer"><span>♢ Your data stays private. Always.</span><span>© 2025 1040 Paydays</span><button onClick={() => setDrawer('privacy')}>Privacy</button><button onClick={() => setDrawer('terms')}>Terms</button><button onClick={() => setDrawer('disclaimer')}>Disclaimer</button><button onClick={() => setDrawer('contact')}>Contact</button></footer>
+
+      <Drawer title="Projection breakdown" open={drawer === 'breakdown'} onClose={() => setDrawer(null)}>
+        <div className="drawerRows"><p><span>Starting investment</span><b>{formatMoney(result.starting, currency)}</b></p><p><span>Future contributions</span><b>{formatMoney(result.futureContributions, currency)}</b></p><p><span>Total contributions</span><b>{formatMoney(result.totalContributions, currency)}</b></p><p><span>Investment growth</span><b>{formatMoney(result.investmentGrowth, currency)}</b></p><p className="total"><span>Projected balance</span><b>{formatMoney(result.balance, currency)}</b></p></div>
+        <div className="assumptionBox"><b>This projection assumes:</b><ul><li>{form.annualReturn}% average annual return after fees and inflation</li><li>{result.frequency.label} contributions of {formatMoney(result.contribution, currency)}</li><li>Retirement at age {result.retireAge}</li><li>All values in today's dollars</li></ul></div>
+      </Drawer>
+      <Drawer title="Privacy settings" open={drawer === 'privacy'} onClose={() => setDrawer(null)}>
+        <label className="check"><input type="checkbox" checked={remember} onChange={(e) => setRemember(e.target.checked)} /> Remember my inputs and history on this device</label>
+        <p>Your information stays in this browser. There is no account required.</p>
+        <button className="danger" onClick={clearData}>Clear saved data</button>
+      </Drawer>
+      <Drawer title="History" open={drawer === 'history'} onClose={() => setDrawer(null)}>
+        <div className="historyFull">{history.map((item, i) => <p key={i}><span>{item.date}</span><span>Payday #{item.payday}</span><b>{formatMoney(item.balance, currency)}</b></p>)}</div>
+      </Drawer>
+      <Drawer title="Saved" open={drawer === 'saved'} onClose={() => setDrawer(null)}><p>Another payday invested. Your progress was saved on this device.</p></Drawer>
+      <Drawer title="How it works" open={drawer === 'how'} onClose={() => setDrawer(null)}><p>Enter what you already have, what you add each payday, and your timeline. 1040 Paydays estimates your future balance using compound growth.</p></Drawer>
+      <Drawer title="Learn" open={drawer === 'learn'} onClose={() => setDrawer(null)}><p>Guides are coming soon: payday investing, TFSA/RRSP basics, and how small contributions compound over time.</p></Drawer>
+      <Drawer title="Advanced assumptions" open={drawer === 'advanced'} onClose={() => setDrawer(null)}><p>Advanced assumptions are simplified in this version. The annual return field should be entered after expected fees and inflation.</p></Drawer>
+      <Drawer title="Menu" open={drawer === 'menu'} onClose={() => setDrawer(null)}><button onClick={() => setDrawer('how')}>How it works</button><button onClick={() => setActiveTab('compare') || setDrawer(null)}>Compare</button><button onClick={() => setDrawer('learn')}>Learn</button><button onClick={() => setDrawer('privacy')}>Privacy</button></Drawer>
+      <Drawer title="Terms" open={drawer === 'terms'} onClose={() => setDrawer(null)}><p>Terms page placeholder. This calculator provides estimates only.</p></Drawer>
+      <Drawer title="Disclaimer" open={drawer === 'disclaimer'} onClose={() => setDrawer(null)}><p>Not financial advice. Results are estimates and not guaranteed.</p></Drawer>
+      <Drawer title="Contact" open={drawer === 'contact'} onClose={() => setDrawer(null)}><p>Contact form coming soon.</p></Drawer>
+    </div>
+  )
+}
