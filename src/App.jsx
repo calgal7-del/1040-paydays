@@ -9,6 +9,7 @@ import ProjectionGraph from './components/ProjectionGraph'
 import PaydayJournal from './components/PaydayJournal'
 import NewsletterCard from './components/NewsletterCard'
 import Footer from './components/Footer'
+import ProjectionDrawer from './components/ProjectionDrawer'
 
 import { DEFAULT_FORM } from './utils/constants'
 import { useProjection } from './hooks/useProjection'
@@ -17,8 +18,9 @@ import { usePaydayJournal } from './hooks/usePaydayJournal'
 export default function App() {
   const [form, setForm] = useState(DEFAULT_FORM)
   const [hasRevealed, setHasRevealed] = useState(false)
+  const [drawerOpen, setDrawerOpen] = useState(false)
 
-  const { projection, graphData, callouts } = useProjection(form)
+  const { projection, graphData, callouts, milestones } = useProjection(form)
   const journal = usePaydayJournal()
 
   function updateForm(key, value) {
@@ -58,6 +60,7 @@ export default function App() {
             projection={projection}
             currency={form.currency}
             hasRevealed={hasRevealed}
+            onOpenBreakdown={() => setDrawerOpen(true)}
           />
         </section>
 
@@ -82,6 +85,15 @@ export default function App() {
       </main>
 
       <Footer />
+
+      <ProjectionDrawer
+        open={drawerOpen}
+        onClose={() => setDrawerOpen(false)}
+        projection={projection}
+        currency={form.currency}
+        form={form}
+        milestones={milestones}
+      />
     </div>
   )
 }
