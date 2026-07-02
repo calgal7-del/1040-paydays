@@ -548,60 +548,69 @@ input:focus, select:focus { border-color: var(--blue); box-shadow:0 0 0 4px rgba
 
 .footer {
   width: min(1760px, calc(100% - 1.5rem)) !important;
-  margin: 0.5rem auto 0 !important;
-  min-height: 72px !important;
-  padding: 0.65rem 1.4rem !important;
-  border-radius: 18px 18px 0 0 !important;
+  margin: 0.45rem auto 0 !important;
+  min-height: 54px !important;
+  padding: 0.55rem 1rem !important;
+  border-radius: 16px 16px 0 0 !important;
   background: linear-gradient(135deg, #06142c, #0a2347) !important;
-  display: grid !important;
-  grid-template-columns: 150px 190px 160px 190px 190px 1fr !important;
-  gap: 1rem !important;
+  display: flex !important;
   align-items: center !important;
+  justify-content: space-between !important;
+  gap: 1rem !important;
   color: white !important;
 }
 
 .footerBrand strong {
-  display: block !important;
-  font-size: 1.75rem !important;
-  line-height: 0.9 !important;
-  letter-spacing: -0.04em !important;
+  font-size: 1.25rem !important;
+  line-height: 1 !important;
 }
 
 .footerBrand p {
-  margin: 0.15rem 0 0 !important;
+  margin: 0 !important;
   color: var(--blue) !important;
-  font-size: 0.72rem !important;
-  letter-spacing: 0.13em !important;
+  font-size: 0.6rem !important;
+  letter-spacing: 0.12em !important;
   font-weight: 900 !important;
 }
 
-.footerDisclaimer p {
-  margin: 0 !important;
-  color: #d6e0ee !important;
-  font-size: 0.72rem !important;
-  line-height: 1.25 !important;
-  max-width: 190px !important;
-}
-
 .footerLinks {
-  display: contents !important;
+  display: flex !important;
+  gap: 1rem !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
 }
 
 .footerLinks a {
-  font-size: 0.72rem !important;
+  font-size: 0.7rem !important;
   font-weight: 800 !important;
   color: white !important;
 }
 
 .footerBottom {
-  text-align: right !important;
+  font-size: 0.65rem !important;
   color: #d6e0ee !important;
-  font-size: 0.68rem !important;
-  line-height: 1.25 !important;
+  text-align: right !important;
 }
+
 .footerDisclaimer,
 .footerLegal,
 .legalNotice,
 .disclaimerText {
   display: none !important;
+}
+
+@media (max-width: 1150px) {
+  .footer {
+    flex-direction: column !important;
+    text-align: center !important;
+    min-height: auto !important;
+  }
+
+  .footerBottom {
+    text-align: center !important;
+  }
+
+  .footerLinks {
+    justify-content: center !important;
+  }
 }
