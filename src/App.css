@@ -1207,3 +1207,43 @@ select:focus {
 .bottomGrid {
   gap: 1rem !important;
 }
+/* MAKE DESKTOP FILL THE SCREEN HEIGHT LIKE DASHBOARD MOCKUP */
+
+@media (min-width: 1151px) {
+  .mainLayout {
+    min-height: calc(100vh - 76px) !important;
+    display: grid !important;
+    grid-template-rows: auto 1fr !important;
+  }
+
+  .topGrid {
+    min-height: 420px !important;
+  }
+
+  .bottomGrid {
+    min-height: 360px !important;
+  }
+
+  .hero,
+  .calculatorCard,
+  .projectionCard {
+    height: 100% !important;
+  }
+
+  .graphCard {
+    height: 100% !important;
+  }
+
+  .rightRail {
+    height: 100% !important;
+  }
+
+  .journalCard,
+  .newsletterCard {
+    min-height: 0 !important;
+  }
+
+  .footer {
+    margin-top: 0 !important;
+  }
+}
