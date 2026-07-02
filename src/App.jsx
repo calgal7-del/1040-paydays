@@ -8,7 +8,6 @@ import ProjectionCard from './components/ProjectionCard'
 import ProjectionGraph from './components/ProjectionGraph'
 import PaydayJournal from './components/PaydayJournal'
 import NewsletterCard from './components/NewsletterCard'
-import Footer from './components/Footer'
 import ProjectionDrawer from './components/ProjectionDrawer'
 
 import { DEFAULT_FORM } from './utils/constants'
@@ -44,32 +43,46 @@ export default function App() {
 
       <main className="mainLayout">
         <section className="topGrid">
-          <Hero paydaysRemaining={projection.paydaysRemaining} />
+          <aside className="leftStack">
+            <Hero paydaysRemaining={projection.paydaysRemaining} />
 
-          <CalculatorCard
-            form={form}
-            onChange={updateForm}
-            onReveal={revealProjection}
-            hasRevealed={hasRevealed}
-          />
+            <footer className="miniFooter">
+              <div>
+                <strong>1040</strong>
+                <span>PAYDAYS</span>
+              </div>
 
-          <ProjectionCard
-            projection={projection}
-            currency={form.currency}
-            hasRevealed={hasRevealed}
-            onOpenBreakdown={() => setDrawerOpen(true)}
-          />
-        </section>
+              <p>
+                A simple way to see the power of consistency and build the
+                future you deserve.
+              </p>
+            </footer>
+          </aside>
 
-        <section className="bottomGrid">
-          <ProjectionGraph
-            graphData={graphData}
-            callouts={callouts}
-            currency={form.currency}
-            hasRevealed={hasRevealed}
-          />
+          <section className="centerStack">
+            <CalculatorCard
+              form={form}
+              onChange={updateForm}
+              onReveal={revealProjection}
+              hasRevealed={hasRevealed}
+            />
+
+            <ProjectionGraph
+              graphData={graphData}
+              callouts={callouts}
+              currency={form.currency}
+              hasRevealed={hasRevealed}
+            />
+          </section>
 
           <aside className="rightRail">
+            <ProjectionCard
+              projection={projection}
+              currency={form.currency}
+              hasRevealed={hasRevealed}
+              onOpenBreakdown={() => setDrawerOpen(true)}
+            />
+
             <PaydayJournal
               currency={form.currency}
               projection={projection}
@@ -80,8 +93,6 @@ export default function App() {
           </aside>
         </section>
       </main>
-
-      <Footer />
 
       <ProjectionDrawer
         open={drawerOpen}
