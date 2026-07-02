@@ -56,7 +56,13 @@ a { color: inherit; text-decoration: none; }
 .currencyDropdown { border: 1px solid rgba(255,255,255,.22); border-radius: 999px; padding: .65rem 1rem; background: rgba(255,255,255,.08); font-weight: 900; color: white; }
 .mobileMenu { width: 42px; height: 42px; border: 0; border-radius: 999px; background: rgba(255,255,255,.08); color: white; }
 
-.mainLayout { width: min(1760px, calc(100% - 1.25rem)); margin: .85rem auto 0; }
+.appShell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.mainLayout { width: min(1760px, calc(100% - 1.25rem)); margin: .85rem auto 0; flex: 1; }
 .topGrid { display: grid; grid-template-columns: .78fr 1.45fr 1fr; gap: 1rem; align-items: start; }
 .leftStack, .centerStack, .rightRail { min-width: 0; display: grid; gap: 1rem; }
 .rightRail { grid-template-rows: auto 64px auto auto; }
@@ -173,12 +179,6 @@ input:focus, select:focus { border-color: var(--blue); box-shadow:0 0 0 4px rgba
 .newsletterCard small { display:block; margin-top:.6rem; color:var(--muted); }
 .successMessage { display:block; margin-top:.6rem; color:var(--success); }
 
-.footer { width:min(1760px, calc(100% - 1.25rem)); margin:.85rem auto 0; min-height:82px; padding:1rem 1.35rem; background:linear-gradient(135deg,#06142c,#0a2347); color:white; border-radius:18px 18px 0 0; display:grid; grid-template-columns:auto 1.1fr 1fr auto; gap:1.4rem; align-items:center; }
-.footerBrand strong { display:block; font-size:1.8rem; line-height:.95; }
-.footerBrand p { margin:0; color:var(--blue); font-weight:900; letter-spacing:.13em; }
-.footerDisclaimer p, .footerBottom { color:#d4deeb; margin:0; font-size:.78rem; line-height:1.35; }
-.footerLinks { display:flex; gap:1rem; font-size:.78rem; font-weight:800; }
-
 .drawerOverlay { position:fixed; inset:0; z-index:100; background:rgba(7,25,54,.32); backdrop-filter:blur(8px); display:flex; justify-content:flex-end; }
 .projectionDrawer { width:min(520px,92vw); height:100%; background:white; padding:2rem; overflow-y:auto; box-shadow:-30px 0 90px rgba(7,25,54,.22); animation:slideDrawer .28s ease both; }
 @keyframes slideDrawer { from { transform:translateX(40px); opacity:0; } to { transform:translateX(0); opacity:1; } }
@@ -206,9 +206,8 @@ input:focus, select:focus { border-color: var(--blue); box-shadow:0 0 0 4px rgba
 @media (max-width: 1150px) {
   .topGrid { grid-template-columns:1fr; }
   .navLinks { display:none; }
-  .mainLayout, .footer { width:calc(100% - 1rem); }
-  .calculatorGrid, .advancedGrid, .projectionStats, .journalInputRow, .newsletterForm, .footer { grid-template-columns:1fr; }
-  .footerLinks { flex-wrap:wrap; }
+  .mainLayout { width:calc(100% - 1rem); }
+  .calculatorGrid, .advancedGrid, .projectionStats, .journalInputRow, .newsletterForm { grid-template-columns:1fr; }
 }
 
 @media (max-width: 760px) {
@@ -218,6 +217,7 @@ input:focus, select:focus { border-color: var(--blue); box-shadow:0 0 0 4px rgba
   .graphCanvas svg { min-width:720px; height:310px; }
   .calloutBox { display:none; }
 }
+
 /* FINAL POLISH: shrink right column and improve hero/icons */
 
 @media (min-width: 1151px) {
@@ -293,6 +293,7 @@ input:focus, select:focus { border-color: var(--blue); box-shadow:0 0 0 4px rgba
     font-size: 1.9rem !important;
   }
 }
+
 /* RIGHT COLUMN COMPACT FIX */
 
 @media (min-width: 1151px) {
@@ -358,7 +359,9 @@ input:focus, select:focus { border-color: var(--blue); box-shadow:0 0 0 4px rgba
     min-height: 40px !important;
     padding: 0.65rem 0.8rem !important;
   }
-}@media (min-width: 1151px) {
+}
+
+@media (min-width: 1151px) {
   .rightRail {
     gap: 0.75rem !important;
   }
@@ -373,6 +376,7 @@ input:focus, select:focus { border-color: var(--blue); box-shadow:0 0 0 4px rgba
     overflow: hidden !important;
   }
 }
+
 @media (min-width: 1151px) {
   .rightRail {
     gap: 0.55rem !important;
@@ -418,6 +422,7 @@ input:focus, select:focus { border-color: var(--blue); box-shadow:0 0 0 4px rgba
     display: none !important;
   }
 }
+
 @media (min-width: 1151px) {
   .rightRail {
     gap: 0.45rem !important;
@@ -436,37 +441,8 @@ input:focus, select:focus { border-color: var(--blue); box-shadow:0 0 0 4px rgba
     padding: 0.7rem 1rem !important;
     max-height: 118px !important;
   }
-
-  .footer {
-    margin-top: 0.55rem !important;
-    padding: 0.75rem 2rem !important;
-    min-height: 70px !important;
-  }
-}@media (min-width: 1151px) {
-  .rightRail {
-    gap: 0.45rem !important;
-  }
-
-  .journalCard {
-    padding: 0.85rem 1rem !important;
-  }
-
-  .emptyJournal {
-    margin-top: 0.55rem !important;
-    padding: 0.85rem !important;
-  }
-
-  .newsletterCard {
-    padding: 0.7rem 1rem !important;
-    max-height: 118px !important;
-  }
-
-  .footer {
-    margin-top: 0.55rem !important;
-    padding: 0.75rem 2rem !important;
-    min-height: 70px !important;
-  }
 }
+
 /* FIT FULL DESKTOP PAGE INCLUDING FOOTER */
 
 @media (min-width: 1151px) {
@@ -537,231 +513,123 @@ input:focus, select:focus { border-color: var(--blue); box-shadow:0 0 0 4px rgba
   .newsletterForm {
     margin-top: 0.45rem !important;
   }
-
-  .footer {
-    margin-top: 0.45rem !important;
-    min-height: 64px !important;
-    padding: 0.7rem 1.8rem !important;
-  }
-}
-/* COMPACT FOOTER RIBBON */
-
-.footer {
-  width: min(1760px, calc(100% - 1.5rem)) !important;
-  margin: 0.45rem auto 0 !important;
-  min-height: 54px !important;
-  padding: 0.55rem 1rem !important;
-  border-radius: 16px 16px 0 0 !important;
-  background: linear-gradient(135deg, #06142c, #0a2347) !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: space-between !important;
-  gap: 1rem !important;
-  color: white !important;
 }
 
-.footerBrand strong {
-  font-size: 1.25rem !important;
-  line-height: 1 !important;
+/* PREMIUM FOOTER – matches prototype, slim dark navy ribbon */
+
+.siteFooter {
+  height: 58px;
+  width: 100%;
+  background: #08182f;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 34px;
+  box-sizing: border-box;
+  border-top: 1px solid rgba(255,255,255,.08);
+  color: white;
 }
 
-.footerBrand p {
-  margin: 0 !important;
-  color: var(--blue) !important;
-  font-size: 0.6rem !important;
-  letter-spacing: 0.12em !important;
-  font-weight: 900 !important;
+.siteFooter * {
+  color: white;
 }
 
-.footerLinks {
-  display: flex !important;
-  gap: 1rem !important;
-  align-items: center !important;
-  flex-wrap: wrap !important;
-}
-
-.footerLinks a {
-  font-size: 0.7rem !important;
-  font-weight: 800 !important;
-  color: white !important;
-}
-
-.footerBottom {
-  font-size: 0.65rem !important;
-  color: #d6e0ee !important;
-  text-align: right !important;
-}
-
-.footerDisclaimer,
-.footerLegal,
-.legalNotice,
-.disclaimerText {
-  display: none !important;
-}
-
-@media (max-width: 1150px) {
-  .footer {
-    flex-direction: column !important;
-    text-align: center !important;
-    min-height: auto !important;
-  }
-
-  .footerBottom {
-    text-align: center !important;
-  }
-
-  .footerLinks {
-    justify-content: center !important;
-  }
-}/* =========================================
-   PREMIUM FOOTER
-========================================= */
-
-.siteFooter{
-    height:58px;
-    width:100%;
-
-    background:#08182f;
-
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-
-    padding:0 34px;
-
-    box-sizing:border-box;
-
-    border-top:1px solid rgba(255,255,255,.08);
-
-    color:white;
-}
-
-.footerLogo{
-    display:flex;
-    align-items:baseline;
-    gap:6px;
-
-    font-weight:900;
-}
-
-.footerLogo1040{
-    font-size:33px;
-    color:white;
-}
-
-.footerLogoPaydays{
-    font-size:18px;
-    letter-spacing:2px;
-    color:#2f6bff;
-}
-
-.footerCentre{
-    display:flex;
-    gap:34px;
-    align-items:center;
-}
-
-.footerPill{
-    display:flex;
-    align-items:center;
-    gap:8px;
-
-    color:white;
-
-    font-size:14px;
-    font-weight:600;
-}
-
-.footerPill svg{
-    width:18px;
-    height:18px;
-
-    stroke:white;
-}
-
-.footerNav{
-    display:flex;
-    gap:28px;
-}
-
-.footerNav a{
-    color:white;
-    text-decoration:none;
-
-    font-size:14px;
-    font-weight:600;
-}
-
-.footerNav a:hover{
-    color:#2f6bff;
-}
-
-.footerSocial{
-    display:flex;
-    gap:16px;
-}
-
-.footerSocial svg{
-    width:20px;
-    height:20px;
-
-    stroke:white;
-
-    cursor:pointer;
-}
-
-.footerSocial svg:hover{
-    stroke:#2f6bff;
-}
-
-.footerBottom{
-    color:rgba(255,255,255,.70);
-
-    font-size:13px;
-    white-space:nowrap;
-}footer.siteFooter {
-  height: 58px !important;
-  width: 100% !important;
-  background: #08182f !important;
-  color: white !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: space-between !important;
-  padding: 0 34px !important;
-  box-sizing: border-box !important;
-  border-top: 1px solid rgba(255,255,255,.08) !important;
-}
-
-footer.siteFooter * {
-  color: white !important;
-}
-
-footer.siteFooter svg {
-  stroke: white !important;
+.siteFooter svg {
+  stroke: white;
 }
 
 .footerLogo {
-  font-size: 28px !important;
-  font-weight: 900 !important;
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  font-weight: 900;
 }
 
-.footerCentre,
-.footerNav,
-.footerSocial {
-  display: flex !important;
-  align-items: center !important;
-  gap: 24px !important;
+.footerLogo1040 {
+  font-size: 33px;
+  color: white;
+}
+
+.footerLogoPaydays {
+  font-size: 18px;
+  letter-spacing: 2px;
+  color: #2f6bff;
+}
+
+.footerCentre {
+  display: flex;
+  gap: 34px;
+  align-items: center;
 }
 
 .footerPill {
-  display: flex !important;
-  align-items: center !important;
-  gap: 8px !important;
-  font-size: 14px !important;
-  font-weight: 700 !important;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.footerPill svg {
+  width: 18px;
+  height: 18px;
+  stroke: white;
+}
+
+.footerNav {
+  display: flex;
+  gap: 28px;
+}
+
+.footerNav a {
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.footerNav a:hover {
+  color: #2f6bff;
+}
+
+.footerSocial {
+  display: flex;
+  gap: 16px;
+}
+
+.footerSocial svg {
+  width: 20px;
+  height: 20px;
+  stroke: white;
+  cursor: pointer;
+}
+
+.footerSocial svg:hover {
+  stroke: #2f6bff;
 }
 
 .footerBottom {
-  font-size: 13px !important;
-  opacity: .75 !important;
+  font-size: 13px;
+  white-space: nowrap;
+  opacity: 0.75;
+}
+
+@media (max-width: 1150px) {
+  .siteFooter {
+    flex-direction: column;
+    text-align: center;
+    height: auto;
+    padding: 0.75rem 1.5rem;
+    gap: 0.5rem;
+  }
+
+  .footerCentre,
+  .footerNav,
+  .footerSocial {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .footerBottom {
+    text-align: center;
+  }
 }
