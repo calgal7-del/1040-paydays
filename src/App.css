@@ -218,3 +218,78 @@ input:focus, select:focus { border-color: var(--blue); box-shadow:0 0 0 4px rgba
   .graphCanvas svg { min-width:720px; height:310px; }
   .calloutBox { display:none; }
 }
+/* FINAL POLISH: shrink right column and improve hero/icons */
+
+@media (min-width: 1151px) {
+  .journalCard {
+    padding: 0.85rem 1rem !important;
+  }
+
+  .journalHeader h2 {
+    font-size: 1.1rem !important;
+  }
+
+  .latestSnapshot {
+    padding: 0.75rem 0.9rem !important;
+    margin-top: 0.6rem !important;
+  }
+
+  .latestSnapshot strong {
+    font-size: 1.55rem !important;
+  }
+
+  .journalInputRow {
+    margin-top: 0.6rem !important;
+  }
+
+  .snapshotList {
+    margin-top: 0.45rem !important;
+  }
+
+  .snapshotItem {
+    padding: 0.45rem 0 !important;
+  }
+
+  .newsletterCard {
+    padding: 0.85rem 1rem !important;
+  }
+
+  .newsletterCard h2 {
+    font-size: 1.1rem !important;
+  }
+
+  .newsletterCard span {
+    font-size: 0.82rem !important;
+  }
+
+  .newsletterForm {
+    margin-top: 0.65rem !important;
+  }
+
+  .newsletterForm input,
+  .newsletterForm button {
+    min-height: 40px !important;
+  }
+
+  .graphCard {
+    padding-bottom: 0.65rem !important;
+  }
+
+  .graphCanvas svg {
+    height: 300px !important;
+  }
+
+  .heroInsight span {
+    width: 54px !important;
+    height: 54px !important;
+    font-size: 1.35rem !important;
+  }
+
+  .heroInsight {
+    grid-template-columns: 58px 1fr !important;
+  }
+
+  .cardHeader h2 {
+    font-size: 1.9rem !important;
+  }
+}
