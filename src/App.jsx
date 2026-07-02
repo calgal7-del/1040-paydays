@@ -20,20 +20,26 @@ export default function App() {
   const [hasRevealed, setHasRevealed] = useState(false)
   const [drawerOpen, setDrawerOpen] = useState(false)
 
-  const { projection, graphData, callouts, milestones } = useProjection(form)
+  const {
+    projection,
+    graphData,
+    callouts,
+    milestones,
+  } = useProjection(form)
+
   const journal = usePaydayJournal()
 
-  function updateForm(key, value) {
-    setForm((current) => ({
-      ...current,
-      [key]: value,
+  function updateForm(field, value) {
+    setForm((previous) => ({
+      ...previous,
+      [field]: value,
     }))
   }
 
-  function handleReveal() {
+  function revealProjection() {
     setHasRevealed(false)
 
-    window.setTimeout(() => {
+    setTimeout(() => {
       setHasRevealed(true)
     }, 50)
   }
@@ -52,7 +58,7 @@ export default function App() {
           <CalculatorCard
             form={form}
             onChange={updateForm}
-            onReveal={handleReveal}
+            onReveal={revealProjection}
             hasRevealed={hasRevealed}
           />
 
