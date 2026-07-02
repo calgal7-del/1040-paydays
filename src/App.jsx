@@ -96,49 +96,45 @@ export default function App() {
         </section>
       </main>
 
- <footer className="siteFooter">
+      <footer className="siteFooter">
+        <div className="footerLogo">
+          <span className="footerLogo1040">1040</span>
+          <span className="footerLogoPaydays">PAYDAYS</span>
+        </div>
 
-  <div className="footerLogo">
-    <span className="footerLogo1040">1040</span>
-    <span className="footerLogoPaydays">PAYDAYS</span>
-  </div>
+        <div className="footerCentre">
+          <div className="footerPill">
+            <Target />
+            <span>One payday at a time</span>
+          </div>
 
-  <div className="footerCentre">
+          <div className="footerPill">
+            <TrendingUp />
+            <span>Build consistency</span>
+          </div>
 
-    <div className="footerPill">
-      <Target />
-      <span>One payday at a time</span>
-    </div>
+          <div className="footerPill">
+            <Target />
+            <span>Future-focused planning</span>
+          </div>
+        </div>
 
-    <div className="footerPill">
-      <TrendingUp />
-      <span>Build consistency</span>
-    </div>
+        <nav className="footerNav">
+          <a href="#calculator">Calculator</a>
+          <a href="#how">How it works</a>
+          <a href="#compare">Compare</a>
+          <a href="#learn">Learn</a>
+        </nav>
 
-    <div className="footerPill">
-      <Target />
-      <span>Future-focused planning</span>
-    </div>
+        <div className="footerSocial">
+          <Instagram />
+          <Youtube />
+        </div>
 
-  </div>
-
-  <nav className="footerNav">
-    <a href="#calculator">Calculator</a>
-    <a href="#how">How it works</a>
-    <a href="#compare">Compare</a>
-    <a href="#learn">Learn</a>
-  </nav>
-
-  <div className="footerSocial">
-    <Instagram />
-    <Youtube />
-  </div>
-
-  <div className="footerBottom">
-    © {new Date().getFullYear()} 1040 Paydays
-  </div>
-
-</footer>
+        <div className="footerBottom">
+          © {new Date().getFullYear()} 1040 Paydays
+        </div>
+      </footer>
 
       <ProjectionDrawer
         open={drawerOpen}
