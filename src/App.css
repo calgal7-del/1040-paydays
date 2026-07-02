@@ -1151,3 +1151,67 @@ select:focus {
     flex-wrap: wrap;
   }
 }
+/* RIGHT COLUMN MUST FIT AT 100% VIEWPORT */
+
+@media (min-width: 1151px) {
+  .rightRail {
+    height: calc(100vh - 92px) !important;
+    display: grid !important;
+    grid-template-rows: minmax(300px, 0.95fr) 72px minmax(190px, 0.7fr) minmax(150px, 0.55fr) !important;
+    gap: 0.75rem !important;
+  }
+
+  .rightRail .projectionCard,
+  .rightRail .journalCard,
+  .rightRail .newsletterCard {
+    min-height: 0 !important;
+    height: 100% !important;
+    overflow: hidden !important;
+  }
+
+  .rightRail .projectionCard {
+    padding: 1.25rem !important;
+  }
+
+  .rightRail .futureValue {
+    font-size: clamp(3rem, 3.4vw, 4.25rem) !important;
+    margin: 0.65rem 0 0.55rem !important;
+  }
+
+  .rightRail .miniSparkline {
+    margin: 0.15rem 0 0.65rem !important;
+  }
+
+  .rightRail .projectionStats {
+    gap: 0.55rem !important;
+  }
+
+  .rightRail .projectionStats div {
+    padding: 0.65rem !important;
+  }
+
+  .rightRail .breakdownButton {
+    margin-top: 0.75rem !important;
+    padding: 0.75rem 1rem !important;
+  }
+
+  .rightRail .projectionDisclaimer {
+    margin-top: 0.75rem !important;
+    font-size: 0.72rem !important;
+  }
+
+  .rightRail .journalCard,
+  .rightRail .newsletterCard {
+    padding: 1rem !important;
+  }
+
+  .rightRail .emptyJournal {
+    margin-top: 0.7rem !important;
+    padding: 0.85rem !important;
+  }
+
+  .rightRail .newsletterForm,
+  .rightRail .journalInputRow {
+    margin-top: 0.7rem !important;
+  }
+}
