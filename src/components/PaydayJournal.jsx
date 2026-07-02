@@ -1,21 +1,15 @@
 import { useState } from 'react'
-import {
-  formatCurrency,
-  formatJournalDate,
-} from '../utils/formatters'
+import { formatCurrency } from '../utils/formatters'
 
-export default function PaydayJournal({
-  currency,
-  projection,
-  journal,
-}) {
+export default function PaydayJournal({ currency, journal }) {
   const [balance, setBalance] = useState('')
 
-  function handleSave() {
-    journal.saveSnapshot({
-      balance,
-      currency,
-      projection,
+  function saveSnapshot() {
+    if (!balance || Number(balance) <= 0) return
+
+    journal.addSnapshot({
+      balance: Number(balance),
+      date: new Date().toISOString(),
     })
 
     setBalance('')
@@ -29,87 +23,57 @@ export default function PaydayJournal({
           <h2>Track your real progress.</h2>
         </div>
 
-        {journal.hasSnapshots && (
-          <button
-            className="ghostButton dangerText"
-            type="button"
-            onClick={journal.resetJournal}
-          >
-            Reset journal
-          </button>
-        )}
+        <a href="#journal">View all</a>
       </div>
 
-      {!journal.hasSnapshots ? (
+      {journal.snapshots.length === 0 ? (
         <div className="emptyJournal">
+          <div className="emptyIcon">▤</div>
           <strong>No snapshots saved yet.</strong>
-          <p>
-            Save your balance on payday and watch your real progress
-            build over time.
-          </p>
+          <span>
+            Saving snapshots lets you compare how your investments grow over time.
+          </span>
+
+          <button className="secondaryButton" type="button" onClick={saveSnapshot}>
+            Save first snapshot
+          </button>
         </div>
       ) : (
-        <div className="latestSnapshot">
-          <span>Latest snapshot</span>
-          <strong>
-            {formatCurrency(journal.latestSnapshot.balance, currency)}
-          </strong>
-          <p>
-            {formatJournalDate(journal.latestSnapshot.date)}
-          </p>
+        <>
+          <div className="latestSnapshot">
+            <span>Latest snapshot</span>
+            <strong>
+              {formatCurrency(journal.snapshots[0].balance, currency)}
+            </strong>
+            <small>
+              {new Date(journal.snapshots[0].date).toLocaleDateString()}
+            </small>
+          </div>
 
-          {journal.latestSnapshot.change !== 0 && (
-            <em
-              className={
-                journal.latestSnapshot.change > 0
-                  ? 'positiveChange'
-                  : 'negativeChange'
-              }
-            >
-              {journal.latestSnapshot.change > 0 ? '+' : ''}
-              {formatCurrency(journal.latestSnapshot.change, currency)} since last snapshot
-            </em>
-          )}
-        </div>
-      )}
+          <div className="journalInputRow">
+            <input
+              value={balance}
+              onChange={(e) => setBalance(e.target.value)}
+              placeholder="Enter current balance"
+              inputMode="decimal"
+            />
+            <button className="secondaryButton" type="button" onClick={saveSnapshot}>
+              Save snapshot
+            </button>
+          </div>
 
-      <div className="journalInputRow">
-        <input
-          value={balance}
-          onChange={(e) =>
-            setBalance(e.target.value.replace(/[^0-9.]/g, ''))
-          }
-          placeholder="Enter current balance"
-          inputMode="decimal"
-        />
-
-        <button
-          className="secondaryButton"
-          type="button"
-          onClick={handleSave}
-        >
-          Save snapshot
-        </button>
-      </div>
-
-      {journal.hasSnapshots && (
-        <div className="snapshotList">
-          {journal.snapshots.slice(0, 4).map((snapshot) => (
-            <div className="snapshotItem" key={snapshot.id}>
-              <span>{formatJournalDate(snapshot.date)}</span>
-              <strong>
-                {formatCurrency(snapshot.balance, currency)}
-              </strong>
-              <button
-                type="button"
-                onClick={() => journal.deleteSnapshot(snapshot.id)}
-                aria-label="Delete snapshot"
-              >
-                ×
-              </button>
-            </div>
-          ))}
-        </div>
+          <div className="snapshotList">
+            {journal.snapshots.slice(0, 3).map((snapshot) => (
+              <div className="snapshotItem" key={snapshot.id}>
+                <span>{new Date(snapshot.date).toLocaleDateString()}</span>
+                <strong>{formatCurrency(snapshot.balance, currency)}</strong>
+                <button type="button" onClick={() => journal.removeSnapshot(snapshot.id)}>
+                  ×
+                </button>
+              </div>
+            ))}
+          </div>
+        </>
       )}
     </section>
   )
