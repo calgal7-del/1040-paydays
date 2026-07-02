@@ -1,6 +1,6 @@
 export const DEFAULT_FORM = {
-  startingBalance: '25000',
-  contribution: '1000',
+  startingBalance: '1000',
+  contribution: '100',
   frequency: 'Biweekly',
   currency: 'CAD',
   currentAge: '35',
