@@ -3,12 +3,15 @@ import { formatCurrency } from '../utils/formatters'
 
 export default function PaydayJournal({ currency, journal }) {
   const [balance, setBalance] = useState('')
+  const hasSnapshots = journal.snapshots.length > 0
+  const latest = hasSnapshots ? journal.snapshots[0] : null
 
   function saveSnapshot() {
-    if (!balance || Number(balance) <= 0) return
+    const amount = Number(balance)
+    if (!amount || amount <= 0) return
 
     journal.addSnapshot({
-      balance: Number(balance),
+      balance: amount,
       date: new Date().toISOString(),
     })
 
@@ -22,58 +25,38 @@ export default function PaydayJournal({ currency, journal }) {
           <p>Payday Journal</p>
           <h2>Track your real progress.</h2>
         </div>
-
         <a href="#journal">View all</a>
       </div>
 
-      {journal.snapshots.length === 0 ? (
+      {!hasSnapshots ? (
         <div className="emptyJournal">
           <div className="emptyIcon">▤</div>
           <strong>No snapshots saved yet.</strong>
-          <span>
-            Saving snapshots lets you compare how your investments grow over time.
-          </span>
-
+          <span>Saving snapshots lets you compare how your investments grow over time.</span>
           <button className="secondaryButton" type="button" onClick={saveSnapshot}>
             Save first snapshot
           </button>
         </div>
       ) : (
-        <>
-          <div className="latestSnapshot">
+        <div className="compactJournalState">
+          <div className="latestSnapshot compactLatest">
             <span>Latest snapshot</span>
-            <strong>
-              {formatCurrency(journal.snapshots[0].balance, currency)}
-            </strong>
-            <small>
-              {new Date(journal.snapshots[0].date).toLocaleDateString()}
-            </small>
+            <strong>{formatCurrency(latest.balance, currency)}</strong>
+            <small>{new Date(latest.date).toLocaleDateString()}</small>
           </div>
 
-          <div className="journalInputRow">
+          <div className="journalInputRow compactInputRow">
             <input
               value={balance}
-              onChange={(e) => setBalance(e.target.value)}
+              onChange={(event) => setBalance(event.target.value)}
               placeholder="Enter current balance"
               inputMode="decimal"
             />
             <button className="secondaryButton" type="button" onClick={saveSnapshot}>
-              Save snapshot
+              Save
             </button>
           </div>
-
-          <div className="snapshotList">
-            {journal.snapshots.slice(0, 3).map((snapshot) => (
-              <div className="snapshotItem" key={snapshot.id}>
-                <span>{new Date(snapshot.date).toLocaleDateString()}</span>
-                <strong>{formatCurrency(snapshot.balance, currency)}</strong>
-                <button type="button" onClick={() => journal.removeSnapshot(snapshot.id)}>
-                  ×
-                </button>
-              </div>
-            ))}
-          </div>
-        </>
+        </div>
       )}
     </section>
   )
