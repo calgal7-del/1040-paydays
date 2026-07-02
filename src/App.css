@@ -418,3 +418,28 @@ input:focus, select:focus { border-color: var(--blue); box-shadow:0 0 0 4px rgba
     display: none !important;
   }
 }
+@media (min-width: 1151px) {
+  .rightRail {
+    gap: 0.45rem !important;
+  }
+
+  .journalCard {
+    padding: 0.85rem 1rem !important;
+  }
+
+  .emptyJournal {
+    margin-top: 0.55rem !important;
+    padding: 0.85rem !important;
+  }
+
+  .newsletterCard {
+    padding: 0.7rem 1rem !important;
+    max-height: 118px !important;
+  }
+
+  .footer {
+    margin-top: 0.55rem !important;
+    padding: 0.75rem 2rem !important;
+    min-height: 70px !important;
+  }
+}
