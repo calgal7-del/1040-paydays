@@ -8,7 +8,6 @@ import ProjectionCard from './components/ProjectionCard'
 import ProjectionGraph from './components/ProjectionGraph'
 import PaydayJournal from './components/PaydayJournal'
 import NewsletterCard from './components/NewsletterCard'
-import { Footer } from './components/Footer'
 import ProjectionDrawer from './components/ProjectionDrawer'
 
 import { DEFAULT_FORM } from './utils/constants'
@@ -91,7 +90,15 @@ export default function App() {
         </section>
       </main>
 
-      <Footer />
+      <footer className="siteFooter">
+  <div className="footerLogo">1040 Paydays</div>
+  <div className="footerPill">○ One payday at a time</div>
+  <div className="footerPill">↗ Build consistency</div>
+  <div className="footerPill">◎ Future-focused planning</div>
+  <div className="footerBottom">
+    © {new Date().getFullYear()} 1040 Paydays.
+  </div>
+</footer>
 
       <ProjectionDrawer
         open={drawerOpen}
