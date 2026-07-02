@@ -445,3 +445,39 @@ input:focus, select:focus { border-color: var(--blue); box-shadow: 0 0 0 4px rgb
     font-size: 2.2rem !important;
   }
 }
+
+/* FINAL FIRST-SCREEN FIT */
+
+@media (min-width: 1151px) {
+  .mainLayout {
+    min-height: auto !important;
+    margin: 0.75rem auto 0 !important;
+  }
+
+  .topGrid {
+    min-height: calc(100vh - 150px) !important;
+    align-items: start !important;
+  }
+
+  .hero {
+    height: calc(100vh - 150px) !important;
+    min-height: 640px !important;
+  }
+
+  .calculatorCard,
+  .projectionCard {
+    height: auto !important;
+    max-height: none !important;
+  }
+
+  .bottomGrid {
+    margin-top: 1.25rem !important;
+  }
+
+  .footer {
+    display: grid !important;
+    margin-top: 0.75rem !important;
+    min-height: 92px !important;
+    padding: 1rem 2rem !important;
+  }
+}
