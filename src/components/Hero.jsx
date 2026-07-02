@@ -1,11 +1,9 @@
 export default function Hero({ paydaysRemaining }) {
   return (
     <section className="hero">
-      <div className="heroAccent"></div>
+      <div className="heroAccent" />
 
-      <p className="heroKicker">
-        YOUR FINANCIAL LIFE IN PAYDAYS
-      </p>
+      <p className="heroKicker">Your financial life in paydays</p>
 
       <h1 className="heroTitle">
         You only get
@@ -22,87 +20,47 @@ export default function Hero({ paydaysRemaining }) {
       </p>
 
       <div className="heroInsights">
-
         <div className="heroInsight blue">
-          <span>👥</span>
-
+          <span>●●</span>
           <div>
-            <strong>
-              You've already experienced 0 paydays.
-            </strong>
-
-            <small>
-              Time invested wisely today creates tomorrow's freedom.
-            </small>
+            <strong>You’ve already experienced 0 paydays.</strong>
+            <small>Time invested wisely today creates tomorrow’s freedom.</small>
           </div>
         </div>
 
         <div className="heroInsight green">
-          <span>📅</span>
-
+          <span>▣</span>
           <div>
-            <strong>
-              You still have roughly {paydaysRemaining.toLocaleString()} opportunities to build your future.
-            </strong>
-
-            <small>
-              Make the most of them.
-            </small>
+            <strong>You still have roughly {paydaysRemaining.toLocaleString()} opportunities to build your future.</strong>
+            <small>Make the most of them.</small>
           </div>
         </div>
 
         <div className="heroInsight gold">
-          <span>📈</span>
-
+          <span>↗</span>
           <div>
-            <strong>
-              Starting five years earlier could nearly double your projected nest egg.
-            </strong>
-
-            <small>
-              Time is your greatest asset.
-            </small>
+            <strong>Starting five years earlier could nearly double your projected nest egg.</strong>
+            <small>Time is your greatest asset.</small>
           </div>
         </div>
 
         <div className="heroInsight purple">
-          <span>🛡️</span>
-
+          <span>◇</span>
           <div>
-            <strong>
-              Small, consistent choices beat big, perfect ones.
-            </strong>
-
-            <small>
-              One payday at a time.
-            </small>
+            <strong>Small, consistent choices beat big, perfect ones.</strong>
+            <small>One payday at a time.</small>
           </div>
         </div>
-
       </div>
 
       <div className="thisPaydayCard">
-
-        <div className="heartIcon">
-          ♡
-        </div>
-
+        <span className="heartIcon">♡</span>
         <div>
-          <p>
-            Your future is decided <strong>every payday.</strong>
-          </p>
-
-          <small>
-            Not someday.
-          </small>
-
-          <em>
-            This payday.
-          </em>
+          <p>Your future is decided <strong>every payday.</strong></p>
+          <small>Not someday.</small>
+          <em>This payday.</em>
         </div>
-
       </div>
-
     </section>
   )
 }
