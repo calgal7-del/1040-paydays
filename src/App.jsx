@@ -1,3 +1,9 @@
+import {
+  Target,
+  TrendingUp,
+  Instagram,
+  Youtube,
+} from "lucide-react";
 import { useState } from 'react'
 import './App.css'
 
@@ -90,14 +96,48 @@ export default function App() {
         </section>
       </main>
 
-      <footer className="siteFooter">
-  <div className="footerLogo">1040 Paydays</div>
-  <div className="footerPill">○ One payday at a time</div>
-  <div className="footerPill">↗ Build consistency</div>
-  <div className="footerPill">◎ Future-focused planning</div>
-  <div className="footerBottom">
-    © {new Date().getFullYear()} 1040 Paydays.
+ <footer className="siteFooter">
+
+  <div className="footerLogo">
+    <span className="footerLogo1040">1040</span>
+    <span className="footerLogoPaydays">PAYDAYS</span>
   </div>
+
+  <div className="footerCentre">
+
+    <div className="footerPill">
+      <Target />
+      <span>One payday at a time</span>
+    </div>
+
+    <div className="footerPill">
+      <TrendingUp />
+      <span>Build consistency</span>
+    </div>
+
+    <div className="footerPill">
+      <Target />
+      <span>Future-focused planning</span>
+    </div>
+
+  </div>
+
+  <nav className="footerNav">
+    <a href="#calculator">Calculator</a>
+    <a href="#how">How it works</a>
+    <a href="#compare">Compare</a>
+    <a href="#learn">Learn</a>
+  </nav>
+
+  <div className="footerSocial">
+    <Instagram />
+    <Youtube />
+  </div>
+
+  <div className="footerBottom">
+    © {new Date().getFullYear()} 1040 Paydays
+  </div>
+
 </footer>
 
       <ProjectionDrawer
