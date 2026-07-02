@@ -613,4 +613,110 @@ input:focus, select:focus { border-color: var(--blue); box-shadow:0 0 0 4px rgba
   .footerLinks {
     justify-content: center !important;
   }
+}/* =========================================
+   PREMIUM FOOTER
+========================================= */
+
+.siteFooter{
+    height:58px;
+    width:100%;
+
+    background:#08182f;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:0 34px;
+
+    box-sizing:border-box;
+
+    border-top:1px solid rgba(255,255,255,.08);
+
+    color:white;
+}
+
+.footerLogo{
+    display:flex;
+    align-items:baseline;
+    gap:6px;
+
+    font-weight:900;
+}
+
+.footerLogo1040{
+    font-size:33px;
+    color:white;
+}
+
+.footerLogoPaydays{
+    font-size:18px;
+    letter-spacing:2px;
+    color:#2f6bff;
+}
+
+.footerCentre{
+    display:flex;
+    gap:34px;
+    align-items:center;
+}
+
+.footerPill{
+    display:flex;
+    align-items:center;
+    gap:8px;
+
+    color:white;
+
+    font-size:14px;
+    font-weight:600;
+}
+
+.footerPill svg{
+    width:18px;
+    height:18px;
+
+    stroke:white;
+}
+
+.footerNav{
+    display:flex;
+    gap:28px;
+}
+
+.footerNav a{
+    color:white;
+    text-decoration:none;
+
+    font-size:14px;
+    font-weight:600;
+}
+
+.footerNav a:hover{
+    color:#2f6bff;
+}
+
+.footerSocial{
+    display:flex;
+    gap:16px;
+}
+
+.footerSocial svg{
+    width:20px;
+    height:20px;
+
+    stroke:white;
+
+    cursor:pointer;
+}
+
+.footerSocial svg:hover{
+    stroke:#2f6bff;
+}
+
+.footerBottom{
+    color:rgba(255,255,255,.70);
+
+    font-size:13px;
+    white-space:nowrap;
 }
