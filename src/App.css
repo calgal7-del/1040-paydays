@@ -1247,3 +1247,108 @@ select:focus {
     margin-top: 0 !important;
   }
 }
+/* TRUE ONE-SCREEN DASHBOARD FIT */
+
+@media (min-width: 1151px) {
+  .navbar {
+    height: 68px !important;
+  }
+
+  .mainLayout {
+    width: min(1760px, calc(100% - 1rem)) !important;
+    margin-top: 0.75rem !important;
+  }
+
+  .topGrid {
+    grid-template-columns: 0.78fr 1.42fr 1fr !important;
+    gap: 0.9rem !important;
+  }
+
+  .bottomGrid {
+    margin-top: 0.9rem !important;
+    grid-template-columns: 1.47fr 0.72fr !important;
+    gap: 0.9rem !important;
+  }
+
+  .hero,
+  .calculatorCard,
+  .projectionCard {
+    max-height: 520px !important;
+    overflow: hidden !important;
+  }
+
+  .hero {
+    padding: 1rem 1.25rem !important;
+  }
+
+  .heroTitle,
+  .hero h1 {
+    font-size: 2.35rem !important;
+  }
+
+  .heroTitle span,
+  .hero h1 span {
+    font-size: 1.38em !important;
+  }
+
+  .heroLead {
+    font-size: 1rem !important;
+    margin: 0.6rem 0 0.8rem !important;
+  }
+
+  .heroInsights {
+    gap: 0.55rem !important;
+  }
+
+  .heroInsight span {
+    width: 30px !important;
+    height: 30px !important;
+  }
+
+  .heroInsight strong {
+    font-size: 0.68rem !important;
+  }
+
+  .heroInsight small {
+    font-size: 0.62rem !important;
+  }
+
+  .thisPaydayCard {
+    margin-top: 0.65rem !important;
+    padding: 0.7rem !important;
+  }
+
+  .calculatorCard {
+    padding: 1.2rem 1.35rem !important;
+  }
+
+  .calculatorGrid {
+    gap: 0.8rem !important;
+  }
+
+  .calculatorGrid input,
+  .calculatorGrid select {
+    min-height: 42px !important;
+    padding: 0.62rem 0.8rem !important;
+  }
+
+  .primaryButton {
+    padding: 0.85rem 1rem !important;
+  }
+
+  .projectionCard {
+    padding: 1.35rem !important;
+  }
+
+  .futureValue {
+    font-size: 3.4rem !important;
+  }
+
+  .graphCanvas svg {
+    height: 320px !important;
+  }
+
+  .footer {
+    padding: 1rem 2rem !important;
+  }
+}
