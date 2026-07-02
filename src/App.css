@@ -599,3 +599,9 @@ input:focus, select:focus { border-color: var(--blue); box-shadow:0 0 0 4px rgba
   font-size: 0.68rem !important;
   line-height: 1.25 !important;
 }
+.footerDisclaimer,
+.footerLegal,
+.legalNotice,
+.disclaimerText {
+  display: none !important;
+}
