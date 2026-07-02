@@ -31,7 +31,9 @@ export default function Hero({ paydaysRemaining }) {
         <div className="heroInsight green">
           <span>▣</span>
           <div>
-            <strong>You still have roughly {paydaysRemaining.toLocaleString()} opportunities to build your future.</strong>
+            <strong>
+              You still have roughly {paydaysRemaining.toLocaleString()} opportunities to build your future.
+            </strong>
             <small>Make the most of them.</small>
           </div>
         </div>
@@ -54,7 +56,7 @@ export default function Hero({ paydaysRemaining }) {
       </div>
 
       <div className="thisPaydayCard">
-        <span className="heartIcon">♡</span>
+        <div className="heartIcon">♡</div>
         <div>
           <p>Your future is decided <strong>every payday.</strong></p>
           <small>Not someday.</small>
