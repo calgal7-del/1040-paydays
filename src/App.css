@@ -481,3 +481,110 @@ input:focus, select:focus { border-color: var(--blue); box-shadow: 0 0 0 4px rgb
     padding: 1rem 2rem !important;
   }
 }
+/* FINAL: MATCH APPROVED MOCKUP STRUCTURE */
+
+@media (min-width: 1151px) {
+  .mainLayout {
+    width: min(1760px, calc(100% - 1.5rem)) !important;
+    margin: 1rem auto 0 !important;
+  }
+
+  .topGrid {
+    display: grid !important;
+    grid-template-columns: 0.78fr 1.45fr 1fr !important;
+    gap: 1rem !important;
+    align-items: start !important;
+  }
+
+  .leftStack,
+  .centerStack,
+  .rightRail {
+    display: grid !important;
+    gap: 1rem !important;
+    min-width: 0 !important;
+  }
+
+  .leftStack {
+    grid-template-rows: auto 82px !important;
+  }
+
+  .centerStack {
+    grid-template-rows: auto auto !important;
+  }
+
+  .hero {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+  }
+
+  .calculatorCard,
+  .projectionCard,
+  .graphCard,
+  .journalCard,
+  .newsletterCard {
+    height: auto !important;
+    max-height: none !important;
+  }
+
+  .graphCard {
+    grid-column: auto !important;
+    min-height: 430px !important;
+  }
+
+  .graphCanvas svg {
+    height: 330px !important;
+  }
+
+  .footer {
+    display: none !important;
+  }
+
+  .miniFooter {
+    display: grid !important;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 1rem;
+    min-height: 82px;
+    padding: 1rem 1.2rem;
+    border-radius: 18px;
+    background: linear-gradient(135deg, #06142c, #0a2347);
+    color: white;
+  }
+
+  .miniFooterLogo strong {
+    display: block;
+    font-size: 1.65rem;
+    line-height: 0.9;
+    letter-spacing: -0.05em;
+  }
+
+  .miniFooterLogo span {
+    display: block;
+    color: var(--blue);
+    font-weight: 900;
+    letter-spacing: 0.13em;
+    font-size: 0.72rem;
+  }
+
+  .miniFooter p {
+    margin: 0;
+    color: #d4deeb;
+    font-size: 0.78rem;
+    line-height: 1.35;
+    font-weight: 700;
+  }
+}
+
+@media (max-width: 1150px) {
+  .leftStack,
+  .centerStack,
+  .rightRail {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .miniFooter {
+    display: none;
+  }
+}
