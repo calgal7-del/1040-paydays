@@ -42,12 +42,10 @@ export default function App() {
         onCurrencyChange={(value) => updateForm('currency', value)}
       />
 
-      <main className="dashboardLayout">
-        <aside className="dashboardHero">
+      <main className="mainLayout">
+        <section className="topGrid">
           <Hero paydaysRemaining={projection.paydaysRemaining} />
-        </aside>
 
-        <section className="dashboardMain">
           <CalculatorCard
             form={form}
             onChange={updateForm}
@@ -55,30 +53,32 @@ export default function App() {
             hasRevealed={hasRevealed}
           />
 
-          <ProjectionGraph
-            graphData={graphData}
-            callouts={callouts}
-            currency={form.currency}
-            hasRevealed={hasRevealed}
-          />
-        </section>
-
-        <aside className="dashboardSide">
           <ProjectionCard
             projection={projection}
             currency={form.currency}
             hasRevealed={hasRevealed}
             onOpenBreakdown={() => setDrawerOpen(true)}
           />
+        </section>
 
-          <PaydayJournal
+        <section className="bottomGrid">
+          <ProjectionGraph
+            graphData={graphData}
+            callouts={callouts}
             currency={form.currency}
-            projection={projection}
-            journal={journal}
+            hasRevealed={hasRevealed}
           />
 
-          <NewsletterCard />
-        </aside>
+          <aside className="rightRail">
+            <PaydayJournal
+              currency={form.currency}
+              projection={projection}
+              journal={journal}
+            />
+
+            <NewsletterCard />
+          </aside>
+        </section>
       </main>
 
       <Footer />
