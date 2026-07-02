@@ -8,6 +8,7 @@ import ProjectionCard from './components/ProjectionCard'
 import ProjectionGraph from './components/ProjectionGraph'
 import PaydayJournal from './components/PaydayJournal'
 import NewsletterCard from './components/NewsletterCard'
+import Footer from './components/Footer'
 import ProjectionDrawer from './components/ProjectionDrawer'
 
 import { DEFAULT_FORM } from './utils/constants'
@@ -31,7 +32,7 @@ export default function App() {
 
   function revealProjection() {
     setHasRevealed(false)
-    setTimeout(() => setHasRevealed(true), 50)
+    window.setTimeout(() => setHasRevealed(true), 50)
   }
 
   return (
@@ -42,7 +43,7 @@ export default function App() {
       />
 
       <main className="mainLayout">
-        <section className="dashboardGrid">
+        <section className="topGrid">
           <aside className="leftStack">
             <Hero paydaysRemaining={projection.paydaysRemaining} />
           </aside>
@@ -63,13 +64,21 @@ export default function App() {
             />
           </section>
 
-          <aside className="rightStack">
+          <aside className="rightRail">
             <ProjectionCard
               projection={projection}
               currency={form.currency}
               hasRevealed={hasRevealed}
               onOpenBreakdown={() => setDrawerOpen(true)}
             />
+
+            <div className="disclaimerCard">
+              <span>ⓘ</span>
+              <div>
+                <strong>Projection only. Not financial advice.</strong>
+                <p>Actual returns, taxes, fees, and government benefits may vary.</p>
+              </div>
+            </div>
 
             <PaydayJournal
               currency={form.currency}
@@ -80,33 +89,9 @@ export default function App() {
             <NewsletterCard />
           </aside>
         </section>
-
-        <footer className="dashboardFooter">
-          <div className="footerBrandBlock">
-            <strong>1040</strong>
-            <span>PAYDAYS</span>
-          </div>
-
-          <p>A simple way to see the power of consistency and build the future you deserve.</p>
-
-          <div className="footerFeature">
-            <span>▣</span>
-            <p>One payday at a time.</p>
-          </div>
-
-          <div className="footerFeature">
-            <span>↗</span>
-            <p>See the power of consistency.</p>
-          </div>
-
-          <div className="footerFeature">
-            <span>◎</span>
-            <p>Build the future you deserve.</p>
-          </div>
-
-          <small>© 2026 1040 Paydays. All rights reserved.</small>
-        </footer>
       </main>
+
+      <Footer />
 
       <ProjectionDrawer
         open={drawerOpen}
