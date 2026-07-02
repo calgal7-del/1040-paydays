@@ -8,7 +8,7 @@ import ProjectionCard from './components/ProjectionCard'
 import ProjectionGraph from './components/ProjectionGraph'
 import PaydayJournal from './components/PaydayJournal'
 import NewsletterCard from './components/NewsletterCard'
-import Footer from './components/Footer'
+import { Footer } from './components/Footer'
 import ProjectionDrawer from './components/ProjectionDrawer'
 
 import { DEFAULT_FORM } from './utils/constants'
