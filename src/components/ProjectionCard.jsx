@@ -11,7 +11,7 @@ export default function ProjectionCard({
   onOpenBreakdown,
 }) {
   return (
-    <section className={`projectionCard compactProjection ${hasRevealed ? 'revealed' : ''}`}>
+    <section className={`projectionCard ${hasRevealed ? 'revealed' : ''}`}>
       <div className="projectionTop">
         <p>Your future ✧</p>
         <span>Built one payday at a time.</span>
@@ -21,7 +21,7 @@ export default function ProjectionCard({
         {formatCurrency(projection.finalBalance, currency)}
       </strong>
 
-      <div className="projectionStats compactStats">
+      <div className="projectionStats">
         <div>
           <span>You invested</span>
           <strong>{formatCurrency(projection.totalContributions, currency)}</strong>
@@ -33,12 +33,12 @@ export default function ProjectionCard({
         </div>
 
         <div>
-          <span>Income</span>
+          <span>Est. monthly income</span>
           <strong>{formatMonthlyIncome(projection.estimatedMonthlyIncome, currency)}</strong>
         </div>
 
         <div>
-          <span>Paydays left</span>
+          <span>Paydays remaining</span>
           <strong>{formatNumber(projection.paydaysRemaining)}</strong>
         </div>
       </div>
@@ -46,10 +46,6 @@ export default function ProjectionCard({
       <button className="breakdownButton" type="button" onClick={onOpenBreakdown}>
         View full breakdown →
       </button>
-
-      <p className="projectionDisclaimer">
-        Projection only. Not financial advice.
-      </p>
     </section>
   )
 }
