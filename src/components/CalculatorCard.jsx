@@ -20,7 +20,9 @@ export default function CalculatorCard({
     <section className="calculatorCard" id="calculator">
       <div className="cardHeader">
         <p>Plan your paydays</p>
-        <h2>Let’s map your 1,040 paydays</h2>
+        <h2>
+          Let’s map your <span>1,040</span> paydays
+        </h2>
       </div>
 
       <div className="calculatorGrid">
@@ -72,7 +74,7 @@ export default function CalculatorCard({
         <label>
           Current age
           <InfoTooltip label="Current age">
-            Your age today. This helps estimate remaining paydays.
+            Your age today.
           </InfoTooltip>
           <input
             value={form.currentAge}
@@ -86,7 +88,7 @@ export default function CalculatorCard({
         <label>
           Retire at age
           <InfoTooltip label="Retirement age">
-            The age when you plan to stop making regular contributions.
+            The age when you plan to stop regular contributions.
           </InfoTooltip>
           <input
             value={form.retireAge}
@@ -129,6 +131,14 @@ export default function CalculatorCard({
       <button className="primaryButton" type="button" onClick={onReveal}>
         {hasRevealed ? '↻ Update projection' : '✨ Reveal my future'}
       </button>
+
+      <div className="calculatorTrust">
+        <span>🔒 No account needed</span>
+        <span>•</span>
+        <span>Saved on your device</span>
+        <span>•</span>
+        <span>Privacy settings</span>
+      </div>
     </section>
   )
 }
