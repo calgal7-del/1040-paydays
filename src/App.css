@@ -293,3 +293,69 @@ input:focus, select:focus { border-color: var(--blue); box-shadow:0 0 0 4px rgba
     font-size: 1.9rem !important;
   }
 }
+/* RIGHT COLUMN COMPACT FIX */
+
+@media (min-width: 1151px) {
+  .journalCard {
+    padding: 1rem !important;
+  }
+
+  .journalHeader h2 {
+    font-size: 1.15rem !important;
+    line-height: 1.1 !important;
+  }
+
+  .latestSnapshot.compactLatest {
+    margin-top: 0.65rem !important;
+    padding: 0.75rem 0.9rem !important;
+    border-radius: 14px !important;
+  }
+
+  .latestSnapshot.compactLatest strong {
+    font-size: 1.55rem !important;
+  }
+
+  .compactInputRow {
+    margin-top: 0.65rem !important;
+    grid-template-columns: 1fr 78px !important;
+  }
+
+  .compactInputRow input,
+  .compactInputRow button {
+    min-height: 40px !important;
+    padding: 0.65rem 0.8rem !important;
+  }
+
+  .newsletterCard {
+    padding: 1rem !important;
+  }
+
+  .newsletterHeader {
+    grid-template-columns: 34px 1fr !important;
+    gap: 0.65rem !important;
+  }
+
+  .newsletterIcon {
+    width: 34px !important;
+    height: 34px !important;
+  }
+
+  .newsletterCard h2 {
+    font-size: 1.15rem !important;
+    line-height: 1.15 !important;
+  }
+
+  .newsletterCard span {
+    font-size: 0.8rem !important;
+  }
+
+  .newsletterForm {
+    margin-top: 0.65rem !important;
+  }
+
+  .newsletterForm input,
+  .newsletterForm button {
+    min-height: 40px !important;
+    padding: 0.65rem 0.8rem !important;
+  }
+}
