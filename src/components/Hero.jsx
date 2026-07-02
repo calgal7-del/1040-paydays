@@ -1,97 +1,108 @@
-/* FINAL NAV + LEFT HERO FIX */
+export default function Hero({ paydaysRemaining }) {
+  return (
+    <section className="hero">
+      <div className="heroAccent"></div>
 
-.navbar {
-  background: linear-gradient(135deg, #06142c, #0a2347);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-  color: white;
-}
+      <p className="heroKicker">
+        YOUR FINANCIAL LIFE IN PAYDAYS
+      </p>
 
-.brandNumber {
-  color: white;
-}
+      <h1 className="heroTitle">
+        You only get
+        <br />
+        about
+        <span>1,040</span>
+        paydays.
+      </h1>
 
-.navLinks {
-  color: rgba(255, 255, 255, 0.82);
-}
+      <p className="heroLead">
+        Every payday buys
+        <br />
+        a little more <em>freedom.</em>
+      </p>
 
-.navLinks a:first-child {
-  color: white;
-}
+      <div className="heroInsights">
 
-.currencyDropdown {
-  background: rgba(255, 255, 255, 0.08);
-  color: white;
-  border-color: rgba(255, 255, 255, 0.22);
-}
+        <div className="heroInsight blue">
+          <span>👥</span>
 
-.mainLayout {
-  margin-top: 1.1rem;
-}
+          <div>
+            <strong>
+              You've already experienced 0 paydays.
+            </strong>
 
-.hero {
-  padding: 1.45rem 1.55rem;
-  max-height: none;
-}
+            <small>
+              Time invested wisely today creates tomorrow's freedom.
+            </small>
+          </div>
+        </div>
 
-.hero h1 {
-  font-size: clamp(2.7rem, 3.4vw, 4.25rem);
-  line-height: 0.93;
-  letter-spacing: -0.055em;
-}
+        <div className="heroInsight green">
+          <span>📅</span>
 
-.hero h1 span {
-  font-size: 1.18em;
-  margin-top: 0.05rem;
-}
+          <div>
+            <strong>
+              You still have roughly {paydaysRemaining.toLocaleString()} opportunities to build your future.
+            </strong>
 
-.heroLead {
-  margin: 0.85rem 0 1rem;
-  font-size: 1.12rem;
-}
+            <small>
+              Make the most of them.
+            </small>
+          </div>
+        </div>
 
-.heroInsights {
-  gap: 0.72rem;
-}
+        <div className="heroInsight gold">
+          <span>📈</span>
 
-.heroInsight {
-  grid-template-columns: 38px 1fr;
-  gap: 0.7rem;
-}
+          <div>
+            <strong>
+              Starting five years earlier could nearly double your projected nest egg.
+            </strong>
 
-.heroInsight span {
-  width: 34px;
-  height: 34px;
-  font-size: 0.9rem;
-}
+            <small>
+              Time is your greatest asset.
+            </small>
+          </div>
+        </div>
 
-.heroInsight p {
-  font-size: 0.78rem;
-  line-height: 1.25;
-}
+        <div className="heroInsight purple">
+          <span>🛡️</span>
 
-.heroInsight small {
-  font-size: 0.74rem;
-  line-height: 1.2;
-}
+          <div>
+            <strong>
+              Small, consistent choices beat big, perfect ones.
+            </strong>
 
-.thisPaydayCard {
-  margin-top: 0.95rem;
-  padding: 0.85rem;
-}
+            <small>
+              One payday at a time.
+            </small>
+          </div>
+        </div>
 
-.thisPaydayCard p {
-  font-size: 0.86rem;
-}
+      </div>
 
-.thisPaydayCard em {
-  font-size: 1.2rem;
-}
+      <div className="thisPaydayCard">
 
-.topGrid {
-  align-items: stretch;
-}
+        <div className="heartIcon">
+          ♡
+        </div>
 
-.calculatorCard,
-.projectionCard {
-  min-height: 0;
+        <div>
+          <p>
+            Your future is decided <strong>every payday.</strong>
+          </p>
+
+          <small>
+            Not someday.
+          </small>
+
+          <em>
+            This payday.
+          </em>
+        </div>
+
+      </div>
+
+    </section>
+  )
 }
