@@ -992,3 +992,105 @@ select:focus {
     grid-template-columns: 1fr;
   }
 }
+/* FINAL LAYOUT POLISH — matches approved 1040 Paydays mockup */
+
+.topGrid {
+  grid-template-columns: 0.86fr 1.45fr 1fr;
+  align-items: stretch;
+}
+
+.calculatorCard {
+  min-height: auto;
+  padding: 1.55rem 1.65rem 1.25rem;
+}
+
+.cardHeader h2 span {
+  color: var(--blue);
+  font-family: "Playfair Display", serif;
+}
+
+.calculatorGrid {
+  margin-top: 1.35rem;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.05rem 1rem;
+}
+
+.calculatorGrid input,
+.calculatorGrid select {
+  min-height: 48px;
+  padding: 0.75rem 0.9rem;
+}
+
+.primaryButton {
+  margin-top: 1.2rem;
+  width: 100%;
+  max-width: none;
+  border-radius: 14px;
+}
+
+.calculatorTrust {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  color: #5d7088;
+  font-size: 0.78rem;
+  font-weight: 750;
+}
+
+.projectionCard {
+  min-height: auto;
+}
+
+.bottomGrid {
+  grid-template-columns: 1.48fr 0.72fr;
+}
+
+.graphCard {
+  padding: 1.25rem 1.35rem 1rem;
+}
+
+.graphCanvas {
+  min-height: 330px;
+}
+
+.graphCanvas svg {
+  height: 350px;
+}
+
+.graphNote {
+  margin-top: 0.75rem;
+}
+
+.journalCard,
+.newsletterCard {
+  padding: 1.25rem;
+}
+
+.footer {
+  margin-top: 1rem;
+}
+
+/* Remove any calculator currency field if an old class appears */
+.calculatorCard label:has(select[value="CAD"]),
+.calculatorCard .currencyField,
+.calculatorCard .currencySelector {
+  display: none;
+}
+
+@media (max-width: 1150px) {
+  .topGrid,
+  .bottomGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 760px) {
+  .calculatorTrust {
+    flex-wrap: wrap;
+  }
+
+  .graphCanvas svg {
+    height: 310px;
+  }
+}
