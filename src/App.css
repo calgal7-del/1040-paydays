@@ -373,3 +373,48 @@ input:focus, select:focus { border-color: var(--blue); box-shadow:0 0 0 4px rgba
     overflow: hidden !important;
   }
 }
+@media (min-width: 1151px) {
+  .rightRail {
+    gap: 0.55rem !important;
+  }
+
+  .newsletterCard {
+    max-height: 132px !important;
+    padding: 0.8rem 1rem !important;
+    overflow: hidden !important;
+  }
+
+  .newsletterHeader {
+    grid-template-columns: 34px 1fr !important;
+    gap: 0.65rem !important;
+  }
+
+  .newsletterIcon {
+    width: 34px !important;
+    height: 34px !important;
+  }
+
+  .newsletterCard h2 {
+    font-size: 1.05rem !important;
+    line-height: 1.1 !important;
+  }
+
+  .newsletterCard span {
+    font-size: 0.76rem !important;
+    line-height: 1.25 !important;
+  }
+
+  .newsletterForm {
+    margin-top: 0.55rem !important;
+  }
+
+  .newsletterForm input,
+  .newsletterForm button {
+    min-height: 36px !important;
+    padding: 0.55rem 0.75rem !important;
+  }
+
+  .newsletterCard small {
+    display: none !important;
+  }
+}
