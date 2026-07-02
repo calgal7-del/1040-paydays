@@ -1352,3 +1352,110 @@ select:focus {
     padding: 1rem 2rem !important;
   }
 }
+/* FINAL STRUCTURE: HERO/CALCULATOR/PROJECTION ON PAGE 1, GRAPH ON PAGE 2 */
+
+@media (min-width: 1151px) {
+  .mainLayout {
+    width: min(1760px, calc(100% - 1.5rem)) !important;
+    margin: 1rem auto 0 !important;
+  }
+
+  .topGrid {
+    min-height: calc(100vh - 92px) !important;
+    grid-template-columns: 0.78fr 1.45fr 1fr !important;
+    gap: 1rem !important;
+    align-items: stretch !important;
+  }
+
+  .bottomGrid {
+    margin-top: 2rem !important;
+    grid-template-columns: 1.5fr 0.72fr !important;
+    gap: 1rem !important;
+  }
+
+  .hero,
+  .calculatorCard,
+  .projectionCard {
+    height: calc(100vh - 110px) !important;
+    max-height: none !important;
+    overflow: hidden !important;
+  }
+}
+
+/* HERO LIKE YOUR SCREENSHOT 2 */
+
+.hero {
+  padding: 1.35rem 1.55rem !important;
+}
+
+.heroTitle,
+.hero h1 {
+  font-family: "Playfair Display", Georgia, serif !important;
+  font-size: clamp(2.25rem, 3vw, 3.25rem) !important;
+  line-height: 0.92 !important;
+  letter-spacing: -0.045em !important;
+}
+
+.heroTitle span,
+.hero h1 span {
+  display: block !important;
+  color: var(--blue) !important;
+  font-family: "Playfair Display", Georgia, serif !important;
+  font-size: 1.55em !important;
+  line-height: 0.9 !important;
+  margin: 0.15rem 0 0.05rem !important;
+}
+
+.heroLead {
+  font-family: "Playfair Display", Georgia, serif !important;
+  font-size: 1.15rem !important;
+  line-height: 1.15 !important;
+  margin: 0.9rem 0 1.1rem !important;
+}
+
+.heroLead em {
+  color: var(--blue) !important;
+}
+
+.heroInsights {
+  gap: 0.85rem !important;
+}
+
+.heroInsight {
+  grid-template-columns: 42px 1fr !important;
+  gap: 0.75rem !important;
+}
+
+.heroInsight span {
+  width: 38px !important;
+  height: 38px !important;
+  font-size: 1rem !important;
+}
+
+.heroInsight strong {
+  display: block !important;
+  font-size: 0.78rem !important;
+  line-height: 1.25 !important;
+}
+
+.heroInsight small {
+  display: block !important;
+  font-size: 0.7rem !important;
+  line-height: 1.25 !important;
+  margin-top: 0.12rem !important;
+}
+
+.thisPaydayCard {
+  margin-top: 1rem !important;
+  padding: 0.95rem !important;
+}
+
+.thisPaydayCard p {
+  font-size: 0.9rem !important;
+  line-height: 1.25 !important;
+}
+
+.thisPaydayCard em {
+  font-size: 1.2rem !important;
+  color: var(--blue) !important;
+}
