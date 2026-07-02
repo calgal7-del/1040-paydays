@@ -1215,3 +1215,87 @@ select:focus {
     margin-top: 0.7rem !important;
   }
 }
+/* COMPRESS RIGHT PROJECTION CARD SO RIGHT COLUMN FITS */
+
+@media (min-width: 1151px) {
+  .rightRail {
+    gap: 0.65rem !important;
+  }
+
+  .rightRail .projectionCard {
+    min-height: 0 !important;
+    height: auto !important;
+    padding: 1rem 1.15rem !important;
+  }
+
+  .rightRail .projectionTop p {
+    margin-bottom: 0.25rem !important;
+  }
+
+  .rightRail .projectionTop span {
+    font-size: 0.82rem !important;
+  }
+
+  .rightRail .futureValue {
+    font-size: 3.15rem !important;
+    margin: 0.45rem 0 0.35rem !important;
+    line-height: 0.9 !important;
+  }
+
+  .rightRail .miniSparkline {
+    height: 78px !important;
+    margin: 0.1rem 0 0.45rem !important;
+  }
+
+  .rightRail .miniSparkline svg {
+    height: 78px !important;
+  }
+
+  .rightRail .projectionStats {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 0.5rem !important;
+  }
+
+  .rightRail .projectionStats div {
+    padding: 0.55rem 0.65rem !important;
+  }
+
+  .rightRail .projectionStats span {
+    font-size: 0.66rem !important;
+  }
+
+  .rightRail .projectionStats strong {
+    font-size: 0.92rem !important;
+  }
+
+  .rightRail .breakdownButton {
+    margin-top: 0.55rem !important;
+    padding: 0.62rem 0.85rem !important;
+    font-size: 0.82rem !important;
+  }
+
+  .rightRail .projectionDisclaimer {
+    margin-top: 0.55rem !important;
+    font-size: 0.66rem !important;
+    line-height: 1.35 !important;
+  }
+
+  .rightRail .journalCard {
+    padding: 0.9rem !important;
+  }
+
+  .rightRail .journalHeader h2,
+  .rightRail .journalHeader h3 {
+    font-size: 1rem !important;
+  }
+
+  .rightRail .emptyJournal,
+  .rightRail .latestSnapshot {
+    padding: 0.8rem !important;
+    margin-top: 0.55rem !important;
+  }
+
+  .rightRail .newsletterCard {
+    padding: 0.9rem !important;
+  }
+}
