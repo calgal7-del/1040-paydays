@@ -20,13 +20,7 @@ export default function App() {
   const [hasRevealed, setHasRevealed] = useState(false)
   const [drawerOpen, setDrawerOpen] = useState(false)
 
-  const {
-    projection,
-    graphData,
-    callouts,
-    milestones,
-  } = useProjection(form)
-
+  const { projection, graphData, callouts, milestones } = useProjection(form)
   const journal = usePaydayJournal()
 
   function updateForm(field, value) {
@@ -38,10 +32,7 @@ export default function App() {
 
   function revealProjection() {
     setHasRevealed(false)
-
-    setTimeout(() => {
-      setHasRevealed(true)
-    }, 50)
+    setTimeout(() => setHasRevealed(true), 50)
   }
 
   return (
@@ -51,10 +42,12 @@ export default function App() {
         onCurrencyChange={(value) => updateForm('currency', value)}
       />
 
-      <main className="mainLayout">
-        <section className="topGrid">
+      <main className="dashboardLayout">
+        <aside className="dashboardHero">
           <Hero paydaysRemaining={projection.paydaysRemaining} />
+        </aside>
 
+        <section className="dashboardMain">
           <CalculatorCard
             form={form}
             onChange={updateForm}
@@ -62,32 +55,30 @@ export default function App() {
             hasRevealed={hasRevealed}
           />
 
-          <ProjectionCard
-            projection={projection}
-            currency={form.currency}
-            hasRevealed={hasRevealed}
-            onOpenBreakdown={() => setDrawerOpen(true)}
-          />
-        </section>
-
-        <section className="bottomGrid">
           <ProjectionGraph
             graphData={graphData}
             callouts={callouts}
             currency={form.currency}
             hasRevealed={hasRevealed}
           />
-
-          <aside className="rightRail">
-            <PaydayJournal
-              currency={form.currency}
-              projection={projection}
-              journal={journal}
-            />
-
-            <NewsletterCard />
-          </aside>
         </section>
+
+        <aside className="dashboardSide">
+          <ProjectionCard
+            projection={projection}
+            currency={form.currency}
+            hasRevealed={hasRevealed}
+            onOpenBreakdown={() => setDrawerOpen(true)}
+          />
+
+          <PaydayJournal
+            currency={form.currency}
+            projection={projection}
+            journal={journal}
+          />
+
+          <NewsletterCard />
+        </aside>
       </main>
 
       <Footer />
