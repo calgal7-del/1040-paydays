@@ -47,7 +47,7 @@ export default function App() {
             <Hero paydaysRemaining={projection.paydaysRemaining} />
 
             <footer className="miniFooter">
-              <div>
+              <div className="miniFooterLogo">
                 <strong>1040</strong>
                 <span>PAYDAYS</span>
               </div>
