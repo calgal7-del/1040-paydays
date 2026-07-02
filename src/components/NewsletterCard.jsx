@@ -2,46 +2,46 @@ import { useState } from 'react'
 
 export default function NewsletterCard() {
   const [email, setEmail] = useState('')
-  const [submitted, setSubmitted] = useState(false)
+  const [joined, setJoined] = useState(false)
 
-  function handleSubmit(event) {
+  function submitForm(event) {
     event.preventDefault()
-
-    if (!email.includes('@')) return
-
-    setSubmitted(true)
-    setEmail('')
+    if (!email.trim()) return
+    setJoined(true)
   }
 
   return (
-    <section className="newsletterCard" id="learn">
-      <p>Stay on track</p>
-      <h2>Get your personal 1,040 Payday Plan.</h2>
+    <section className="newsletterCard">
+      <div className="newsletterHeader">
+        <span className="newsletterIcon">✉</span>
 
-      <span>
-        Your next 12 paydays, milestone ideas, and simple ways to stay consistent.
-      </span>
+        <div>
+          <p>Stay on track</p>
+          <h2>Get your personal 1,040 Payday Plan.</h2>
+          <span>
+            Your next 12 paydays, milestone ideas, and simple ways to stay consistent.
+          </span>
+        </div>
+      </div>
 
-      <form onSubmit={handleSubmit} className="newsletterForm">
+      <form className="newsletterForm" onSubmit={submitForm}>
         <input
-          type="email"
           value={email}
-          placeholder="Email address"
           onChange={(e) => setEmail(e.target.value)}
+          placeholder="Email address"
+          type="email"
         />
 
-        <button type="submit" className="secondaryButton">
+        <button className="secondaryButton" type="submit">
           Get my plan
         </button>
       </form>
 
-      {submitted && (
-        <strong className="successMessage">
-          You’re on the list.
-        </strong>
+      {joined ? (
+        <strong className="successMessage">You’re on the list.</strong>
+      ) : (
+        <small>No spam. Just your plan.</small>
       )}
-
-      <small>No spam. Just your plan.</small>
     </section>
   )
 }
