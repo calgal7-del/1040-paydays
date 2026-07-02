@@ -467,3 +467,80 @@ input:focus, select:focus { border-color: var(--blue); box-shadow:0 0 0 4px rgba
     min-height: 70px !important;
   }
 }
+/* FIT FULL DESKTOP PAGE INCLUDING FOOTER */
+
+@media (min-width: 1151px) {
+  .mainLayout {
+    margin-top: 0.6rem !important;
+  }
+
+  .topGrid {
+    gap: 0.75rem !important;
+  }
+
+  .leftStack,
+  .centerStack,
+  .rightRail {
+    gap: 0.65rem !important;
+  }
+
+  .calculatorCard {
+    padding: 1.1rem 1.35rem 0.95rem !important;
+  }
+
+  .calculatorGrid {
+    margin-top: 1rem !important;
+    gap: 0.75rem 0.85rem !important;
+  }
+
+  .calculatorGrid input,
+  .calculatorGrid select {
+    min-height: 40px !important;
+    padding: 0.6rem 0.8rem !important;
+  }
+
+  .primaryButton {
+    margin-top: 0.9rem !important;
+    padding: 0.75rem 1rem !important;
+  }
+
+  .calculatorTrust {
+    margin-top: 0.65rem !important;
+  }
+
+  .graphCard {
+    padding: 0.9rem 1.05rem 0.75rem !important;
+    min-height: 0 !important;
+  }
+
+  .graphCanvas svg {
+    height: 255px !important;
+  }
+
+  .graphLegend {
+    margin: 0.6rem 0 0.35rem !important;
+  }
+
+  .journalCard {
+    padding: 0.75rem 0.9rem !important;
+  }
+
+  .emptyJournal {
+    margin-top: 0.45rem !important;
+    padding: 0.7rem !important;
+  }
+
+  .newsletterCard {
+    padding: 0.65rem 0.85rem !important;
+  }
+
+  .newsletterForm {
+    margin-top: 0.45rem !important;
+  }
+
+  .footer {
+    margin-top: 0.45rem !important;
+    min-height: 64px !important;
+    padding: 0.7rem 1.8rem !important;
+  }
+}
