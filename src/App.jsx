@@ -1,10 +1,9 @@
-    import React, { useEffect, useMemo, useState } from "react";
+    import React, { useEffect, useMemo, useRef, useState } from "react";
     import {
       CalendarDays,
       CircleDotDashed,
       UserRound,
       Sun,
-      Heart,
       Lock,
       Mail,
       Camera,
@@ -16,7 +15,6 @@
       X,
       Menu,
       BookOpen,
-      GraduationCap,
     } from "lucide-react";
     import "./App.css";
 
@@ -39,6 +37,397 @@
       contributionGrowth: 0,
       snapshots: [],
     };
+
+    const FEATURED_ARTICLE = {
+      id: "you-only-get-about-1040-paydays",
+      title: "You Only Get About 1,040 Paydays",
+      summary: "1040 Paydays began with a simple question after watching a coworker retire: How did she get there? The answer became a new way of thinking about money—not in dollars, but as approximately 1,040 opportunities to build financial freedom, one payday at a time.",
+      image: "/article-1040-paydays.png",
+      readTime: "6 min read",
+      category: "Payday philosophy",
+      kicker: "THE PAYDAY PHILOSOPHY",
+      alt: "A woman at her desk during her final week before retirement",
+      caption: "One ordinary retirement sparked a different way to think about every paycheck.",
+      quote: {
+        strong: "About 1,040 opportunities.",
+        text: "One paycheck at a time.",
+      },
+      sections: [
+        {
+          heading: "The question that started it",
+          paragraphs: [
+            "The idea for 1040 Paydays didn't come from a finance book.",
+            "It didn't come from a spreadsheet, an investment seminar, or a viral social media post.",
+            "It started on my first week at a new job.",
+            "One morning I noticed something unusual. A woman a few cubicles away seemed happier than everyone else. People kept stopping by to congratulate her. She was smiling, laughing, and talking about what came next.",
+            "It was her last day before retirement.",
+            "Later that day I found myself wondering a simple question.",
+            "How did she get here?",
+            "Not just to retirement, but to the point where work had become optional.",
+            "She hadn't won the lottery.",
+            "She wasn't a celebrity.",
+            "She wasn't driving an exotic car.",
+            "She was simply finished.",
+            "That moment stayed with me.",
+          ],
+        },
+        {
+          heading: "A finite number of opportunities",
+          paragraphs: [
+            "As I learned more about saving, investing, and retirement planning over the following years, I came across a number that completely changed how I thought about money.",
+            "Most people who work a full-time career receive about 26 paychecks each year.",
+            "Work for roughly 40 years, and you'll collect about 1,040 paydays.",
+            "That's it.",
+            "Not an unlimited number.",
+            "Not \"someday.\"",
+            "About 1,040 opportunities.",
+            "Suddenly retirement didn't seem like one giant impossible goal anymore.",
+            "It became something much smaller.",
+            "One paycheck at a time.",
+          ],
+        },
+        {
+          heading: "Think in paydays, not just dollars",
+          paragraphs: [
+            "Every payday asks the same question.",
+            "Will this paycheck disappear without changing your future?",
+            "Or will a small piece of it buy you freedom later?",
+            "Most financial advice focuses on dollars.",
+            "I prefer to think about paydays.",
+            "Everyone has different incomes.",
+            "Different goals.",
+            "Different expenses.",
+            "But every one of us has a limited number of opportunities to decide what each paycheck will do.",
+            "That simple shift changed everything for me.",
+            "Instead of asking, \"How much do I need to retire?\"",
+            "I started asking, \"What can this payday do for my future?\"",
+          ],
+        },
+        {
+          heading: "Why I created 1040 Paydays",
+          paragraphs: [
+            "That's why I created 1040 Paydays.",
+            "Not to tell people they can't enjoy life.",
+            "Not to make anyone feel guilty for spending money.",
+            "But to help people see the incredible power hidden inside ordinary paydays.",
+            "Because the future isn't built in one massive financial decision.",
+            "It's built hundreds of times.",
+            "One payday after another.",
+            "One choice after another.",
+            "One deposit after another.",
+            "By itself, one paycheck doesn't seem very important.",
+            "Multiply that decision across 1,040 opportunities, and it can completely change the direction of your life.",
+            "That's what this website is about.",
+            "Helping you understand where you are on your own 1,040-payday journey.",
+            "Helping you see how today's choices affect tomorrow's freedom.",
+            "Helping you make every payday count.",
+            "Because every payday funds a future.",
+            "Choose yours.",
+          ],
+        },
+      ],
+    };
+
+    const SECOND_ARTICLE = {
+      id: "who-wants-to-go-home",
+      title: "Who Wants to Go Home?",
+      summary: "A simple question at the end of every shift taught me one of the biggest lessons about money. Wealth isn't built by one massive decision—it's built through hundreds of small choices that determine what each payday is really worth.",
+      image: "/article-who-wants-to-go-home.png",
+      readTime: "3 min read",
+      category: "Payday philosophy",
+      kicker: "SMALL CHOICES · LASTING IMPACT",
+      alt: "A call centre employee raises his hand while a supervisor asks who wants to leave early",
+      caption: "A small decision at the end of a shift can reveal the hidden value of an ordinary payday.",
+      quote: {
+        strong: "One choice rarely changes your life.",
+        text: "Repeated hundreds of times, those choices quietly shape your future.",
+      },
+      sections: [
+        {
+          heading: "The question everyone loved",
+          paragraphs: [
+            "I still remember working in a call centre in my twenties.",
+            "The days could be busy, stressful, and exhausting. Near the end of the shift, the supervisor would stand up and ask a question everyone loved to hear.",
+            "\"Who wants to go home?\"",
+            "Hands would shoot into the air.",
+            "Some people couldn't raise them fast enough.",
+            "If call volumes were low enough, a few employees would be allowed to leave early.",
+            "At first, it seemed like a reward.",
+            "An extra hour at home.",
+            "Less stress.",
+            "One less hour answering phones.",
+            "Who wouldn't want that?",
+          ],
+        },
+        {
+          heading: "The hidden cost of leaving early",
+          paragraphs: [
+            "Then I started noticing something.",
+            "The same people volunteered almost every time.",
+            "An hour here.",
+            "Two hours there.",
+            "Another hour the following week.",
+            "None of those decisions felt important on their own.",
+            "But together, they became something much bigger.",
+            "Every hour they left early was an hour they weren't being paid.",
+            "Every early departure meant a slightly smaller paycheck.",
+            "Every smaller paycheck meant a little less money available to save, invest, or put toward future goals.",
+            "The decision wasn't really about going home.",
+            "It was about giving up part of today's payday.",
+          ],
+        },
+        {
+          heading: "Every decision has a trade-off",
+          paragraphs: [
+            "That doesn't mean staying at work is always the right answer.",
+            "Sometimes your family needs you.",
+            "Sometimes your health needs you.",
+            "Sometimes rest is the smartest investment you can make.",
+            "The lesson isn't that you should always work more.",
+            "The lesson is that every financial decision has a trade-off.",
+            "Most of us don't make one giant decision that determines our financial future.",
+            "We make hundreds of tiny decisions that barely seem worth thinking about.",
+            "Bring lunch or buy it.",
+            "Cancel the subscription or keep it.",
+            "Work the extra shift or leave early.",
+            "Save part of this paycheck or spend all of it.",
+            "One choice rarely changes your life.",
+            "But repeated hundreds of times, those choices quietly shape your future.",
+          ],
+        },
+        {
+          heading: "What each payday is worth",
+          paragraphs: [
+            "That's what I learned from one simple question.",
+            "\"Who wants to go home?\"",
+            "It wasn't really a question about going home.",
+            "It was a question about what each payday was worth to you.",
+            "Once I began looking at money that way, I realized wealth isn't built through dramatic moments.",
+            "It's built through ordinary decisions repeated over and over again.",
+            "That's the idea behind 1040 Paydays.",
+            "You only receive about 1,040 paydays during a full career.",
+            "Every one of them gives you another opportunity to move a little closer to financial freedom.",
+            "Or a little farther away.",
+            "Every payday funds a future.",
+            "Choose yours.",
+          ],
+        },
+      ],
+    };
+
+    const THIRD_ARTICLE = {
+      id: "one-hundred-dollars-one-lifetime-lesson",
+      title: "One Hundred Dollars. One Lifetime Lesson.",
+      summary: "A $100 loan that was never repaid taught me a lesson worth far more than the money itself. If you choose to lend money, do it only if you're comfortable never getting it back—and never lose sight of what that money could have done for your own future.",
+      image: "/article-one-hundred-dollars.png",
+      readTime: "4 min read",
+      category: "Payday philosophy",
+      kicker: "MONEY · BOUNDARIES · PEACE",
+      alt: "Two people at a kitchen table signing a handwritten promissory note beside a one-hundred-dollar bill",
+      caption: "A small loan, a written promise, and a lesson that proved far more valuable than the money.",
+      quote: {
+        strong: "Treat a personal loan like a gift.",
+        text: "Only give what you can afford never to receive again.",
+      },
+      sections: [
+        {
+          heading: "A promise on paper",
+          paragraphs: [
+            "I never expected $100 to teach me one of the most valuable financial lessons of my life.",
+            "It wasn't a large amount of money.",
+            "It wasn't an investment that went wrong.",
+            "It wasn't a bad purchase.",
+            "It was a loan.",
+            "Someone I knew asked if they could borrow $100.",
+            "They promised they would pay me back.",
+            "To make me feel more comfortable, they even suggested writing out a promissory note.",
+            "We both signed it.",
+            "I remember thinking that was a smart idea. Surely someone who was willing to put it in writing intended to keep their word.",
+          ],
+        },
+        {
+          heading: "The money was gone",
+          paragraphs: [
+            "Weeks passed.",
+            "Then months.",
+            "Every time I asked about the money, there was another excuse.",
+            "Eventually, the excuses stopped altogether.",
+            "When I mentioned the promissory note, I was told something I never expected.",
+            "\"It isn't legally enforceable anyway.\"",
+            "That was the end of the conversation.",
+            "The money was gone.",
+            "Later I found out they had used the money to go to a party.",
+            "At first, I was angry.",
+            "Not because of the amount.",
+            "Because of the principle.",
+            "Someone had asked for help, made a promise, and then decided the promise didn't matter.",
+          ],
+        },
+        {
+          heading: "A simple rule for lending",
+          paragraphs: [
+            "As the years passed, I realized I had learned a lesson that was worth far more than $100.",
+            "Whenever you lend money to friends or family, there's always a chance you won't see it again.",
+            "It doesn't matter what is promised.",
+            "It doesn't matter what's written on paper.",
+            "People's circumstances change.",
+            "Sometimes their priorities change.",
+            "Sometimes they simply choose not to pay.",
+            "That's why I now have one simple rule.",
+            "If I lend money, I do it knowing there's a real possibility I'll never get it back.",
+            "In my mind, I treat it as a gift from the moment I hand it over.",
+            "If it comes back, that's wonderful.",
+            "If it doesn't, I won't let resentment grow for years over something I could have planned for.",
+          ],
+        },
+        {
+          heading: "What could that $100 have done?",
+          paragraphs: [
+            "The other lesson came much later.",
+            "I stopped thinking about what the other person did with the money.",
+            "Instead, I started asking a different question.",
+            "What could that $100 have done for me?",
+            "It could have paid for a memorable dinner with my family.",
+            "It could have become part of a weekend getaway.",
+            "It could have bought a few great books that changed the way I think.",
+            "It could have started growing inside an investment account.",
+            "It could have quietly become part of my future instead of someone else's night out.",
+            "One hundred dollars isn't life-changing.",
+            "But neither is one payday.",
+            "The power comes from what happens over and over again.",
+            "One hundred dollars invested today.",
+            "Another hundred next month.",
+            "Another after that.",
+            "Small amounts, repeated consistently, have a way of becoming something much bigger than they first appear.",
+          ],
+        },
+        {
+          heading: "A lesson worth far more",
+          paragraphs: [
+            "That's what 1040 Paydays is really about.",
+            "Every payday gives you choices.",
+            "Some choices build someone else's future.",
+            "Some choices build your own.",
+            "For years I thought I'd lost $100.",
+            "I hadn't.",
+            "I had paid $100 for a lesson that has saved me thousands since.",
+            "Today, when someone asks to borrow money, I don't ask whether they'll pay me back.",
+            "I ask whether losing that money would hurt my own future.",
+            "If the answer is yes, I politely say no.",
+            "If the answer is no, I may lend it—or give it freely—and expect nothing in return.",
+            "That one decision has brought me more peace than any promissory note ever could.",
+            "Every payday gives us choices.",
+            "Some choices cost us today.",
+            "Others protect tomorrow.",
+            "Every payday funds a future.",
+            "Choose yours.",
+          ],
+        },
+      ],
+    };
+
+    const FOURTH_ARTICLE = {
+      id: "when-extra-money-isnt-really-extra",
+      title: "When Extra Money Isn't Really Extra",
+      summary: "After receiving a severance payment, I treated it like free money and spent it renovating my home. Years later, I realized unexpected money isn't \"extra\"—it's one of the greatest opportunities you'll ever have to build your future.",
+      image: "/article-extra-money.png",
+      readTime: "3 min read",
+      category: "Payday philosophy",
+      kicker: "WINDFALLS · CHOICES · BALANCE",
+      alt: "Freshly installed hardwood floors with a steam mop, renovation supplies, and rolled pale pink carpet",
+      caption: "A beautiful renovation—and a lasting lesson about giving unexpected money more than one purpose.",
+      quote: {
+        strong: "How much of this belongs to my future?",
+        text: "A windfall can improve today and the next twenty years.",
+      },
+      sections: [
+        {
+          heading: "When money feels different",
+          paragraphs: [
+            "There are only a handful of times in life when a large sum of money lands in your bank account unexpectedly.",
+            "A bonus.",
+            "A tax refund.",
+            "An inheritance.",
+            "A severance package.",
+            "When it happens, it's easy to think of it as extra money.",
+            "That's exactly what I did.",
+            "Years ago, I was laid off from my job.",
+            "Like most people, I was worried about what came next.",
+            "Fortunately, I found another job much sooner than I expected.",
+            "Then my severance payment arrived.",
+            "Because I was already working again, the money felt different.",
+            "It didn't feel like income.",
+            "It felt like a bonus.",
+            "Extra money.",
+          ],
+        },
+        {
+          heading: "The Mocha Oak floors",
+          paragraphs: [
+            "Around that time, our house still had pale pink carpet and perfectly good linoleum throughout much of the main floor.",
+            "It wasn't damaged.",
+            "It wasn't falling apart.",
+            "It just wasn't what we wanted.",
+            "So we made the decision to renovate.",
+            "Out came the carpet.",
+            "Out came the linoleum.",
+            "In went beautiful Mocha Oak hardwood floors.",
+            "I even bought a special steam mop to keep them looking their best.",
+            "To this day, I still love those floors.",
+          ],
+        },
+        {
+          heading: "What I really regret",
+          paragraphs: [
+            "I don't regret making our home nicer.",
+            "What I regret is believing I had to spend all of that unexpected money.",
+            "At the time, it never crossed my mind to divide the severance into two purposes.",
+            "Enjoy some of it.",
+            "Invest the rest.",
+            "Had I invested even part of that money, it would have had years to grow.",
+            "Instead, I treated every dollar like spending money.",
+            "Looking back, I realize the biggest mistake wasn't buying hardwood floors.",
+            "The mistake was believing a windfall should be treated differently than every other payday.",
+          ],
+        },
+        {
+          heading: "Give the money two purposes",
+          paragraphs: [
+            "Unexpected money deserves even more thought than expected money.",
+            "It doesn't arrive very often.",
+            "Each time it does, it gives you a rare opportunity to move your future forward in a meaningful way.",
+            "Today, if I receive a bonus, tax refund, or any other unexpected payment, I ask myself one question before I spend a dollar.",
+            "How much of this belongs to my future?",
+            "Sometimes the answer is half.",
+            "Sometimes it's more.",
+            "Sometimes it's all of it.",
+            "The important thing is asking the question.",
+          ],
+        },
+        {
+          heading: "Let your future celebrate too",
+          paragraphs: [
+            "There's nothing wrong with enjoying unexpected money.",
+            "Celebrate it.",
+            "Take a trip.",
+            "Buy something you've been wanting.",
+            "Improve your home.",
+            "Just remember that your future deserves to celebrate too.",
+            "A windfall can improve today.",
+            "Or it can improve the next twenty years.",
+            "The best choice is often to let it do a little of both.",
+            "That's one of the biggest lessons I've learned about money.",
+            "Extra money isn't really extra.",
+            "It's simply another opportunity.",
+            "And opportunities are too valuable to waste.",
+            "Every payday funds a future.",
+            "Choose yours.",
+          ],
+        },
+      ],
+    };
+
+    const ARTICLES = [FEATURED_ARTICLE, SECOND_ARTICLE, THIRD_ARTICLE, FOURTH_ARTICLE];
 
     const currencies = [
       ["USD", "🇺🇸 USD"], ["CAD", "🇨🇦 CAD"], ["EUR", "🇪🇺 EUR"], ["GBP", "🇬🇧 GBP"],
@@ -258,12 +647,19 @@
         retireAge,
       ]);
 
-      const money = (n) =>
-        Number(n).toLocaleString("en-US", {
+      const money = (n) => {
+        const value = Number(n) || 0;
+
+        if (currency === "USD" || currency === "CAD") {
+          return `$${value.toLocaleString("en-US", { maximumFractionDigits: 0 })}`;
+        }
+
+        return value.toLocaleString("en-US", {
           style: "currency",
           currency,
           maximumFractionDigits: 0,
         });
+      };
 
       return (
         <div className="app-shell">
@@ -271,6 +667,7 @@
             <SlidePanel
               panel={panel}
               close={() => setPanel(null)}
+              navigate={setPanel}
               money={money}
               projection={projection}
               compare={compare}
@@ -357,14 +754,12 @@
                 <StoryItem tone="purple" icon="◇" title="Small choices compound." text="Consistency wins." />
               </div>
 
-              <div className="promise-box">
-                <Heart />
-                <div>
-                  <strong>Your future is decided <span>every payday.</span></strong>
-                  <p>Not someday.</p>
-                  <em>This payday.</em>
-                </div>
-              </div>
+              <button className="feature-placeholder feature-article-card" type="button" onClick={() => setPanel(`article:${FEATURED_ARTICLE.id}`)}>
+                <img src={FEATURED_ARTICLE.image} alt="A woman at her desk during her final week before retirement" />
+                <span>FEATURED ARTICLE</span>
+                <strong>{FEATURED_ARTICLE.title}</strong>
+                <em>Read article →</em>
+              </button>
             </aside>
 
             <section className="middle-column">
@@ -410,7 +805,7 @@
                     value={returnRate}
                     setValue={setReturnRate}
                     step="0.1"
-                    hint="Try adjusting the rate of return ↗"
+                    hint="Adjust return rate ↗"
                     onInteract={dismissStartTip}
                   />
                 </div>
@@ -456,7 +851,7 @@
                   </div>
                 </div>
 
-                <ProjectionChart age={age} retireAge={retireAge} money={money} balance={projection.balance} starting={starting} paydaysUsed={paydaysUsed} hasPlan={hasRetirementPlan} />
+                <ProjectionChart age={age} retireAge={retireAge} money={money} balance={projection.balance} invested={projection.invested} starting={starting} paydaysUsed={paydaysUsed} hasPlan={hasRetirementPlan} />
               </section>
             </section>
 
@@ -490,11 +885,6 @@
                   <MiniStat label="Est. monthly income" value={`${money(projection.monthly)}/mo`} />
                   <MiniStat label="Paydays remaining" value={paydaysRemaining} />
                 </div>
-              </section>
-
-              <section className="warning-box">
-                <ShieldAlert size={20} />
-                <p><strong>Projection only. Not financial advice.</strong><br />Actual returns, taxes, fees, and government benefits may vary.</p>
               </section>
 
               <section className="side-card card">
@@ -573,14 +963,24 @@
       );
     }
 
-    function SlidePanel({ panel, close, money, projection, compare, snapshots, setSnapshots, compareControls, values, setters }) {
+    function SlidePanel({ panel, close, navigate, money, projection, compare, snapshots, setSnapshots, compareControls, values, setters }) {
       const isAdvanced = panel === "advanced";
       const isCompare = panel === "compare";
       const isCalculator = panel === "calculator";
+      const isLearn = panel === "learn";
+      const isArticle = panel?.startsWith("article:");
+      const activeArticle = isArticle
+        ? ARTICLES.find((article) => article.id === panel.slice("article:".length)) || FEATURED_ARTICLE
+        : null;
+      const panelRef = useRef(null);
+
+      useEffect(() => {
+        panelRef.current?.scrollTo({ top: 0, behavior: "auto" });
+      }, [panel]);
 
       return (
         <div className="overlay">
-          <aside className={`slide-panel ${isAdvanced || isCompare || isCalculator ? "wide-panel" : ""}`}>
+          <aside key={panel} ref={panelRef} className={`slide-panel ${isAdvanced || isCompare || isCalculator || isLearn || isArticle ? "wide-panel" : ""} ${isLearn || isArticle ? "article-panel" : ""} ${isLearn ? "learn-library-panel" : ""}`}>
             <button className="close-panel" onClick={close}><X size={18} /></button>
 
             {isAdvanced && (
@@ -622,9 +1022,9 @@
               <PanelContent icon={<BookOpen />} title="How 1,040 Paydays Works" text="A person working from about age 25 to 65 and paid biweekly receives roughly 1,040 paydays. The point is simple: every payday is a decision point." />
             )}
 
-            {panel === "learn" && (
-              <PanelContent icon={<GraduationCap />} title="Learn" text="This section will hold your future articles, videos, guides, payday challenges, and retirement explainers." />
-            )}
+            {isLearn && <LearnLibrary onOpenArticle={(article) => navigate(`article:${article.id}`)} close={close} />}
+
+            {isArticle && <ArticlePanel article={activeArticle} close={close} backToLearn={() => navigate("learn")} />}
 
             {panel === "journal" && (
               <>
@@ -649,7 +1049,7 @@
             )}
 
             {panel === "about" && (
-              <PanelContent icon={<BookOpen />} title="About 1040 Paydays" text="Placeholder: 1040 Paydays helps people think about money one payday at a time. Replace this with your founder story, mission, and why the 1,040-payday idea matters." />
+              <AboutPanel close={close} />
             )}
 
             {panel === "privacy" && (
@@ -661,10 +1061,10 @@
             )}
 
             {panel === "contact" && (
-              <PanelContent icon={<Mail />} title="Contact" text="Placeholder: Add your contact email, business inquiries, media requests, partnership notes, and expected response time." />
+              <ContactPanel close={close} />
             )}
 
-            {!["advanced", "calculator", "how", "learn", "compare", "journal", "about", "privacy", "terms", "contact"].includes(panel) && (
+            {!isArticle && !["advanced", "calculator", "how", "learn", "compare", "journal", "about", "privacy", "terms", "contact"].includes(panel) && (
               <PanelContent icon={<BookOpen />} title="Coming soon" text="This section can be expanded with formulas, examples, articles, and more payday planning tools." />
             )}
           </aside>
@@ -727,9 +1127,108 @@
             </div>
           </section>
 
+          <div className="calculator-disclaimer">
+            <ShieldAlert size={18} />
+            <p>
+              <strong>Projection only. Not financial advice.</strong>
+              Actual returns, taxes, fees, inflation, and government benefits may vary.
+            </p>
+          </div>
+
           <div className="panel-note">Every change updates the dashboard and is saved on this device.</div>
           <button className="ok-button" onClick={close}>Done</button>
         </>
+      );
+    }
+
+    function LearnLibrary({ onOpenArticle, close }) {
+      return (
+        <section className="learn-library">
+          <div className="learn-library-toolbar">
+            <div>
+              <p className="eyebrow">LEARN · KNOWLEDGE &amp; INSIGHTS</p>
+              <h1>Make every payday smarter.</h1>
+              <p>Clear, practical ideas for building wealth one decision at a time.</p>
+            </div>
+            <button type="button" onClick={close}>Back to calculator</button>
+          </div>
+
+          <div className="learn-filter-row" aria-label="Article categories">
+            <span className="is-active">All articles</span>
+            <span>Payday philosophy</span>
+            <span>Saving</span>
+            <span>Investing</span>
+            <span>Retirement</span>
+          </div>
+
+          <div className="learn-article-grid">
+            {ARTICLES.map((article) => (
+              <button className="learn-article-card" type="button" key={article.id} onClick={() => onOpenArticle(article)}>
+                <img src={article.image} alt={article.alt} />
+                <div className="learn-card-content">
+                  <span>{article.category} · {article.readTime}</span>
+                  <h2>{article.title}</h2>
+                  <p>{article.summary}</p>
+                  <strong>Read article <span aria-hidden="true">→</span></strong>
+                </div>
+              </button>
+            ))}
+          </div>
+
+          <div className="learn-library-note">
+            <strong>More knowledge is on the way.</strong>
+            <span>New articles will appear here as the 1040 Paydays library grows.</span>
+          </div>
+        </section>
+      );
+    }
+
+    function ArticlePanel({ article, close, backToLearn }) {
+      return (
+        <article className="learn-article">
+          <div className="article-toolbar">
+            <button type="button" onClick={backToLearn}>← All articles</button>
+            <span>LEARN · KNOWLEDGE &amp; INSIGHTS</span>
+          </div>
+
+          <header className="article-header">
+            <p className="article-kicker">{article.kicker}</p>
+            <h1>{article.title}</h1>
+            <p className="article-summary">{article.summary}</p>
+            <div className="article-meta">
+              <span>1040 Paydays</span>
+              <span>•</span>
+              <span>{article.readTime}</span>
+            </div>
+          </header>
+
+          <figure className="article-hero">
+            <img src={article.image} alt={article.alt} />
+            <figcaption>{article.caption}</figcaption>
+          </figure>
+
+          <div className="article-body">
+            {article.sections.map((section, sectionIndex) => (
+              <React.Fragment key={section.heading}>
+                <section>
+                  <h2>{section.heading}</h2>
+                  {section.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+                </section>
+                {sectionIndex === 1 && (
+                  <blockquote>
+                    <strong>{article.quote.strong}</strong>
+                    <span>{article.quote.text}</span>
+                  </blockquote>
+                )}
+              </React.Fragment>
+            ))}
+          </div>
+
+          <footer className="article-footer-cta">
+            <p>See where you are on your own 1,040-payday journey.</p>
+            <button type="button" onClick={close}>Back to the calculator</button>
+          </footer>
+        </article>
       );
     }
 
@@ -823,6 +1322,91 @@
       );
     }
 
+    function AboutPanel({ close }) {
+      return (
+        <section className="about-panel">
+          <div className="panel-icon"><BookOpen /></div>
+          <p className="eyebrow">ABOUT</p>
+          <h2>A lifetime, one payday at a time.</h2>
+
+          <p>
+            1040 Paydays was inspired by a simple idea: most people receive only about
+            {" "}<strong>1,040 paydays</strong> during a full working career.
+          </p>
+          <p>
+            That number changed the way I think about money. Instead of seeing financial
+            freedom as one distant goal, I began seeing it as hundreds of opportunities—one
+            payday at a time.
+          </p>
+          <p>
+            This website was created to help people make better financial decisions through
+            practical tools, real-life stories, and simple ideas that anyone can understand.
+            Whether you're saving for your first emergency fund, planning for retirement, or
+            simply trying to make smarter choices with each paycheck, I hope you'll find
+            something here that helps.
+          </p>
+
+          <div className="about-progress">
+            <strong>1040 Paydays isn't about perfection.</strong>
+            <span>It's about progress.</span>
+          </div>
+
+          <div className="about-manifesto" aria-label="The 1040 Paydays philosophy">
+            <span>One payday.</span>
+            <span>One decision.</span>
+            <span>One future.</span>
+          </div>
+
+          <div className="contact-signoff">
+            <span>Because every payday funds a future.</span>
+            <strong>Choose yours.</strong>
+          </div>
+
+          <button className="ok-button" type="button" onClick={close}>Back to the calculator</button>
+        </section>
+      );
+    }
+
+    function ContactPanel({ close }) {
+      return (
+        <section className="contact-panel">
+          <div className="panel-icon"><Mail /></div>
+          <p className="eyebrow">CONTACT</p>
+          <h2>I'd love to hear from you.</h2>
+          <p className="contact-intro">
+            Whether you have a question, found an error, want to share your own payday story,
+            or just want to say hello, I'd be happy to hear from you.
+          </p>
+
+          <a className="contact-email-card" href="mailto:hello@1040paydays.com">
+            <span>Email</span>
+            <strong>hello@1040paydays.com</strong>
+            <em>Write to me →</em>
+          </a>
+
+          <p>I read every message personally and do my best to respond as time allows.</p>
+
+          <div className="contact-disclaimer">
+            <ShieldAlert size={20} />
+            <p>
+              Please note that I can't provide personalized financial, legal, or tax advice.
+              The articles and tools on 1040 Paydays are intended for educational and
+              informational purposes only.
+            </p>
+          </div>
+
+          <p>Thank you for being part of the 1040 Paydays community.</p>
+
+          <div className="contact-signoff">
+            <span>Every payday funds a future.</span>
+            <strong>Choose yours.</strong>
+          </div>
+
+          <button className="ok-button" type="button" onClick={close}>Back to the calculator</button>
+        </section>
+      );
+    }
+
     function Input({ label, value, setValue, step = "1", hint = "", onInteract }) {
       return (
         <label className="field">
@@ -896,255 +1480,277 @@
       return lines.slice(0, 2);
     }
 
-    function ProjectionChart({ age, retireAge, money, balance, starting, paydaysUsed, hasPlan }) {
-      const currentBalance = Number(starting) || 0;
-      const totalGrowth = Math.max(balance - currentBalance, 1);
-      const remainingPaydays = Math.max(PAYDAYS_TOTAL - paydaysUsed, 1);
+    function ProjectionChart({ age, retireAge, money, balance, invested, starting, paydaysUsed, hasPlan }) {
+      const [hoveredBar, setHoveredBar] = useState(null);
+      const yearsRemaining = Math.max(Number(retireAge) - Number(age), 0);
+      const remainingPaydays = Math.max(PAYDAYS_TOTAL - paydaysUsed, 0);
       const retirementPayday = hasPlan ? PAYDAYS_TOTAL : 0;
+      const startingValue = Math.max(Number(starting) || 0, 0);
+      const finalInvested = Math.max(Number(invested) || 0, startingValue);
+      const finalBalance = Math.max(Number(balance) || 0, finalInvested);
+      const finalGrowth = Math.max(finalBalance - finalInvested, 0);
 
-      const yFor = (t) => 235 - 198 * Math.pow(Math.max(t, 0), 1.55);
-      const xFor = (t) => 58 + 814 * Math.max(0, Math.min(t, 1));
+      const makeBars = (count, left, right, baseline, maxHeight, width) => (
+        Array.from({ length: count }, (_, index) => {
+          const t = count === 1 ? 1 : index / (count - 1);
+          const contributions = startingValue + (finalInvested - startingValue) * t;
+          const growth = finalGrowth * Math.pow(t, 1.72);
+          const total = contributions + growth;
+          const totalHeight = finalBalance > 0
+            ? Math.max(24, (total / finalBalance) * maxHeight)
+            : 24;
+          const contributionHeight = total > 0
+            ? Math.max(7, totalHeight * (contributions / total))
+            : 7;
 
-      const moneyTargets = [50000, 100000, 250000, 500000, 750000, 1000000, 1500000, 2000000, 2500000, 3000000]
-        .filter((target) => target > currentBalance && target < balance)
-        .map((target) => {
-          const t = Math.max(0.08, Math.min(0.93, (target - currentBalance) / totalGrowth));
           return {
-            type: "money",
-            title: `First ${money(target)}`,
-            sub: `Payday #${Math.round(paydaysUsed + remainingPaydays * t)}`,
+            index,
             t,
+            x: left + ((right - left) / Math.max(count - 1, 1)) * index,
+            width,
+            total,
+            contributions,
+            growth,
+            totalHeight,
+            contributionHeight,
+            growthHeight: Math.max(totalHeight - contributionHeight, 0),
+            top: baseline - totalHeight,
+            contributionTop: baseline - contributionHeight,
+            payday: Math.round(paydaysUsed + remainingPaydays * t),
+            year: Math.round(yearsRemaining * t),
           };
-        });
+        })
+      );
 
-      const careerTargets = [260, 520, 780]
-        .filter((payday) => payday > paydaysUsed && payday < PAYDAYS_TOTAL)
-        .map((payday) => ({
-          type: "career",
-          title: payday === 520 ? "Halfway point" : `Payday #${payday}`,
-          sub: payday === 520 ? "The middle of your payday journey" : "Still ahead of you",
-          t: Math.max(0.1, Math.min(0.9, (payday - paydaysUsed) / remainingPaydays)),
+      const desktopBarSpecs = [
+        [38, 64], [111, 36], [154, 38], [199, 43], [249, 64],
+        [321, 45], [373, 44], [424, 66], [498, 43], [548, 43],
+        [598, 43], [648, 67], [724, 43], [774, 43], [914, 65],
+      ];
+      const bars = makeBars(desktopBarSpecs.length, 0, 1, 250, 170, 1)
+        .map((bar, index) => ({
+          ...bar,
+          x: desktopBarSpecs[index][0],
+          width: desktopBarSpecs[index][1],
         }));
-
-      const yearsRemaining = Math.max(retireAge - age, 0);
-      const timeTargets = [10, 5, 1]
-        .filter((yearsLeft) => yearsRemaining > yearsLeft)
-        .map((yearsLeft) => ({
-          type: "time",
-          title: `${yearsLeft} year${yearsLeft === 1 ? "" : "s"} left`,
-          sub: `Age ${retireAge - yearsLeft}`,
-          t: Math.max(0.12, Math.min(0.94, (yearsRemaining - yearsLeft) / Math.max(yearsRemaining, 1))),
-        }));
-
-      const milestonePool = [...moneyTargets, ...careerTargets, ...timeTargets]
-        .sort((a, b) => a.t - b.t)
-        .filter((item, index, arr) => index === 0 || Math.abs(item.t - arr[index - 1].t) > 0.09);
-
-      const milestones = !hasPlan
-        ? []
-        : milestonePool.length
-        ? milestonePool.slice(0, 3)
-        : [
-            { type: "time", title: "Keep building", sub: "Your next payday matters", t: 0.28 },
-            { type: "career", title: "Future momentum", sub: `Payday #${Math.round(paydaysUsed + remainingPaydays * 0.55)}`, t: 0.55 },
-            { type: "money", title: "Almost there", sub: `Age ${Math.max(age, retireAge - 1)}`, t: 0.84 },
-          ];
-
-      const measuredMilestones = milestones.map((item) => {
-        const titleLines = wrapChartText(item.title, 21);
-        const subLines = wrapChartText(item.sub, 25);
-        const longestTitle = Math.max(...titleLines.map((line) => line.length), 0);
-        const longestSub = Math.max(...subLines.map((line) => line.length), 0);
-        const cardWidth = Math.min(164, Math.max(116, Math.ceil(Math.max(longestTitle * 6.7, longestSub * 5.8) + 28)));
-        const subStartOffset = titleLines.length > 1 ? 49 : 43;
-        const cardHeight = Math.max(62, subStartOffset + (subLines.length - 1) * 12 + 13);
-
-        return { ...item, titleLines, subLines, cardWidth, cardHeight, subStartOffset };
-      });
-
-      const cardLanes = [42, 116, 186];
-      const placedMilestones = [];
-
-      measuredMilestones.forEach((item, index) => {
-        const x = xFor(item.t);
-        const y = yFor(item.t);
-        const cardX = Math.min(Math.max(x - item.cardWidth * 0.38, 224), 854 - item.cardWidth);
-        const laneScores = cardLanes.map((lane, laneIndex) => {
-          const overlapPenalty = placedMilestones.reduce((score, placed) => {
-            const horizontalOverlap = Math.max(0, Math.min(cardX + item.cardWidth, placed.cardX + placed.cardWidth) - Math.max(cardX, placed.cardX));
-            const verticalOverlap = Math.max(0, Math.min(lane + item.cardHeight, placed.cardY + placed.cardHeight) - Math.max(lane, placed.cardY));
-            return score + horizontalOverlap * verticalOverlap;
-          }, 0);
-          const distancePenalty = Math.abs(lane - y) * 0.55 + Math.abs(laneIndex - index) * 7;
-          return overlapPenalty + distancePenalty;
-        });
-        const bestLaneIndex = laneScores.indexOf(Math.min(...laneScores));
-        placedMilestones.push({ ...item, x, y, cardX, cardY: cardLanes[bestLaneIndex] });
-      });
-
-      const dots = [0, .14, .28, .43, .58, .73, .88].map((t) => [xFor(t), yFor(t)]);
-      const linePath = "M58 235 C176 230, 286 210, 398 175 C548 128, 790 43, 872 37";
-      const contributionPath = "M58 252 C225 249, 410 240, 590 216 C724 198, 830 164, 872 160";
-      const areaPath = `${linePath} L872 258 L58 258 Z`;
+      const mobileBars = makeBars(8, 27, 322, 166, 122, 29);
+      const tooltipBar = bars[Math.min(3, bars.length - 1)];
+      const moneyMilestones = [50000, 100000, 250000, 500000, 1000000]
+        .filter((target) => target > startingValue && target < finalBalance)
+        .map((target) => ({
+          target,
+          bar: bars.find((bar) => bar.total >= target),
+        }))
+        .filter((item) => item.bar)
+        .filter((item, index, array) => index === 0 || item.bar.index - array[index - 1].bar.index >= 3)
+        .slice(0, 2);
+      const yearsLeftBar = yearsRemaining > 5
+        ? bars[Math.min(bars.length - 2, Math.max(1, Math.round(((yearsRemaining - 5) / yearsRemaining) * (bars.length - 1))))]
+        : null;
+      const guidePoints = bars.slice(0, -1).map((bar) => `${bar.x + bar.width / 2},${bar.top}`).join(" ");
+      const timelineStops = [0, .2, .4, .6, .8, 1];
+      const ribbonColors = ["#0b2858", "#17457d", "#2c75aa", "#3f9dbe", "#72aaa2", "#f0b73a"];
+      const envelopeStart = bars[bars.length - 2];
+      const finalBar = bars[bars.length - 1];
 
       return (
         <>
-        <div className="chart-box premium-chart desktop-projection-chart">
-          <svg
-            viewBox="0 0 900 300"
-            preserveAspectRatio="xMidYMid meet"
-            role="img"
-            aria-label={`Projected balance from age ${age} to age ${retireAge}`}
-          >
-            <defs>
-              <linearGradient id="areaFill" x1="0" x2="1" y1="0" y2="1">
-                <stop offset="0%" stopColor="#176bff" stopOpacity="0.14" />
-                <stop offset="55%" stopColor="#176bff" stopOpacity="0.08" />
-                <stop offset="100%" stopColor="#f5a400" stopOpacity="0.34" />
-              </linearGradient>
-              <linearGradient id="wealthLine" x1="0" x2="1" y1="0" y2="0">
-                <stop offset="0%" stopColor="#061936" />
-                <stop offset="62%" stopColor="#176bff" />
-                <stop offset="100%" stopColor="#f5a400" />
-              </linearGradient>
-              <linearGradient id="areaEdgeFade" x1="0" x2="1" y1="0" y2="0">
-                <stop offset="0%" stopColor="white" />
-                <stop offset="91%" stopColor="white" />
-                <stop offset="100%" stopColor="black" />
-              </linearGradient>
-              <mask id="areaFadeMask">
-                <rect x="58" y="0" width="826" height="258" fill="url(#areaEdgeFade)" />
-              </mask>
-            </defs>
+          <div className="chart-box payday-bar-chart desktop-projection-chart">
+            <svg viewBox="0 0 1000 340" role="img" aria-label={`Projected contributions and growth from age ${age} to age ${retireAge}`}>
+              <defs>
+                <linearGradient id="barGrowth" x1="0" x2="0" y1="1" y2="0">
+                  <stop offset="0%" stopColor="#176bff" />
+                  <stop offset="100%" stopColor="#55c3d8" />
+                </linearGradient>
+                <filter id="barShadow" x="-20%" y="-20%" width="140%" height="160%">
+                  <feDropShadow dx="0" dy="4" stdDeviation="4" floodColor="#071936" floodOpacity=".13" />
+                </filter>
+              </defs>
 
-            <g className="chart-grid">
-              <line x1="58" y1="245" x2="884" y2="245" className="grid-line" />
-              <line x1="58" y1="190" x2="884" y2="190" className="grid-line" />
-              <line x1="58" y1="135" x2="884" y2="135" className="grid-line" />
-              <line x1="58" y1="80" x2="884" y2="80" className="grid-line" />
-              <line x1="264" y1="32" x2="264" y2="258" className="vertical-grid-line" />
-              <line x1="470" y1="32" x2="470" y2="258" className="vertical-grid-line" />
-              <line x1="676" y1="32" x2="676" y2="258" className="vertical-grid-line" />
-            </g>
+              <g className="bar-grid">
+                {[80, 122, 164, 206, 250].map((y) => <line key={y} x1="38" y1={y} x2="980" y2={y} />)}
+              </g>
 
-            <path d={areaPath} fill="url(#areaFill)" className="chart-area" mask="url(#areaFadeMask)" />
-            <path d={contributionPath} className="contrib-line" />
-            <path d={linePath} className="wealth-path glow-path" />
-            <path d={linePath} className="wealth-path animated-path" />
-
-            {dots.map(([x,y], index) => (
-              <circle
-                key={x}
-                cx={x}
-                cy={y}
-                r="4.6"
-                className="chart-dot"
-                style={{ "--dot-index": index }}
+              <polyline points={guidePoints} className="bar-guide-line" />
+              <polygon
+                className="growth-gap-area"
+                points={[
+                  `${envelopeStart.x + envelopeStart.width},${envelopeStart.top}`,
+                  `${finalBar.x},${finalBar.top}`,
+                  `${finalBar.x},${finalBar.contributionTop}`,
+                  `${envelopeStart.x + envelopeStart.width},${envelopeStart.contributionTop}`,
+                ].join(" ")}
               />
-            ))}
+              <g className="growth-envelope">
+                <line
+                  x1={envelopeStart.x + envelopeStart.width}
+                  y1={envelopeStart.top}
+                  x2={finalBar.x}
+                  y2={finalBar.top}
+                />
+                <line
+                  x1={envelopeStart.x + envelopeStart.width}
+                  y1={envelopeStart.contributionTop}
+                  x2={finalBar.x}
+                  y2={finalBar.contributionTop}
+                />
+              </g>
 
-            <g className="today-card">
-              <rect x="74" y="83" width="142" height="76" rx="13" />
-              <text x="91" y="109" className="tooltip-title">Today</text>
-              <text x="91" y="130" className="tooltip-text">Age {age}</text>
-              <text x="91" y="150" className="tooltip-text">Payday #{paydaysUsed}</text>
-            </g>
+              <g className="projection-bars">
+                {bars.map((bar) => (
+                  <g
+                    key={bar.index}
+                    className={`projection-bar ${hoveredBar?.index === bar.index ? "is-hovered" : ""}`}
+                    style={{ "--bar-index": bar.index }}
+                    tabIndex="0"
+                    role="img"
+                    aria-label={`Year ${bar.year}, payday ${bar.payday}, contributions ${money(bar.contributions)}, growth ${money(bar.growth)}`}
+                    onMouseEnter={() => setHoveredBar(bar)}
+                    onMouseLeave={() => setHoveredBar(null)}
+                    onPointerEnter={() => setHoveredBar(bar)}
+                    onPointerLeave={() => setHoveredBar(null)}
+                    onFocus={() => setHoveredBar(bar)}
+                    onBlur={() => setHoveredBar(null)}
+                  >
+                    <title>{`Year ${bar.year} · Payday #${bar.payday} · Contributions ${money(bar.contributions)} · Growth ${money(bar.growth)}`}</title>
+                    <rect x={bar.x} y={bar.contributionTop} width={bar.width} height={bar.contributionHeight} className="bar-contribution" />
+                    {bar.growthHeight > 0 && (
+                      <rect x={bar.x} y={bar.top} width={bar.width} height={bar.growthHeight + 1} rx="3" className="bar-growth" />
+                    )}
+                    <rect
+                      x={bar.x}
+                      y={bar.top}
+                      width={bar.width}
+                      height={bar.totalHeight}
+                      rx="3"
+                      className="bar-outline"
+                      onMouseEnter={() => setHoveredBar(bar)}
+                      onMouseLeave={() => setHoveredBar(null)}
+                      onPointerEnter={() => setHoveredBar(bar)}
+                      onPointerLeave={() => setHoveredBar(null)}
+                    />
+                  </g>
+                ))}
+              </g>
 
-            {placedMilestones.map((item, index) => (
-                <g
-                  className={`milestone-card ${item.type}`}
-                  key={`${item.title}-${item.sub}`}
-                  style={{ "--milestone-index": index }}
-                >
-                  <line
-                    x1={item.x}
-                    y1={item.y}
-                    x2={item.cardX + 18}
-                    y2={item.cardY + item.cardHeight / 2}
-                    className="milestone-stem"
-                  />
-                  <circle cx={item.x} cy={item.y} r="6" className="milestone-dot" />
-                  <rect x={item.cardX} y={item.cardY} width={item.cardWidth} height={item.cardHeight} rx="13" />
-                  <text x={item.cardX + 14} y={item.cardY + 21} className="callout-blue">
-                    {item.titleLines.map((line, lineIndex) => (
-                      <tspan key={line} x={item.cardX + 14} dy={lineIndex ? 13 : 0}>{line}</tspan>
-                    ))}
-                  </text>
-                  <text x={item.cardX + 14} y={item.cardY + item.subStartOffset} className="callout-sub">
-                    {item.subLines.map((line, lineIndex) => (
-                      <tspan key={line} x={item.cardX + 14} dy={lineIndex ? 12 : 0}>{line}</tspan>
-                    ))}
-                  </text>
+              <g className="chart-today-label">
+                <text x="44" y="182">Today</text>
+                <text x="44" y="200">Age {age}</text>
+                <text x="44" y="216">Payday #{paydaysUsed}</text>
+              </g>
+
+              {moneyMilestones.map(({ target, bar }, index) => (
+                <g className="bar-milestone" key={target} style={{ "--milestone-index": index }}>
+                  <line x1={bar.x + bar.width / 2} y1={bar.top - 2} x2={bar.x + bar.width / 2} y2={bar.top - 19} />
+                  <circle cx={bar.x + bar.width / 2} cy={bar.top - 2} r="4" />
+                  <text x={bar.x + bar.width / 2} y={bar.top - 25} textAnchor="middle">First {money(target).replace(/,000$/, "k")}</text>
+                  <text x={bar.x + bar.width / 2} y={bar.top - 12} textAnchor="middle">Payday #{bar.payday}</text>
                 </g>
               ))}
 
-            <line x1="58" y1="258" x2="884" y2="258" className="timeline-axis" />
-            <line x1="884" y1="253" x2="884" y2="263" className="timeline-end-tick" />
+              {yearsLeftBar && (
+                <g className="bar-time-marker">
+                  <line x1={yearsLeftBar.x + yearsLeftBar.width / 2} y1={yearsLeftBar.top - 2} x2={yearsLeftBar.x + yearsLeftBar.width / 2} y2={yearsLeftBar.top - 39} />
+                  <text x={yearsLeftBar.x + yearsLeftBar.width / 2} y={yearsLeftBar.top - 64} textAnchor="middle">5 years left</text>
+                  <text x={yearsLeftBar.x + yearsLeftBar.width / 2} y={yearsLeftBar.top - 48} textAnchor="middle">Age {retireAge - 5}</text>
+                </g>
+              )}
 
-            <circle cx="872" cy="37" r="10" className="destination-core" />
-            <circle cx="872" cy="37" r="24" className="destination-glow" />
-            <text x="842" y="20" textAnchor="end" className="destination-label">Retirement</text>
-            <text x="858" y="72" textAnchor="end" className="destination-sub">Age {retireAge}</text>
-            <text x="858" y="88" textAnchor="end" className="destination-sub">Payday #{retirementPayday}</text>
+              <g className="bar-detail-card" filter="url(#barShadow)">
+                <rect x="38" y="62" width="222" height="84" rx="11" />
+                <path d="M198 146 l11 11 11 -11" className="detail-pointer" />
+                <text x="55" y="84" className="bar-detail-title">At year {tooltipBar.year} / Payday #{tooltipBar.payday}</text>
+                <rect x="55" y="100" width="10" height="10" rx="2" className="detail-contribution-swatch" />
+                <text x="73" y="109">Contributions</text>
+                <text x="240" y="109" textAnchor="end">{money(tooltipBar.contributions)}</text>
+                <rect x="55" y="120" width="10" height="10" rx="2" className="detail-growth-swatch" />
+                <text x="73" y="129">Growth</text>
+                <text x="240" y="129" textAnchor="end">{money(tooltipBar.growth)}</text>
+              </g>
 
-            <text x="58" y="276" className="axis-label">Today</text>
-            <text x="872" y="276" textAnchor="end" className="axis-label">Retirement</text>
-            <text x="58" y="291" className="axis-sub">Age {age} · Payday #{paydaysUsed}</text>
-            <text x="872" y="291" textAnchor="end" className="axis-sub">Age {retireAge} · Payday #{retirementPayday}</text>
-          </svg>
-        </div>
-        <div className="chart-box mobile-projection-chart">
-          <svg
-            viewBox="0 0 360 220"
-            role="img"
-            aria-label={`Mobile projection from age ${age} to age ${retireAge}`}
-          >
-            <defs>
-              <linearGradient id="mobileAreaFill" x1="0" x2="1" y1="0" y2="1">
-                <stop offset="0%" stopColor="#176bff" stopOpacity="0.12" />
-                <stop offset="100%" stopColor="#f5a400" stopOpacity="0.24" />
-              </linearGradient>
-              <linearGradient id="mobileWealthLine" x1="0" x2="1" y1="0" y2="0">
-                <stop offset="0%" stopColor="#061936" />
-                <stop offset="65%" stopColor="#176bff" />
-                <stop offset="100%" stopColor="#f5a400" />
-              </linearGradient>
-              <linearGradient id="mobileAreaEdgeFade" x1="0" x2="1" y1="0" y2="0">
-                <stop offset="0%" stopColor="white" />
-                <stop offset="88%" stopColor="white" />
-                <stop offset="100%" stopColor="black" />
-              </linearGradient>
-              <mask id="mobileAreaFadeMask">
-                <rect x="20" y="0" width="328" height="184" fill="url(#mobileAreaEdgeFade)" />
-              </mask>
-            </defs>
+              {hoveredBar && (
+                <g className="bar-hover-card" pointerEvents="none">
+                  <rect x={hoveredBar.index > 7 ? 250 : 650} y="52" width="235" height="88" rx="13" />
+                  <text x={hoveredBar.index > 7 ? 268 : 668} y="76" className="hover-card-title">
+                    Year {hoveredBar.year} · Payday #{hoveredBar.payday}
+                  </text>
+                  <rect x={hoveredBar.index > 7 ? 268 : 668} y="91" width="11" height="11" rx="2" className="detail-contribution-swatch" />
+                  <text x={hoveredBar.index > 7 ? 286 : 686} y="101">Contributions</text>
+                  <text x={hoveredBar.index > 7 ? 468 : 868} y="101" textAnchor="end">{money(hoveredBar.contributions)}</text>
+                  <rect x={hoveredBar.index > 7 ? 268 : 668} y="116" width="11" height="11" rx="2" className="detail-growth-swatch" />
+                  <text x={hoveredBar.index > 7 ? 286 : 686} y="126">Growth</text>
+                  <text x={hoveredBar.index > 7 ? 468 : 868} y="126" textAnchor="end">{money(hoveredBar.growth)}</text>
+                </g>
+              )}
 
-            <g className="mobile-chart-grid">
-              <line x1="20" y1="50" x2="340" y2="50" />
-              <line x1="20" y1="90" x2="340" y2="90" />
-              <line x1="20" y1="130" x2="340" y2="130" />
-              <line x1="20" y1="170" x2="340" y2="170" />
-            </g>
+              <g className="retirement-marker">
+                <text x="980" y="28" textAnchor="end">Retirement</text>
+                <text x="980" y="46" textAnchor="end">Payday #{retirementPayday}</text>
+                <circle cx={bars[bars.length - 1].x + bars[bars.length - 1].width / 2} cy={bars[bars.length - 1].top} r="5" />
+              </g>
 
-            <path
-              d="M20 174 C80 170 130 150 180 120 C240 84 320 32 340 30 L340 184 L20 184 Z"
-              fill="url(#mobileAreaFill)"
-              mask="url(#mobileAreaFadeMask)"
-            />
-            <path d="M20 181 C110 180 300 138 340 132" className="mobile-contribution-line" />
-            <path d="M20 174 C80 170 130 150 180 120 C240 84 320 32 340 30" className="mobile-wealth-glow" />
-            <path d="M20 174 C80 170 130 150 180 120 C240 84 320 32 340 30" className="mobile-wealth-line" />
+              <g className="payday-ribbon">
+                {timelineStops.map((stop, index) => (
+                  <g key={stop}>
+                    {index < timelineStops.length - 1 && (
+                      <path
+                        className="timeline-chevron"
+                        fill={ribbonColors[index]}
+                        d={`M${38 + stop * 942} 267 H${38 + timelineStops[index + 1] * 942 - 13} L${38 + timelineStops[index + 1] * 942} 282 L${38 + timelineStops[index + 1] * 942 - 13} 297 H${38 + stop * 942} L${38 + stop * 942 + 13} 282 Z`}
+                      />
+                    )}
+                    <text x={38 + stop * 942} y="318" textAnchor={index === 0 ? "start" : index === timelineStops.length - 1 ? "end" : "middle"}>
+                      {index === 0 ? "Your 1" : index === timelineStops.length - 1 ? "Retirement" : `Year ${Math.max(1, Math.round(yearsRemaining * stop))}`}
+                    </text>
+                    <text x={38 + stop * 942} y="334" textAnchor={index === 0 ? "start" : index === timelineStops.length - 1 ? "end" : "middle"}>
+                      {index === 0 ? `Payday #${paydaysUsed}` : index === timelineStops.length - 1 ? `Age ${retireAge} · Payday #${retirementPayday}` : `Payday #${Math.round(paydaysUsed + remainingPaydays * stop)}`}
+                    </text>
+                  </g>
+                ))}
+              </g>
+            </svg>
+          </div>
 
-            <circle cx="20" cy="174" r="5" className="mobile-start-dot" />
-            <circle cx="340" cy="30" r="14" className="mobile-end-glow" />
-            <circle cx="340" cy="30" r="7" className="mobile-end-dot" />
+          <div className="chart-box mobile-projection-chart mobile-payday-bars">
+            <svg viewBox="0 0 360 226" role="img" aria-label={`Mobile contributions and growth projection from age ${age} to age ${retireAge}`}>
+              <defs>
+                <linearGradient id="mobileBarGrowth" x1="0" x2="0" y1="1" y2="0">
+                  <stop offset="0%" stopColor="#176bff" />
+                  <stop offset="100%" stopColor="#55c3d8" />
+                </linearGradient>
+                <linearGradient id="mobileRibbon" x1="0" x2="1">
+                  <stop offset="0%" stopColor="#0c3470" />
+                  <stop offset="58%" stopColor="#00a6a6" />
+                  <stop offset="100%" stopColor="#f5a400" />
+                </linearGradient>
+              </defs>
 
-            <line x1="20" y1="184" x2="348" y2="184" className="mobile-timeline-axis" />
-            <line x1="348" y1="180" x2="348" y2="188" className="mobile-timeline-tick" />
-            <text x="20" y="204" className="mobile-chart-label">Today · Age {age}</text>
-            <text x="340" y="204" textAnchor="end" className="mobile-chart-label">Retirement · Age {retireAge}</text>
-          </svg>
-        </div>
+              <g className="mobile-bar-grid">
+                {[44, 84, 124, 166].map((y) => <line key={y} x1="20" y1={y} x2="340" y2={y} />)}
+              </g>
+
+              <polyline
+                points={mobileBars.map((bar) => `${bar.x + bar.width / 2},${bar.top}`).join(" ")}
+                className="mobile-bar-guide"
+              />
+
+              {mobileBars.map((bar) => (
+                <g key={bar.index} className="mobile-projection-bar" style={{ "--bar-index": bar.index }}>
+                  <rect x={bar.x} y={bar.contributionTop} width={bar.width} height={bar.contributionHeight} className="bar-contribution" />
+                  {bar.growthHeight > 0 && <rect x={bar.x} y={bar.top} width={bar.width} height={bar.growthHeight + 1} rx="3" className="mobile-bar-growth" />}
+                  <rect x={bar.x} y={bar.top} width={bar.width} height={bar.totalHeight} rx="3" className="bar-outline" />
+                </g>
+              ))}
+
+              <text x="20" y="181" className="mobile-end-label">Today · Age {age}</text>
+              <text x="340" y="181" textAnchor="end" className="mobile-end-label">Retirement · Age {retireAge}</text>
+              <rect x="20" y="192" width="320" height="13" rx="7" fill="url(#mobileRibbon)" />
+              {[20, 100, 180, 260, 340].map((x) => <circle key={x} cx={x} cy="198.5" r="3.5" className="mobile-ribbon-stop" />)}
+              <text x="20" y="220" className="mobile-payday-label">#{paydaysUsed}</text>
+              <text x="180" y="220" textAnchor="middle" className="mobile-payday-label">Your payday timeline</text>
+              <text x="340" y="220" textAnchor="end" className="mobile-payday-label">#{retirementPayday}</text>
+            </svg>
+          </div>
         </>
       );
     }
