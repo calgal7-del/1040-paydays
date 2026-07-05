@@ -15,6 +15,7 @@
       X,
       Menu,
       BookOpen,
+      Search,
     } from "lucide-react";
     import "./App.css";
 
@@ -429,6 +430,97 @@
 
     const ARTICLES = [FEATURED_ARTICLE, SECOND_ARTICLE, THIRD_ARTICLE, FOURTH_ARTICLE];
 
+    const ARTICLE_FAQS = {
+      "you-only-get-about-1040-paydays": [
+        {
+          question: "Is 1,040 paydays an exact number?",
+          answer: "No. It is a useful illustration based on roughly 26 biweekly paychecks a year across a 40-year career. Your total will vary with your pay frequency and years worked.",
+        },
+        {
+          question: "What if I'm paid weekly or monthly?",
+          answer: "The same idea still applies: your paydays are finite decision points. The calculator adjusts the timeline using the pay frequency you select.",
+        },
+        {
+          question: "Is it too late to start?",
+          answer: "Your best starting point is the next payday available to you. Even modest, consistent choices can improve the future you are building.",
+        },
+        {
+          question: "How much should I save from each paycheck?",
+          answer: "There is no universal amount. Start with something sustainable, protect essential expenses, and increase it as your circumstances allow.",
+        },
+        {
+          question: "Is the 1040 Paydays calculator financial advice?",
+          answer: "No. It is an educational projection tool. Your actual results will depend on returns, taxes, fees, inflation, and your personal circumstances.",
+        },
+      ],
+      "who-wants-to-go-home": [
+        {
+          question: "Does this mean I should always work extra hours?",
+          answer: "No. Rest, health, and family time matter. The lesson is to recognize the trade-off and make the choice deliberately.",
+        },
+        {
+          question: "How can I estimate the cost of leaving early?",
+          answer: "Multiply the unpaid hours by your hourly wage, then consider what that amount could have supported—today or in your longer-term plan.",
+        },
+        {
+          question: "Can a small decision really affect my future?",
+          answer: "One decision may not, but a repeated pattern can. Small choices become meaningful when they happen across months and years.",
+        },
+        {
+          question: "Is choosing rest ever a good financial decision?",
+          answer: "Absolutely. Protecting your health and avoiding burnout can be valuable. The goal is thoughtful balance, not working at every opportunity.",
+        },
+        {
+          question: "How do I apply this lesson on payday?",
+          answer: "Pause before the money disappears and give part of the paycheck a specific job, whether that is saving, debt repayment, investing, or an essential expense.",
+        },
+      ],
+      "one-hundred-dollars-one-lifetime-lesson": [
+        {
+          question: "Should I never lend money to friends or family?",
+          answer: "That is a personal choice. A helpful boundary is to lend only an amount you could lose without damaging your own finances or the relationship.",
+        },
+        {
+          question: "Does a written promissory note guarantee repayment?",
+          answer: "No. Laws and enforceability vary, and a written agreement cannot guarantee that someone will pay. Seek qualified legal advice when the stakes are significant.",
+        },
+        {
+          question: "Why treat a personal loan like a gift?",
+          answer: "It helps you decide whether you can truly afford the risk and can reduce long-term resentment if repayment never arrives.",
+        },
+        {
+          question: "How can I politely say no to a loan request?",
+          answer: "Keep it simple and honest: explain that you are not able to lend money without putting your own financial plans at risk.",
+        },
+        {
+          question: "What should I consider before lending money?",
+          answer: "Consider your emergency savings, upcoming obligations, the impact of non-repayment, and whether clear expectations could protect the relationship.",
+        },
+      ],
+      "when-extra-money-isnt-really-extra": [
+        {
+          question: "What counts as a financial windfall?",
+          answer: "A windfall is money outside your normal expected income, such as a bonus, tax refund, inheritance, severance payment, or unexpected gift.",
+        },
+        {
+          question: "Is it wrong to spend some unexpected money?",
+          answer: "Not at all. The point is to make the decision intentionally and consider giving both your present life and your future a share.",
+        },
+        {
+          question: "How should I divide a windfall?",
+          answer: "There is no single correct split. Consider immediate needs, emergency savings, high-cost debt, longer-term goals, and something you will genuinely enjoy.",
+        },
+        {
+          question: "Should severance money be treated differently?",
+          answer: "Severance may need to replace income while you search for work. Protecting essential expenses and maintaining a cash buffer usually deserves careful consideration first.",
+        },
+        {
+          question: "What question should I ask before spending it?",
+          answer: "Ask: “How much of this belongs to my future?” That pause can keep an unexpected opportunity from becoming automatic spending.",
+        },
+      ],
+    };
+
     const currencies = [
       ["USD", "🇺🇸 USD"], ["CAD", "🇨🇦 CAD"], ["EUR", "🇪🇺 EUR"], ["GBP", "🇬🇧 GBP"],
       ["JPY", "🇯🇵 JPY"], ["CNY", "🇨🇳 CNY"], ["AUD", "🇦🇺 AUD"], ["CHF", "🇨🇭 CHF"],
@@ -478,6 +570,7 @@
 
     export default function App() {
       const [initialSettings] = useState(loadSettings);
+      const [route, setRoute] = useState(() => window.location.pathname);
       const [currency, setCurrency] = useState(initialSettings.currency);
       const [starting, setStarting] = useState(initialSettings.starting);
       const [contribution, setContribution] = useState(initialSettings.contribution);
@@ -523,6 +616,32 @@
         const timer = window.setTimeout(() => setIntroPulse(false), 1100);
         return () => window.clearTimeout(timer);
       }, []);
+
+      useEffect(() => {
+        const handlePopState = () => {
+          setRoute(window.location.pathname);
+          setPanel(null);
+          setMobileMenuOpen(false);
+        };
+
+        window.addEventListener("popstate", handlePopState);
+        return () => window.removeEventListener("popstate", handlePopState);
+      }, []);
+
+      useEffect(() => {
+        const metaDescription = document.querySelector('meta[name="description"]');
+        const isLearnRoute = route === "/learn" || route.startsWith("/learn/");
+
+        document.title = isLearnRoute ? "Learn | 1040 Paydays" : "1040 Paydays";
+        if (metaDescription) {
+          metaDescription.setAttribute(
+            "content",
+            isLearnRoute
+              ? "Browse practical personal finance articles about saving, investing, retirement, debt, and making the most of every payday."
+              : "See how every payday can move you closer to financial freedom with the 1040 Paydays calculator."
+          );
+        }
+      }, [route]);
 
       useEffect(() => {
         if (Number(withdrawalRate) <= 0) setWithdrawalRate(DEFAULT_SETTINGS.withdrawalRate);
@@ -661,6 +780,38 @@
         });
       };
 
+      const navigateTo = (path) => {
+        if (window.location.pathname !== path) window.history.pushState({}, "", path);
+        setRoute(path);
+        setPanel(null);
+        setMobileMenuOpen(false);
+        window.scrollTo({ top: 0, behavior: "auto" });
+      };
+
+      const openHomePanel = (destination) => {
+        if (window.location.pathname !== "/") window.history.pushState({}, "", "/");
+        setRoute("/");
+        setMobileMenuOpen(false);
+        setPanel(destination);
+      };
+
+      const normalizedRoute = route.length > 1 ? route.replace(/\/+$/, "") : route;
+
+      if (normalizedRoute === "/learn" || normalizedRoute.startsWith("/learn/")) {
+        const articleId = normalizedRoute.startsWith("/learn/") ? normalizedRoute.slice("/learn/".length) : "";
+        const activeArticle = ARTICLES.find((article) => article.id === articleId);
+
+        return (
+          <LearnRoute
+            currency={currency}
+            setCurrency={setCurrency}
+            article={activeArticle}
+            navigateTo={navigateTo}
+            openHomePanel={openHomePanel}
+          />
+        );
+      }
+
       return (
         <div className="app-shell">
           {panel && (
@@ -697,7 +848,7 @@
               <button className="active" onClick={() => setPanel("calculator")}>Calculator</button>
               <button onClick={() => setPanel("how")}>How it works</button>
               <button onClick={() => setPanel("compare")}>Compare</button>
-              <button onClick={() => setPanel("learn")}>Learn</button>
+              <button onClick={() => navigateTo("/learn")}>Learn</button>
             </nav>
 
             <div className="top-actions">
@@ -721,14 +872,15 @@
                     ["Calculator", "calculator"],
                     ["How it works", "how"],
                     ["Compare", "compare"],
-                    ["Learn", "learn"],
+                    ["Learn", "/learn"],
                   ].map(([label, destination]) => (
                     <button
                       type="button"
                       key={destination}
                       onClick={() => {
                         setMobileMenuOpen(false);
-                        setPanel(destination);
+                        if (destination === "/learn") navigateTo(destination);
+                        else setPanel(destination);
                       }}
                     >
                       {label}
@@ -742,7 +894,6 @@
           <main className={`dashboard ${panel ? "blurred" : ""}`} id="calculator">
             <aside className="story-panel card">
               <div className="short-line" />
-              <p className="eyebrow">YOUR FINANCIAL LIFE IN PAYDAYS</p>
 
               <h1>You only get about <span>1,040</span> paydays.</h1>
               <h2>Make the <span>next one</span> count.</h2>
@@ -752,6 +903,11 @@
                 <StoryItem tone="teal" icon="□" title={`${paydaysRemaining} opportunities ahead.`} text="Give the next one a job." />
                 <StoryItem tone="gold" icon="↗" title="Time is your advantage." text="Starting sooner matters." />
                 <StoryItem tone="purple" icon="◇" title="Small choices compound." text="Consistency wins." />
+              </div>
+
+              <div className="feature-lead">
+                <span>Every payday is a decision.</span>
+                <strong>Choose yours.</strong>
               </div>
 
               <button className="feature-placeholder feature-article-card" type="button" onClick={() => setPanel(`article:${FEATURED_ARTICLE.id}`)}>
@@ -937,6 +1093,23 @@
               </div>
               <p>Small choices compound. Consistency wins.</p>
             </section>
+
+            <section className="mobile-featured-reading card">
+              <p className="eyebrow">FEATURED READING</p>
+              <h2>Every payday is a decision. <span>Choose yours.</span></h2>
+              <p>Swipe through practical stories about the choices that shape your financial future.</p>
+              <div className="mobile-home-article-strip">
+                {ARTICLES.map((article) => (
+                  <button type="button" key={article.id} onClick={() => setPanel(`article:${article.id}`)}>
+                    <img src={article.image} alt={article.alt} />
+                    <span>{article.category} · {article.readTime}</span>
+                    <strong>{article.title}</strong>
+                    <em>Read article →</em>
+                  </button>
+                ))}
+              </div>
+              <small>Swipe to explore more articles →</small>
+            </section>
           </main>
 
           <footer className={`footer ${panel ? "blurred" : ""}`}>
@@ -1019,12 +1192,19 @@
             )}
 
             {panel === "how" && (
-              <PanelContent icon={<BookOpen />} title="How 1,040 Paydays Works" text="A person working from about age 25 to 65 and paid biweekly receives roughly 1,040 paydays. The point is simple: every payday is a decision point." />
+              <HowItWorksPanel close={close} />
             )}
 
             {isLearn && <LearnLibrary onOpenArticle={(article) => navigate(`article:${article.id}`)} close={close} />}
 
-            {isArticle && <ArticlePanel article={activeArticle} close={close} backToLearn={() => navigate("learn")} />}
+            {isArticle && (
+              <ArticlePanel
+                article={activeArticle}
+                close={close}
+                backToLearn={() => navigate("learn")}
+                openArticle={(nextArticle) => navigate(`article:${nextArticle.id}`)}
+              />
+            )}
 
             {panel === "journal" && (
               <>
@@ -1141,6 +1321,278 @@
       );
     }
 
+    const LEARN_CATEGORIES = [
+      "Getting Started",
+      "Saving",
+      "Investing",
+      "Retirement",
+      "Debt",
+      "Payday Philosophy",
+    ];
+
+    function articleCategory(article) {
+      return article.category.replace(/\b\w/g, (letter) => letter.toUpperCase());
+    }
+
+    function LearnRoute({ currency, setCurrency, article, navigateTo, openHomePanel }) {
+      const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+      const goHomePanel = (panelName) => {
+        setMobileMenuOpen(false);
+        openHomePanel(panelName);
+      };
+
+      return (
+        <div className="learn-route-shell">
+          <header className="topbar">
+            <a
+              className="brand"
+              href="/"
+              onClick={(event) => {
+                event.preventDefault();
+                navigateTo("/");
+              }}
+            >
+              <strong>1040</strong><span>PAYDAYS</span>
+            </a>
+
+            <nav className="topnav" aria-label="Primary navigation">
+              <button onClick={() => goHomePanel("calculator")}>Calculator</button>
+              <button onClick={() => goHomePanel("how")}>How it works</button>
+              <button onClick={() => goHomePanel("compare")}>Compare</button>
+              <button className="active" onClick={() => navigateTo("/learn")}>Learn</button>
+            </nav>
+
+            <div className="top-actions">
+              <select value={currency} onChange={(event) => setCurrency(event.target.value)} className="currency-select" aria-label="Currency">
+                {currencies.map(([code, label]) => <option key={code} value={code}>{label}</option>)}
+              </select>
+              <button
+                className="mobile-menu-button"
+                type="button"
+                aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+                aria-expanded={mobileMenuOpen}
+                aria-controls="learn-mobile-navigation"
+                onClick={() => setMobileMenuOpen((open) => !open)}
+              >
+                {mobileMenuOpen ? <X size={19} /> : <Menu size={19} />}
+              </button>
+
+              {mobileMenuOpen && (
+                <nav className="mobile-nav-menu" id="learn-mobile-navigation" aria-label="Mobile navigation">
+                  <button type="button" onClick={() => goHomePanel("calculator")}>Calculator</button>
+                  <button type="button" onClick={() => goHomePanel("how")}>How it works</button>
+                  <button type="button" onClick={() => goHomePanel("compare")}>Compare</button>
+                  <button type="button" onClick={() => navigateTo("/learn")}>Learn</button>
+                </nav>
+              )}
+            </div>
+          </header>
+
+          {article ? (
+            <main className="learn-route-article">
+              <ArticlePanel
+                article={article}
+                close={() => goHomePanel(null)}
+                backToLearn={() => navigateTo("/learn")}
+                openArticle={(nextArticle) => navigateTo(`/learn/${nextArticle.id}`)}
+              />
+            </main>
+          ) : (
+            <LearnPage navigateTo={navigateTo} />
+          )}
+
+          <footer className="footer">
+            <div>
+              <strong>1040 Paydays</strong>
+              <p>One payday at a time.<br />Build consistency.</p>
+            </div>
+
+            <nav aria-label="Footer navigation">
+              <button onClick={() => goHomePanel("about")}>About</button>
+              <button onClick={() => goHomePanel("privacy")}>Privacy</button>
+              <button onClick={() => goHomePanel("terms")}>Terms</button>
+              <button onClick={() => goHomePanel("contact")}>Contact</button>
+            </nav>
+
+            <div className="socials">
+              <a href="#facebook" aria-label="Facebook"><Facebook size={22} /></a>
+              <a href="#instagram" aria-label="Instagram"><Instagram size={22} /></a>
+              <a href="#youtube" aria-label="YouTube"><Youtube size={22} /></a>
+              <a href="mailto:hello@1040paydays.com" aria-label="Email"><Mail size={22} /></a>
+            </div>
+          </footer>
+        </div>
+      );
+    }
+
+    function LearnPage({ navigateTo }) {
+      const [query, setQuery] = useState("");
+      const [category, setCategory] = useState("All");
+      const [sort, setSort] = useState("Newest");
+
+      const filteredArticles = useMemo(() => {
+        const normalizedQuery = query.trim().toLowerCase();
+        const results = ARTICLES.filter((article) => {
+          const displayCategory = articleCategory(article);
+          const matchesCategory = category === "All" || displayCategory === category;
+          const searchable = `${article.title} ${article.summary} ${displayCategory}`.toLowerCase();
+          return matchesCategory && (!normalizedQuery || searchable.includes(normalizedQuery));
+        });
+
+        return [...results].sort((first, second) => {
+          if (sort === "Oldest") return ARTICLES.indexOf(first) - ARTICLES.indexOf(second);
+          if (sort === "Reading Time") return parseInt(first.readTime, 10) - parseInt(second.readTime, 10);
+          return ARTICLES.indexOf(second) - ARTICLES.indexOf(first);
+        });
+      }, [query, category, sort]);
+
+      const selectCategory = (nextCategory) => {
+        setCategory(nextCategory);
+        document.getElementById("learn-articles")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      };
+
+      return (
+        <main className="learn-page">
+          <section className="learn-page-hero" aria-labelledby="learn-title">
+            <p className="eyebrow">KNOWLEDGE &amp; INSIGHTS</p>
+            <h1 id="learn-title">Learn</h1>
+            <p>Simple ideas, practical lessons, and real stories to help you make the most of every payday.</p>
+          </section>
+
+          <section className="learn-category-section" aria-labelledby="category-heading">
+            <div className="learn-section-heading">
+              <div>
+                <p className="eyebrow muted">EXPLORE BY TOPIC</p>
+                <h2 id="category-heading">Build knowledge that compounds.</h2>
+              </div>
+              <p>Start where you are. Choose the topic that matters most today.</p>
+            </div>
+
+            <nav className="learn-category-grid" aria-label="Article categories">
+              {LEARN_CATEGORIES.map((item, index) => (
+                <button type="button" key={item} onClick={() => selectCategory(item)}>
+                  <span>{String(index + 1).padStart(2, "0")}</span>
+                  <strong>{item}</strong>
+                  <small>Explore articles →</small>
+                </button>
+              ))}
+            </nav>
+          </section>
+
+          <section className="learn-articles-section" id="learn-articles" aria-labelledby="articles-heading">
+            <div className="learn-section-heading">
+              <div>
+                <p className="eyebrow muted">THE LIBRARY</p>
+                <h2 id="articles-heading">Practical ideas for every payday.</h2>
+              </div>
+              <p>{filteredArticles.length} {filteredArticles.length === 1 ? "article" : "articles"}</p>
+            </div>
+
+            <div className="learn-controls">
+              <label className="learn-search">
+                <Search size={19} aria-hidden="true" />
+                <span className="sr-only">Search articles</span>
+                <input
+                  type="search"
+                  value={query}
+                  onChange={(event) => setQuery(event.target.value)}
+                  placeholder="Search articles"
+                />
+              </label>
+
+              <label className="learn-sort">
+                <span>Sort by</span>
+                <select value={sort} onChange={(event) => setSort(event.target.value)}>
+                  <option>Newest</option>
+                  <option>Oldest</option>
+                  <option>Reading Time</option>
+                </select>
+              </label>
+            </div>
+
+            <nav className="learn-filter-chips" aria-label="Filter articles">
+              {["All", ...LEARN_CATEGORIES].map((item) => (
+                <button
+                  type="button"
+                  key={item}
+                  className={category === item ? "is-active" : ""}
+                  aria-pressed={category === item}
+                  onClick={() => setCategory(item)}
+                >
+                  {item}
+                </button>
+              ))}
+            </nav>
+
+            {filteredArticles.length ? (
+              <div className="learn-page-grid">
+                {filteredArticles.map((item) => (
+                  <article className="learn-page-card" key={item.id}>
+                    <a
+                      href={`/learn/${item.id}`}
+                      onClick={(event) => {
+                        event.preventDefault();
+                        navigateTo(`/learn/${item.id}`);
+                      }}
+                    >
+                      <img src={item.image} alt={item.alt} loading="lazy" decoding="async" />
+                      <div>
+                        <span className="learn-category-badge">{articleCategory(item)}</span>
+                        <h3>{item.title}</h3>
+                        <p>{item.summary}</p>
+                        <footer>
+                          <small>{item.readTime}</small>
+                          <strong>Read Article →</strong>
+                        </footer>
+                      </div>
+                    </a>
+                  </article>
+                ))}
+              </div>
+            ) : (
+              <div className="learn-empty-state">
+                <h3>No articles found.</h3>
+                <p>Try a different search or choose another category.</p>
+                <button type="button" onClick={() => { setQuery(""); setCategory("All"); }}>Show all articles</button>
+              </div>
+            )}
+          </section>
+
+          <section className="learn-start-here" aria-labelledby="start-here-heading">
+            <div className="learn-section-heading">
+              <div>
+                <p className="eyebrow">START HERE</p>
+                <h2 id="start-here-heading">Three stories. One better way to see payday.</h2>
+              </div>
+              <p>A thoughtful introduction to the 1040 Paydays philosophy.</p>
+            </div>
+
+            <div className="learn-start-grid">
+              {ARTICLES.slice(0, 3).map((item, index) => (
+                <article key={item.id}>
+                  <span>{String(index + 1).padStart(2, "0")}</span>
+                  <div>
+                    <small>{articleCategory(item)} · {item.readTime}</small>
+                    <h3>{item.title}</h3>
+                    <a
+                      href={`/learn/${item.id}`}
+                      onClick={(event) => {
+                        event.preventDefault();
+                        navigateTo(`/learn/${item.id}`);
+                      }}
+                    >
+                      Read Article →
+                    </a>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+        </main>
+      );
+    }
+
     function LearnLibrary({ onOpenArticle, close }) {
       return (
         <section className="learn-library">
@@ -1183,7 +1635,10 @@
       );
     }
 
-    function ArticlePanel({ article, close, backToLearn }) {
+    function ArticlePanel({ article, close, backToLearn, openArticle }) {
+      const relatedArticles = ARTICLES.filter((item) => item.id !== article.id);
+      const faqs = ARTICLE_FAQS[article.id] || [];
+
       return (
         <article className="learn-article">
           <div className="article-toolbar">
@@ -1223,6 +1678,39 @@
               </React.Fragment>
             ))}
           </div>
+
+          <section className="article-faqs">
+            <p className="article-section-kicker">FREQUENTLY ASKED QUESTIONS</p>
+            <h2>Five questions to take with you.</h2>
+            <div>
+              {faqs.map((faq) => (
+                <details key={faq.question}>
+                  <summary>{faq.question}</summary>
+                  <p>{faq.answer}</p>
+                </details>
+              ))}
+            </div>
+          </section>
+
+          <section className="related-articles">
+            <div className="related-heading">
+              <div>
+                <p className="article-section-kicker">KEEP READING</p>
+                <h2>Another payday. Another perspective.</h2>
+              </div>
+              <span>Swipe to explore →</span>
+            </div>
+            <div className="related-article-strip">
+              {relatedArticles.map((related) => (
+                <button type="button" key={related.id} onClick={() => openArticle(related)}>
+                  <img src={related.image} alt="" />
+                  <span>{related.readTime}</span>
+                  <strong>{related.title}</strong>
+                  <em>Read next →</em>
+                </button>
+              ))}
+            </div>
+          </section>
 
           <footer className="article-footer-cta">
             <p>See where you are on your own 1,040-payday journey.</p>
@@ -1327,42 +1815,82 @@
         <section className="about-panel">
           <div className="panel-icon"><BookOpen /></div>
           <p className="eyebrow">ABOUT</p>
-          <h2>A lifetime, one payday at a time.</h2>
+          <h2>Founder, 1040 Paydays</h2>
 
           <p>
-            1040 Paydays was inspired by a simple idea: most people receive only about
-            {" "}<strong>1,040 paydays</strong> during a full working career.
+            1040 Paydays is a passion project created by someone with an MBA and a lifelong
+            interest in personal finance, investing, and the power of small financial decisions.
           </p>
           <p>
-            That number changed the way I think about money. Instead of seeing financial
-            freedom as one distant goal, I began seeing it as hundreds of opportunities—one
-            payday at a time.
+            The idea is simple: most of us receive only about <strong>1,040 paydays</strong>
+            {" "}during our working lives. Every paycheck is a decision—one that can move us
+            closer to financial freedom or further away from it.
           </p>
           <p>
-            This website was created to help people make better financial decisions through
-            practical tools, real-life stories, and simple ideas that anyone can understand.
-            Whether you're saving for your first emergency fund, planning for retirement, or
-            simply trying to make smarter choices with each paycheck, I hope you'll find
-            something here that helps.
+            This site was created to make those decisions a little easier through practical
+            articles, interactive calculators, and thoughtful tools that help people build
+            wealth one payday at a time.
+          </p>
+          <p>
+            Whether you're saving for your first emergency fund, investing for retirement,
+            paying off debt, or simply trying to make smarter choices with each paycheck,
+            the goal is the same:
           </p>
 
           <div className="about-progress">
-            <strong>1040 Paydays isn't about perfection.</strong>
-            <span>It's about progress.</span>
-          </div>
-
-          <div className="about-manifesto" aria-label="The 1040 Paydays philosophy">
-            <span>One payday.</span>
-            <span>One decision.</span>
-            <span>One future.</span>
-          </div>
-
-          <div className="contact-signoff">
-            <span>Because every payday funds a future.</span>
-            <strong>Choose yours.</strong>
+            <strong>Every payday is a decision.</strong>
+            <span>Choose yours.</span>
           </div>
 
           <button className="ok-button" type="button" onClick={close}>Back to the calculator</button>
+        </section>
+      );
+    }
+
+    function HowItWorksPanel({ close }) {
+      return (
+        <section className="about-panel how-panel">
+          <div className="panel-icon"><BookOpen /></div>
+          <p className="eyebrow">HOW IT WORKS</p>
+          <h2>See what each payday could become.</h2>
+
+          <p>
+            Most people will receive about <strong>1,040 paydays</strong> during their
+            working lives.
+          </p>
+          <p>
+            That number surprised me the first time I heard it. It also changed the way I
+            looked at money.
+          </p>
+          <p>
+            Every payday gives us a choice. We can spend it without thinking, save part of
+            it for the future, pay down debt, invest for retirement, or work toward a goal
+            that matters to us. One decision will not change your life, but hundreds of
+            small decisions often do.
+          </p>
+          <p>
+            The calculator on this site is designed to help you see what those decisions
+            could mean over time. Change the numbers, explore different ideas, and see how
+            small increases in saving or investing may affect your future.
+          </p>
+          <p>
+            The articles are written with the same goal. They are not about getting rich
+            overnight or finding the next financial shortcut. They are about building good
+            habits, making thoughtful decisions, and understanding how money works one
+            payday at a time.
+          </p>
+          <p>
+            Whether you are just getting started or have been investing for years, I hope
+            this site gives you ideas, encouragement, and a different way to think about
+            every paycheck.
+          </p>
+
+          <div className="about-progress">
+            <strong>After all, every payday is a decision.</strong>
+            <span>Choose yours.</span>
+          </div>
+
+          <button className="ok-button" type="button" onClick={close}>Try the calculator</button>
         </section>
       );
     }
