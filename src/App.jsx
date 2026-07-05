@@ -1,4 +1,4 @@
-    import React, { useMemo, useState } from "react";
+    import React, { useEffect, useMemo, useState } from "react";
     import {
       CalendarDays,
       CircleDotDashed,
@@ -14,13 +14,31 @@
       ShieldAlert,
       SlidersHorizontal,
       X,
-      Calculator,
+      Menu,
       BookOpen,
       GraduationCap,
     } from "lucide-react";
     import "./App.css";
 
     const PAYDAYS_TOTAL = 1040;
+    const STORAGE_KEY = "1040-paydays-settings";
+    const ONBOARDING_KEY = "1040-paydays-onboarding-seen";
+
+    const DEFAULT_SETTINGS = {
+      currency: "USD",
+      starting: 10000,
+      contribution: 250,
+      frequency: "Biweekly",
+      age: 35,
+      retireAge: 65,
+      returnRate: 7,
+      withdrawalRate: 4,
+      lifespan: 95,
+      inflation: 2.5,
+      feeRate: 0.5,
+      contributionGrowth: 0,
+      snapshots: [],
+    };
 
     const currencies = [
       ["USD", "🇺🇸 USD"], ["CAD", "🇨🇦 CAD"], ["EUR", "🇪🇺 EUR"], ["GBP", "🇬🇧 GBP"],
@@ -44,24 +62,61 @@
       return Math.max(balance, 0);
     }
 
-    export default function App() {
-      const [currency, setCurrency] = useState("USD");
-      const [starting, setStarting] = useState(1000);
-      const [contribution, setContribution] = useState(100);
-      const [frequency, setFrequency] = useState("Biweekly");
-      const [age, setAge] = useState(35);
-      const [retireAge, setRetireAge] = useState(65);
-      const [returnRate, setReturnRate] = useState(7);
+    function loadSettings() {
+      if (typeof window === "undefined") return DEFAULT_SETTINGS;
 
-      const [withdrawalRate, setWithdrawalRate] = useState(4);
-      const [lifespan, setLifespan] = useState(100);
-      const [inflation, setInflation] = useState(2.5);
-      const [feeRate, setFeeRate] = useState(0.5);
-      const [contributionGrowth, setContributionGrowth] = useState(0);
+      try {
+        const saved = window.localStorage.getItem(STORAGE_KEY);
+        if (!saved) return DEFAULT_SETTINGS;
+
+        const parsed = JSON.parse(saved);
+        if (!parsed || typeof parsed !== "object") return DEFAULT_SETTINGS;
+
+        return {
+          ...DEFAULT_SETTINGS,
+          ...parsed,
+          withdrawalRate: Number(parsed.withdrawalRate) > 0
+            ? Number(parsed.withdrawalRate)
+            : DEFAULT_SETTINGS.withdrawalRate,
+          lifespan: Number(parsed.lifespan) >= 75
+            ? Number(parsed.lifespan)
+            : DEFAULT_SETTINGS.lifespan,
+        };
+      } catch {
+        return DEFAULT_SETTINGS;
+      }
+    }
+
+    export default function App() {
+      const [initialSettings] = useState(loadSettings);
+      const [currency, setCurrency] = useState(initialSettings.currency);
+      const [starting, setStarting] = useState(initialSettings.starting);
+      const [contribution, setContribution] = useState(initialSettings.contribution);
+      const [frequency, setFrequency] = useState(initialSettings.frequency);
+      const [age, setAge] = useState(initialSettings.age);
+      const [retireAge, setRetireAge] = useState(initialSettings.retireAge);
+      const [returnRate, setReturnRate] = useState(initialSettings.returnRate);
+
+      const [withdrawalRate, setWithdrawalRate] = useState(initialSettings.withdrawalRate);
+      const [lifespan, setLifespan] = useState(initialSettings.lifespan);
+      const [inflation, setInflation] = useState(initialSettings.inflation);
+      const [feeRate, setFeeRate] = useState(initialSettings.feeRate);
+      const [contributionGrowth, setContributionGrowth] = useState(initialSettings.contributionGrowth);
 
       const [panel, setPanel] = useState(null);
+      const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
       const [email, setEmail] = useState("");
-      const [snapshots, setSnapshots] = useState([]);
+      const [snapshots, setSnapshots] = useState(initialSettings.snapshots);
+      const [showStartTip, setShowStartTip] = useState(() => {
+        if (typeof window === "undefined") return false;
+        try {
+          return window.localStorage.getItem(ONBOARDING_KEY) !== "seen";
+        } catch {
+          return true;
+        }
+      });
+      const [tipLeaving, setTipLeaving] = useState(false);
+      const [introPulse, setIntroPulse] = useState(true);
 
       const [compareExtraSavings, setCompareExtraSavings] = useState(50);
       const [compareReturn, setCompareReturn] = useState(8);
@@ -69,10 +124,69 @@
       const [compareWaitYears, setCompareWaitYears] = useState(5);
 
       const paydaysPerYear = frequency === "Weekly" ? 52 : frequency === "Monthly" ? 12 : 26;
-      const yearsRemaining = Math.max(retireAge - age, 0);
+      const hasRetirementPlan = Number(age) > 0 && Number(retireAge) > Number(age);
+      const yearsRemaining = hasRetirementPlan ? Math.max(retireAge - age, 0) : 0;
       const retirementYears = Math.max(lifespan - retireAge, 0);
       const paydaysRemaining = Math.round(yearsRemaining * paydaysPerYear);
-      const paydaysUsed = Math.max(PAYDAYS_TOTAL - paydaysRemaining, 0);
+      const paydaysUsed = hasRetirementPlan ? Math.max(PAYDAYS_TOTAL - paydaysRemaining, 0) : 0;
+
+      useEffect(() => {
+        const timer = window.setTimeout(() => setIntroPulse(false), 1100);
+        return () => window.clearTimeout(timer);
+      }, []);
+
+      useEffect(() => {
+        if (Number(withdrawalRate) <= 0) setWithdrawalRate(DEFAULT_SETTINGS.withdrawalRate);
+        if (Number(lifespan) < 75) setLifespan(DEFAULT_SETTINGS.lifespan);
+      }, []);
+
+      useEffect(() => {
+        try {
+          window.localStorage.setItem(STORAGE_KEY, JSON.stringify({
+            currency,
+            starting,
+            contribution,
+            frequency,
+            age,
+            retireAge,
+            returnRate,
+            withdrawalRate,
+            lifespan,
+            inflation,
+            feeRate,
+            contributionGrowth,
+            snapshots,
+          }));
+        } catch {
+          // The calculator still works when browser storage is unavailable.
+        }
+      }, [
+        currency,
+        starting,
+        contribution,
+        frequency,
+        age,
+        retireAge,
+        returnRate,
+        withdrawalRate,
+        lifespan,
+        inflation,
+        feeRate,
+        contributionGrowth,
+        snapshots,
+      ]);
+
+      const dismissStartTip = () => {
+        if (!showStartTip || tipLeaving) return;
+
+        setTipLeaving(true);
+        try {
+          window.localStorage.setItem(ONBOARDING_KEY, "seen");
+        } catch {
+          // The prompt can still dismiss when browser storage is unavailable.
+        }
+        window.setTimeout(() => setShowStartTip(false), 260);
+      };
 
       const projection = useMemo(() => {
         const balance = projectFuture(starting, contribution, yearsRemaining, paydaysPerYear, returnRate - feeRate, contributionGrowth);
@@ -93,6 +207,10 @@
           monthly: Math.round((balance * (withdrawalRate / 100)) / 12),
         };
       }, [starting, contribution, yearsRemaining, paydaysPerYear, returnRate, withdrawalRate, feeRate, contributionGrowth]);
+
+      const investedShare = projection.balance > 0
+        ? Math.min(100, Math.max(0, (projection.invested / projection.balance) * 100))
+        : 0;
 
       const compare = useMemo(() => {
         const current = projection.balance;
@@ -168,8 +286,8 @@
                 compareWaitYears,
                 setCompareWaitYears,
               }}
-              values={{ age, retireAge, returnRate, withdrawalRate, lifespan, inflation, feeRate, contributionGrowth, retirementYears }}
-              setters={{ setAge, setRetireAge, setWithdrawalRate, setLifespan, setInflation, setFeeRate, setContributionGrowth }}
+              values={{ starting, contribution, frequency, age, retireAge, returnRate, withdrawalRate, lifespan, inflation, feeRate, contributionGrowth, retirementYears }}
+              setters={{ setStarting, setContribution, setFrequency, setAge, setRetireAge, setReturnRate, setWithdrawalRate, setLifespan, setInflation, setFeeRate, setContributionGrowth }}
             />
           )}
 
@@ -189,6 +307,38 @@
               <select value={currency} onChange={(e) => setCurrency(e.target.value)} className="currency-select">
                 {currencies.map(([code, label]) => <option key={code} value={code}>{label}</option>)}
               </select>
+              <button
+                className="mobile-menu-button"
+                type="button"
+                aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+                aria-expanded={mobileMenuOpen}
+                aria-controls="mobile-navigation"
+                onClick={() => setMobileMenuOpen((open) => !open)}
+              >
+                {mobileMenuOpen ? <X size={19} /> : <Menu size={19} />}
+              </button>
+
+              {mobileMenuOpen && (
+                <nav className="mobile-nav-menu" id="mobile-navigation" aria-label="Mobile navigation">
+                  {[
+                    ["Calculator", "calculator"],
+                    ["How it works", "how"],
+                    ["Compare", "compare"],
+                    ["Learn", "learn"],
+                  ].map(([label, destination]) => (
+                    <button
+                      type="button"
+                      key={destination}
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        setPanel(destination);
+                      }}
+                    >
+                      {label}
+                    </button>
+                  ))}
+                </nav>
+              )}
             </div>
           </header>
 
@@ -198,13 +348,13 @@
               <p className="eyebrow">YOUR FINANCIAL LIFE IN PAYDAYS</p>
 
               <h1>You only get about <span>1,040</span> paydays.</h1>
-              <h2>Every payday buys a little more <span>freedom.</span></h2>
+              <h2>Make the <span>next one</span> count.</h2>
 
               <div className="story-stack">
-                <StoryItem tone="blue" icon="●●" title={`You've already experienced ${paydaysUsed} paydays.`} text="Time invested wisely today creates tomorrow's freedom." />
-                <StoryItem tone="teal" icon="□" title={`You still have ${paydaysRemaining} opportunities to build your future.`} text="Make the most of them." />
-                <StoryItem tone="gold" icon="↗" title="Starting five years earlier could nearly double your projected nest egg." text="Time is your greatest asset." />
-                <StoryItem tone="purple" icon="◇" title="Small, consistent choices beat big, perfect ones." text="One payday at a time." />
+                <StoryItem tone="blue" icon="●●" title={`${paydaysUsed} paydays behind you.`} text="They brought you here." />
+                <StoryItem tone="teal" icon="□" title={`${paydaysRemaining} opportunities ahead.`} text="Give the next one a job." />
+                <StoryItem tone="gold" icon="↗" title="Time is your advantage." text="Starting sooner matters." />
+                <StoryItem tone="purple" icon="◇" title="Small choices compound." text="Consistency wins." />
               </div>
 
               <div className="promise-box">
@@ -218,38 +368,51 @@
             </aside>
 
             <section className="middle-column">
-              <section className="journey-card card">
-                <p className="eyebrow">YOUR 1,040 PAYDAY JOURNEY</p>
-                <h2>You’ve already used <span>{paydaysUsed}</span> paydays. <strong>{paydaysRemaining}</strong> remain.</h2>
-                <p className="subtext wealth-line">Every payday is a chance to build wealth. See exactly how each paycheck moves you toward financial freedom.</p>
-
-                <div className="journey-stats">
-                  <Stat icon={<CalendarDays />} label="Paydays used" value={paydaysUsed} />
-                  <Stat icon={<CircleDotDashed />} label="Paydays remaining" value={paydaysRemaining} teal />
-                  <Stat icon={<UserRound />} label="Current age" value={age} />
-                  <Stat icon={<Sun />} label="Years remaining" value={yearsRemaining} gold />
+              <section className={`assumptions-card card ${introPulse ? "intro-pulse" : ""}`}>
+                <div className="assumptions-heading">
+                  <div>
+                    <p className="eyebrow">START HERE · YOUR NUMBERS</p>
+                    <h2>Build your payday plan.</h2>
+                    <p>Replace the example values below—your results update instantly.</p>
+                  </div>
+                  {showStartTip && (
+                    <div className={`start-tooltip ${tipLeaving ? "is-leaving" : ""}`} role="status">
+                      <strong>Start here</strong>
+                      <span>Enter your numbers to see your future.</span>
+                    </div>
+                  )}
+                  <button className="assumption-title" onClick={() => setPanel("advanced")} type="button">
+                    Advanced assumptions <SlidersHorizontal size={14} />
+                  </button>
                 </div>
-              </section>
-
-              <section className="assumptions-card card">
-                <button className="assumption-title" onClick={() => setPanel("advanced")} type="button">
-                  EDIT YOUR ASSUMPTIONS <SlidersHorizontal size={14} />
-                </button>
 
                 <div className="input-grid">
-                  <Input label="Starting balance" value={starting} setValue={setStarting} />
-                  <Input label="Contribution each payday" value={contribution} setValue={setContribution} />
+                  <Input label="Starting balance" value={starting} setValue={setStarting} onInteract={dismissStartTip} />
+                  <Input label="Contribution each payday" value={contribution} setValue={setContribution} onInteract={dismissStartTip} />
                   <label className="field">
                     <span>Pay frequency</span>
-                    <select value={frequency} onChange={(e) => setFrequency(e.target.value)}>
+                    <select
+                      value={frequency}
+                      onChange={(e) => {
+                        dismissStartTip();
+                        setFrequency(e.target.value);
+                      }}
+                    >
                       <option>Biweekly</option>
                       <option>Weekly</option>
                       <option>Monthly</option>
                     </select>
                   </label>
-                  <Input label="Current age" value={age} setValue={setAge} />
-                  <Input label="Retire at age" value={retireAge} setValue={setRetireAge} />
-                  <Input label="Expected return" value={returnRate} setValue={setReturnRate} step="0.1" />
+                  <Input label="Current age" value={age} setValue={setAge} onInteract={dismissStartTip} />
+                  <Input label="Retire at age" value={retireAge} setValue={setRetireAge} onInteract={dismissStartTip} />
+                  <Input
+                    label="Expected return"
+                    value={returnRate}
+                    setValue={setReturnRate}
+                    step="0.1"
+                    hint="Try adjusting the rate of return ↗"
+                    onInteract={dismissStartTip}
+                  />
                 </div>
 
                 <div className="privacy-row">
@@ -261,9 +424,25 @@
                 </div>
               </section>
 
+              <section className="journey-card card results-card">
+                <div className="results-heading">
+                  <p className="eyebrow">CALCULATED RESULT · YOUR 1,040 PAYDAY JOURNEY</p>
+                  <span className="locked-badge"><Lock size={11} /> Read-only results</span>
+                </div>
+                <h2>You’ve already used <span>{paydaysUsed}</span> paydays. <strong>{paydaysRemaining}</strong> remain.</h2>
+
+                <div className="journey-stats">
+                  <Stat icon={<CalendarDays />} label="Paydays used" value={paydaysUsed} />
+                  <Stat icon={<CircleDotDashed />} label="Paydays remaining" value={paydaysRemaining} teal />
+                  <Stat icon={<UserRound />} label="Current age" value={age} />
+                  <Stat icon={<Sun />} label="Years remaining" value={yearsRemaining} gold />
+                </div>
+              </section>
+
               <section className="projection-card card">
                 <div className="chart-top">
                   <div>
+                    <p className="eyebrow muted">YOUR PROJECTION</p>
                     <h2>Your projected future value</h2>
                     <div className="legend">
                       <span className="sample balance" /> Balance
@@ -277,15 +456,33 @@
                   </div>
                 </div>
 
-                <ProjectionChart age={age} retireAge={retireAge} money={money} balance={projection.balance} starting={starting} paydaysUsed={paydaysUsed} />
+                <ProjectionChart age={age} retireAge={retireAge} money={money} balance={projection.balance} starting={starting} paydaysUsed={paydaysUsed} hasPlan={hasRetirementPlan} />
               </section>
             </section>
 
             <aside className="right-column">
               <section className="future-card">
-                <p className="eyebrow gold">YOUR FUTURE ✧</p>
-                <h3>Built one payday at a time.</h3>
+                <div className="future-title-row">
+                  <p className="eyebrow gold">YOUR FUTURE ✧</p>
+                  <span><Lock size={11} /> Projection</span>
+                </div>
+                <h3>Your calculated outlook.</h3>
                 <div className="money-number">{money(projection.balance)}</div>
+
+                <div className="portfolio-mix">
+                  <div>
+                    <span>Your contributions</span>
+                    <span>Investment growth</span>
+                  </div>
+                  <div
+                    className="portfolio-mix-bar"
+                    role="img"
+                    aria-label={`${Math.round(investedShare)} percent contributions and ${Math.round(100 - investedShare)} percent growth`}
+                  >
+                    <span className="mix-contributions" style={{ width: `${investedShare}%` }} />
+                    <span className="mix-growth" style={{ width: `${100 - investedShare}%` }} />
+                  </div>
+                </div>
 
                 <div className="future-grid">
                   <MiniStat label="You invested" value={money(projection.invested)} />
@@ -340,6 +537,16 @@
                 </div>
               </section>
             </aside>
+
+            <section className="mobile-story-summary card">
+              <p className="eyebrow">WHY 1,040 PAYDAYS?</p>
+              <h2>Your next payday is a decision point.</h2>
+              <div className="mobile-story-metrics">
+                <div><strong>{paydaysUsed}</strong><span>behind you</span></div>
+                <div><strong>{paydaysRemaining}</strong><span>opportunities ahead</span></div>
+              </div>
+              <p>Small choices compound. Consistency wins.</p>
+            </section>
           </main>
 
           <footer className={`footer ${panel ? "blurred" : ""}`}>
@@ -369,10 +576,11 @@
     function SlidePanel({ panel, close, money, projection, compare, snapshots, setSnapshots, compareControls, values, setters }) {
       const isAdvanced = panel === "advanced";
       const isCompare = panel === "compare";
+      const isCalculator = panel === "calculator";
 
       return (
         <div className="overlay">
-          <aside className={`slide-panel ${isAdvanced || isCompare ? "wide-panel" : ""}`}>
+          <aside className={`slide-panel ${isAdvanced || isCompare || isCalculator ? "wide-panel" : ""}`}>
             <button className="close-panel" onClick={close}><X size={18} /></button>
 
             {isAdvanced && (
@@ -400,8 +608,14 @@
               />
             )}
 
-            {panel === "calculator" && (
-              <PanelContent icon={<Calculator />} title="Calculator" text="This calculator turns retirement planning into payday decisions. Enter what you have now, what you can add each payday, your age, retirement age, and expected return." />
+            {isCalculator && (
+              <CalculatorPanel
+                money={money}
+                projection={projection}
+                values={values}
+                setters={setters}
+                close={close}
+              />
             )}
 
             {panel === "how" && (
@@ -455,6 +669,90 @@
             )}
           </aside>
         </div>
+      );
+    }
+
+    function CalculatorPanel({ money, projection, values, setters, close }) {
+      return (
+        <>
+          <p className="eyebrow">CALCULATOR · LIVE PLAN</p>
+          <h2>Shape your payday future.</h2>
+
+          <div className="calculator-panel-hero">
+            <span>Current projection</span>
+            <strong>{money(projection.balance)}</strong>
+            <em>{money(projection.monthly)}/mo estimated income</em>
+          </div>
+
+          <section className="calculator-panel-section">
+            <div className="panel-section-heading">
+              <div>
+                <span>YOUR NUMBERS</span>
+                <strong>Core assumptions</strong>
+              </div>
+              <small>Updates instantly</small>
+            </div>
+
+            <div className="calculator-panel-grid">
+              <PanelNumberInput label="Starting balance" value={values.starting} setValue={setters.setStarting} />
+              <PanelNumberInput label="Contribution each payday" value={values.contribution} setValue={setters.setContribution} />
+              <label className="panel-field">
+                <span>Pay frequency</span>
+                <select value={values.frequency} onChange={(event) => setters.setFrequency(event.target.value)}>
+                  <option>Biweekly</option>
+                  <option>Weekly</option>
+                  <option>Monthly</option>
+                </select>
+              </label>
+              <PanelNumberInput label="Current age" value={values.age} setValue={setters.setAge} />
+              <PanelNumberInput label="Retire at age" value={values.retireAge} setValue={setters.setRetireAge} />
+              <PanelNumberInput label="Expected return" value={values.returnRate} setValue={setters.setReturnRate} step="0.1" suffix="%" />
+            </div>
+          </section>
+
+          <section className="calculator-panel-section advanced-panel-section">
+            <div className="panel-section-heading">
+              <div>
+                <span>ADVANCED</span>
+                <strong>Fine-tune the projection</strong>
+              </div>
+            </div>
+
+            <div className="calculator-slider-grid">
+              <Slider label="Withdrawal rate" value={values.withdrawalRate} setValue={setters.setWithdrawalRate} min={2} max={8} step={0.1} suffix="%" />
+              <Slider label="Lifespan" value={values.lifespan} setValue={setters.setLifespan} min={75} max={110} />
+              <Slider label="Inflation" value={values.inflation} setValue={setters.setInflation} min={0} max={8} step={0.1} suffix="%" />
+              <Slider label="Investment fees" value={values.feeRate} setValue={setters.setFeeRate} min={0} max={3} step={0.1} suffix="%" />
+              <Slider label="Contribution growth" value={values.contributionGrowth} setValue={setters.setContributionGrowth} min={0} max={10} step={0.1} suffix="%" />
+            </div>
+          </section>
+
+          <div className="panel-note">Every change updates the dashboard and is saved on this device.</div>
+          <button className="ok-button" onClick={close}>Done</button>
+        </>
+      );
+    }
+
+    function PanelNumberInput({ label, value, setValue, step = "1", suffix = "" }) {
+      return (
+        <label className="panel-field">
+          <span>{label}</span>
+          <div className="panel-input-wrap">
+            <input
+              type="number"
+              step={step}
+              value={value}
+              onChange={(event) => {
+                const nextValue = event.target.value;
+                setValue(nextValue === "" ? "" : Number(nextValue));
+              }}
+              onBlur={() => {
+                if (value === "") setValue(0);
+              }}
+            />
+            {suffix && <small>{suffix}</small>}
+          </div>
+        </label>
       );
     }
 
@@ -525,11 +823,24 @@
       );
     }
 
-    function Input({ label, value, setValue, step = "1" }) {
+    function Input({ label, value, setValue, step = "1", hint = "", onInteract }) {
       return (
         <label className="field">
           <span>{label}</span>
-          <input type="number" step={step} value={value} onChange={(e) => setValue(Number(e.target.value))} />
+          <input
+            type="number"
+            step={step}
+            value={value}
+            onChange={(e) => {
+              const nextValue = e.target.value;
+              onInteract?.();
+              setValue(nextValue === "" ? "" : Number(nextValue));
+            }}
+            onBlur={() => {
+              if (value === "") setValue(0);
+            }}
+          />
+          {hint && <small className="field-nudge">{hint}</small>}
         </label>
       );
     }
@@ -565,13 +876,34 @@
       return <div className="mini-stat static"><small>{label}</small><strong>{value}</strong></div>;
     }
 
-    function ProjectionChart({ age, retireAge, money, balance, starting, paydaysUsed }) {
+    function wrapChartText(value, maxCharacters = 22) {
+      const words = String(value).split(/\s+/);
+      const lines = [];
+
+      words.forEach((word) => {
+        const current = lines[lines.length - 1];
+        if (!current) {
+          lines.push(word);
+        } else if (`${current} ${word}`.length <= maxCharacters) {
+          lines[lines.length - 1] = `${current} ${word}`;
+        } else if (lines.length < 2) {
+          lines.push(word);
+        } else {
+          lines[1] = `${lines[1].replace(/…$/, "")}…`;
+        }
+      });
+
+      return lines.slice(0, 2);
+    }
+
+    function ProjectionChart({ age, retireAge, money, balance, starting, paydaysUsed, hasPlan }) {
       const currentBalance = Number(starting) || 0;
       const totalGrowth = Math.max(balance - currentBalance, 1);
       const remainingPaydays = Math.max(PAYDAYS_TOTAL - paydaysUsed, 1);
+      const retirementPayday = hasPlan ? PAYDAYS_TOTAL : 0;
 
       const yFor = (t) => 235 - 198 * Math.pow(Math.max(t, 0), 1.55);
-      const xFor = (t) => 58 + 792 * Math.max(0, Math.min(t, 1));
+      const xFor = (t) => 58 + 814 * Math.max(0, Math.min(t, 1));
 
       const moneyTargets = [50000, 100000, 250000, 500000, 750000, 1000000, 1500000, 2000000, 2500000, 3000000]
         .filter((target) => target > currentBalance && target < balance)
@@ -608,7 +940,9 @@
         .sort((a, b) => a.t - b.t)
         .filter((item, index, arr) => index === 0 || Math.abs(item.t - arr[index - 1].t) > 0.09);
 
-      const milestones = milestonePool.length
+      const milestones = !hasPlan
+        ? []
+        : milestonePool.length
         ? milestonePool.slice(0, 3)
         : [
             { type: "time", title: "Keep building", sub: "Your next payday matters", t: 0.28 },
@@ -616,19 +950,29 @@
             { type: "money", title: "Almost there", sub: `Age ${Math.max(age, retireAge - 1)}`, t: 0.84 },
           ];
 
-      const cardWidth = 148;
-      const cardHeight = 58;
-      const cardLanes = [48, 120, 188];
+      const measuredMilestones = milestones.map((item) => {
+        const titleLines = wrapChartText(item.title, 21);
+        const subLines = wrapChartText(item.sub, 25);
+        const longestTitle = Math.max(...titleLines.map((line) => line.length), 0);
+        const longestSub = Math.max(...subLines.map((line) => line.length), 0);
+        const cardWidth = Math.min(164, Math.max(116, Math.ceil(Math.max(longestTitle * 6.7, longestSub * 5.8) + 28)));
+        const subStartOffset = titleLines.length > 1 ? 49 : 43;
+        const cardHeight = Math.max(62, subStartOffset + (subLines.length - 1) * 12 + 13);
+
+        return { ...item, titleLines, subLines, cardWidth, cardHeight, subStartOffset };
+      });
+
+      const cardLanes = [42, 116, 186];
       const placedMilestones = [];
 
-      milestones.forEach((item, index) => {
+      measuredMilestones.forEach((item, index) => {
         const x = xFor(item.t);
         const y = yFor(item.t);
-        const cardX = Math.min(Math.max(x - 54, 232), 640);
+        const cardX = Math.min(Math.max(x - item.cardWidth * 0.38, 224), 854 - item.cardWidth);
         const laneScores = cardLanes.map((lane, laneIndex) => {
           const overlapPenalty = placedMilestones.reduce((score, placed) => {
-            const horizontalOverlap = Math.max(0, Math.min(cardX + cardWidth, placed.cardX + cardWidth) - Math.max(cardX, placed.cardX));
-            const verticalOverlap = Math.max(0, Math.min(lane + cardHeight, placed.cardY + cardHeight) - Math.max(lane, placed.cardY));
+            const horizontalOverlap = Math.max(0, Math.min(cardX + item.cardWidth, placed.cardX + placed.cardWidth) - Math.max(cardX, placed.cardX));
+            const verticalOverlap = Math.max(0, Math.min(lane + item.cardHeight, placed.cardY + placed.cardHeight) - Math.max(lane, placed.cardY));
             return score + horizontalOverlap * verticalOverlap;
           }, 0);
           const distancePenalty = Math.abs(lane - y) * 0.55 + Math.abs(laneIndex - index) * 7;
@@ -639,12 +983,19 @@
       });
 
       const dots = [0, .14, .28, .43, .58, .73, .88].map((t) => [xFor(t), yFor(t)]);
-      const linePath = "M58 235 C170 229, 275 211, 385 178 C535 132, 680 82, 850 37";
-      const areaPath = `${linePath} L850 258 L58 258 Z`;
+      const linePath = "M58 235 C176 230, 286 210, 398 175 C548 128, 790 43, 872 37";
+      const contributionPath = "M58 252 C225 249, 410 240, 590 216 C724 198, 830 164, 872 160";
+      const areaPath = `${linePath} L872 258 L58 258 Z`;
 
       return (
-        <div className="chart-box premium-chart">
-          <svg viewBox="0 0 900 300" preserveAspectRatio="none">
+        <>
+        <div className="chart-box premium-chart desktop-projection-chart">
+          <svg
+            viewBox="0 0 900 300"
+            preserveAspectRatio="xMidYMid meet"
+            role="img"
+            aria-label={`Projected balance from age ${age} to age ${retireAge}`}
+          >
             <defs>
               <linearGradient id="areaFill" x1="0" x2="1" y1="0" y2="1">
                 <stop offset="0%" stopColor="#176bff" stopOpacity="0.14" />
@@ -656,19 +1007,41 @@
                 <stop offset="62%" stopColor="#176bff" />
                 <stop offset="100%" stopColor="#f5a400" />
               </linearGradient>
+              <linearGradient id="areaEdgeFade" x1="0" x2="1" y1="0" y2="0">
+                <stop offset="0%" stopColor="white" />
+                <stop offset="91%" stopColor="white" />
+                <stop offset="100%" stopColor="black" />
+              </linearGradient>
+              <mask id="areaFadeMask">
+                <rect x="58" y="0" width="826" height="258" fill="url(#areaEdgeFade)" />
+              </mask>
             </defs>
 
-            <line x1="58" y1="245" x2="850" y2="245" className="grid-line" />
-            <line x1="58" y1="190" x2="850" y2="190" className="grid-line" />
-            <line x1="58" y1="135" x2="850" y2="135" className="grid-line" />
-            <line x1="58" y1="80" x2="850" y2="80" className="grid-line" />
+            <g className="chart-grid">
+              <line x1="58" y1="245" x2="884" y2="245" className="grid-line" />
+              <line x1="58" y1="190" x2="884" y2="190" className="grid-line" />
+              <line x1="58" y1="135" x2="884" y2="135" className="grid-line" />
+              <line x1="58" y1="80" x2="884" y2="80" className="grid-line" />
+              <line x1="264" y1="32" x2="264" y2="258" className="vertical-grid-line" />
+              <line x1="470" y1="32" x2="470" y2="258" className="vertical-grid-line" />
+              <line x1="676" y1="32" x2="676" y2="258" className="vertical-grid-line" />
+            </g>
 
-            <path d={areaPath} fill="url(#areaFill)" />
-            <path d="M58 252 C205 248, 385 240, 560 220 C700 202, 795 182, 850 162" className="contrib-line" />
+            <path d={areaPath} fill="url(#areaFill)" className="chart-area" mask="url(#areaFadeMask)" />
+            <path d={contributionPath} className="contrib-line" />
             <path d={linePath} className="wealth-path glow-path" />
             <path d={linePath} className="wealth-path animated-path" />
 
-            {dots.map(([x,y]) => <circle key={x} cx={x} cy={y} r="4.6" className="chart-dot" />)}
+            {dots.map(([x,y], index) => (
+              <circle
+                key={x}
+                cx={x}
+                cy={y}
+                r="4.6"
+                className="chart-dot"
+                style={{ "--dot-index": index }}
+              />
+            ))}
 
             <g className="today-card">
               <rect x="74" y="83" width="142" height="76" rx="13" />
@@ -677,27 +1050,101 @@
               <text x="91" y="150" className="tooltip-text">Payday #{paydaysUsed}</text>
             </g>
 
-            {placedMilestones.map((item) => (
-              <g className={`milestone-card ${item.type}`} key={`${item.title}-${item.sub}`}>
-                <line x1={item.x} y1={item.y} x2={item.cardX + 18} y2={item.cardY + 34} className="milestone-stem" />
-                <circle cx={item.x} cy={item.y} r="6" className="milestone-dot" />
-                <rect x={item.cardX} y={item.cardY} width={cardWidth} height={cardHeight} rx="13" />
-                <text x={item.cardX + 14} y={item.cardY + 23} className="callout-blue">{item.title}</text>
-                <text x={item.cardX + 14} y={item.cardY + 43} className="callout-sub">{item.sub}</text>
-              </g>
-            ))}
+            {placedMilestones.map((item, index) => (
+                <g
+                  className={`milestone-card ${item.type}`}
+                  key={`${item.title}-${item.sub}`}
+                  style={{ "--milestone-index": index }}
+                >
+                  <line
+                    x1={item.x}
+                    y1={item.y}
+                    x2={item.cardX + 18}
+                    y2={item.cardY + item.cardHeight / 2}
+                    className="milestone-stem"
+                  />
+                  <circle cx={item.x} cy={item.y} r="6" className="milestone-dot" />
+                  <rect x={item.cardX} y={item.cardY} width={item.cardWidth} height={item.cardHeight} rx="13" />
+                  <text x={item.cardX + 14} y={item.cardY + 21} className="callout-blue">
+                    {item.titleLines.map((line, lineIndex) => (
+                      <tspan key={line} x={item.cardX + 14} dy={lineIndex ? 13 : 0}>{line}</tspan>
+                    ))}
+                  </text>
+                  <text x={item.cardX + 14} y={item.cardY + item.subStartOffset} className="callout-sub">
+                    {item.subLines.map((line, lineIndex) => (
+                      <tspan key={line} x={item.cardX + 14} dy={lineIndex ? 12 : 0}>{line}</tspan>
+                    ))}
+                  </text>
+                </g>
+              ))}
 
-            <circle cx="850" cy="37" r="10" className="destination-core" />
-            <circle cx="850" cy="37" r="24" className="destination-glow" />
-            <text x="782" y="75" className="destination-label">Retirement</text>
-            <text x="782" y="93" className="destination-sub">Age {retireAge}</text>
-            <text x="782" y="109" className="destination-sub">Payday #1040</text>
+            <line x1="58" y1="258" x2="884" y2="258" className="timeline-axis" />
+            <line x1="884" y1="253" x2="884" y2="263" className="timeline-end-tick" />
+
+            <circle cx="872" cy="37" r="10" className="destination-core" />
+            <circle cx="872" cy="37" r="24" className="destination-glow" />
+            <text x="842" y="20" textAnchor="end" className="destination-label">Retirement</text>
+            <text x="858" y="72" textAnchor="end" className="destination-sub">Age {retireAge}</text>
+            <text x="858" y="88" textAnchor="end" className="destination-sub">Payday #{retirementPayday}</text>
 
             <text x="58" y="276" className="axis-label">Today</text>
-            <text x="850" y="276" textAnchor="end" className="axis-label">Retirement</text>
+            <text x="872" y="276" textAnchor="end" className="axis-label">Retirement</text>
             <text x="58" y="291" className="axis-sub">Age {age} · Payday #{paydaysUsed}</text>
-            <text x="850" y="291" textAnchor="end" className="axis-sub">Age {retireAge} · Payday #1040</text>
+            <text x="872" y="291" textAnchor="end" className="axis-sub">Age {retireAge} · Payday #{retirementPayday}</text>
           </svg>
         </div>
+        <div className="chart-box mobile-projection-chart">
+          <svg
+            viewBox="0 0 360 220"
+            role="img"
+            aria-label={`Mobile projection from age ${age} to age ${retireAge}`}
+          >
+            <defs>
+              <linearGradient id="mobileAreaFill" x1="0" x2="1" y1="0" y2="1">
+                <stop offset="0%" stopColor="#176bff" stopOpacity="0.12" />
+                <stop offset="100%" stopColor="#f5a400" stopOpacity="0.24" />
+              </linearGradient>
+              <linearGradient id="mobileWealthLine" x1="0" x2="1" y1="0" y2="0">
+                <stop offset="0%" stopColor="#061936" />
+                <stop offset="65%" stopColor="#176bff" />
+                <stop offset="100%" stopColor="#f5a400" />
+              </linearGradient>
+              <linearGradient id="mobileAreaEdgeFade" x1="0" x2="1" y1="0" y2="0">
+                <stop offset="0%" stopColor="white" />
+                <stop offset="88%" stopColor="white" />
+                <stop offset="100%" stopColor="black" />
+              </linearGradient>
+              <mask id="mobileAreaFadeMask">
+                <rect x="20" y="0" width="328" height="184" fill="url(#mobileAreaEdgeFade)" />
+              </mask>
+            </defs>
+
+            <g className="mobile-chart-grid">
+              <line x1="20" y1="50" x2="340" y2="50" />
+              <line x1="20" y1="90" x2="340" y2="90" />
+              <line x1="20" y1="130" x2="340" y2="130" />
+              <line x1="20" y1="170" x2="340" y2="170" />
+            </g>
+
+            <path
+              d="M20 174 C80 170 130 150 180 120 C240 84 320 32 340 30 L340 184 L20 184 Z"
+              fill="url(#mobileAreaFill)"
+              mask="url(#mobileAreaFadeMask)"
+            />
+            <path d="M20 181 C110 180 300 138 340 132" className="mobile-contribution-line" />
+            <path d="M20 174 C80 170 130 150 180 120 C240 84 320 32 340 30" className="mobile-wealth-glow" />
+            <path d="M20 174 C80 170 130 150 180 120 C240 84 320 32 340 30" className="mobile-wealth-line" />
+
+            <circle cx="20" cy="174" r="5" className="mobile-start-dot" />
+            <circle cx="340" cy="30" r="14" className="mobile-end-glow" />
+            <circle cx="340" cy="30" r="7" className="mobile-end-dot" />
+
+            <line x1="20" y1="184" x2="348" y2="184" className="mobile-timeline-axis" />
+            <line x1="348" y1="180" x2="348" y2="188" className="mobile-timeline-tick" />
+            <text x="20" y="204" className="mobile-chart-label">Today · Age {age}</text>
+            <text x="340" y="204" textAnchor="end" className="mobile-chart-label">Retirement · Age {retireAge}</text>
+          </svg>
+        </div>
+        </>
       );
     }
