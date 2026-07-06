@@ -428,7 +428,943 @@
       ],
     };
 
-    const ARTICLES = [FEATURED_ARTICLE, SECOND_ARTICLE, THIRD_ARTICLE, FOURTH_ARTICLE];
+    const FIFTH_ARTICLE = {
+      id: "rich-enough",
+      title: "Rich Enough",
+      summary: "A simple comment during a performance review revealed what financial freedom really means. Wealth isn't about owning everything. It's about having enough choices to live life on your own terms.",
+      image: "/article-rich-enough.png",
+      readTime: "4 min read",
+      category: "Payday philosophy",
+      kicker: "FINANCIAL FREEDOM · ENOUGH · CHOICE",
+      alt: "Person sitting in a cave looking out at a mountain lake at sunset",
+      caption: "Financial freedom is not about having everything. It is about having enough choices.",
+      quote: {
+        strong: "The goal was never to collect as much money as possible.",
+        text: "The goal was to buy freedom.",
+      },
+      sections: [
+        {
+          heading: "The sentence I wasn't supposed to say",
+          paragraphs: [
+            "I wasn't supposed to say it out loud.",
+            "It was just a routine performance review. We were talking about goals, career plans, and what I wanted to accomplish over the next few years.",
+            "At one point my manager asked where I saw myself in the future.",
+            "Without thinking, I answered.",
+            "\"I could retire if I wanted to.\"",
+            "The room went quiet.",
+            "I wasn't trying to brag. In fact, I regretted saying it almost immediately. I could tell it sounded very different than I intended.",
+            "What I meant was simple.",
+            "After years of working, saving, investing, and living below my means, I had finally reached a point where work had become a choice instead of a necessity.",
+          ],
+        },
+        {
+          heading: "What enough really feels like",
+          paragraphs: [
+            "That doesn't mean I own a yacht.",
+            "It doesn't mean I fly on private jets.",
+            "It doesn't mean I buy everything I want.",
+            "It means something much more valuable.",
+            "I have enough.",
+            "Enough to sleep well at night.",
+            "Enough to handle life's surprises.",
+            "Enough to know that if tomorrow didn't go according to plan, my future wouldn't fall apart.",
+          ],
+        },
+        {
+          heading: "Built from ordinary paydays",
+          paragraphs: [
+            "That feeling didn't come from one big paycheck.",
+            "It wasn't the result of a lucky investment or a winning lottery ticket.",
+            "It came from thousands of ordinary paydays.",
+            "Paydays where I saved before I spent.",
+            "Paydays where I invested when it would have been easier to buy something else.",
+            "Paydays where I made small decisions that didn't seem important at the time.",
+            "Looking back, none of those decisions changed my life on their own.",
+            "Together, they changed everything.",
+          ],
+        },
+        {
+          heading: "A different definition of rich",
+          paragraphs: [
+            "When people hear the word \"rich,\" they often picture mansions, luxury cars, and extravagant vacations.",
+            "I've learned that being rich has less to do with what other people see and much more to do with the choices you have.",
+            "Being able to leave a job you no longer enjoy.",
+            "Being able to help your family without creating hardship for yourself.",
+            "Being able to take time off when life demands it.",
+            "Being able to sleep peacefully because money isn't keeping you awake.",
+            "That's the kind of wealth I wanted.",
+            "Money is a tool.",
+            "The goal was never to collect as much of it as possible.",
+            "The goal was to buy freedom.",
+            "Freedom to choose.",
+            "Freedom to say yes.",
+            "Freedom to say no.",
+            "Freedom to spend my time on the things that matter most.",
+          ],
+        },
+        {
+          heading: "Rich enough to choose",
+          paragraphs: [
+            "I still work.",
+            "I enjoy having projects, solving problems, and learning new things.",
+            "But there's a quiet confidence that comes from knowing I don't have to.",
+            "That feeling wasn't built overnight.",
+            "It was built one payday at a time.",
+            "One decision at a time.",
+            "One ordinary habit repeated over and over again.",
+            "You don't have to become the richest person in the room.",
+            "You just have to become rich enough to live life on your own terms.",
+            "Because in the end, wealth isn't about having everything.",
+            "It's about having enough choices.",
+            "And every payday gives you another chance to build them.",
+          ],
+        },
+      ],
+    };
+
+    const SIXTH_ARTICLE = {
+      id: "youre-not-too-late",
+      title: "You're Not Too Late",
+      summary: "Saving my first $1,000 didn't make me wealthy, but it changed how I thought about money forever. It's never too late to begin because every financial journey starts with a single payday.",
+      image: "/article-youre-not-too-late.png",
+      readTime: "4 min read",
+      category: "Saving",
+      kicker: "SAVING · STARTING · MOMENTUM",
+      alt: "Savings jar with bills and coins beside a notebook and pen",
+      caption: "The first milestone matters because it proves that progress belongs to you, too.",
+      quote: {
+        strong: "Your future doesn't need a perfect beginning.",
+        text: "It only needs a beginning.",
+      },
+      sections: [
+        {
+          heading: "My first four digits",
+          paragraphs: [
+            "I still remember saving my first $1,000.",
+            "It didn't happen overnight.",
+            "At the time, I was working in a call centre. The pay wasn't remarkable, and there certainly wasn't extra money sitting around waiting to be saved.",
+            "Every payday, I'd set a little aside before I spent the rest. Some paydays it felt easy. Other times it meant saying no to things I wanted.",
+            "Progress was slow.",
+            "There were weeks when the balance barely seemed to move.",
+            "Then one day, I looked at my account and saw four digits.",
+            "One thousand dollars.",
+            "To someone else, it might not have seemed like much.",
+            "To me, it felt enormous.",
+          ],
+        },
+        {
+          heading: "The proof mattered more than the amount",
+          paragraphs: [
+            "Not because of the amount.",
+            "Because it proved something.",
+            "I could do this.",
+            "That first thousand wasn't life changing financially.",
+            "It was life changing mentally.",
+            "For the first time, saving money wasn't something other people did.",
+            "It was something I did.",
+            "That small victory gave me confidence to save the next thousand.",
+            "Then the next.",
+            "Eventually, I started investing.",
+            "Years passed.",
+            "Those small, ordinary decisions kept adding up.",
+          ],
+        },
+        {
+          heading: "The next payday is still yours",
+          paragraphs: [
+            "People sometimes tell me they wish they had started saving twenty years ago.",
+            "I understand that feeling.",
+            "But wishing doesn't change yesterday.",
+            "The only payday you can still influence is the next one.",
+            "The best time to start may have been years ago.",
+            "The second best time is your next payday.",
+            "I've met people who started investing in their twenties.",
+            "I've met others who didn't begin until their forties or fifties.",
+            "The ones who made progress weren't the ones who started the earliest.",
+            "They were the ones who finally started.",
+          ],
+        },
+        {
+          heading: "Grow the habit first",
+          paragraphs: [
+            "Money has an incredible ability to grow.",
+            "But before your investments can grow, your habits have to grow first.",
+            "Every saver has a first payday.",
+            "Every investor buys a first investment.",
+            "Every retirement account begins with a balance of zero.",
+            "No one skips those first steps.",
+            "If you're waiting until you have more money...",
+            "If you're waiting until life settles down...",
+            "If you're waiting until next year...",
+            "You may be waiting forever.",
+            "Your future doesn't need a perfect beginning.",
+            "It only needs a beginning.",
+          ],
+        },
+        {
+          heading: "Choose your first milestone",
+          paragraphs: [
+            "Maybe your first goal is $100.",
+            "Maybe it's $500.",
+            "Maybe it's your first $1,000, just like mine.",
+            "The amount doesn't matter nearly as much as the habit you're building.",
+            "One payday becomes two.",
+            "Two becomes ten.",
+            "Ten becomes a year.",
+            "Years become decades.",
+            "One ordinary decision repeated hundreds of times quietly changes your future.",
+            "If you're reading this and wondering whether you've missed your chance, let me answer that for you.",
+            "You haven't.",
+            "Your next payday is still coming.",
+            "And that's all you need.",
+          ],
+        },
+      ],
+    };
+
+    const SEVENTH_ARTICLE = {
+      id: "love-is-wonderful-it-just-isnt-a-financial-plan",
+      title: "Love Is Wonderful. It Just Isn't a Financial Plan.",
+      summary: "A conversation with a kind coworker revealed an important lesson: love and financial security are not the same thing. The strongest relationships are built when both people have a solid financial foundation of their own.",
+      image: "/article-love-isnt-a-financial-plan.png",
+      readTime: "4 min read",
+      category: "Payday philosophy",
+      kicker: "LOVE · INDEPENDENCE · SECURITY",
+      alt: "Couple walking together beside a desk with financial planning tools",
+      caption: "Love can enrich a life. A financial foundation gives that life choices.",
+      quote: {
+        strong: "Building your own future doesn't mean you expect to be alone.",
+        text: "It means you're giving yourself choices no matter what life brings.",
+      },
+      sections: [
+        {
+          heading: "A conversation I never forgot",
+          paragraphs: [
+            "She was one of the kindest people I've ever worked with.",
+            "The type of person who remembered birthdays, asked how your family was doing, and was always willing to help when someone needed it.",
+            "One day we were talking about the company's pension plan.",
+            "Almost everyone enrolled.",
+            "She hadn't.",
+            "I asked why.",
+            "She smiled and said something I'll never forget.",
+            "\"I won't need it. There will always be someone to take care of me.\"",
+            "She wasn't joking.",
+            "She genuinely believed that her future would always include someone else to provide financial security.",
+            "Maybe a partner.",
+            "Maybe family.",
+            "Maybe someone who loved her enough to make sure she was always okay.",
+          ],
+        },
+        {
+          heading: "Love and money are different things",
+          paragraphs: [
+            "I understood where she was coming from.",
+            "Love is one of the greatest gifts in life.",
+            "Having people who care about you is something money can never replace.",
+            "But as the years passed, I kept thinking about that conversation.",
+            "Because love and money are two very different things.",
+            "People lose jobs.",
+            "Relationships end.",
+            "Someone gets sick.",
+            "A spouse dies.",
+            "Life changes in ways we never expect.",
+            "None of those things mean someone failed.",
+            "They simply mean life happened.",
+          ],
+        },
+        {
+          heading: "Build a foundation for the unknown",
+          paragraphs: [
+            "The people who seem the most financially secure aren't always the ones with the highest incomes.",
+            "Often, they're the people who quietly built their own foundation while hoping they would never need it.",
+            "That's what saving really is.",
+            "It's not preparing for the worst.",
+            "It's preparing for the unknown.",
+            "The truth is, building your own financial future doesn't mean you expect to be alone.",
+            "It means you're giving yourself choices no matter what life brings.",
+            "If everything goes exactly as planned, wonderful.",
+            "You'll have more freedom together.",
+            "If life takes an unexpected turn, you'll still have a foundation beneath your feet.",
+            "That's not a lack of faith.",
+            "That's wisdom.",
+          ],
+        },
+        {
+          heading: "A gift to the people you love",
+          paragraphs: [
+            "One of the greatest gifts you can give someone you love isn't asking them to carry your financial future.",
+            "It's knowing they don't have to.",
+            "Because you've built one of your own.",
+            "Every payday is an opportunity to strengthen that foundation.",
+            "Sometimes it's a small contribution to a retirement account.",
+            "Sometimes it's paying down debt.",
+            "Sometimes it's adding a little more to your emergency fund.",
+            "The amount matters less than the habit.",
+            "You're quietly building independence one decision at a time.",
+          ],
+        },
+        {
+          heading: "Love richly. Plan wisely.",
+          paragraphs: [
+            "Love can make life richer.",
+            "It can make difficult days easier.",
+            "It can give us strength we never knew we had.",
+            "But it should never be the only thing standing between you and financial security.",
+            "Build your own foundation.",
+            "Share your life with someone if you're fortunate enough to find them.",
+            "But make sure your future isn't resting entirely on someone else's shoulders.",
+            "Because relationships are wonderful.",
+            "They just aren't a financial plan.",
+          ],
+        },
+      ],
+    };
+
+    const EIGHTH_ARTICLE = {
+      id: "the-biggest-lie-about-retirement",
+      title: "The Biggest Lie About Retirement",
+      summary: "Most people think retirement begins at a certain age. In reality, retirement starts the moment your money gives you the freedom to choose how you spend your time. Every payday is another step toward that freedom.",
+      image: "/article-biggest-lie-retirement.png",
+      readTime: "4 min read",
+      category: "Retirement",
+      kicker: "RETIREMENT · FREEDOM · CHOICE",
+      alt: "Retired couple having breakfast on a patio overlooking the coast",
+      caption: "Retirement is not a birthday. It is the freedom to choose what comes next.",
+      quote: {
+        strong: "Retirement isn't an age.",
+        text: "It's a financial condition.",
+      },
+      sections: [
+        {
+          heading: "The gentleman I never forgot",
+          paragraphs: [
+            "Early in my career, I worked with a gentleman who stood out.",
+            "His hair was white.",
+            "His suit hung a little too loosely, as though it had been tailored for a younger version of himself many years earlier.",
+            "He was quiet.",
+            "Polite.",
+            "Always on time.",
+            "I remember wondering why he was still working. He looked well past the age I assumed people retired.",
+            "At the time, I didn't know anything about his life.",
+            "Maybe he enjoyed the routine.",
+            "Maybe he liked being around people.",
+            "Maybe he simply wasn't ready to retire.",
+            "Or maybe there was another reason entirely.",
+            "I never asked.",
+            "A few months later, the company announced layoffs.",
+            "He was one of the people who lost his job.",
+            "I remember sitting at my desk thinking about him—not because I knew what he was going through, but because I realized I had no idea.",
+            "Was he financially prepared?",
+            "Was he worried?",
+            "Did he have enough saved?",
+            "Or was he wondering where his next paycheque would come from?",
+            "I never found out.",
+            "But I never forgot him.",
+            "He changed the way I thought about retirement.",
+          ],
+        },
+        {
+          heading: "The biggest lie",
+          paragraphs: [
+            "For most of my life, I thought retirement was an age.",
+            "Sixty-five.",
+            "That was the number everyone talked about. Some people said sixty. Others said seventy. It sounded as though retirement happened simply because enough birthdays had passed.",
+            "Then I realized something.",
+            "Retirement isn't an age.",
+            "It's a financial condition.",
+            "Two people can turn sixty-five on the same day.",
+            "One can retire.",
+            "The other can't.",
+            "The calendar didn't make the difference.",
+            "The money did.",
+          ],
+        },
+        {
+          heading: "Working because you want to",
+          paragraphs: [
+            "I hope I still have the energy to work when I'm older.",
+            "I hope I still enjoy learning new things.",
+            "I hope I still feel useful.",
+            "There's nothing wrong with working later in life—if it's your choice.",
+            "The problem isn't working.",
+            "The problem is not having a choice.",
+            "There's a world of difference between saying:",
+            "\"I'd like to keep working.\"",
+            "and",
+            "\"I have to keep working.\"",
+            "One is freedom.",
+            "The other is necessity.",
+            "Every payday quietly moves us toward one of those futures.",
+          ],
+        },
+        {
+          heading: "Retirement starts much earlier than you think",
+          paragraphs: [
+            "Most people think retirement begins on the day they stop working.",
+            "I don't.",
+            "I think retirement begins with your first payday.",
+            "Every time you save a little.",
+            "Every time you invest.",
+            "Every time you decide not to spend every dollar that reaches your account.",
+            "You're building options for your future.",
+            "Those choices don't seem exciting when you're twenty-five.",
+            "Or thirty-five.",
+            "Or even forty-five.",
+            "But one day, they become incredibly important.",
+            "Because retirement isn't built during your last year of work.",
+            "It's built during every year that came before it.",
+          ],
+        },
+        {
+          heading: "Buying tomorrow's freedom",
+          paragraphs: [
+            "People often think saving for retirement is about having more money.",
+            "I don't think that's the real goal.",
+            "The real goal is having more choices.",
+            "The choice to spend more time with your family.",
+            "The choice to travel.",
+            "The choice to volunteer.",
+            "The choice to start something new.",
+            "The choice to keep working because you enjoy it—not because you have no alternative.",
+            "Every dollar you save is quietly buying a little more freedom for your future self.",
+            "Not all at once.",
+            "One payday at a time.",
+          ],
+        },
+        {
+          heading: "One payday at a time",
+          paragraphs: [
+            "Most of us only receive about 1,040 paydays during our working lives.",
+            "Every one of them is an opportunity.",
+            "Not just to earn a living.",
+            "To build a life.",
+            "The biggest lie about retirement isn't that you need a certain age.",
+            "It's that retirement begins on your last day of work.",
+            "The truth is, retirement begins with your very first payday.",
+            "Because every payday funds a future.",
+            "Choose yours.",
+          ],
+        },
+      ],
+    };
+
+    const NINTH_ARTICLE = {
+      id: "everyone-needs-a-float",
+      title: "Everyone Needs a Float",
+      summary: "A float isn't about earning the highest return. It's about creating enough breathing room that life's unexpected expenses don't become financial emergencies. Sometimes the best investment is peace of mind.",
+      image: "/article-everyone-needs-a-float.png",
+      readTime: "4 min read",
+      category: "Saving",
+      kicker: "SAVING · RESILIENCE · PEACE OF MIND",
+      alt: "Vintage cash register drawer with bills and coins labeled float",
+      caption: "A quiet cash cushion can keep an ordinary problem from becoming a financial crisis.",
+      quote: {
+        strong: "A float isn't money waiting to be spent.",
+        text: "It's money waiting to protect you.",
+      },
+      sections: [
+        {
+          heading: "The cash drawer lesson",
+          paragraphs: [
+            "One of my first jobs was working as a cashier.",
+            "Every morning before the store opened, we'd head downstairs to collect the cash for our register.",
+            "Inside every cash drawer was something called a float.",
+            "It wasn't there to spend.",
+            "It wasn't extra money.",
+            "It wasn't profit.",
+            "It had one job:",
+            "To make sure we could make change throughout the day.",
+            "As customers came and went, money constantly moved in and out of the drawer. At the end of every shift, we counted everything. The sales had to match. The cash had to match. And the float had to still be there.",
+            "If the float was short, something had gone wrong.",
+            "It wasn't meant to disappear.",
+            "It was meant to be ready for tomorrow morning.",
+            "Years later, I realized our personal finances aren't much different.",
+          ],
+        },
+        {
+          heading: "Your life needs a float",
+          paragraphs: [
+            "Every payday, money arrives.",
+            "Bills get paid.",
+            "Groceries get bought.",
+            "The mortgage comes out.",
+            "The phone bill is due.",
+            "Life keeps moving.",
+            "But life has something stores don't:",
+            "Unexpected expenses.",
+            "The furnace stops working.",
+            "Your car needs a repair.",
+            "The dog gets sick.",
+            "You lose your job.",
+            "The washing machine quits.",
+            "Emergencies don't make appointments.",
+            "They simply show up.",
+            "That's why every household needs a float.",
+            "We usually call it an emergency fund.",
+            "I still like the word float—because that's exactly what it is.",
+          ],
+        },
+        {
+          heading: "It's not money waiting to be spent",
+          paragraphs: [
+            "One of the biggest mistakes people make is looking at an emergency fund and thinking,",
+            "\"I have all that money sitting there doing nothing.\"",
+            "That's exactly the wrong way to see it.",
+            "A float isn't money waiting to be spent.",
+            "It's money waiting to protect you.",
+            "The cash drawer at work wasn't considered wasted because it wasn't used every minute of the day. Its value came from being there when it was needed.",
+            "Your emergency fund works the same way.",
+            "Most days, nothing happens—and that's the goal.",
+            "But when life surprises you, your float quietly steps in and does the job it was created to do.",
+          ],
+        },
+        {
+          heading: "Who do you turn to?",
+          paragraphs: [
+            "Imagine your transmission fails tomorrow.",
+            "Or your furnace quits in the middle of winter.",
+            "If you have a float, the problem is expensive.",
+            "If you don't, the problem becomes something much bigger.",
+            "Now you're trying to borrow money.",
+            "Maybe from family.",
+            "Maybe from friends.",
+            "Maybe from the bank.",
+            "Maybe from a credit card.",
+            "The emergency hasn't changed.",
+            "Only the way you have to deal with it has.",
+            "A float gives you options.",
+            "It gives you breathing room.",
+            "Most importantly, it lets you solve one problem without creating another.",
+          ],
+        },
+        {
+          heading: "Build it one payday at a time",
+          paragraphs: [
+            "People often think they need thousands of dollars before starting an emergency fund.",
+            "You don't.",
+            "You simply need to begin.",
+            "Maybe it's twenty-five dollars from this payday.",
+            "Maybe it's fifty.",
+            "Maybe it's one hundred.",
+            "The amount matters far less than the habit.",
+            "Every payday adds another layer of protection.",
+            "Over time, that protection becomes confidence.",
+            "Eventually, something interesting happens.",
+            "You stop worrying quite as much.",
+            "Not because emergencies stopped happening—but because you know you're ready when they do.",
+          ],
+        },
+        {
+          heading: "The best money you never spend",
+          paragraphs: [
+            "The best emergency fund is the one you rarely touch.",
+            "Not because it isn't useful.",
+            "Because its greatest value comes from quietly waiting in the background.",
+            "Just like the float in a cash drawer.",
+            "Always there.",
+            "Always ready.",
+            "Hopefully, never needed.",
+            "And if one day you do need it, you'll be grateful you built it one payday at a time.",
+          ],
+        },
+        {
+          heading: "One payday at a time",
+          paragraphs: [
+            "At 1040 Paydays, we believe every payday has a purpose.",
+            "Some dollars pay today's bills.",
+            "Some dollars build tomorrow's retirement.",
+            "And some dollars simply wait—not because they're forgotten, but because they're protecting everything else you've worked so hard to build.",
+            "Most of us only receive about 1,040 paydays during our working lives.",
+            "Use a few of them to build your float.",
+            "One day, you'll be thankful it's there.",
+            "Because every payday funds a future.",
+            "Choose yours.",
+          ],
+        },
+      ],
+    };
+
+    const TENTH_ARTICLE = {
+      id: "the-number-that-really-matters",
+      title: "The Number That Really Matters",
+      summary: "A strong salary may look impressive, but the number that shapes your future is what actually reaches your account—and what you choose to do with every payday.",
+      image: "/article-number-that-really-matters.png",
+      readTime: "4 min read",
+      category: "Payday philosophy",
+      kicker: "TAKE-HOME PAY · CHOICES · CONSISTENCY",
+      alt: "Man reviewing a pay statement and writing notes at a kitchen table",
+      caption: "Your gross salary is a promise. Your take-home pay is the money you get to put to work.",
+      quote: {
+        strong: "Income matters.",
+        text: "But what you do with the money you actually receive matters even more.",
+      },
+      sections: [
+        {
+          heading: "The number on the job posting",
+          paragraphs: [
+            "Whenever someone starts a new job, there's usually one question people can't wait to ask.",
+            "\"How much does it pay?\"",
+            "It's understandable.",
+            "Salary is easy to compare.",
+            "It's the number printed on the job posting.",
+            "It's the number we tell our friends.",
+            "It's the number we use to judge whether someone is doing well.",
+            "For a long time, I thought it was the most important financial number too.",
+            "Then I looked at one of my pay stubs.",
+            "My salary looked great.",
+            "My take-home pay looked very different.",
+            "Taxes.",
+            "Pension deductions.",
+            "Employment insurance.",
+            "Benefits.",
+            "Other deductions.",
+            "By the time my pay reached my bank account, a noticeable portion had already gone somewhere else.",
+            "That wasn't a bad thing.",
+            "Many of those deductions were building my future.",
+            "But it reminded me of something important.",
+            "The number that changes your life isn't your gross salary.",
+            "It's what actually reaches your account.",
+            "Because that's the money you get to make decisions with.",
+          ],
+        },
+        {
+          heading: "What you do with it matters more",
+          paragraphs: [
+            "Every payday, you're faced with a choice.",
+            "Spend it.",
+            "Save it.",
+            "Invest it.",
+            "Pay down debt.",
+            "Give some away.",
+            "Those decisions are made with your take-home pay—not the number on your employment contract.",
+            "Imagine two people.",
+            "One earns $120,000 a year.",
+            "The other earns $75,000.",
+            "Who becomes wealthier?",
+            "Most people assume it's the person earning more.",
+            "Maybe.",
+            "But maybe not.",
+            "What if the first person spends nearly everything that reaches their account?",
+            "What if the second person consistently saves and invests part of every pay?",
+            "Twenty years later, who has more choices?",
+            "Who worries less?",
+            "Who built more security?",
+            "Income matters.",
+            "But what you do with the money you actually receive matters even more.",
+          ],
+        },
+        {
+          heading: "Every raise comes with a choice",
+          paragraphs: [
+            "A raise feels good.",
+            "You earned it.",
+            "But every raise quietly asks a question:",
+            "\"What are you going to do with me?\"",
+            "Spend all of it?",
+            "Save some of it?",
+            "Invest part of it?",
+            "Pay down debt?",
+            "Most raises disappear without us noticing—nicer vehicles, larger homes, upgraded phones, extra subscriptions.",
+            "None of those things are wrong.",
+            "The problem is assuming every raise belongs to today's lifestyle instead of tomorrow's freedom.",
+            "Sometimes the smartest financial decision isn't earning more.",
+            "It's keeping more.",
+          ],
+        },
+        {
+          heading: "Small decisions become big results",
+          paragraphs: [
+            "People often believe wealth is created by one brilliant investment or one lucky opportunity.",
+            "More often, wealth is built quietly.",
+            "A little saved today.",
+            "A little invested next payday.",
+            "Another small contribution the payday after that.",
+            "Those decisions don't feel exciting.",
+            "They often feel insignificant.",
+            "But time rewards consistency.",
+            "Money that remains invested begins earning money of its own.",
+            "Then those earnings begin earning money.",
+            "Years pass.",
+            "Then decades.",
+            "Eventually you realize something:",
+            "Those ordinary decisions were never ordinary at all.",
+            "They were building your future while you were busy living your life.",
+          ],
+        },
+        {
+          heading: "The number that really matters",
+          paragraphs: [
+            "The next time someone asks about your new job, you'll probably tell them your annual salary.",
+            "That's normal.",
+            "It's how the world measures careers.",
+            "But privately, measure something different.",
+            "Measure how much actually reaches your account.",
+            "Measure how much you save.",
+            "Measure how much you invest.",
+            "Measure how much debt you've paid off.",
+            "Measure how much closer each payday brings you to the future you want.",
+            "Your gross salary might impress people.",
+            "Your take-home pay quietly builds your life.",
+            "One is the promise.",
+            "The other is reality.",
+            "At 1040 Paydays, we believe financial freedom isn't built by the salary printed on an employment contract.",
+            "It's built by the choices you make with the money that actually reaches your account.",
+            "Most of us only receive about 1,040 paydays during our working lives.",
+            "We can't control how many we receive.",
+            "We can control what we do with every one of them.",
+            "Every payday funds a future.",
+            "Choose yours.",
+          ],
+        },
+      ],
+    };
+
+    const ELEVENTH_ARTICLE = {
+      id: "the-language-i-wish-id-learned-sooner",
+      title: "The Language I Wish I'd Learned Sooner",
+      summary: "I once looked at a 13-cent stock every day without realizing the opportunity in front of me. Learning the language of money taught me that understanding is often the first and most valuable investment you'll ever make.",
+      image: "/article-language-learned-sooner.png",
+      readTime: "4 min read",
+      category: "Financial Basics",
+      kicker: "FINANCIAL BASICS · LEARNING · CONFIDENCE",
+      alt: "Financial learning objects on a table, including a compass, stock certificate, savings tote, and growth plant",
+      caption: "Sometimes an opportunity looks ordinary until you learn the language needed to recognize it.",
+      quote: {
+        strong: "The biggest investment I ever made wasn't in a company.",
+        text: "It was in learning.",
+      },
+      sections: [
+        {
+          heading: "The language I didn't know",
+          paragraphs: [
+            "Early in my career, I knew how to work.",
+            "I knew how to show up on time.",
+            "I knew how to meet deadlines.",
+            "I knew how to do a good job.",
+            "What I didn't know was the language of money.",
+            "Words like compound interest, dividends, shares, interest rates, and diversification.",
+            "They all sounded important.",
+            "But none of them meant anything to me.",
+            "When I joined my company's pension plan, I chose my investments using \"eeny, meeny, miny, moe.\"",
+            "Not because I didn't care, but because I didn't understand what I was looking at.",
+            "The options were just names on a page.",
+            "To me, one looked about as good as another.",
+          ],
+        },
+        {
+          heading: "The 13-cent number on my screen",
+          paragraphs: [
+            "Around that same time, our company rolled out a new software system.",
+            "Every morning when I logged in, the first screen showed the company's share price.",
+            "If my memory is right, it hovered around eleven or thirteen cents.",
+            "I saw that number every single day.",
+            "Sometimes more than once.",
+            "But I never stopped to think about it.",
+            "I never wondered what owning a share actually meant.",
+            "I never asked why the number mattered.",
+            "I didn't even know enough to know it was worth asking.",
+            "Years later, the company was acquired.",
+            "If I'm remembering correctly, shareholders received somewhere around $3.40 a share.",
+            "I wasn't upset that I hadn't bought the stock.",
+            "What stayed with me was something much simpler.",
+            "I had looked at that number hundreds of times...",
+            "...without ever understanding what I was looking at.",
+            "That realization changed me.",
+          ],
+        },
+        {
+          heading: "You can't recognize what you don't understand",
+          paragraphs: [
+            "Looking back, I don't blame my younger self.",
+            "Nobody had ever taught me how investing worked.",
+            "Nobody had explained what a share represented.",
+            "Nobody had shown me how compound interest quietly builds wealth over time.",
+            "Nobody had explained why understanding money matters just as much as earning it.",
+            "So I did what many people do.",
+            "I ignored it.",
+            "Not because I thought it was unimportant.",
+            "But because I didn't know it was important.",
+            "There's a big difference.",
+          ],
+        },
+        {
+          heading: "Learning the language",
+          paragraphs: [
+            "A few years later, I went back to school.",
+            "Slowly, the words that once felt intimidating started to make sense.",
+            "Compound interest wasn't just a term. It was a force.",
+            "A share wasn't just a number. It was ownership.",
+            "Interest rates weren't abstract. They shaped mortgages, loans, and everyday decisions.",
+            "The world hadn't changed.",
+            "I had changed.",
+            "Because I finally understood the language.",
+            "Once you understand the language, you begin to see opportunities that were there all along.",
+          ],
+        },
+        {
+          heading: "You don't need to know everything",
+          paragraphs: [
+            "One of the biggest surprises was realizing you don't need to be an expert to begin.",
+            "You don't need to memorize stock symbols.",
+            "You don't need to predict markets.",
+            "You don't need to understand every chart or every headline.",
+            "You just need to understand the basics.",
+            "Because once you understand the language, your confidence grows.",
+            "Your questions get better.",
+            "Your decisions get better.",
+            "And over time, your future gets better too.",
+          ],
+        },
+        {
+          heading: "One payday at a time",
+          paragraphs: [
+            "That 13-cent stock taught me something I never forgot.",
+            "Opportunities don't always announce themselves.",
+            "Sometimes they sit quietly on a screen you see every day.",
+            "Sometimes they look ordinary until you understand what you're looking at.",
+            "The biggest investment I ever made wasn't in a company.",
+            "It was in learning.",
+            "Most people only get about 1,040 paydays during their working lives.",
+            "Spend some earning money.",
+            "Spend some learning about money.",
+            "Because every payday funds a future.",
+            "Choose yours.",
+          ],
+        },
+      ],
+    };
+
+    const TWELFTH_ARTICLE = {
+      id: "the-month-i-accidentally-saved-money",
+      title: "The Month I Accidentally Saved Money",
+      summary: "I changed a few habits to feel healthier and discovered that my bank balance improved too. Sometimes the most effective financial changes begin with a better decision somewhere else in life.",
+      image: "/article-accidentally-saved-money.png",
+      readTime: "4 min read",
+      category: "Saving",
+      kicker: "SAVING · HEALTH · HABITS",
+      alt: "Woman writing in a notebook at a kitchen table with packed food and coffee nearby",
+      caption: "A packed lunch, coffee from home, and a few ordinary choices quietly changed two things at once.",
+      quote: {
+        strong: "Money doesn't always improve because we focus on money.",
+        text: "Sometimes it improves because we become more intentional about how we live.",
+      },
+      sections: [
+        {
+          heading: "A healthier goal",
+          paragraphs: [
+            "A few years ago, I decided it was time to lose a few pounds.",
+            "Not because anyone told me to.",
+            "Not because I had made a New Year's resolution.",
+            "I simply wanted to feel healthier.",
+            "So I made a few small changes.",
+            "I packed my lunch instead of buying it.",
+            "I stopped grabbing a coffee every morning on the way to work.",
+            "I skipped the afternoon chocolate bar that had quietly become part of my routine.",
+            "Instead of ordering takeout after a long day, I cooked dinner at home.",
+            "None of those decisions had anything to do with saving money.",
+            "I wasn't budgeting.",
+            "I wasn't trying to spend less.",
+            "I wasn't tracking every dollar.",
+            "My only goal was to build healthier habits.",
+            "About a month later, I logged into my bank account.",
+            "There was more money sitting there than I expected.",
+            "For a moment, I thought I'd forgotten to pay a bill.",
+            "I checked everything.",
+            "Nothing was missing.",
+            "I hadn't earned any extra money.",
+            "I hadn't received a bonus.",
+            "I hadn't found money lying around.",
+            "I had simply spent less without ever trying to.",
+            "That was the month I accidentally saved money.",
+          ],
+        },
+        {
+          heading: "Sometimes the best financial plan isn't about money",
+          paragraphs: [
+            "We often think improving our finances means creating a detailed budget, tracking every purchase, or finding ways to earn more.",
+            "Those things certainly help.",
+            "But sometimes the biggest financial improvements happen because we change something completely unrelated.",
+            "When I started eating healthier, I naturally stopped buying things I didn't really need.",
+            "Restaurant meals became groceries.",
+            "Coffee shop visits became coffee at home.",
+            "Impulse snacks quietly disappeared.",
+            "I wasn't making financial decisions.",
+            "I was making health decisions.",
+            "The financial benefits simply followed.",
+          ],
+        },
+        {
+          heading: "Every season has a purpose",
+          paragraphs: [
+            "Life has seasons.",
+            "Sometimes your focus is paying off debt.",
+            "Sometimes it's raising children.",
+            "Sometimes it's building your career.",
+            "Sometimes it's looking after your health.",
+            "The interesting thing is that progress in one area often creates progress somewhere else.",
+            "Better health can mean fewer impulse purchases.",
+            "Less stress can mean fewer emotional shopping trips.",
+            "Cooking at home can improve both your waistline and your bank balance.",
+            "Good habits rarely stay in just one part of your life.",
+            "They have a way of spreading.",
+          ],
+        },
+        {
+          heading: "Tiny decisions become big results",
+          paragraphs: [
+            "None of the choices I made felt significant.",
+            "One lunch.",
+            "One coffee.",
+            "One dinner.",
+            "One walk instead of a drive.",
+            "On their own, they barely seemed worth mentioning.",
+            "But repeated over a month, they quietly changed two things at once.",
+            "I felt better.",
+            "And my bank account looked better.",
+            "That's the funny thing about habits.",
+            "You rarely notice them while you're building them.",
+            "You notice them later, when the results begin to appear.",
+          ],
+        },
+        {
+          heading: "A better question",
+          paragraphs: [
+            "Instead of asking,",
+            "\"How can I save more money?\"",
+            "Sometimes it's worth asking,",
+            "\"What habit could improve my life?\"",
+            "Maybe it's exercising.",
+            "Maybe it's sleeping better.",
+            "Maybe it's meal planning.",
+            "Maybe it's spending less time shopping out of boredom.",
+            "You might discover, as I did, that improving one part of your life quietly improves another.",
+          ],
+        },
+        {
+          heading: "Healthier. Wealthier. Wiser.",
+          paragraphs: [
+            "That month taught me something I've never forgotten.",
+            "Money doesn't always improve because we focus on money.",
+            "Sometimes it improves because we become more intentional about how we live.",
+            "Healthier choices.",
+            "Better habits.",
+            "More thoughtful decisions.",
+            "One small change has a way of leading to another.",
+            "Before long, your life begins moving in a different direction.",
+            "One payday at a time.",
+            "At 1040 Paydays, we believe every payday is an opportunity to build a better future.",
+            "Sometimes that future begins with a financial decision.",
+            "Sometimes it begins with a completely different one.",
+            "Either way, the principle is the same.",
+            "Small choices, repeated consistently, change your life.",
+            "Because every payday funds a future.",
+            "Choose yours.",
+          ],
+        },
+      ],
+    };
+
+    const ARTICLES = [FEATURED_ARTICLE, SECOND_ARTICLE, THIRD_ARTICLE, FOURTH_ARTICLE, FIFTH_ARTICLE, SIXTH_ARTICLE, SEVENTH_ARTICLE, EIGHTH_ARTICLE, NINTH_ARTICLE, TENTH_ARTICLE, ELEVENTH_ARTICLE, TWELFTH_ARTICLE];
 
     const ARTICLE_FAQS = {
       "you-only-get-about-1040-paydays": [
@@ -519,6 +1455,182 @@
           answer: "Ask: “How much of this belongs to my future?” That pause can keep an unexpected opportunity from becoming automatic spending.",
         },
       ],
+      "rich-enough": [
+        {
+          question: "What does it mean to be rich enough?",
+          answer: "It means having enough financial security and flexibility to make meaningful choices without money controlling every decision. The number will be different for every person.",
+        },
+        {
+          question: "Is being rich enough the same as retiring early?",
+          answer: "Not necessarily. Financial freedom can mean continuing to work because you enjoy it while knowing that work is no longer your only option.",
+        },
+        {
+          question: "How can ordinary paydays create financial freedom?",
+          answer: "Consistently saving, investing, and spending intentionally can compound across hundreds of paydays. The individual choices may feel small, but the repeated pattern can become powerful.",
+        },
+        {
+          question: "How do I know how much is enough for me?",
+          answer: "Start with the life you want to support, your essential expenses, a margin for unexpected events, and the choices you hope money will make possible. A qualified financial professional can help with a personalized plan.",
+        },
+        {
+          question: "Do I need a high income to begin building more choices?",
+          answer: "No. Income affects the pace, but the habit can begin with any sustainable amount. Protect the essentials, start where you are, and increase your saving or investing when your circumstances allow.",
+        },
+      ],
+      "youre-not-too-late": [
+        {
+          question: "Is it really worth starting to save later in life?",
+          answer: "Yes. Starting today cannot change the past, but it can improve every payday that follows. Even a shorter period of consistent saving can strengthen your options and resilience.",
+        },
+        {
+          question: "What should my first savings goal be?",
+          answer: "Choose a milestone that feels meaningful and achievable, such as $100, $500, or $1,000. Reaching it helps build confidence and creates momentum for the next goal.",
+        },
+        {
+          question: "What if I can only save a small amount each payday?",
+          answer: "A small sustainable amount is a real beginning. The habit matters, and you can increase the amount later when your income or expenses change.",
+        },
+        {
+          question: "Should I save or invest first?",
+          answer: "Many people begin with accessible emergency savings before investing for longer-term goals. The right order depends on your needs, debts, time horizon, and comfort with risk.",
+        },
+        {
+          question: "How can I make saving more consistent?",
+          answer: "Set aside money as soon as you are paid, automate the transfer when possible, and use a clear milestone so each deposit feels connected to visible progress.",
+        },
+      ],
+      "love-is-wonderful-it-just-isnt-a-financial-plan": [
+        {
+          question: "Does financial independence mean keeping money separate from a partner?",
+          answer: "Not necessarily. Couples can combine finances, keep some accounts separate, or use a mixture. The important part is that each person understands the plan and has meaningful financial awareness and security.",
+        },
+        {
+          question: "How can partners build financial security together?",
+          answer: "Talk openly about income, debt, saving, insurance, retirement, and shared goals. A strong joint plan can still respect each person's need for knowledge, access, and a voice in decisions.",
+        },
+        {
+          question: "What should I build in my own name?",
+          answer: "Needs vary, but accessible savings, retirement assets, credit history, and a clear understanding of household finances can all strengthen your foundation. Consider professional advice for your circumstances.",
+        },
+        {
+          question: "Is planning for unexpected life changes pessimistic?",
+          answer: "No. Planning is not predicting that something will go wrong. It is creating options so you and the people you love are better protected if life changes.",
+        },
+        {
+          question: "What is one step I can take on my next payday?",
+          answer: "Choose one foundation-building action: contribute to retirement, add to emergency savings, reduce debt, review insurance, or learn where important household accounts and documents are kept.",
+        },
+      ],
+      "the-biggest-lie-about-retirement": [
+        {
+          question: "Is retirement an age or a financial position?",
+          answer: "Retirement eligibility may involve ages and rules, but the freedom to choose whether you work depends more broadly on your resources, expenses, goals, health, and personal circumstances.",
+        },
+        {
+          question: "How do I estimate how much retirement freedom I need?",
+          answer: "Start with the life and expenses you want to support, then consider inflation, taxes, healthcare, longevity, other income sources, and a margin for uncertainty. Personalized professional advice can help.",
+        },
+        {
+          question: "Can working in retirement still count as retirement?",
+          answer: "Absolutely. If work is a choice rather than a financial requirement, part-time work, consulting, or a meaningful second career can all fit your version of retirement.",
+        },
+        {
+          question: "What can I do if retirement feels impossibly far away?",
+          answer: "Measure smaller gains in freedom: an emergency fund, lower debt, growing investments, or the ability to handle a setback. Those milestones make progress visible before your final working day.",
+        },
+        {
+          question: "What can my next payday do for retirement?",
+          answer: "It can fund a retirement contribution, reduce expensive debt, strengthen emergency savings, or simply reinforce the habit of giving part of today's income to your future choices.",
+        },
+      ],
+      "everyone-needs-a-float": [
+        {
+          question: "Is a float the same as an emergency fund?",
+          answer: "They serve a similar purpose: accessible cash that keeps unexpected expenses from becoming debt. You may call it a float, emergency fund, buffer, or cash cushion.",
+        },
+        {
+          question: "How much money should I keep in my float?",
+          answer: "There is no universal number. A first milestone might be $500 or $1,000, followed by one month of essential expenses and, over time, a larger cushion suited to your risks and responsibilities.",
+        },
+        {
+          question: "Where should I keep this money?",
+          answer: "A float generally belongs somewhere safe, accessible, and separate from everyday spending, such as an insured savings account. Accessibility usually matters more than chasing a high return.",
+        },
+        {
+          question: "Should I build a float before investing?",
+          answer: "Many people benefit from creating at least a starter cushion before taking more investment risk. Your priorities may also depend on expensive debt, employer matching, and personal circumstances.",
+        },
+        {
+          question: "What should I do after I use part of my float?",
+          answer: "Use it for the problem it was built to solve, then make replenishing it a payday priority. The fund did its job; rebuilding it prepares you for the next surprise.",
+        },
+      ],
+      "the-number-that-really-matters": [
+        {
+          question: "What is the difference between gross salary and take-home pay?",
+          answer: "Gross salary is your pay before deductions. Take-home pay is what reaches your account after taxes, pension or retirement contributions, insurance, benefits, and other deductions.",
+        },
+        {
+          question: "Are payroll deductions always a bad thing?",
+          answer: "No. Some deductions pay required taxes or fund valuable benefits and retirement savings. Understanding each deduction helps you see where your compensation is going.",
+        },
+        {
+          question: "Why can someone with a lower salary build more wealth?",
+          answer: "Income provides opportunity, but spending, saving, investing, debt, taxes, and time all affect the outcome. Someone who consistently keeps and invests part of their pay may build more choices than a higher earner who spends nearly everything.",
+        },
+        {
+          question: "What is a smart way to handle a raise?",
+          answer: "Decide in advance how much will improve life today and how much will support savings, investing, or debt repayment. Directing part of a raise toward the future can limit automatic lifestyle inflation.",
+        },
+        {
+          question: "Which payday numbers should I track?",
+          answer: "Useful measures include take-home pay, savings rate, investment contributions, debt reduction, and progress toward specific goals. Choose a small set that helps you make better decisions.",
+        },
+      ],
+      "the-language-i-wish-id-learned-sooner": [
+        {
+          question: "Which financial terms should a beginner learn first?",
+          answer: "Start with interest, compound growth, inflation, shares, bonds, diversification, fees, risk, and the difference between saving and investing. A few core ideas make many later decisions easier.",
+        },
+        {
+          question: "What does owning a share mean?",
+          answer: "A share represents a small ownership interest in a company. Its value can rise or fall, and some companies may distribute part of their profits to shareholders through dividends.",
+        },
+        {
+          question: "What is compound interest?",
+          answer: "Compounding happens when your money earns a return and future returns are earned on both the original amount and earlier gains. Time and consistency can make the effect powerful.",
+        },
+        {
+          question: "Do I need to understand individual stocks before investing?",
+          answer: "No. Many beginners use diversified funds rather than selecting individual companies. Understanding goals, risk, diversification, time horizon, and fees is more important than memorizing stock symbols.",
+        },
+        {
+          question: "How can I start improving my financial literacy?",
+          answer: "Choose one concept at a time, use trustworthy educational sources, review your own pension or investment documents, and ask questions whenever a term or fee is unclear.",
+        },
+      ],
+      "the-month-i-accidentally-saved-money": [
+        {
+          question: "Can healthier habits really make a noticeable financial difference?",
+          answer: "They can. Replacing repeated convenience purchases with planned meals, coffee from home, walking, or other routines may reduce spending without making saving the primary goal.",
+        },
+        {
+          question: "Do I still need a budget if better habits reduce my spending?",
+          answer: "Helpful habits and a budget can work together. Habits reduce friction, while a simple plan helps you notice the extra money and direct it toward goals instead of letting it disappear elsewhere.",
+        },
+        {
+          question: "What should I do with money I save accidentally?",
+          answer: "Give it a job. You might build your emergency fund, reduce debt, invest for a longer-term goal, or intentionally use part of it for something meaningful.",
+        },
+        {
+          question: "Which habit should I change first?",
+          answer: "Choose one frequent routine that would improve your life and feels realistic to repeat. Small, sustainable changes usually last longer than an ambitious overhaul.",
+        },
+        {
+          question: "How long should I try a new habit before evaluating it?",
+          answer: "A month is often long enough to observe patterns without demanding perfection. Look at how you feel, what you spent, and whether the habit is sustainable.",
+        },
+      ],
     };
 
     const currencies = [
@@ -587,6 +1699,7 @@
 
       const [panel, setPanel] = useState(null);
       const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+      const mobileArticleStripRef = useRef(null);
       const [email, setEmail] = useState("");
       const [snapshots, setSnapshots] = useState(initialSettings.snapshots);
       const [showStartTip, setShowStartTip] = useState(() => {
@@ -788,6 +1901,13 @@
         window.scrollTo({ top: 0, behavior: "auto" });
       };
 
+      const scrollMobileArticles = (position) => {
+        const strip = mobileArticleStripRef.current;
+        if (!strip) return;
+        const maxScroll = strip.scrollWidth - strip.clientWidth;
+        strip.scrollTo({ left: maxScroll * position, behavior: "smooth" });
+      };
+
       const openHomePanel = (destination) => {
         if (window.location.pathname !== "/") window.history.pushState({}, "", "/");
         setRoute("/");
@@ -916,6 +2036,11 @@
                 <strong>{FEATURED_ARTICLE.title}</strong>
                 <em>Read article →</em>
               </button>
+              <div className="home-article-dots" aria-label="Featured article position">
+                <span className="is-active" />
+                <span />
+                <span />
+              </div>
             </aside>
 
             <section className="middle-column">
@@ -1098,7 +2223,7 @@
               <p className="eyebrow">FEATURED READING</p>
               <h2>Every payday is a decision. <span>Choose yours.</span></h2>
               <p>Swipe through practical stories about the choices that shape your financial future.</p>
-              <div className="mobile-home-article-strip">
+              <div className="mobile-home-article-strip" ref={mobileArticleStripRef}>
                 {ARTICLES.map((article) => (
                   <button type="button" key={article.id} onClick={() => setPanel(`article:${article.id}`)}>
                     <img src={article.image} alt={article.alt} />
@@ -1108,7 +2233,11 @@
                   </button>
                 ))}
               </div>
-              <small>Swipe to explore more articles →</small>
+              <div className="mobile-home-article-dots" aria-label="Scroll featured articles">
+                <button type="button" aria-label="Show first articles" onClick={() => scrollMobileArticles(0)} />
+                <button type="button" aria-label="Show middle articles" onClick={() => scrollMobileArticles(0.5)} />
+                <button type="button" aria-label="Show last articles" onClick={() => scrollMobileArticles(1)} />
+              </div>
             </section>
           </main>
 
@@ -1323,6 +2452,7 @@
 
     const LEARN_CATEGORIES = [
       "Getting Started",
+      "Financial Basics",
       "Saving",
       "Investing",
       "Retirement",
@@ -1447,44 +2577,45 @@
         });
       }, [query, category, sort]);
 
-      const selectCategory = (nextCategory) => {
-        setCategory(nextCategory);
-        document.getElementById("learn-articles")?.scrollIntoView({ behavior: "smooth", block: "start" });
-      };
+      const featuredArticles = ARTICLES.slice(0, 5);
+      const filterOptions = ["All", ...LEARN_CATEGORIES];
 
       return (
         <main className="learn-page">
           <section className="learn-page-hero" aria-labelledby="learn-title">
-            <p className="eyebrow">KNOWLEDGE &amp; INSIGHTS</p>
-            <h1 id="learn-title">Learn</h1>
-            <p>Simple ideas, practical lessons, and real stories to help you make the most of every payday.</p>
+            <div>
+              <p className="eyebrow">KNOWLEDGE &amp; INSIGHTS</p>
+              <h1 id="learn-title">Learn</h1>
+            </div>
+            <p>Real stories for better payday decisions.</p>
           </section>
 
-          <section className="learn-category-section" aria-labelledby="category-heading">
-            <div className="learn-section-heading">
-              <div>
-                <p className="eyebrow muted">EXPLORE BY TOPIC</p>
-                <h2 id="category-heading">Build knowledge that compounds.</h2>
-              </div>
-              <p>Start where you are. Choose the topic that matters most today.</p>
-            </div>
-
-            <nav className="learn-category-grid" aria-label="Article categories">
-              {LEARN_CATEGORIES.map((item, index) => (
-                <button type="button" key={item} onClick={() => selectCategory(item)}>
-                  <span>{String(index + 1).padStart(2, "0")}</span>
-                  <strong>{item}</strong>
-                  <small>Explore articles →</small>
-                </button>
-              ))}
-            </nav>
+          <section className="learn-featured-gallery" aria-label="Featured articles">
+            {featuredArticles.map((item, index) => (
+              <article className={index === 0 ? "is-featured" : ""} key={item.id}>
+                <a
+                  href={`/learn/${item.id}`}
+                  onClick={(event) => {
+                    event.preventDefault();
+                    navigateTo(`/learn/${item.id}`);
+                  }}
+                >
+                  <img src={item.image} alt={item.alt} loading={index === 0 ? "eager" : "lazy"} decoding="async" />
+                  <div>
+                    <span>{articleCategory(item)} · {item.readTime}</span>
+                    <h2>{item.title}</h2>
+                    {index === 0 && <p>{item.summary}</p>}
+                  </div>
+                </a>
+              </article>
+            ))}
           </section>
 
           <section className="learn-articles-section" id="learn-articles" aria-labelledby="articles-heading">
             <div className="learn-section-heading">
               <div>
-                <p className="eyebrow muted">THE LIBRARY</p>
-                <h2 id="articles-heading">Practical ideas for every payday.</h2>
+                <p className="eyebrow muted">ALL ARTICLES</p>
+                <h2 id="articles-heading">Choose what to read next.</h2>
               </div>
               <p>{filteredArticles.length} {filteredArticles.length === 1 ? "article" : "articles"}</p>
             </div>
@@ -1512,7 +2643,7 @@
             </div>
 
             <nav className="learn-filter-chips" aria-label="Filter articles">
-              {["All", ...LEARN_CATEGORIES].map((item) => (
+              {filterOptions.map((item) => (
                 <button
                   type="button"
                   key={item}
@@ -1557,37 +2688,6 @@
                 <button type="button" onClick={() => { setQuery(""); setCategory("All"); }}>Show all articles</button>
               </div>
             )}
-          </section>
-
-          <section className="learn-start-here" aria-labelledby="start-here-heading">
-            <div className="learn-section-heading">
-              <div>
-                <p className="eyebrow">START HERE</p>
-                <h2 id="start-here-heading">Three stories. One better way to see payday.</h2>
-              </div>
-              <p>A thoughtful introduction to the 1040 Paydays philosophy.</p>
-            </div>
-
-            <div className="learn-start-grid">
-              {ARTICLES.slice(0, 3).map((item, index) => (
-                <article key={item.id}>
-                  <span>{String(index + 1).padStart(2, "0")}</span>
-                  <div>
-                    <small>{articleCategory(item)} · {item.readTime}</small>
-                    <h3>{item.title}</h3>
-                    <a
-                      href={`/learn/${item.id}`}
-                      onClick={(event) => {
-                        event.preventDefault();
-                        navigateTo(`/learn/${item.id}`);
-                      }}
-                    >
-                      Read Article →
-                    </a>
-                  </div>
-                </article>
-              ))}
-            </div>
           </section>
         </main>
       );
@@ -1638,6 +2738,23 @@
     function ArticlePanel({ article, close, backToLearn, openArticle }) {
       const relatedArticles = ARTICLES.filter((item) => item.id !== article.id);
       const faqs = ARTICLE_FAQS[article.id] || [];
+      const articleIndex = ARTICLES.findIndex((item) => item.id === article.id);
+      const previousArticle = ARTICLES[(articleIndex - 1 + ARTICLES.length) % ARTICLES.length];
+      const nextArticle = ARTICLES[(articleIndex + 1) % ARTICLES.length];
+      const jumpToArticle = (nextItem) => {
+        openArticle(nextItem);
+        requestAnimationFrame(() => {
+          document.querySelector(".learn-route-shell")?.scrollTo({ top: 0, behavior: "smooth" });
+        });
+      };
+      const renderArticlePager = () => (
+        <nav className="article-dot-nav" aria-label="Article navigation">
+          <button type="button" onClick={() => jumpToArticle(previousArticle)} aria-label={`Previous article: ${previousArticle.title}`} />
+          <button type="button" className="is-current" aria-current="page" aria-label={`Current article: ${article.title}`} disabled />
+          <button type="button" onClick={() => jumpToArticle(nextArticle)} aria-label={`Next article: ${nextArticle.title}`} />
+          <span>Next: {nextArticle.title}</span>
+        </nav>
+      );
 
       return (
         <article className="learn-article">
@@ -1662,6 +2779,11 @@
             <figcaption>{article.caption}</figcaption>
           </figure>
 
+          <div className="article-quick-pager">
+            <p>Tap a dot to keep reading</p>
+            {renderArticlePager()}
+          </div>
+
           <div className="article-body">
             {article.sections.map((section, sectionIndex) => (
               <React.Fragment key={section.heading}>
@@ -1678,6 +2800,8 @@
               </React.Fragment>
             ))}
           </div>
+
+          {renderArticlePager()}
 
           <section className="article-faqs">
             <p className="article-section-kicker">FREQUENTLY ASKED QUESTIONS</p>

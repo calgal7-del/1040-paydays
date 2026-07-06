@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title description">
+  <title id="title">Everyone Needs a Float image coming soon</title>
+  <desc id="description">A calm editorial placeholder for an article about cash savings and financial resilience.</desc>
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#061936"/>
+      <stop offset=".56" stop-color="#0b4e72"/>
+      <stop offset="1" stop-color="#00a6a6"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="83%" cy="18%" r="58%">
+      <stop offset="0" stop-color="#8ee4d8" stop-opacity=".35"/>
+      <stop offset="1" stop-color="#8ee4d8" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#background)"/>
+  <rect width="1600" height="900" fill="url(#glow)"/>
+  <path d="M1030 900C1140 675 1335 545 1600 515V900Z" fill="#fff" fill-opacity=".06"/>
+  <path d="M1120 735C1235 645 1390 606 1580 620" fill="none" stroke="#fff" stroke-opacity=".18" stroke-width="5"/>
+  <circle cx="1335" cy="635" r="14" fill="#f5a400"/>
+  <g fill="#fff">
+    <text x="120" y="325" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="700" letter-spacing="8" opacity=".72">SAVING · RESILIENCE · PEACE OF MIND</text>
+    <text x="112" y="505" font-family="Georgia, 'Times New Roman', serif" font-size="120" font-weight="700">Everyone Needs a Float</text>
+    <text x="120" y="600" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="500" opacity=".84">A little breathing room can make life far less fragile.</text>
+    <text x="120" y="750" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="700" letter-spacing="3" opacity=".58">FEATURED IMAGE COMING SOON</text>
+  </g>
+</svg>

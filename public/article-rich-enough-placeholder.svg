@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title description">
+  <title id="title">Rich Enough image coming soon</title>
+  <desc id="description">A calm blue editorial placeholder for the Rich Enough article.</desc>
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#061936"/>
+      <stop offset="0.7" stop-color="#0b3971"/>
+      <stop offset="1" stop-color="#176bff"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="82%" cy="18%" r="58%">
+      <stop offset="0" stop-color="#54c9c4" stop-opacity=".45"/>
+      <stop offset="1" stop-color="#54c9c4" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#background)"/>
+  <rect width="1600" height="900" fill="url(#glow)"/>
+  <circle cx="1260" cy="180" r="255" fill="none" stroke="#fff" stroke-opacity=".08" stroke-width="2"/>
+  <circle cx="1260" cy="180" r="185" fill="none" stroke="#fff" stroke-opacity=".08" stroke-width="2"/>
+  <path d="M1040 900C1150 670 1320 545 1600 500V900Z" fill="#fff" fill-opacity=".05"/>
+  <g fill="#fff">
+    <text x="120" y="355" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="700" letter-spacing="8" opacity=".7">PAYDAY PHILOSOPHY</text>
+    <text x="112" y="510" font-family="Georgia, 'Times New Roman', serif" font-size="132" font-weight="700">Rich Enough</text>
+    <text x="120" y="588" font-family="Arial, Helvetica, sans-serif" font-size="35" font-weight="500" opacity=".82">A new story about freedom, choice, and having enough.</text>
+    <text x="120" y="735" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="700" letter-spacing="3" opacity=".55">FEATURED IMAGE COMING SOON</text>
+  </g>
+</svg>

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title description">
+  <title id="title">Love Is Wonderful image coming soon</title>
+  <desc id="description">A warm editorial placeholder for an article about love and financial independence.</desc>
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#061936"/>
+      <stop offset=".6" stop-color="#183d72"/>
+      <stop offset="1" stop-color="#7d45ff"/>
+    </linearGradient>
+    <radialGradient id="warmth" cx="84%" cy="20%" r="55%">
+      <stop offset="0" stop-color="#f5a400" stop-opacity=".32"/>
+      <stop offset="1" stop-color="#f5a400" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#background)"/>
+  <rect width="1600" height="900" fill="url(#warmth)"/>
+  <circle cx="1290" cy="190" r="245" fill="none" stroke="#fff" stroke-opacity=".08" stroke-width="3"/>
+  <path d="M1130 900C1200 690 1375 560 1600 520V900Z" fill="#fff" fill-opacity=".055"/>
+  <g fill="#fff">
+    <text x="120" y="305" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="700" letter-spacing="8" opacity=".72">LOVE · INDEPENDENCE · SECURITY</text>
+    <text x="112" y="445" font-family="Georgia, 'Times New Roman', serif" font-size="104" font-weight="700">Love Is Wonderful.</text>
+    <text x="112" y="565" font-family="Georgia, 'Times New Roman', serif" font-size="86" font-weight="700">It Just Isn't a Financial Plan.</text>
+    <text x="120" y="650" font-family="Arial, Helvetica, sans-serif" font-size="31" font-weight="500" opacity=".84">Build a future that gives everyone more freedom.</text>
+    <text x="120" y="760" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="700" letter-spacing="3" opacity=".58">FEATURED IMAGE COMING SOON</text>
+  </g>
+</svg>
