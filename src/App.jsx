@@ -1785,7 +1785,145 @@
       ],
     };
 
-    const ARTICLES = [FEATURED_ARTICLE, SECOND_ARTICLE, THIRD_ARTICLE, FOURTH_ARTICLE, FIFTH_ARTICLE, SIXTH_ARTICLE, SEVENTH_ARTICLE, EIGHTH_ARTICLE, NINTH_ARTICLE, TENTH_ARTICLE, ELEVENTH_ARTICLE, TWELFTH_ARTICLE, THIRTEENTH_ARTICLE, FOURTEENTH_ARTICLE, FIFTEENTH_ARTICLE];
+    const SIXTEENTH_ARTICLE = {
+      id: "the-biggest-retirement-mistake-has-nothing-to-do-with-investing",
+      title: "The Biggest Retirement Mistake Has Nothing to Do With Investing",
+      summary: "Comfortable retirement is rarely won by one brilliant investment. It is built through ordinary paydays that quietly give your future self more freedom.",
+      image: "/article-biggest-retirement-mistake.png",
+      readTime: "5 min read",
+      category: "Retirement",
+      kicker: "RETIREMENT · PAYDAYS · HABITS",
+      alt: "Retired man relaxing on a couch with a cup of coffee",
+      caption: "Retirement is shaped long before the retirement party, one ordinary payday at a time.",
+      quote: {
+        strong: "The biggest retirement mistake isn't choosing the wrong investment.",
+        text: "It's believing retirement begins at sixty five.",
+      },
+      sections: [
+        {
+          heading: "Two very different retirements",
+          paragraphs: [
+            "Every so often, someone retires.",
+            "They stop setting an alarm.",
+            "They stop commuting.",
+            "They wake up on a Monday morning with nowhere they have to be.",
+            "Some spend those years travelling, spoiling their grandchildren, volunteering, picking up old hobbies, or simply enjoying the freedom they spent decades working toward.",
+            "Others spend those same years asking very different questions.",
+            "Should we start buying the off brand groceries?",
+            "Maybe we should check the thrift stores before buying anything new.",
+            "Could we rent out a room to help cover the bills?",
+            "Should we put off replacing the car for another few years?",
+            "Are there government programs or senior benefits we should apply for?",
+            "Can we really afford to visit the grandkids this year?",
+            "Same stage of life.",
+            "Very different retirement.",
+          ],
+        },
+        {
+          heading: "Where retirement is really won or lost",
+          paragraphs: [
+            "That got me thinking.",
+            "What separates the people who spend retirement enjoying their freedom from the people who spend it worrying about every dollar?",
+            "Most people think the answer is investing.",
+            "They assume the people with comfortable retirements picked better stocks.",
+            "Found better mutual funds.",
+            "Earned higher returns.",
+            "Those things certainly help.",
+            "But I don't think that's where retirement is won or lost.",
+            "I think the biggest retirement mistake happens years before anyone ever retires.",
+            "It happens on ordinary paydays.",
+          ],
+        },
+        {
+          heading: "Ordinary paydays are powerful",
+          paragraphs: [
+            "Paydays don't feel important.",
+            "They arrive.",
+            "The bills get paid.",
+            "The groceries get bought.",
+            "A few things show up from an online order.",
+            "The credit card gets paid.",
+            "The weekend comes and goes.",
+            "Then another payday arrives.",
+            "Nothing about one payday seems capable of changing your future.",
+            "That's exactly why they're so powerful.",
+            "One payday doesn't decide your retirement.",
+            "Neither does the next one.",
+            "Or the one after that.",
+            "But over an entire working life, those ordinary paydays quietly become your retirement.",
+          ],
+        },
+        {
+          heading: "Small decisions become big outcomes",
+          paragraphs: [
+            "Every payday asks the same question.",
+            "Will all of this money be spent making today a little more comfortable?",
+            "Or will part of it be set aside to make tomorrow a little more secure?",
+            "The answer doesn't have to be dramatic.",
+            "It doesn't have to be half your paycheque.",
+            "It might be fifty dollars.",
+            "It might be one hundred.",
+            "It might simply be increasing your savings by one percent after your next raise.",
+            "Small decisions repeated hundreds of times have a way of becoming very big outcomes.",
+          ],
+        },
+        {
+          heading: "The ordinary stories build retirement",
+          paragraphs: [
+            "I've noticed something about people who retire comfortably.",
+            "They rarely tell stories about one brilliant financial decision.",
+            "Instead, they describe years of ordinary habits.",
+            "They paid themselves first.",
+            "They invested consistently.",
+            "They lived just a little below their means.",
+            "They let time do the heavy lifting.",
+            "It sounds almost boring.",
+            "That's because wealth usually is.",
+            "The exciting stories make the news.",
+            "The ordinary stories build retirement.",
+            "The people who struggle in retirement usually didn't wake up one morning and make a terrible financial decision.",
+            "Life simply happened.",
+            "There was always another expense.",
+            "Another reason to wait.",
+            "Another payday that would be a better time to start saving.",
+            "Then, one day, there weren't any more working years left to catch up.",
+          ],
+        },
+        {
+          heading: "Retirement starts earlier than most people think",
+          paragraphs: [
+            "The biggest retirement mistake isn't choosing the wrong investment.",
+            "It's believing retirement begins at sixty five.",
+            "It doesn't.",
+            "Retirement begins with your very first paycheque.",
+            "Every one after that either gives your future self a little more freedom...",
+            "...or quietly takes some away.",
+            "One decision won't determine how you retire.",
+            "Hundreds of them will.",
+          ],
+        },
+        {
+          heading: "The question every payday asks",
+          paragraphs: [
+            "That's why I don't think the most important retirement question is,",
+            "\"What's the best investment?\"",
+            "I think it's,",
+            "\"What will this payday do for my future?\"",
+            "Because every investment begins with money that wasn't spent.",
+            "Every retirement begins with ordinary paydays.",
+            "And every comfortable retirement is built long before the retirement party.",
+            "One payday at a time.",
+            "One choice at a time.",
+            "One future at a time.",
+            "The next payday is coming whether you have a plan for it or not.",
+            "The only question is this.",
+            "Will it help build the retirement you hope for... or the retirement you're hoping to avoid?",
+          ],
+        },
+      ],
+    };
+
+    const ARTICLES = [FEATURED_ARTICLE, SECOND_ARTICLE, THIRD_ARTICLE, FOURTH_ARTICLE, FIFTH_ARTICLE, SIXTH_ARTICLE, SEVENTH_ARTICLE, EIGHTH_ARTICLE, NINTH_ARTICLE, TENTH_ARTICLE, ELEVENTH_ARTICLE, TWELFTH_ARTICLE, THIRTEENTH_ARTICLE, FOURTEENTH_ARTICLE, FIFTEENTH_ARTICLE, SIXTEENTH_ARTICLE];
 
     const ARTICLE_FAQS = {
       "you-only-get-about-1040-paydays": [
@@ -2116,6 +2254,28 @@
         {
           question: "What if I don't find much money?",
           answer: "You may still find value: a meal you can make, a book to reread, a candle to enjoy, or one less thing to buy. The awareness is often worth as much as the cash.",
+        },
+      ],
+      "the-biggest-retirement-mistake-has-nothing-to-do-with-investing": [
+        {
+          question: "Is the biggest retirement mistake really not about investing?",
+          answer: "Investing matters, but every investment begins with money that was not spent. The habits around ordinary paydays often decide whether retirement gets funded at all.",
+        },
+        {
+          question: "How can one payday affect retirement?",
+          answer: "One payday will not decide everything. Hundreds of paydays, handled with the same intention over many years, can quietly become a very different future.",
+        },
+        {
+          question: "What if I can only save a small amount?",
+          answer: "Start with an amount you can repeat. Fifty dollars, one hundred dollars, or even a small percentage increase after a raise can matter when the habit lasts.",
+        },
+        {
+          question: "Should I save or invest first?",
+          answer: "Build a basic emergency fund and deal with high-cost debt first. After that, investing can help your future self benefit from time and compound growth.",
+        },
+        {
+          question: "What question should I ask on payday?",
+          answer: "Ask, \"What will this payday do for my future?\" That simple question can turn an ordinary paycheque into a decision point.",
         },
       ],
     };
