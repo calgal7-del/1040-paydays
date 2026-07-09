@@ -3671,6 +3671,7 @@
       });
       const [tipLeaving, setTipLeaving] = useState(false);
       const [introPulse, setIntroPulse] = useState(true);
+      const hasTrackedInitialPageView = useRef(false);
 
       const [compareExtraSavings, setCompareExtraSavings] = useState(50);
       const [compareReturn, setCompareReturn] = useState(8);
@@ -3713,6 +3714,21 @@
               : "See how every payday can move you closer to financial freedom with the 1040 Paydays calculator."
           );
         }
+      }, [route]);
+
+      useEffect(() => {
+        if (!hasTrackedInitialPageView.current) {
+          hasTrackedInitialPageView.current = true;
+          return;
+        }
+
+        if (typeof window.gtag !== "function") return;
+
+        window.gtag("event", "page_view", {
+          page_title: document.title,
+          page_location: window.location.href,
+          page_path: route,
+        });
       }, [route]);
 
       useEffect(() => {
