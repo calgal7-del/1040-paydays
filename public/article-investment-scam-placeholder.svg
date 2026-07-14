@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">How to spot an investment scam before it costs you everything</title>
+  <desc id="desc">A desk illustration with a laptop warning, phone message, documents, and a verification checklist.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#f8fafc"/>
+      <stop offset="0.55" stop-color="#fff7ed"/>
+      <stop offset="1" stop-color="#fee2e2"/>
+    </linearGradient>
+    <linearGradient id="desk" x1="0" x2="1">
+      <stop offset="0" stop-color="#8b5e34"/>
+      <stop offset="1" stop-color="#b77945"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="16" stdDeviation="18" flood-color="#334155" flood-opacity="0.18"/>
+    </filter>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <circle cx="1280" cy="155" r="125" fill="#f97316" opacity="0.18"/>
+  <circle cx="280" cy="210" r="105" fill="#38bdf8" opacity="0.14"/>
+  <rect y="650" width="1600" height="250" fill="url(#desk)"/>
+  <g filter="url(#shadow)">
+    <rect x="315" y="250" width="560" height="330" rx="28" fill="#0f172a"/>
+    <rect x="365" y="300" width="460" height="210" rx="14" fill="#f8fafc"/>
+    <path d="M595 340l92 160H503z" fill="#f97316"/>
+    <text x="595" y="464" text-anchor="middle" font-family="Arial, sans-serif" font-size="92" font-weight="700" fill="#fff">!</text>
+    <text x="595" y="548" text-anchor="middle" font-family="Arial, sans-serif" font-size="31" font-weight="700" fill="#f8fafc">VERIFY BEFORE YOU INVEST</text>
+    <rect x="250" y="580" width="690" height="42" rx="21" fill="#334155"/>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="970" y="195" width="335" height="470" rx="36" fill="#1f2937"/>
+    <rect x="1010" y="250" width="255" height="345" rx="18" fill="#fff"/>
+    <text x="1138" y="315" text-anchor="middle" font-family="Arial, sans-serif" font-size="26" font-weight="700" fill="#991b1b">URGENT</text>
+    <rect x="1045" y="350" width="185" height="18" rx="9" fill="#fecaca"/>
+    <rect x="1045" y="390" width="150" height="18" rx="9" fill="#fecaca"/>
+    <rect x="1045" y="430" width="205" height="18" rx="9" fill="#fecaca"/>
+    <rect x="1065" y="500" width="145" height="48" rx="24" fill="#dc2626"/>
+    <text x="1138" y="533" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#fff">ACT NOW</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="555" y="555" width="395" height="235" rx="20" fill="#fff" stroke="#cbd5e1" stroke-width="6"/>
+    <text x="610" y="620" font-family="Arial, sans-serif" font-size="32" font-weight="700" fill="#0f172a">CHECK FIRST</text>
+    <circle cx="625" cy="665" r="14" fill="#1f766e"/>
+    <path d="M617 665l7 7 15-18" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="660" y="674" font-family="Arial, sans-serif" font-size="24" fill="#334155">Registered?</text>
+    <circle cx="625" cy="710" r="14" fill="#1f766e"/>
+    <path d="M617 710l7 7 15-18" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="660" y="719" font-family="Arial, sans-serif" font-size="24" fill="#334155">Can withdraw?</text>
+    <circle cx="625" cy="755" r="14" fill="#1f766e"/>
+    <path d="M617 755l7 7 15-18" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="660" y="764" font-family="Arial, sans-serif" font-size="24" fill="#334155">Sleep on it?</text>
+  </g>
+  <text x="800" y="840" text-anchor="middle" font-family="Georgia, serif" font-size="54" font-weight="700" fill="#0f172a">How to Spot an Investment Scam</text>
+</svg>

@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">The simplest explanation of compound interest</title>
+  <desc id="desc">A snowball rolling downhill beside a growing investment chart.</desc>
+  <defs>
+    <linearGradient id="sky" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#f8fafc"/>
+      <stop offset="0.55" stop-color="#e0f2fe"/>
+      <stop offset="1" stop-color="#f0fdf4"/>
+    </linearGradient>
+    <linearGradient id="hill" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#bfdbfe"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="14" stdDeviation="18" flood-color="#334155" flood-opacity="0.18"/>
+    </filter>
+  </defs>
+  <rect width="1600" height="900" fill="url(#sky)"/>
+  <circle cx="1280" cy="170" r="120" fill="#facc15" opacity="0.28"/>
+  <path d="M0 720 C310 610 470 520 760 580 C1070 645 1260 560 1600 415 L1600 900 L0 900 Z" fill="url(#hill)"/>
+  <path d="M200 690 C430 585 635 520 875 558 C1085 592 1240 540 1435 455" fill="none" stroke="#93c5fd" stroke-width="10" stroke-linecap="round" opacity="0.7"/>
+  <g filter="url(#shadow)">
+    <circle cx="430" cy="602" r="48" fill="#fff" stroke="#cbd5e1" stroke-width="7"/>
+    <circle cx="650" cy="565" r="76" fill="#fff" stroke="#cbd5e1" stroke-width="8"/>
+    <circle cx="950" cy="558" r="122" fill="#fff" stroke="#cbd5e1" stroke-width="10"/>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="1040" y="225" width="345" height="300" rx="24" fill="#0f172a"/>
+    <rect x="1090" y="275" width="245" height="175" rx="12" fill="#f8fafc"/>
+    <polyline points="1122,420 1160,392 1200,398 1240,350 1282,322 1310,286" fill="none" stroke="#1f766e" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="1310" cy="286" r="17" fill="#f59e0b"/>
+    <text x="1212" y="489" text-anchor="middle" font-family="Arial, sans-serif" font-size="28" font-weight="700" fill="#f8fafc">GROWTH ON GROWTH</text>
+  </g>
+  <g>
+    <rect x="235" y="245" width="410" height="230" rx="22" fill="#fff" stroke="#cbd5e1" stroke-width="6" filter="url(#shadow)"/>
+    <text x="440" y="315" text-anchor="middle" font-family="Arial, sans-serif" font-size="34" font-weight="700" fill="#0f172a">$1,000</text>
+    <text x="440" y="365" text-anchor="middle" font-family="Arial, sans-serif" font-size="26" fill="#475569">earns money</text>
+    <path d="M345 415 H535" stroke="#1f766e" stroke-width="12" stroke-linecap="round"/>
+    <path d="M500 386 L538 415 L500 444" fill="none" stroke="#1f766e" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <text x="800" y="815" text-anchor="middle" font-family="Georgia, serif" font-size="58" font-weight="700" fill="#0f172a">The Simplest Explanation of Compound Interest</text>
+</svg>
