@@ -4657,7 +4657,150 @@
       ],
     };
 
-    const ARTICLES = [FEATURED_ARTICLE, SECOND_ARTICLE, THIRD_ARTICLE, FOURTH_ARTICLE, FIFTH_ARTICLE, SIXTH_ARTICLE, SEVENTH_ARTICLE, EIGHTH_ARTICLE, NINTH_ARTICLE, TENTH_ARTICLE, ELEVENTH_ARTICLE, TWELFTH_ARTICLE, THIRTEENTH_ARTICLE, FOURTEENTH_ARTICLE, FIFTEENTH_ARTICLE, SIXTEENTH_ARTICLE, SEVENTEENTH_ARTICLE, EIGHTEENTH_ARTICLE, NINETEENTH_ARTICLE, TWENTIETH_ARTICLE, TWENTY_FIRST_ARTICLE, TWENTY_SECOND_ARTICLE, TWENTY_THIRD_ARTICLE, TWENTY_FOURTH_ARTICLE, TWENTY_FIFTH_ARTICLE, TWENTY_SIXTH_ARTICLE, TWENTY_SEVENTH_ARTICLE, TWENTY_EIGHTH_ARTICLE, TWENTY_NINTH_ARTICLE];
+    const THIRTIETH_ARTICLE = {
+      id: "the-safest-envelope-is-at-the-bank",
+      title: "The Safest Envelope Is at the Bank",
+      summary: "Cash can feel safe when it is close by, but long-term savings deserve more protection than a hiding place can offer.",
+      image: "/article-safest-envelope-bank.png",
+      readTime: "4 min read",
+      category: "Saving",
+      kicker: "SAVING · SAFETY · PROTECTION",
+      alt: "A bank envelope, savings account record, and a small stack of cash on a desk",
+      caption: "Long-term savings deserve records, interest, and protection.",
+      quote: {
+        strong: "Some things take years to save...",
+        text: "and only seconds to lose.",
+      },
+      sections: [
+        {
+          heading: "Cash envelopes are everywhere",
+          paragraphs: [
+            "Cash envelopes are everywhere right now.",
+            "Some people use them to budget.",
+            "Others use them to store years of savings in a drawer, under a mattress, or in a home office.",
+            "It feels safe because you always know where it is.",
+            "But a story a friend shared with me has stayed with me for years.",
+          ],
+        },
+        {
+          heading: "The truck was gone",
+          paragraphs: [
+            "One morning she left the house for work like she always did.",
+            "As she walked toward the garage, she stopped.",
+            "Her husband's work truck was gone.",
+            "At first she thought maybe he had left early.",
+            "Then she remembered.",
+            "He was still asleep inside.",
+            "She ran back into the house and woke him up.",
+            "\"Where's your truck?\"",
+            "Still half asleep, he looked at her.",
+            "\"What do you mean?\"",
+            "\"Your truck isn't in the garage.\"",
+            "He was out of bed in seconds.",
+            "The two of them ran outside.",
+            "The truck was gone.",
+            "Along with thousands of dollars' worth of tools.",
+          ],
+        },
+        {
+          heading: "Then they noticed the filing cabinet",
+          paragraphs: [
+            "Then they noticed the filing cabinet.",
+            "It was sitting in the backyard.",
+            "The drawers had been pulled open.",
+            "And it was almost empty.",
+            "The police later explained that thieves sometimes steal business records to commit fraud using someone else's identity.",
+            "Then they both thought of the same thing.",
+            "The cash.",
+            "She ran inside and checked the place where she had been hiding it.",
+            "It was empty.",
+            "For years she had quietly tucked away every extra dollar she could.",
+            "She wasn't saving for a vacation.",
+            "She was saving to buy an electric wheelchair for her ailing father.",
+            "Insurance helped recover some of the value of the truck and the tools.",
+            "But it didn't replace the cash.",
+            "Years of sacrifice disappeared overnight.",
+          ],
+        },
+        {
+          heading: "My own hiding place",
+          paragraphs: [
+            "That story stayed with me.",
+            "But if I'm being honest, it didn't change my habits immediately.",
+            "I knew what had happened to my friend while she slept just a few rooms away.",
+            "Still, I told myself my situation was different.",
+            "I didn't own a business.",
+            "I didn't have a work truck full of expensive tools.",
+            "Before I knew better, I used to roll up cash and hide it in my broom closet.",
+            "Every once in a while I'd pull it out, count it, smile, and tuck it back where I thought nobody would ever find it.",
+          ],
+        },
+        {
+          heading: "Who else could find it?",
+          paragraphs: [
+            "Then one day some family came to stay.",
+            "While I was out, they decided to surprise me by cleaning the house.",
+            "When I got home they were smiling.",
+            "\"We found your stash!\" they laughed.",
+            "I laughed too.",
+            "But inside I was thinking...",
+            "If someone trying to help could find it...",
+            "Who else could?",
+            "That's when it finally clicked.",
+            "It doesn't matter how clever you think your hiding place is.",
+            "Eventually someone else may find it.",
+            "A burglar.",
+            "A contractor.",
+            "A visitor.",
+            "A moment of bad luck.",
+          ],
+        },
+        {
+          heading: "The safest envelope I own",
+          paragraphs: [
+            "Unlike cash hidden around the house, money in a savings account leaves a record of every deposit, can earn interest, and may be protected by deposit insurance, depending on your financial institution and the type of account.",
+            "Hidden cash doesn't earn interest.",
+            "And if it disappears, it's gone forever.",
+            "That's why I no longer think of a savings account as just another account.",
+            "I think of it as the safest envelope I own.",
+            "It keeps a record of every dollar I save.",
+            "It gives my money a chance to grow.",
+            "And it helps protect years of effort from disappearing because of one bad day.",
+          ],
+        },
+        {
+          heading: "Long-term savings deserve protection",
+          paragraphs: [
+            "If you're saving for retirement...",
+            "A down payment...",
+            "Your child's education...",
+            "Or an electric wheelchair for someone you love...",
+            "Your future deserves more protection than a hiding place can offer.",
+            "Cash envelopes are great for groceries.",
+            "They're great for entertainment.",
+            "They're great for helping you stick to a budget.",
+            "But long-term savings deserve long-term protection.",
+            "They deserve records.",
+            "They deserve interest.",
+            "They deserve insurance.",
+            "Most of all, they deserve to still be there when you need them.",
+          ],
+        },
+        {
+          heading: "One final thought",
+          paragraphs: [
+            "The safest envelope isn't in your house.",
+            "It's at your bank.",
+            "Because some things take years to save...",
+            "And only seconds to lose.",
+            "Every payday is a decision.",
+            "Choose yours.",
+          ],
+        },
+      ],
+    };
+
+    const ARTICLES = [FEATURED_ARTICLE, SECOND_ARTICLE, THIRD_ARTICLE, FOURTH_ARTICLE, FIFTH_ARTICLE, SIXTH_ARTICLE, SEVENTH_ARTICLE, EIGHTH_ARTICLE, NINTH_ARTICLE, TENTH_ARTICLE, ELEVENTH_ARTICLE, TWELFTH_ARTICLE, THIRTEENTH_ARTICLE, FOURTEENTH_ARTICLE, FIFTEENTH_ARTICLE, SIXTEENTH_ARTICLE, SEVENTEENTH_ARTICLE, EIGHTEENTH_ARTICLE, NINETEENTH_ARTICLE, TWENTIETH_ARTICLE, TWENTY_FIRST_ARTICLE, TWENTY_SECOND_ARTICLE, TWENTY_THIRD_ARTICLE, TWENTY_FOURTH_ARTICLE, TWENTY_FIFTH_ARTICLE, TWENTY_SIXTH_ARTICLE, TWENTY_SEVENTH_ARTICLE, TWENTY_EIGHTH_ARTICLE, TWENTY_NINTH_ARTICLE, THIRTIETH_ARTICLE];
 
     const ARTICLE_FAQS = {
       "you-only-get-about-1040-paydays": [
@@ -5296,6 +5439,28 @@
         {
           question: "What is the simplest rule to remember?",
           answer: "Never invest because someone wants an answer today. Sleep on it, research it, and ask questions first.",
+        },
+      ],
+      "the-safest-envelope-is-at-the-bank": [
+        {
+          question: "Are cash envelopes bad?",
+          answer: "No. Cash envelopes can be useful for short-term budget categories like groceries, entertainment, or spending money.",
+        },
+        {
+          question: "Why is hidden cash risky?",
+          answer: "Cash hidden at home can be stolen, lost, damaged, or found by someone else. If it disappears, there may be no record and no way to recover it.",
+        },
+        {
+          question: "Why can a savings account be safer?",
+          answer: "A savings account creates records, may earn interest, and may be protected by deposit insurance depending on the institution and account type.",
+        },
+        {
+          question: "Should I keep any cash at home?",
+          answer: "Some people keep a small amount for emergencies. Long-term savings, however, usually deserve stronger protection than a hiding place.",
+        },
+        {
+          question: "What is the main lesson?",
+          answer: "Short-term cash can help with budgeting, but money saved for important long-term goals deserves records, interest, protection, and a safer home.",
         },
       ],
     };
