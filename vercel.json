@@ -1,7 +1,180 @@
 {
+  "trailingSlash": false,
   "rewrites": [
     {
-      "source": "/((?!assets/|favicon.ico).*)",
+      "source": "/learn",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/learn/you-only-get-about-1040-paydays",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/learn/who-wants-to-go-home",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/learn/one-hundred-dollars-one-lifetime-lesson",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/learn/when-extra-money-isnt-really-extra",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/learn/rich-enough",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/learn/youre-not-too-late",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/learn/love-is-wonderful-it-just-isnt-a-financial-plan",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/learn/the-biggest-lie-about-retirement",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/learn/everyone-needs-a-float",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/learn/the-number-that-really-matters",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/learn/the-language-i-wish-id-learned-sooner",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/learn/the-month-i-accidentally-saved-money",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/learn/the-vacation-that-showed-me-how-small-spending-adds-up",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/learn/the-grocery-store-in-my-cupboard",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/learn/your-house-is-full-of-money-you-just-cant-see-it-yet",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/learn/the-biggest-retirement-mistake-has-nothing-to-do-with-investing",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/learn/the-best-age-to-retire-isnt-an-age",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/learn/the-wealth-you-build-before-you-build-wealth",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/learn/the-little-grocery-store",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/learn/the-hidden-paycheque-at-work",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/learn/loud-budgeting-thats-not-where-i-want-my-money-to-go",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/learn/ai-is-changing-the-9-to-5-club-heres-how-to-stay-in-it",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/learn/the-10000-blueprint",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/learn/you-saved-3-and-lost-30000",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/learn/my-sofa-isnt-broken",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/learn/buying-clothes-didnt-use-to-be-a-hobby",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/learn/the-most-valuable-asset-youll-ever-own",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/learn/the-simplest-explanation-of-compound-interest",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/learn/how-to-spot-an-investment-scam-before-it-costs-you-everything",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/learn/the-safest-envelope-is-at-the-bank",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/learn/the-day-your-credit-score-speaks-before-you-do",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/learn/debt-grows-best-in-the-dark",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/learn/the-language-of-money",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/learn/your-house-is-not-your-retirement-plan",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/learn/the-best-financial-decision-is-the-one-you-only-make-once",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/learn/the-most-expensive-word-in-personal-finance-is-later",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/learn/i-have-a-chequebook-somewhere",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/learn/the-drawer-full-of-phone-chargers",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/learn/nobody-talks-about-financial-seasons",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/learn/seeds-for-a-future-you-cannot-see-yet",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/learn/why-money-flows-downhill",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/learn/money-has-a-memory",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/learn/fixed-vs-variable-mortgage-rates-which-one-is-right-for-you",
       "destination": "/index.html"
     }
   ]

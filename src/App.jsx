@@ -7755,14 +7755,17 @@
       const normalizedRoute = route.length > 1 ? route.replace(/\/+$/, "") : route;
 
       if (normalizedRoute === "/learn" || normalizedRoute.startsWith("/learn/")) {
-        const articleId = normalizedRoute.startsWith("/learn/") ? normalizedRoute.slice("/learn/".length) : "";
-        const activeArticle = ARTICLES.find((article) => article.id === articleId);
+        const isArticleRoute = normalizedRoute.startsWith("/learn/");
+        const articleId = isArticleRoute ? normalizedRoute.slice("/learn/".length) : "";
+        const activeArticle = isArticleRoute ? ARTICLES.find((article) => article.id === articleId) : null;
+        const notFound = isArticleRoute && !activeArticle;
 
         return (
           <LearnRoute
             currency={currency}
             setCurrency={setCurrency}
             article={activeArticle}
+            notFound={notFound}
             navigateTo={navigateTo}
             openHomePanel={openHomePanel}
           />
@@ -8199,11 +8202,11 @@
             )}
 
             {panel === "privacy" && (
-              <PanelContent icon={<BookOpen />} title="Privacy" text="Placeholder: Explain what information is stored, what stays on the user's device, what email data is collected, and how people can request deletion or unsubscribe." />
+              <PrivacyPanel close={close} />
             )}
 
             {panel === "terms" && (
-              <PanelContent icon={<BookOpen />} title="Terms" text="Placeholder: Add your terms of use here. Include educational-use language, no financial-advice wording, user responsibilities, and site limitations." />
+              <TermsPanel close={close} />
             )}
 
             {panel === "contact" && (
@@ -8301,7 +8304,7 @@
       return article.category.replace(/\b\w/g, (letter) => letter.toUpperCase());
     }
 
-    function LearnRoute({ currency, setCurrency, article, navigateTo, openHomePanel }) {
+    function LearnRoute({ currency, setCurrency, article, notFound, navigateTo, openHomePanel }) {
       const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
       const goHomePanel = (panelName) => {
@@ -8356,7 +8359,9 @@
             </div>
           </header>
 
-          {article ? (
+          {notFound ? (
+            <NotFoundPage navigateTo={navigateTo} />
+          ) : article ? (
             <main className="learn-route-article">
               <ArticlePanel
                 article={article}
@@ -8390,6 +8395,44 @@
             </div>
           </footer>
         </div>
+      );
+    }
+
+    function NotFoundPage({ navigateTo }) {
+      useEffect(() => {
+        const previousTitle = document.title;
+        let robots = document.querySelector('meta[name="robots"]');
+        const previousRobots = robots?.getAttribute("content") || "";
+        const createdRobots = !robots;
+
+        if (!robots) {
+          robots = document.createElement("meta");
+          robots.setAttribute("name", "robots");
+          document.head.appendChild(robots);
+        }
+
+        document.title = "Page not found | 1040 Paydays";
+        robots.setAttribute("content", "noindex, follow");
+
+        return () => {
+          document.title = previousTitle;
+          if (createdRobots) robots.remove();
+          else robots.setAttribute("content", previousRobots);
+        };
+      }, []);
+
+      return (
+        <main className="not-found-page" aria-labelledby="not-found-title">
+          <p className="eyebrow">PAGE NOT FOUND</p>
+          <h1 id="not-found-title">This article is not here.</h1>
+          <p>
+            The link may be old, mistyped, or no longer available. The Learn library has the current articles.
+          </p>
+          <div className="not-found-actions">
+            <button type="button" onClick={() => navigateTo("/learn")}>Go to Learn</button>
+            <button type="button" className="secondary" onClick={() => navigateTo("/")}>Back to calculator</button>
+          </div>
+        </main>
       );
     }
 
@@ -8852,6 +8895,119 @@
           </div>
 
           <button className="ok-button" type="button" onClick={close}>Try the calculator</button>
+        </section>
+      );
+    }
+
+    function PrivacyPanel({ close }) {
+      return (
+        <section className="about-panel policy-panel">
+          <div className="panel-icon"><BookOpen /></div>
+          <p className="eyebrow">PRIVACY</p>
+          <h2>Privacy Policy</h2>
+
+          <p><strong>Last updated:</strong> July 2026</p>
+          <p>
+            1040 Paydays is built to help you explore payday planning, saving, and retirement
+            ideas. We try to collect as little personal information as possible.
+          </p>
+
+          <h3>Information you enter into the calculator</h3>
+          <p>
+            The numbers you enter into the calculator, comparison tools, and saved projections are
+            stored in your browser on your own device using local storage. They are not sent to us
+            through the calculator.
+          </p>
+
+          <h3>Analytics and advertising</h3>
+          <p>
+            We use Google Analytics to understand how visitors use the site, such as which pages
+            are visited and which features are used. We may also use Google AdSense to show ads.
+            Google and its partners may use cookies or similar technologies to serve and measure ads.
+          </p>
+          <p>
+            You can manage advertising preferences through your browser settings and Google's ad
+            settings. Blocking cookies may affect some site features, but the main articles and
+            calculator should still be available.
+          </p>
+
+          <h3>Email and contact</h3>
+          <p>
+            If you contact us by email, we will use your email address and message only to respond
+            to you. If a newsletter or email list is offered, you can unsubscribe using the
+            instructions provided in those emails.
+          </p>
+
+          <h3>Third-party links</h3>
+          <p>
+            The site may link to third-party websites or services. Their privacy practices are
+            controlled by their own policies, not this one.
+          </p>
+
+          <h3>Contact</h3>
+          <p>
+            For privacy questions, contact <a href="mailto:hello@1040paydays.com">hello@1040paydays.com</a>.
+          </p>
+
+          <button className="ok-button" onClick={close}>OK</button>
+        </section>
+      );
+    }
+
+    function TermsPanel({ close }) {
+      return (
+        <section className="about-panel policy-panel">
+          <div className="panel-icon"><BookOpen /></div>
+          <p className="eyebrow">TERMS</p>
+          <h2>Terms of Use</h2>
+
+          <p><strong>Last updated:</strong> July 2026</p>
+          <p>
+            By using 1040 Paydays, you agree to use the site for personal, educational, and
+            informational purposes.
+          </p>
+
+          <h3>Educational content only</h3>
+          <p>
+            The calculator, articles, examples, and projections are provided for general education.
+            They are not financial, investment, tax, legal, mortgage, or retirement advice. Your
+            financial situation is personal, and you should speak with a qualified professional
+            before making important decisions.
+          </p>
+
+          <h3>Calculator estimates</h3>
+          <p>
+            Results are estimates based on the numbers and assumptions you enter. Actual outcomes
+            can be different because of market returns, fees, inflation, taxes, income changes,
+            contribution changes, timing, and other life events.
+          </p>
+
+          <h3>Your responsibility</h3>
+          <p>
+            You are responsible for the decisions you make using the information on this site.
+            Please review your own numbers carefully and do not rely on any example as a guarantee
+            of future results.
+          </p>
+
+          <h3>Site availability and accuracy</h3>
+          <p>
+            We do our best to keep the site useful and accurate, but we cannot promise that every
+            feature, calculation, article, or link will always be complete, current, or error-free.
+            The site may change or be unavailable from time to time.
+          </p>
+
+          <h3>Advertising and third-party services</h3>
+          <p>
+            The site may display ads or link to third-party websites. We are not responsible for the
+            content, products, services, or policies of third-party sites.
+          </p>
+
+          <h3>Contact</h3>
+          <p>
+            For questions about these terms, contact <a href="mailto:hello@1040paydays.com">hello@1040paydays.com</a>.
+          </p>
+
+          <button className="ok-button" onClick={close}>OK</button>
         </section>
       );
     }

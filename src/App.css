@@ -2028,6 +2028,23 @@ a {
   color: var(--blue);
 }
 
+.policy-panel h3 {
+  margin: 24px 0 9px;
+  color: var(--ink);
+  font-size: 16px;
+  line-height: 1.25;
+}
+
+.policy-panel a {
+  color: var(--blue);
+  font-weight: 850;
+  text-decoration: none;
+}
+
+.policy-panel a:hover {
+  text-decoration: underline;
+}
+
 .about-progress {
   margin: 24px 0 16px;
   border: 1px solid #d5e2f4;
@@ -4830,6 +4847,56 @@ a {
   color: white;
   background: var(--blue);
   font-weight: 850;
+}
+
+.not-found-page {
+  width: min(760px, calc(100% - 40px));
+  min-height: calc(100dvh - 180px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0 auto;
+  padding: 72px 0;
+}
+
+.not-found-page h1 {
+  max-width: 680px;
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(44px, 7vw, 76px);
+  line-height: .94;
+  letter-spacing: -2.4px;
+}
+
+.not-found-page > p:not(.eyebrow) {
+  max-width: 560px;
+  margin: 22px 0 0;
+  color: var(--muted);
+  font-size: 18px;
+  line-height: 1.55;
+}
+
+.not-found-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.not-found-actions button {
+  min-height: 44px;
+  border: 0;
+  border-radius: 12px;
+  padding: 0 18px;
+  color: white;
+  background: var(--blue);
+  font-weight: 900;
+}
+
+.not-found-actions button.secondary {
+  border: 1px solid #cbd9ec;
+  color: var(--ink);
+  background: white;
 }
 
 .learn-start-here {

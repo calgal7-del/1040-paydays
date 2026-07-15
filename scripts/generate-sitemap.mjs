@@ -4,6 +4,7 @@ import { resolve } from "node:path";
 const SITE_URL = "https://www.1040paydays.com";
 const appSourcePath = resolve("src/App.jsx");
 const sitemapPath = resolve("public/sitemap.xml");
+const vercelPath = resolve("vercel.json");
 
 const appSource = readFileSync(appSourcePath, "utf8");
 
@@ -78,3 +79,20 @@ const sitemap = [
 writeFileSync(sitemapPath, sitemap);
 
 console.log(`Generated ${sitemapPath} with ${publicPaths.length} URLs.`);
+
+const appRewritePaths = [
+  "/learn",
+  ...articleIds.map((id) => `/learn/${id}`),
+];
+
+const vercelConfig = {
+  trailingSlash: false,
+  rewrites: appRewritePaths.map((path) => ({
+    source: path,
+    destination: "/index.html",
+  })),
+};
+
+writeFileSync(vercelPath, `${JSON.stringify(vercelConfig, null, 2)}\n`);
+
+console.log(`Generated ${vercelPath} with ${appRewritePaths.length} app rewrites.`);
