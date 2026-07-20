@@ -4220,11 +4220,11 @@ const ELEVENTH_ARTICLE = {
   ],
 };
 const THIRTY_SECOND_ARTICLE = {
-  id: "article-debt-grows-dark.png",
+  id: "debt-grows-best-in-the-dark",
   title: "Debt Grows Best in the Dark",
   summary:
     "Years ago, a manager taught me that financial problems are easier to address when people keep talking instead of disappearing.",
-  image: "/article-debt-grows-dark.png"
+  image: "/article-debt-grows-dark.png",
   readTime: "4 min read",
   category: "Debt",
   kicker: "DEBT · COMMUNICATION · COMPASSION",
