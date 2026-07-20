@@ -154,11 +154,11 @@
       "destination": "/index.html"
     },
     {
-      "source": "/learn/nobody-talks-about-financial-seasons",
+      "source": "/learn/retirement-belonged-to-another-season",
       "destination": "/index.html"
     },
     {
-      "source": "/learn/seeds-for-a-future-you-cannot-see-yet",
+      "source": "/learn/the-potatoes-i-forgot-about",
       "destination": "/index.html"
     },
     {
@@ -171,6 +171,10 @@
     },
     {
       "source": "/learn/fixed-vs-variable-mortgage-rates-which-one-is-right-for-you",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/learn/what-do-you-do-when-you-have-almost-nothing-left",
       "destination": "/index.html"
     }
   ]
