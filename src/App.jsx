@@ -2265,7 +2265,7 @@ const FIFTH_ARTICLE = {
   title: "The Hidden Paycheque at Work",
   summary:
     "Your salary is only part of what your job pays. Workplace benefits, retirement matching, employee discounts, and other perks can quietly leave more money in your pocket.",
-  image: "/article-hidden-paycheque-at-work.png",
+  image: "/article-work-perks-paycheque.png",
   readTime: "5 min read",
   category: "Workplace Money",
   kicker: "WORKPLACE BENEFITS · COMPENSATION · SAVING",
