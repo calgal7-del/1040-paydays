@@ -4218,8 +4218,9 @@ const ELEVENTH_ARTICLE = {
       ],
     },
   ],
-};const THIRTY_SECOND_ARTICLE = {
-  id: "Debt-Grows-Best-in-ihe-Dark",
+};
+const THIRTY_SECOND_ARTICLE = {
+  id: "debt-grows-best-in-the-dark",
   title: "Debt Grows Best in the Dark",
   summary:
     "Years ago, a manager taught me that financial problems are easier to address when people keep talking instead of disappearing.",
