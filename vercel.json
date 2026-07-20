@@ -46,6 +46,10 @@
       "destination": "/index.html"
     },
     {
+      "source": "/learn/the-safest-envelope-is-at-the-bank",
+      "destination": "/index.html"
+    },
+    {
       "source": "/learn/the-month-i-accidentally-saved-money",
       "destination": "/index.html"
     },
@@ -99,10 +103,6 @@
     },
     {
       "source": "/learn/my-sofa-isnt-broken",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/learn/buying-clothes-didnt-use-to-be-a-hobby",
       "destination": "/index.html"
     },
     {
