@@ -4224,7 +4224,7 @@ const THIRTY_SECOND_ARTICLE = {
   title: "Debt Grows Best in the Dark",
   summary:
     "Years ago, a manager taught me that financial problems are easier to address when people keep talking instead of disappearing.",
-  image: "/article-debt-grows-dark.png",
+  image: "/article-language-of-money.png",
   readTime: "4 min read",
   category: "Debt",
   kicker: "DEBT · COMMUNICATION · COMPASSION",
