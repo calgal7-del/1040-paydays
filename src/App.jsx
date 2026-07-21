@@ -5497,7 +5497,99 @@ const THIRTY_SIXTH_ARTICLE = {
       ],
     };
 
-    const ARTICLES = [FEATURED_ARTICLE, SECOND_ARTICLE, THIRD_ARTICLE, FOURTH_ARTICLE, FIFTH_ARTICLE, SIXTH_ARTICLE, SEVENTH_ARTICLE, EIGHTH_ARTICLE, NINTH_ARTICLE, TENTH_ARTICLE, ELEVENTH_ARTICLE, TWELFTH_ARTICLE, THIRTEENTH_ARTICLE, FOURTEENTH_ARTICLE, FIFTEENTH_ARTICLE, SIXTEENTH_ARTICLE, SEVENTEENTH_ARTICLE, EIGHTEENTH_ARTICLE, NINETEENTH_ARTICLE, TWENTIETH_ARTICLE, TWENTY_FIRST_ARTICLE, TWENTY_SECOND_ARTICLE, TWENTY_THIRD_ARTICLE, TWENTY_FOURTH_ARTICLE, TWENTY_FIFTH_ARTICLE, TWENTY_SEVENTH_ARTICLE, TWENTY_EIGHTH_ARTICLE, TWENTY_NINTH_ARTICLE, THIRTY_FIRST_ARTICLE, THIRTY_SECOND_ARTICLE, THIRTY_THIRD_ARTICLE, THIRTY_FOURTH_ARTICLE, THIRTY_FIFTH_ARTICLE, THIRTY_SIXTH_ARTICLE, THIRTY_SEVENTH_ARTICLE, THIRTY_EIGHTH_ARTICLE, THIRTY_NINTH_ARTICLE, FORTIETH_ARTICLE, FORTY_FIRST_ARTICLE, FORTY_SECOND_ARTICLE, FORTY_THIRD_ARTICLE, FORTY_FOURTH_ARTICLE, FORTY_FIFTH_ARTICLE];
+    const FORTY_SIXTH_ARTICLE = {
+      id: "the-habit-that-outlived-the-electric-bill",
+      title: "The Habit That Outlived the Electric Bill",
+      summary: "Some habits outlive the reasons we first learned them.",
+      image: "/article-habit-outlived-electric-bill.png",
+      readTime: "3 min read",
+      category: "Saving",
+      kicker: "HABITS · GRATITUDE · WASTE",
+      alt: "A dim hallway looking toward a warmly lit kitchen at evening",
+      caption: "Some habits outlive the reasons we first learned them.",
+      quote: {
+        strong: "The electric bill isn't the point anymore.",
+        text: "The habit is.",
+      },
+      sections: [
+        {
+          heading: "The light switch",
+          paragraphs: [
+            "I still turn off the lights when I leave a room.",
+            "I don't stop to think about it.",
+            "My hand just reaches for the switch.",
+            "That's how I grew up.",
+            "If nobody was in the room, the light went off.",
+            "Simple.",
+            "The funny part is that today's LED bulbs use so little electricity that leaving one on for a while probably won't change my life.",
+            "I still turn it off.",
+            "Not because I have to.",
+            "Because it feels wrong not to.",
+            "Looking back, it was never really about the light.",
+          ],
+        },
+        {
+          heading: "Little habits",
+          paragraphs: [
+            "Growing up, our house was full of little habits like that.",
+            "When the evening cooled down, we'd open the windows.",
+            "Before the air conditioner came on, we'd close them again.",
+            "The thermostat went down before bed.",
+            "Why heat an empty house when everyone was under warm blankets?",
+            "None of those habits felt unusual.",
+            "They were simply the way things were done.",
+            "Years later, I realized they all had the same purpose.",
+            "Not to make us rich.",
+            "To teach us not to waste what we already had.",
+          ],
+        },
+        {
+          heading: "The habit stayed. The reason changed.",
+          paragraphs: [
+            "Today I could leave a light on.",
+            "I could turn the thermostat up another degree.",
+            "I could forget to close a window before the air conditioner starts.",
+            "None of those choices would change my financial future.",
+            "But I still don't do them.",
+            "Not because I'm trying to save a few dollars.",
+            "Because those habits became part of how I think.",
+            "When you've worked hard to build a comfortable life, taking care of it becomes second nature.",
+            "Not because you're afraid of losing it.",
+            "Because you respect it.",
+          ],
+        },
+        {
+          heading: "Respect what you already have",
+          paragraphs: [
+            "I've noticed those same habits showing up in other parts of my life.",
+            "I finish the leftovers.",
+            "I wear things until they're actually worn out.",
+            "I don't replace something that's still doing its job.",
+            "None of those choices feels like a sacrifice.",
+            "If anything, they remind me to appreciate what I already have.",
+            "The older I get, the more I think good financial habits aren't really about money.",
+            "They're about gratitude.",
+            "They're about treating the things you've earned with the same care you used when you were still working toward them.",
+          ],
+        },
+        {
+          heading: "The habit is",
+          paragraphs: [
+            "Maybe that's what my parents were teaching all along.",
+            "Not with lectures.",
+            "Not with spreadsheets.",
+            "Just by reaching for the light switch every time they left a room.",
+            "Now I do the same.",
+            "The electric bill isn't the point anymore.",
+            "The habit is.",
+            "Every payday is a decision.",
+            "Choose yours.",
+          ],
+        },
+      ],
+    };
+
+    const ARTICLES = [FEATURED_ARTICLE, SECOND_ARTICLE, THIRD_ARTICLE, FOURTH_ARTICLE, FIFTH_ARTICLE, SIXTH_ARTICLE, SEVENTH_ARTICLE, EIGHTH_ARTICLE, NINTH_ARTICLE, TENTH_ARTICLE, ELEVENTH_ARTICLE, TWELFTH_ARTICLE, THIRTEENTH_ARTICLE, FOURTEENTH_ARTICLE, FIFTEENTH_ARTICLE, SIXTEENTH_ARTICLE, SEVENTEENTH_ARTICLE, EIGHTEENTH_ARTICLE, NINETEENTH_ARTICLE, TWENTIETH_ARTICLE, TWENTY_FIRST_ARTICLE, TWENTY_SECOND_ARTICLE, TWENTY_THIRD_ARTICLE, TWENTY_FOURTH_ARTICLE, TWENTY_FIFTH_ARTICLE, TWENTY_SEVENTH_ARTICLE, TWENTY_EIGHTH_ARTICLE, TWENTY_NINTH_ARTICLE, THIRTY_FIRST_ARTICLE, THIRTY_SECOND_ARTICLE, THIRTY_THIRD_ARTICLE, THIRTY_FOURTH_ARTICLE, THIRTY_FIFTH_ARTICLE, THIRTY_SIXTH_ARTICLE, THIRTY_SEVENTH_ARTICLE, THIRTY_EIGHTH_ARTICLE, THIRTY_NINTH_ARTICLE, FORTIETH_ARTICLE, FORTY_FIRST_ARTICLE, FORTY_SECOND_ARTICLE, FORTY_THIRD_ARTICLE, FORTY_FOURTH_ARTICLE, FORTY_FIFTH_ARTICLE, FORTY_SIXTH_ARTICLE];
 
     const ARTICLE_FAQS = {
       "you-only-get-about-1040-paydays": [
@@ -6488,6 +6580,28 @@ const THIRTY_SIXTH_ARTICLE = {
         {
           question: "What is the main lesson?",
           answer: "The smartest financial decision is not always making the perfect purchase. Sometimes it is correcting a purchase while you still have the chance.",
+        },
+      ],
+      "the-habit-that-outlived-the-electric-bill": [
+        {
+          question: "Why keep small habits if they do not save much money?",
+          answer: "Small habits can represent respect for what you already have. The dollar amount may be small, but the mindset can shape bigger financial decisions.",
+        },
+        {
+          question: "Is this article really about electricity?",
+          answer: "Not really. The light switch is the example. The larger lesson is about avoiding waste, appreciating what you have, and caring for the life you have built.",
+        },
+        {
+          question: "Can frugal habits go too far?",
+          answer: "Yes. A habit should support your life, not make it smaller or more stressful. The goal is gratitude and intention, not fear.",
+        },
+        {
+          question: "What are other examples of habits like this?",
+          answer: "Finishing leftovers, closing windows before running air conditioning, using something until it is truly worn out, or not replacing items that still do their job.",
+        },
+        {
+          question: "What is the main lesson?",
+          answer: "Some financial habits begin as necessity and later become values. They remind you not to waste what you worked hard to build.",
         },
       ],
     };

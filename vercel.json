@@ -176,6 +176,10 @@
     {
       "source": "/learn/the-most-valuable-coat-i-never-owned",
       "destination": "/index.html"
+    },
+    {
+      "source": "/learn/the-habit-that-outlived-the-electric-bill",
+      "destination": "/index.html"
     }
   ]
 }
