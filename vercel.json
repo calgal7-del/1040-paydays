@@ -54,7 +54,7 @@
       "destination": "/index.html"
     },
     {
-      "source": "/learn/the-vacation-that-showed-me-how-small-spending-adds-up",
+      "source": "/learn/your-routine-was-spending-your-money",
       "destination": "/index.html"
     },
     {
@@ -86,7 +86,7 @@
       "destination": "/index.html"
     },
     {
-      "source": "/learn/loud-budgeting-thats-not-where-i-want-my-money-to-go",
+      "source": "/learn/why-saying-no-feels-so-hard",
       "destination": "/index.html"
     },
     {
@@ -110,7 +110,7 @@
       "destination": "/index.html"
     },
     {
-      "source": "/learn/the-simplest-explanation-of-compound-interest",
+      "source": "/learn/the-years-when-compound-interest-feels-like-nothing",
       "destination": "/index.html"
     },
     {
@@ -175,6 +175,10 @@
     },
     {
       "source": "/learn/what-do-you-do-when-you-have-almost-nothing-left",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/learn/the-most-valuable-coat-i-never-owned",
       "destination": "/index.html"
     }
   ]
