@@ -180,6 +180,10 @@
     {
       "source": "/learn/the-habit-that-outlived-the-electric-bill",
       "destination": "/index.html"
+    },
+    {
+      "source": "/learn/the-room-i-chose-to-leave",
+      "destination": "/index.html"
     }
   ]
 }

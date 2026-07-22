@@ -5589,7 +5589,131 @@ const THIRTY_SIXTH_ARTICLE = {
       ],
     };
 
-    const ARTICLES = [FEATURED_ARTICLE, SECOND_ARTICLE, THIRD_ARTICLE, FOURTH_ARTICLE, FIFTH_ARTICLE, SIXTH_ARTICLE, SEVENTH_ARTICLE, EIGHTH_ARTICLE, NINTH_ARTICLE, TENTH_ARTICLE, ELEVENTH_ARTICLE, TWELFTH_ARTICLE, THIRTEENTH_ARTICLE, FOURTEENTH_ARTICLE, FIFTEENTH_ARTICLE, SIXTEENTH_ARTICLE, SEVENTEENTH_ARTICLE, EIGHTEENTH_ARTICLE, NINETEENTH_ARTICLE, TWENTIETH_ARTICLE, TWENTY_FIRST_ARTICLE, TWENTY_SECOND_ARTICLE, TWENTY_THIRD_ARTICLE, TWENTY_FOURTH_ARTICLE, TWENTY_FIFTH_ARTICLE, TWENTY_SEVENTH_ARTICLE, TWENTY_EIGHTH_ARTICLE, TWENTY_NINTH_ARTICLE, THIRTY_FIRST_ARTICLE, THIRTY_SECOND_ARTICLE, THIRTY_THIRD_ARTICLE, THIRTY_FOURTH_ARTICLE, THIRTY_FIFTH_ARTICLE, THIRTY_SIXTH_ARTICLE, THIRTY_SEVENTH_ARTICLE, THIRTY_EIGHTH_ARTICLE, THIRTY_NINTH_ARTICLE, FORTIETH_ARTICLE, FORTY_FIRST_ARTICLE, FORTY_SECOND_ARTICLE, FORTY_THIRD_ARTICLE, FORTY_FOURTH_ARTICLE, FORTY_FIFTH_ARTICLE, FORTY_SIXTH_ARTICLE];
+    const FORTY_SEVENTH_ARTICLE = {
+      id: "the-room-i-chose-to-leave",
+      title: "The Room I Chose to Leave",
+      summary: "Sometimes savings are not about buying more. They are about having enough freedom to walk away.",
+      image: "/article-room-i-chose-to-leave.png",
+      readTime: "4 min read",
+      category: "Payday Philosophy",
+      kicker: "CHOICE · SAFETY · MOVING FORWARD",
+      alt: "A dim hallway in an old residence beside a small room with a bed, sink, and chair",
+      caption: "Savings buy the freedom to choose a different path.",
+      quote: {
+        strong: "Savings buy the freedom to choose a different path.",
+        text: "Not as the ability to buy more. As the freedom to say no.",
+      },
+      sections: [
+        {
+          heading: "Arriving too late",
+          paragraphs: [
+            "Years ago, a few weeks before school started, I returned to the city where I was studying.",
+            "Finding a place to live before classes began had become part of my routine.",
+            "I'd usually arrive, spend a day or two looking at apartment postings, and find a room without much trouble.",
+            "This year was different.",
+            "I'd left it too late.",
+            "Classes were about to start, and most of the good places were already gone.",
+            "For my first week, I rented a room in an old nurses' residence.",
+            "Rooms were rented by the week while people looked for something more permanent.",
+          ],
+        },
+        {
+          heading: "The old residence",
+          paragraphs: [
+            "I carried my suitcase up a wide, polished stone staircase.",
+            "The building still felt like what it had once been.",
+            "The hallway was dimly lit.",
+            "The walls were painted that faded institutional pink you used to see in older buildings.",
+            "There was a small sink in my room.",
+            "The toilets and showers were down the hall.",
+            "A wall phone hung in the hallway for everyone to use.",
+            "It wasn't home.",
+            "I was young.",
+            "That didn't bother me.",
+          ],
+        },
+        {
+          heading: "Everyone had a story",
+          paragraphs: [
+            "Most evenings, the men staying there gathered in the TV room.",
+            "I joined them.",
+            "Everyone seemed to have a story.",
+            "One young guy was in the city to take a forklift course.",
+            "When he finished, he was heading north.",
+            "\"You can make big money up there,\" he said.",
+            "One night I came back with Chinese food.",
+            "The guys laughed.",
+            "\"You know how much rice we could buy for what you paid for that?\"",
+            "We all laughed.",
+          ],
+        },
+        {
+          heading: "The hallway phone",
+          paragraphs: [
+            "A few nights later, I was using the hallway phone when one of the men walked over.",
+            "He demanded to know who I was talking to.",
+            "Not asked.",
+            "Demanded.",
+            "My gut said, run.",
+            "Instead, I smiled.",
+            "\"Just my mom,\" I said.",
+            "We talked for another minute.",
+            "Then I hung up and walked back to my room.",
+            "I remember looking at the chair and wondering if I should wedge it against the door.",
+            "I don't remember whether I actually did.",
+            "I remember sitting on the edge of the bed.",
+            "Every sound in the hallway suddenly seemed louder.",
+            "For the first time since I'd arrived, I was scared.",
+          ],
+        },
+        {
+          heading: "Enough to walk away",
+          paragraphs: [
+            "What frightened me wasn't what he said.",
+            "It was the feeling.",
+            "For a brief moment, it felt as though he thought I belonged to him.",
+            "It felt as though he was trying to figure out who I was before deciding what came next.",
+            "That was enough.",
+            "Right then and there, I knew I was leaving.",
+            "Until then, I hadn't stopped to think about what kind of place I was living in, or who I was living with.",
+          ],
+        },
+        {
+          heading: "The search",
+          paragraphs: [
+            "The next morning, I started the desperate search for somewhere else to live.",
+            "I didn't have a car.",
+            "I took the bus or walked from apartment posting to apartment posting.",
+            "Whenever I found a place that looked promising, I called the landlord or knocked on the door.",
+            "A few days later, on the other side of town, I found an old Victorian house that had been divided into student apartments.",
+            "There were shops on the main floor.",
+            "Students lived upstairs.",
+            "The bathroom was shared.",
+            "In the middle of it sat an old claw-foot bathtub.",
+            "The place wasn't fancy.",
+            "It felt safe.",
+          ],
+        },
+        {
+          heading: "The room I chose to leave",
+          paragraphs: [
+            "I've forgotten almost everything about that apartment.",
+            "I haven't forgotten the room I chose to leave.",
+            "That week taught me something no finance book ever could.",
+            "Savings buy the freedom to choose a different path.",
+            "I could leave because I had enough money to keep looking.",
+            "Enough to pay for another room.",
+            "Enough to walk away.",
+            "Not as the ability to buy more.",
+            "As the freedom to say no.",
+            "Every payday is a decision.",
+            "Choose yours.",
+          ],
+        },
+      ],
+    };
+
+    const ARTICLES = [FEATURED_ARTICLE, SECOND_ARTICLE, THIRD_ARTICLE, FOURTH_ARTICLE, FIFTH_ARTICLE, SIXTH_ARTICLE, SEVENTH_ARTICLE, EIGHTH_ARTICLE, NINTH_ARTICLE, TENTH_ARTICLE, ELEVENTH_ARTICLE, TWELFTH_ARTICLE, THIRTEENTH_ARTICLE, FOURTEENTH_ARTICLE, FIFTEENTH_ARTICLE, SIXTEENTH_ARTICLE, SEVENTEENTH_ARTICLE, EIGHTEENTH_ARTICLE, NINETEENTH_ARTICLE, TWENTIETH_ARTICLE, TWENTY_FIRST_ARTICLE, TWENTY_SECOND_ARTICLE, TWENTY_THIRD_ARTICLE, TWENTY_FOURTH_ARTICLE, TWENTY_FIFTH_ARTICLE, TWENTY_SEVENTH_ARTICLE, TWENTY_EIGHTH_ARTICLE, TWENTY_NINTH_ARTICLE, THIRTY_FIRST_ARTICLE, THIRTY_SECOND_ARTICLE, THIRTY_THIRD_ARTICLE, THIRTY_FOURTH_ARTICLE, THIRTY_FIFTH_ARTICLE, THIRTY_SIXTH_ARTICLE, THIRTY_SEVENTH_ARTICLE, THIRTY_EIGHTH_ARTICLE, THIRTY_NINTH_ARTICLE, FORTIETH_ARTICLE, FORTY_FIRST_ARTICLE, FORTY_SECOND_ARTICLE, FORTY_THIRD_ARTICLE, FORTY_FOURTH_ARTICLE, FORTY_FIFTH_ARTICLE, FORTY_SIXTH_ARTICLE, FORTY_SEVENTH_ARTICLE];
 
     const ARTICLE_FAQS = {
       "you-only-get-about-1040-paydays": [
@@ -6602,6 +6726,28 @@ const THIRTY_SIXTH_ARTICLE = {
         {
           question: "What is the main lesson?",
           answer: "Some financial habits begin as necessity and later become values. They remind you not to waste what you worked hard to build.",
+        },
+      ],
+      "the-room-i-chose-to-leave": [
+        {
+          question: "What is the main money lesson in this story?",
+          answer: "Savings are not only for buying things. They can give you the freedom to leave a place, situation, or choice that no longer feels right.",
+        },
+        {
+          question: "Why does having savings create more choices?",
+          answer: "Even a small cushion can buy time, transportation, another room, or the ability to keep looking instead of accepting the first option available.",
+        },
+        {
+          question: "Does this mean money solves every unsafe situation?",
+          answer: "No. Safety can depend on many things, including support, timing, and outside help. But having some money available can make it easier to act when you need to leave.",
+        },
+        {
+          question: "What if I cannot save much right now?",
+          answer: "Start with what is possible. Even small amounts can build a little more flexibility over time.",
+        },
+        {
+          question: "What is the main takeaway?",
+          answer: "Financial progress is not always about having more. Sometimes it is about having enough freedom to say no and choose a different path.",
         },
       ],
     };
