@@ -5705,7 +5705,7 @@ const THIRTY_SIXTH_ARTICLE = {
             "Enough to pay for another room.",
             "Enough to walk away.",
             "Not as the ability to buy more.",
-            "As the freedom to say no.",
+            "And the freedom to say no.",
             "Not me, not today"
           ],
         },
