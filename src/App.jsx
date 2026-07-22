@@ -5706,8 +5706,7 @@ const THIRTY_SIXTH_ARTICLE = {
             "Enough to walk away.",
             "Not as the ability to buy more.",
             "As the freedom to say no.",
-            "Every payday is a decision.",
-            "Choose yours.",
+            "Not me, not today"
           ],
         },
       ],
