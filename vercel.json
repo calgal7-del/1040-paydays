@@ -184,6 +184,10 @@
     {
       "source": "/learn/the-room-i-chose-to-leave",
       "destination": "/index.html"
+    },
+    {
+      "source": "/learn/the-raise-you-already-got",
+      "destination": "/index.html"
     }
   ]
 }

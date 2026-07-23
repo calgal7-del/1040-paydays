@@ -5712,7 +5712,96 @@ const THIRTY_SIXTH_ARTICLE = {
       ],
     };
 
-    const ARTICLES = [FEATURED_ARTICLE, SECOND_ARTICLE, THIRD_ARTICLE, FOURTH_ARTICLE, FIFTH_ARTICLE, SIXTH_ARTICLE, SEVENTH_ARTICLE, EIGHTH_ARTICLE, NINTH_ARTICLE, TENTH_ARTICLE, ELEVENTH_ARTICLE, TWELFTH_ARTICLE, THIRTEENTH_ARTICLE, FOURTEENTH_ARTICLE, FIFTEENTH_ARTICLE, SIXTEENTH_ARTICLE, SEVENTEENTH_ARTICLE, EIGHTEENTH_ARTICLE, NINETEENTH_ARTICLE, TWENTIETH_ARTICLE, TWENTY_FIRST_ARTICLE, TWENTY_SECOND_ARTICLE, TWENTY_THIRD_ARTICLE, TWENTY_FOURTH_ARTICLE, TWENTY_FIFTH_ARTICLE, TWENTY_SEVENTH_ARTICLE, TWENTY_EIGHTH_ARTICLE, TWENTY_NINTH_ARTICLE, THIRTY_FIRST_ARTICLE, THIRTY_SECOND_ARTICLE, THIRTY_THIRD_ARTICLE, THIRTY_FOURTH_ARTICLE, THIRTY_FIFTH_ARTICLE, THIRTY_SIXTH_ARTICLE, THIRTY_SEVENTH_ARTICLE, THIRTY_EIGHTH_ARTICLE, THIRTY_NINTH_ARTICLE, FORTIETH_ARTICLE, FORTY_FIRST_ARTICLE, FORTY_SECOND_ARTICLE, FORTY_THIRD_ARTICLE, FORTY_FOURTH_ARTICLE, FORTY_FIFTH_ARTICLE, FORTY_SIXTH_ARTICLE, FORTY_SEVENTH_ARTICLE];
+    const FORTY_EIGHTH_ARTICLE = {
+      id: "the-raise-you-already-got",
+      title: "The Raise You Already Got",
+      summary: "Sometimes making more money starts with noticing the benefits and discounts you have already earned.",
+      image: "/article-raise-you-already-got.png",
+      readTime: "3 min read",
+      category: "Work",
+      kicker: "BENEFITS · DISCOUNTS · KEEPING MORE",
+      alt: "A man reviewing pension and benefit paperwork at a wooden table with a laptop and notes",
+      caption: "Your paycheck may not change, but how much of it you keep can.",
+      quote: {
+        strong: "My paycheck hadn't changed.",
+        text: "What changed was how much of it I got to keep.",
+      },
+      sections: [
+        {
+          heading: "Another way to make more",
+          paragraphs: [
+            "Whenever people talk about making more money, the advice is familiar.",
+            "Ask for a raise.",
+            "Find a better-paying job.",
+            "Work overtime.",
+            "Start a side hustle.",
+            "All of that can help.",
+            "But there's another way to end up with more money, and almost nobody talks about it.",
+          ],
+        },
+        {
+          heading: "The discount I did not know about",
+          paragraphs: [
+            "A few years ago, a coworker mentioned buying new tires through an employee discount.",
+            "I didn't even know our company offered one.",
+            "So I started looking.",
+            "Within minutes I found discounts on hotels, insurance, electronics, vehicles, and the same mattress I was already planning to buy.",
+            "I realized I'd been ignoring part of my compensation for years.",
+            "My paycheck hadn't changed.",
+            "What changed was how much of it I got to keep.",
+          ],
+        },
+        {
+          heading: "The raise you already got",
+          paragraphs: [
+            "Imagine your employer gave you a $500 raise.",
+            "You'd notice.",
+            "Now imagine they helped you save that same $500 over the course of a year.",
+            "Financially, there's no difference.",
+            "Employee discounts.",
+            "Retirement matching.",
+            "Health benefits.",
+            "Professional training.",
+            "Legal services.",
+            "Preferred insurance rates.",
+            "Most employers offer more than people realize.",
+            "Most employees never look.",
+          ],
+        },
+        {
+          heading: "Keeping more matters",
+          paragraphs: [
+            "For years, I believed getting ahead meant earning more.",
+            "Now I think it also means wasting less.",
+            "Before I make an expensive purchase, I check whether my employer already has a discount.",
+            "Before paying for a course, I check whether it's covered.",
+            "Before buying insurance, I compare the employee rate.",
+            "Sometimes I find nothing.",
+            "Sometimes I save hundreds of dollars.",
+            "Those few minutes are worth it.",
+          ],
+        },
+        {
+          heading: "Pay attention",
+          paragraphs: [
+            "Two people can earn the same salary for twenty years and finish in very different financial positions.",
+            "The difference isn't always income.",
+            "Sometimes it's simply paying attention.",
+            "I've stopped thinking of workplace benefits as extras.",
+            "They're part of my pay.",
+            "I've already earned them.",
+            "If I don't use them, I'm choosing to leave money behind.",
+            "Most of us only get about 1,040 paydays during our working lives.",
+            "Your salary matters.",
+            "Keeping more of it matters just as much.",
+            "Every payday is a decision.",
+            "Choose yours.",
+          ],
+        },
+      ],
+    };
+
+    const ARTICLES = [FEATURED_ARTICLE, SECOND_ARTICLE, THIRD_ARTICLE, FOURTH_ARTICLE, FIFTH_ARTICLE, SIXTH_ARTICLE, SEVENTH_ARTICLE, EIGHTH_ARTICLE, NINTH_ARTICLE, TENTH_ARTICLE, ELEVENTH_ARTICLE, TWELFTH_ARTICLE, THIRTEENTH_ARTICLE, FOURTEENTH_ARTICLE, FIFTEENTH_ARTICLE, SIXTEENTH_ARTICLE, SEVENTEENTH_ARTICLE, EIGHTEENTH_ARTICLE, NINETEENTH_ARTICLE, TWENTIETH_ARTICLE, TWENTY_FIRST_ARTICLE, TWENTY_SECOND_ARTICLE, TWENTY_THIRD_ARTICLE, TWENTY_FOURTH_ARTICLE, TWENTY_FIFTH_ARTICLE, TWENTY_SEVENTH_ARTICLE, TWENTY_EIGHTH_ARTICLE, TWENTY_NINTH_ARTICLE, THIRTY_FIRST_ARTICLE, THIRTY_SECOND_ARTICLE, THIRTY_THIRD_ARTICLE, THIRTY_FOURTH_ARTICLE, THIRTY_FIFTH_ARTICLE, THIRTY_SIXTH_ARTICLE, THIRTY_SEVENTH_ARTICLE, THIRTY_EIGHTH_ARTICLE, THIRTY_NINTH_ARTICLE, FORTIETH_ARTICLE, FORTY_FIRST_ARTICLE, FORTY_SECOND_ARTICLE, FORTY_THIRD_ARTICLE, FORTY_FOURTH_ARTICLE, FORTY_FIFTH_ARTICLE, FORTY_SIXTH_ARTICLE, FORTY_SEVENTH_ARTICLE, FORTY_EIGHTH_ARTICLE];
 
     const ARTICLE_FAQS = {
       "you-only-get-about-1040-paydays": [
@@ -6747,6 +6836,28 @@ const THIRTY_SIXTH_ARTICLE = {
         {
           question: "What is the main takeaway?",
           answer: "Financial progress is not always about having more. Sometimes it is about having enough freedom to say no and choose a different path.",
+        },
+      ],
+      "the-raise-you-already-got": [
+        {
+          question: "How can workplace benefits feel like a raise?",
+          answer: "If a benefit or discount saves you money you would have spent anyway, it has a similar effect to earning more because more of your paycheck stays with you.",
+        },
+        {
+          question: "What benefits should I check first?",
+          answer: "Start with retirement matching, health benefits, employee discounts, professional training, insurance rates, legal services, and any employee discount website your workplace offers.",
+        },
+        {
+          question: "What if my employer does not offer many perks?",
+          answer: "That can happen. The habit is still useful because checking first only takes a few minutes and may occasionally save you money.",
+        },
+        {
+          question: "Should I spend the money I save?",
+          answer: "If possible, give the savings a purpose. Save it, invest it, pay down debt, or use it for something that matters more than the purchase you avoided.",
+        },
+        {
+          question: "What is the main lesson?",
+          answer: "Your salary matters, but so does keeping more of it. Benefits you have already earned can quietly improve your financial position if you use them.",
         },
       ],
     };
