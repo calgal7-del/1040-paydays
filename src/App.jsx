@@ -15,15 +15,16 @@
       X,
       Menu,
       BookOpen,
-      Search,
     } from "lucide-react";
     import "./App.css";
+    import { LEARN_EDITORIAL_CONFIG } from "./learnConfig.mjs";
 
     const PAYDAYS_TOTAL = 1040;
     const STORAGE_KEY = "1040-paydays-settings";
     const ONBOARDING_KEY = "1040-paydays-onboarding-seen";
     const MAILING_LIST_CONSENT_TEXT =
       "Join the 1040 Paydays mailing list for new articles, practical financial ideas, calculators, and occasional updates. You can unsubscribe at any time.";
+    const SITE_URL = "https://www.1040paydays.com";
 
     const DEFAULT_SETTINGS = {
       currency: "USD",
@@ -6017,6 +6018,35 @@ const THIRTY_SIXTH_ARTICLE = {
     };
 
     const ARTICLES = [FEATURED_ARTICLE, SECOND_ARTICLE, THIRD_ARTICLE, FOURTH_ARTICLE, FIFTH_ARTICLE, SIXTH_ARTICLE, SEVENTH_ARTICLE, EIGHTH_ARTICLE, NINTH_ARTICLE, TENTH_ARTICLE, ELEVENTH_ARTICLE, TWELFTH_ARTICLE, THIRTEENTH_ARTICLE, FOURTEENTH_ARTICLE, FIFTEENTH_ARTICLE, SIXTEENTH_ARTICLE, SEVENTEENTH_ARTICLE, EIGHTEENTH_ARTICLE, NINETEENTH_ARTICLE, TWENTIETH_ARTICLE, TWENTY_FIRST_ARTICLE, TWENTY_SECOND_ARTICLE, TWENTY_THIRD_ARTICLE, TWENTY_FOURTH_ARTICLE, TWENTY_FIFTH_ARTICLE, TWENTY_SEVENTH_ARTICLE, TWENTY_EIGHTH_ARTICLE, TWENTY_NINTH_ARTICLE, THIRTY_FIRST_ARTICLE, THIRTY_SECOND_ARTICLE, THIRTY_THIRD_ARTICLE, THIRTY_FOURTH_ARTICLE, THIRTY_FIFTH_ARTICLE, THIRTY_SIXTH_ARTICLE, THIRTY_SEVENTH_ARTICLE, THIRTY_EIGHTH_ARTICLE, THIRTY_NINTH_ARTICLE, FORTIETH_ARTICLE, FORTY_FIRST_ARTICLE, FORTY_SECOND_ARTICLE, FORTY_THIRD_ARTICLE, FORTY_FOURTH_ARTICLE, FORTY_FIFTH_ARTICLE, FORTY_SIXTH_ARTICLE, FORTY_SEVENTH_ARTICLE, FORTY_EIGHTH_ARTICLE, FORTY_NINTH_ARTICLE, FIFTIETH_ARTICLE];
+    const ARTICLE_BY_ID = new Map(ARTICLES.map((article) => [article.id, article]));
+    const LEARN_CLUSTER_BY_SLUG = new Map(
+      LEARN_EDITORIAL_CONFIG.clusters.map((cluster) => [cluster.slug, cluster])
+    );
+
+    function configuredArticles(slugs, label) {
+      const missingSlugs = slugs.filter((slug) => !ARTICLE_BY_ID.has(slug));
+
+      if (missingSlugs.length && import.meta.env.DEV) {
+        console.warn(
+          `[Learn configuration] ${label} contains unknown article slug(s): ${missingSlugs.join(", ")}`
+        );
+      }
+
+      return slugs.map((slug) => ARTICLE_BY_ID.get(slug)).filter(Boolean);
+    }
+
+    function articlesForCluster(cluster) {
+      if (!cluster) return [];
+      return ARTICLES.filter((article) => cluster.categories.includes(article.category));
+    }
+
+    const LEARN_FEATURED_ARTICLE =
+      configuredArticles([LEARN_EDITORIAL_CONFIG.featuredSlug], "featuredSlug")[0] ||
+      null;
+    const LEARN_START_HERE_ARTICLES = configuredArticles(
+      LEARN_EDITORIAL_CONFIG.startHereSlugs,
+      "startHereSlugs"
+    ).slice(0, 3);
 
     const ARTICLE_FAQS = {
       "you-only-get-about-1040-paydays": [
@@ -7168,6 +7198,80 @@ const THIRTY_SIXTH_ARTICLE = {
       }
     }
 
+    function NewsletterSignup({
+      email,
+      setEmail,
+      newsletterStatus,
+      setNewsletterStatus,
+      setNewsletterError,
+      newsletterError,
+      newsletterMessageRef,
+      submitNewsletter,
+    }) {
+      if (newsletterStatus === "success") {
+        return (
+          <div
+            className="newsletter-success-panel"
+            ref={newsletterMessageRef}
+            tabIndex="-1"
+            role="status"
+            aria-live="polite"
+          >
+            <strong>✓ You're on the list.</strong>
+            <p>Thanks for joining 1040 Paydays.</p>
+            <span>I'll occasionally send thoughtful articles, practical financial ideas, and useful calculators. No spam. Unsubscribe anytime.</span>
+          </div>
+        );
+      }
+
+      return (
+        <form className="newsletter-signup" onSubmit={submitNewsletter} noValidate>
+          <label className="sr-only" htmlFor="newsletter-email">Email address</label>
+          <div className="email-row">
+            <input
+              id="newsletter-email"
+              name="email"
+              value={email}
+              onChange={(event) => {
+                setEmail(event.target.value);
+                if (newsletterStatus === "error") {
+                  setNewsletterStatus("idle");
+                  setNewsletterError("");
+                }
+              }}
+              placeholder="Enter your email"
+              type="email"
+              autoComplete="email"
+              inputMode="email"
+              aria-invalid={newsletterStatus === "error" ? "true" : "false"}
+              aria-describedby="newsletter-consent newsletter-message"
+              disabled={newsletterStatus === "loading"}
+            />
+            <input
+              className="newsletter-honeypot"
+              type="text"
+              name="company"
+              tabIndex="-1"
+              autoComplete="off"
+              aria-hidden="true"
+            />
+            <button type="submit" disabled={newsletterStatus === "loading"}>
+              {newsletterStatus === "loading" ? "Joining..." : "Join"}
+            </button>
+          </div>
+          <small id="newsletter-consent">{MAILING_LIST_CONSENT_TEXT}</small>
+          <p
+            id="newsletter-message"
+            className="newsletter-message"
+            role={newsletterStatus === "error" ? "alert" : "status"}
+            aria-live="polite"
+          >
+            {newsletterStatus === "error" ? newsletterError : ""}
+          </p>
+        </form>
+      );
+    }
+
     export default function App() {
       const [initialSettings] = useState(loadSettings);
       const [route, setRoute] = useState(() => window.location.pathname);
@@ -7234,17 +7338,89 @@ const THIRTY_SIXTH_ARTICLE = {
       }, []);
 
       useEffect(() => {
-        const metaDescription = document.querySelector('meta[name="description"]');
-        const isLearnRoute = route === "/learn" || route.startsWith("/learn/");
+        const normalizedPath = route.length > 1 ? route.replace(/\/+$/, "") : route;
+        const routeSlug = normalizedPath.startsWith("/learn/")
+          ? normalizedPath.slice("/learn/".length)
+          : "";
+        const cluster = LEARN_CLUSTER_BY_SLUG.get(routeSlug);
+        const article = ARTICLE_BY_ID.get(routeSlug);
+        const isLearnIndex = normalizedPath === "/learn";
+        const isLearnRoute = isLearnIndex || Boolean(cluster) || Boolean(article);
+        const title = article
+          ? `${article.title} | 1040 Paydays`
+          : cluster
+            ? `${cluster.title} | Learn | 1040 Paydays`
+            : isLearnIndex
+              ? "Learn | 1040 Paydays"
+              : "1040 Paydays | Savings and Retirement Calculator by Paycheck";
+        const description = article
+          ? article.summary
+          : cluster
+            ? cluster.intro
+            : isLearnIndex
+              ? "Essays and guides to help you save more, spend with intention, build wealth, and create more freedom."
+              : "Estimate how much you can save from every paycheck. Use 1040 Paydays to plan savings, retirement, and future growth with a simple calculator.";
+        const canonicalPath = isLearnRoute ? normalizedPath : "/";
+        const canonicalUrl = `${SITE_URL}${canonicalPath === "/" ? "/" : canonicalPath}`;
 
-        document.title = isLearnRoute ? "Learn | 1040 Paydays" : "1040 Paydays";
-        if (metaDescription) {
-          metaDescription.setAttribute(
-            "content",
-            isLearnRoute
-              ? "Browse practical personal finance articles about saving, investing, retirement, debt, and making the most of every payday."
-              : "See how every payday can move you closer to financial freedom with the 1040 Paydays calculator."
-          );
+        const setMeta = (selector, attribute, value) => {
+          let element = document.head.querySelector(selector);
+          if (!element) {
+            element = document.createElement("meta");
+            const [name, key] = attribute;
+            element.setAttribute(name, key);
+            document.head.appendChild(element);
+          }
+          element.setAttribute("content", value);
+        };
+
+        document.title = title;
+        setMeta('meta[name="description"]', ["name", "description"], description);
+        setMeta('meta[property="og:title"]', ["property", "og:title"], title);
+        setMeta('meta[property="og:description"]', ["property", "og:description"], description);
+        setMeta('meta[property="og:type"]', ["property", "og:type"], article ? "article" : "website");
+        setMeta('meta[property="og:url"]', ["property", "og:url"], canonicalUrl);
+
+        let canonical = document.head.querySelector('link[rel="canonical"]');
+        if (!canonical) {
+          canonical = document.createElement("link");
+          canonical.setAttribute("rel", "canonical");
+          document.head.appendChild(canonical);
+        }
+        canonical.setAttribute("href", canonicalUrl);
+
+        const existingStructuredData = document.getElementById("learn-structured-data");
+        const collectionArticles = isLearnIndex
+          ? ARTICLES
+          : cluster
+            ? articlesForCluster(cluster)
+            : [];
+
+        if (collectionArticles.length) {
+          const structuredData = {
+            "@context": "https://schema.org",
+            "@type": "CollectionPage",
+            name: cluster ? cluster.title : "Learn",
+            description,
+            url: canonicalUrl,
+            mainEntity: {
+              "@type": "ItemList",
+              numberOfItems: collectionArticles.length,
+              itemListElement: collectionArticles.map((item, index) => ({
+                "@type": "ListItem",
+                position: index + 1,
+                url: `${SITE_URL}/learn/${item.id}`,
+                name: item.title,
+              })),
+            },
+          };
+          const script = existingStructuredData || document.createElement("script");
+          script.id = "learn-structured-data";
+          script.type = "application/ld+json";
+          script.textContent = JSON.stringify(structuredData);
+          if (!existingStructuredData) document.head.appendChild(script);
+        } else {
+          existingStructuredData?.remove();
         }
       }, [route]);
 
@@ -7470,21 +7646,34 @@ const THIRTY_SIXTH_ARTICLE = {
       };
 
       const normalizedRoute = route.length > 1 ? route.replace(/\/+$/, "") : route;
+      const newsletterProps = {
+        email,
+        setEmail,
+        newsletterStatus,
+        setNewsletterStatus,
+        setNewsletterError,
+        newsletterError,
+        newsletterMessageRef,
+        submitNewsletter,
+      };
 
       if (normalizedRoute === "/learn" || normalizedRoute.startsWith("/learn/")) {
-        const isArticleRoute = normalizedRoute.startsWith("/learn/");
-        const articleId = isArticleRoute ? normalizedRoute.slice("/learn/".length) : "";
-        const activeArticle = isArticleRoute ? ARTICLES.find((article) => article.id === articleId) : null;
-        const notFound = isArticleRoute && !activeArticle;
+        const isNestedLearnRoute = normalizedRoute.startsWith("/learn/");
+        const routeSlug = isNestedLearnRoute ? normalizedRoute.slice("/learn/".length) : "";
+        const activeCluster = isNestedLearnRoute ? LEARN_CLUSTER_BY_SLUG.get(routeSlug) : null;
+        const activeArticle = isNestedLearnRoute && !activeCluster ? ARTICLE_BY_ID.get(routeSlug) : null;
+        const notFound = isNestedLearnRoute && !activeCluster && !activeArticle;
 
         return (
           <LearnRoute
             currency={currency}
             setCurrency={setCurrency}
             article={activeArticle}
+            cluster={activeCluster}
             notFound={notFound}
             navigateTo={navigateTo}
             openHomePanel={openHomePanel}
+            newsletterProps={newsletterProps}
           />
         );
       }
@@ -7758,64 +7947,7 @@ const THIRTY_SIXTH_ARTICLE = {
                   <p className="eyebrow muted">STAY ON TRACK</p>
                   <h3>Get your 1,040 Payday Plan.</h3>
 
-                  {newsletterStatus === "success" ? (
-                    <div
-                      className="newsletter-success-panel"
-                      ref={newsletterMessageRef}
-                      tabIndex="-1"
-                      role="status"
-                      aria-live="polite"
-                    >
-                      <strong>✓ You're on the list.</strong>
-                      <p>Thanks for joining 1040 Paydays.</p>
-                      <span>I'll occasionally send thoughtful articles, practical financial ideas, and useful calculators. No spam. Unsubscribe anytime.</span>
-                    </div>
-                  ) : (
-                    <form className="newsletter-signup" onSubmit={submitNewsletter} noValidate>
-                      <label className="sr-only" htmlFor="newsletter-email">Email address</label>
-                      <div className="email-row">
-                        <input
-                          id="newsletter-email"
-                          name="email"
-                          value={email}
-                          onChange={(e) => {
-                            setEmail(e.target.value);
-                            if (newsletterStatus === "error") {
-                              setNewsletterStatus("idle");
-                              setNewsletterError("");
-                            }
-                          }}
-                          placeholder="Enter your email"
-                          type="email"
-                          autoComplete="email"
-                          inputMode="email"
-                          aria-invalid={newsletterStatus === "error" ? "true" : "false"}
-                          aria-describedby="newsletter-consent newsletter-message"
-                          disabled={newsletterStatus === "loading"}
-                        />
-                        <input
-                          className="newsletter-honeypot"
-                          type="text"
-                          name="company"
-                          tabIndex="-1"
-                          autoComplete="off"
-                          aria-hidden="true"
-                        />
-                        <button type="submit" disabled={newsletterStatus === "loading"}>
-                          {newsletterStatus === "loading" ? "Joining..." : "Join"}
-                        </button>
-                      </div>
-                      <small id="newsletter-consent">{MAILING_LIST_CONSENT_TEXT}</small>
-                      <p
-                        id="newsletter-message"
-                        className="newsletter-message"
-                        role={newsletterStatus === "error" ? "alert" : "status"}
-                        aria-live="polite"
-                      >
-                        {newsletterStatus === "error" ? newsletterError : ""}
-                      </p>
-                    </form>
-                  )}
+                  <NewsletterSignup {...newsletterProps} />
                 </div>
               </section>
             </aside>
@@ -8061,21 +8193,16 @@ const THIRTY_SIXTH_ARTICLE = {
       );
     }
 
-    const LEARN_CATEGORIES = [
-      "Getting Started",
-      "Financial Basics",
-      "Saving",
-      "Investing",
-      "Retirement",
-      "Debt",
-      "Payday Philosophy",
-    ];
-
-    function articleCategory(article) {
-      return article.category.replace(/\b\w/g, (letter) => letter.toUpperCase());
-    }
-
-    function LearnRoute({ currency, setCurrency, article, notFound, navigateTo, openHomePanel }) {
+    function LearnRoute({
+      currency,
+      setCurrency,
+      article,
+      cluster,
+      notFound,
+      navigateTo,
+      openHomePanel,
+      newsletterProps,
+    }) {
       const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
       const goHomePanel = (panelName) => {
@@ -8141,8 +8268,10 @@ const THIRTY_SIXTH_ARTICLE = {
                 openArticle={(nextArticle) => navigateTo(`/learn/${nextArticle.id}`)}
               />
             </main>
+          ) : cluster ? (
+            <LearnClusterPage cluster={cluster} navigateTo={navigateTo} />
           ) : (
-            <LearnPage navigateTo={navigateTo} />
+            <LearnPage navigateTo={navigateTo} newsletterProps={newsletterProps} />
           )}
 
           <footer className="footer">
@@ -8207,139 +8336,276 @@ const THIRTY_SIXTH_ARTICLE = {
       );
     }
 
-    function LearnPage({ navigateTo }) {
-      const [query, setQuery] = useState("");
-      const [category, setCategory] = useState("All");
-      const [sort, setSort] = useState("Newest");
-
-      const filteredArticles = useMemo(() => {
-        const normalizedQuery = query.trim().toLowerCase();
-        const results = ARTICLES.filter((article) => {
-          const displayCategory = articleCategory(article);
-          const matchesCategory = category === "All" || displayCategory === category;
-          const searchable = `${article.title} ${article.summary} ${displayCategory}`.toLowerCase();
-          return matchesCategory && (!normalizedQuery || searchable.includes(normalizedQuery));
-        });
-
-        return [...results].sort((first, second) => {
-          if (sort === "Oldest") return ARTICLES.indexOf(first) - ARTICLES.indexOf(second);
-          if (sort === "Reading Time") return parseInt(first.readTime, 10) - parseInt(second.readTime, 10);
-          return ARTICLES.indexOf(second) - ARTICLES.indexOf(first);
-        });
-      }, [query, category, sort]);
-
-      const featuredArticles = ARTICLES.slice(0, 5);
-      const filterOptions = ["All", ...LEARN_CATEGORIES];
-
+    function LearnArticleLink({ article, navigateTo, className = "" }) {
       return (
-        <main className="learn-page">
-          <section className="learn-page-hero" aria-labelledby="learn-title">
-            <div>
-              <p className="eyebrow">KNOWLEDGE &amp; INSIGHTS</p>
-              <h1 id="learn-title">Learn</h1>
-            </div>
-            <p>Real stories for better payday decisions.</p>
-          </section>
+        <a
+          className={className}
+          href={`/learn/${article.id}`}
+          onClick={(event) => {
+            event.preventDefault();
+            navigateTo(`/learn/${article.id}`);
+          }}
+        >
+          {article.title}
+        </a>
+      );
+    }
 
-          <section className="learn-featured-gallery" aria-label="Featured articles">
-            {featuredArticles.map((item, index) => (
-              <article className={index === 0 ? "is-featured" : ""} key={item.id}>
+    function LearnPage({ navigateTo, newsletterProps }) {
+      return (
+        <main className="learn-page editorial-learn">
+          <section className="editorial-hero" aria-labelledby="learn-title">
+            <div className="editorial-hero-copy">
+              <p className="eyebrow">THE 1040 PAYDAYS PHILOSOPHY</p>
+              <h1 id="learn-title">You only get about 1,040 paydays.</h1>
+              <p>
+                We believe money is a tool for the life you want. Our essays and guides help you save more, spend with intention, build wealth, and create more freedom.
+              </p>
+              <div className="editorial-hero-actions">
+                <a className="editorial-primary-link" href="#learn-content">Start exploring</a>
+                <a className="editorial-secondary-link" href="#all-articles">View all articles</a>
+              </div>
+            </div>
+
+            {LEARN_FEATURED_ARTICLE && (
+              <article className="editorial-feature">
                 <a
-                  href={`/learn/${item.id}`}
+                  href={`/learn/${LEARN_FEATURED_ARTICLE.id}`}
                   onClick={(event) => {
                     event.preventDefault();
-                    navigateTo(`/learn/${item.id}`);
+                    navigateTo(`/learn/${LEARN_FEATURED_ARTICLE.id}`);
                   }}
                 >
-                  <img src={item.image} alt={item.alt} loading={index === 0 ? "eager" : "lazy"} decoding="async" />
+                  <img
+                    src={LEARN_FEATURED_ARTICLE.image}
+                    alt={LEARN_FEATURED_ARTICLE.alt}
+                    width="1200"
+                    height="800"
+                    decoding="async"
+                    fetchpriority="high"
+                  />
                   <div>
-                    <span>{articleCategory(item)} · {item.readTime}</span>
-                    <h2>{item.title}</h2>
-                    {index === 0 && <p>{item.summary}</p>}
+                    <span>{LEARN_FEATURED_ARTICLE.category} · {LEARN_FEATURED_ARTICLE.readTime}</span>
+                    <h2>{LEARN_FEATURED_ARTICLE.title}</h2>
+                    <p>{LEARN_FEATURED_ARTICLE.summary}</p>
+                    <strong>Read the essay <span aria-hidden="true">→</span></strong>
                   </div>
                 </a>
               </article>
-            ))}
+            )}
           </section>
 
-          <section className="learn-articles-section" id="learn-articles" aria-labelledby="articles-heading">
-            <div className="learn-section-heading">
-              <div>
-                <p className="eyebrow muted">ALL ARTICLES</p>
-                <h2 id="articles-heading">Choose what to read next.</h2>
-              </div>
-              <p>{filteredArticles.length} {filteredArticles.length === 1 ? "article" : "articles"}</p>
-            </div>
-
-            <div className="learn-controls">
-              <label className="learn-search">
-                <Search size={19} aria-hidden="true" />
-                <span className="sr-only">Search articles</span>
-                <input
-                  type="search"
-                  value={query}
-                  onChange={(event) => setQuery(event.target.value)}
-                  placeholder="Search articles"
-                />
-              </label>
-
-              <label className="learn-sort">
-                <span>Sort by</span>
-                <select value={sort} onChange={(event) => setSort(event.target.value)}>
-                  <option>Newest</option>
-                  <option>Oldest</option>
-                  <option>Reading Time</option>
-                </select>
-              </label>
-            </div>
-
-            <nav className="learn-filter-chips" aria-label="Filter articles">
-              {filterOptions.map((item) => (
-                <button
-                  type="button"
-                  key={item}
-                  className={category === item ? "is-active" : ""}
-                  aria-pressed={category === item}
-                  onClick={() => setCategory(item)}
-                >
-                  {item}
-                </button>
-              ))}
-            </nav>
-
-            {filteredArticles.length ? (
-              <div className="learn-page-grid">
-                {filteredArticles.map((item) => (
-                  <article className="learn-page-card" key={item.id}>
-                    <a
-                      href={`/learn/${item.id}`}
-                      onClick={(event) => {
-                        event.preventDefault();
-                        navigateTo(`/learn/${item.id}`);
-                      }}
-                    >
-                      <img src={item.image} alt={item.alt} loading="lazy" decoding="async" />
+          <div id="learn-content" className="editorial-content">
+            {LEARN_START_HERE_ARTICLES.length > 0 && (
+              <section className="editorial-start" aria-labelledby="start-here-heading">
+                <header className="editorial-section-heading">
+                  <div>
+                    <p className="eyebrow">START HERE</p>
+                    <h2 id="start-here-heading">Three essays to understand our approach to money.</h2>
+                  </div>
+                </header>
+                <div className="editorial-start-list">
+                  {LEARN_START_HERE_ARTICLES.map((article, index) => (
+                    <article key={article.id}>
+                      <span aria-hidden="true">0{index + 1}</span>
                       <div>
-                        <span className="learn-category-badge">{articleCategory(item)}</span>
-                        <h3>{item.title}</h3>
-                        <p>{item.summary}</p>
-                        <footer>
-                          <small>{item.readTime}</small>
-                          <strong>Read Article →</strong>
-                        </footer>
+                        <small>{article.category} · {article.readTime}</small>
+                        <h3>
+                          <LearnArticleLink article={article} navigateTo={navigateTo} />
+                        </h3>
+                        <p>{article.summary}</p>
                       </div>
-                    </a>
+                    </article>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            <section className="editorial-topics" aria-labelledby="topics-heading">
+              <header className="editorial-section-heading">
+                <div>
+                  <p className="eyebrow">EXPLORE BY TOPIC</p>
+                  <h2 id="topics-heading">Ideas for every part of your financial life.</h2>
+                </div>
+                <p>Each collection uses the categories already attached to these essays.</p>
+              </header>
+
+              <div className="editorial-clusters">
+                {LEARN_EDITORIAL_CONFIG.clusters.map((cluster) => {
+                  const clusterArticles = articlesForCluster(cluster).slice(0, 4);
+                  if (!clusterArticles.length) return null;
+                  const [leadArticle, ...supportingArticles] = clusterArticles;
+
+                  return (
+                    <section className="editorial-cluster" key={cluster.slug} aria-labelledby={`cluster-${cluster.slug}`}>
+                      <header>
+                        <p className="eyebrow">TOPIC</p>
+                        <h2 id={`cluster-${cluster.slug}`}>{cluster.title}</h2>
+                        <p className="editorial-cluster-thesis">{cluster.thesis}</p>
+                        <a
+                          className="editorial-topic-link"
+                          href={`/learn/${cluster.slug}`}
+                          onClick={(event) => {
+                            event.preventDefault();
+                            navigateTo(`/learn/${cluster.slug}`);
+                          }}
+                        >
+                          Explore {cluster.title} <span aria-hidden="true">→</span>
+                        </a>
+                      </header>
+                      <div className="editorial-cluster-stories">
+                        <article className="editorial-cluster-lead">
+                          <a
+                            href={`/learn/${leadArticle.id}`}
+                            onClick={(event) => {
+                              event.preventDefault();
+                              navigateTo(`/learn/${leadArticle.id}`);
+                            }}
+                          >
+                            <img
+                              src={leadArticle.image}
+                              alt={leadArticle.alt}
+                              width="900"
+                              height="600"
+                              loading="lazy"
+                              decoding="async"
+                            />
+                            <span>{leadArticle.category} · {leadArticle.readTime}</span>
+                            <h3>{leadArticle.title}</h3>
+                            <p>{leadArticle.summary}</p>
+                          </a>
+                        </article>
+                        <div className="editorial-cluster-supporting">
+                          {supportingArticles.map((article) => (
+                            <article key={article.id}>
+                              <img
+                                src={article.image}
+                                alt={article.alt}
+                                width="320"
+                                height="240"
+                                loading="lazy"
+                                decoding="async"
+                              />
+                              <div>
+                                <small>{article.category} · {article.readTime}</small>
+                                <h3><LearnArticleLink article={article} navigateTo={navigateTo} /></h3>
+                              </div>
+                            </article>
+                          ))}
+                        </div>
+                      </div>
+                    </section>
+                  );
+                })}
+              </div>
+            </section>
+
+            <section className="editorial-archive" id="all-articles" aria-labelledby="archive-heading">
+              <header className="editorial-section-heading">
+                <div>
+                  <p className="eyebrow">ALL ARTICLES</p>
+                  <h2 id="archive-heading">More from 1040 Paydays</h2>
+                </div>
+                <p>Browse the complete collection. No article is hidden from this archive.</p>
+              </header>
+              <div className="editorial-archive-list">
+                {ARTICLES.map((article) => (
+                  <article key={article.id}>
+                    <img
+                      src={article.image}
+                      alt={article.alt}
+                      width="240"
+                      height="180"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                    <div className="editorial-archive-copy">
+                      <div>
+                        <span>{article.category}</span>
+                        <small>{article.readTime}</small>
+                      </div>
+                      <h3><LearnArticleLink article={article} navigateTo={navigateTo} /></h3>
+                    </div>
                   </article>
                 ))}
               </div>
-            ) : (
-              <div className="learn-empty-state">
-                <h3>No articles found.</h3>
-                <p>Try a different search or choose another category.</p>
-                <button type="button" onClick={() => { setQuery(""); setCategory("All"); }}>Show all articles</button>
+            </section>
+
+            <section className="editorial-newsletter" aria-labelledby="learn-newsletter-heading">
+              <div>
+                <p className="eyebrow">STAY ON TRACK</p>
+                <h2 id="learn-newsletter-heading">Get your 1,040 Payday Plan.</h2>
+                <p>Join the mailing list for thoughtful articles, practical financial ideas, and useful calculators.</p>
               </div>
-            )}
+              <NewsletterSignup {...newsletterProps} />
+            </section>
+          </div>
+        </main>
+      );
+    }
+
+    function LearnClusterPage({ cluster, navigateTo }) {
+      const clusterArticles = articlesForCluster(cluster);
+      const relatedClusters = LEARN_EDITORIAL_CONFIG.clusters.filter(
+        (item) => item.slug !== cluster.slug && articlesForCluster(item).length
+      );
+
+      return (
+        <main className="learn-cluster-page">
+          <nav className="learn-breadcrumbs" aria-label="Breadcrumb">
+            <a
+              href="/learn"
+              onClick={(event) => {
+                event.preventDefault();
+                navigateTo("/learn");
+              }}
+            >
+              Learn
+            </a>
+            <span aria-hidden="true">/</span>
+            <span aria-current="page">{cluster.title}</span>
+          </nav>
+
+          <header className="learn-cluster-hero">
+            <p className="eyebrow">1040 PAYDAYS TOPIC</p>
+            <h1>{cluster.title}</h1>
+            <p className="learn-cluster-thesis">{cluster.thesis}</p>
+            <p>{cluster.intro}</p>
+          </header>
+
+          <section className="learn-cluster-index" aria-labelledby="cluster-articles-heading">
+            <h2 id="cluster-articles-heading">Articles in this collection</h2>
+            <div>
+              {clusterArticles.map((article, index) => (
+                <article key={article.id}>
+                  <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+                  <div>
+                    <small>{article.category} · {article.readTime}</small>
+                    <h3><LearnArticleLink article={article} navigateTo={navigateTo} /></h3>
+                    <p>{article.summary}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
           </section>
+
+          <nav className="learn-related-topics" aria-label="Related topics">
+            <strong>Explore another topic</strong>
+            <div>
+              {relatedClusters.map((item) => (
+                <a
+                  href={`/learn/${item.slug}`}
+                  key={item.slug}
+                  onClick={(event) => {
+                    event.preventDefault();
+                    navigateTo(`/learn/${item.slug}`);
+                  }}
+                >
+                  {item.title}
+                </a>
+              ))}
+            </div>
+          </nav>
         </main>
       );
     }

@@ -1,5 +1,6 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
+import { LEARN_EDITORIAL_CONFIG } from "../src/learnConfig.mjs";
 
 const SITE_URL = "https://www.1040paydays.com";
 const appSourcePath = resolve("src/App.jsx");
@@ -49,11 +50,15 @@ function getArticleId(source, articleConstantName) {
 const articleIds = getArticlesList(appSource).map((articleName) =>
   getArticleId(appSource, articleName)
 );
+const clusterPaths = LEARN_EDITORIAL_CONFIG.clusters.map(
+  (cluster) => `/learn/${cluster.slug}`
+);
 
 const lastmod = new Date().toISOString().slice(0, 10);
 const publicPaths = [
   "/",
   "/learn",
+  ...clusterPaths,
   ...articleIds.map((id) => `/learn/${id}`),
 ];
 
@@ -82,6 +87,7 @@ console.log(`Generated ${sitemapPath} with ${publicPaths.length} URLs.`);
 
 const appRewritePaths = [
   "/learn",
+  ...clusterPaths,
   ...articleIds.map((id) => `/learn/${id}`),
 ];
 

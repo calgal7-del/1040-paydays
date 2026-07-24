@@ -6,6 +6,22 @@
       "destination": "/index.html"
     },
     {
+      "source": "/learn/saving-money",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/learn/building-wealth",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/learn/money-and-life",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/learn/major-money-decisions",
+      "destination": "/index.html"
+    },
+    {
       "source": "/learn/you-only-get-about-1040-paydays",
       "destination": "/index.html"
     },
