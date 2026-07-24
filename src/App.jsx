@@ -8368,9 +8368,10 @@ const THIRTY_SIXTH_ARTICLE = {
             </div>
 
             {LEARN_FEATURED_ARTICLE && (
-              <article className="editorial-feature">
+              <div className="editorial-feature">
                 <a
                   href={`/learn/${LEARN_FEATURED_ARTICLE.id}`}
+                  aria-label={`Read ${LEARN_FEATURED_ARTICLE.title}`}
                   onClick={(event) => {
                     event.preventDefault();
                     navigateTo(`/learn/${LEARN_FEATURED_ARTICLE.id}`);
@@ -8384,14 +8385,8 @@ const THIRTY_SIXTH_ARTICLE = {
                     decoding="async"
                     fetchpriority="high"
                   />
-                  <div>
-                    <span>{LEARN_FEATURED_ARTICLE.category} · {LEARN_FEATURED_ARTICLE.readTime}</span>
-                    <h2>{LEARN_FEATURED_ARTICLE.title}</h2>
-                    <p>{LEARN_FEATURED_ARTICLE.summary}</p>
-                    <strong>Read the essay <span aria-hidden="true">→</span></strong>
-                  </div>
                 </a>
-              </article>
+              </div>
             )}
           </section>
 
@@ -8431,13 +8426,14 @@ const THIRTY_SIXTH_ARTICLE = {
               </header>
 
               <div className="editorial-clusters">
-                {LEARN_EDITORIAL_CONFIG.clusters.map((cluster) => {
+                {LEARN_EDITORIAL_CONFIG.clusters.map((cluster, clusterIndex) => {
                   const clusterArticles = articlesForCluster(cluster).slice(0, 4);
                   if (!clusterArticles.length) return null;
                   const [leadArticle, ...supportingArticles] = clusterArticles;
+                  const clusterVariant = clusterIndex % 2 === 0 ? "is-standard" : "is-reversed";
 
                   return (
-                    <section className="editorial-cluster" key={cluster.slug} aria-labelledby={`cluster-${cluster.slug}`}>
+                    <section className={`editorial-cluster ${clusterVariant}`} key={cluster.slug} aria-labelledby={`cluster-${cluster.slug}`}>
                       <header>
                         <p className="eyebrow">TOPIC</p>
                         <h2 id={`cluster-${cluster.slug}`}>{cluster.title}</h2>
