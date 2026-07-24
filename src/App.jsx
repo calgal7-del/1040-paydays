@@ -22,6 +22,8 @@
     const PAYDAYS_TOTAL = 1040;
     const STORAGE_KEY = "1040-paydays-settings";
     const ONBOARDING_KEY = "1040-paydays-onboarding-seen";
+    const MAILING_LIST_CONSENT_TEXT =
+      "Join the 1040 Paydays mailing list for new articles, practical financial ideas, calculators, and occasional updates. You can unsubscribe at any time.";
 
     const DEFAULT_SETTINGS = {
       currency: "USD",
@@ -5801,7 +5803,105 @@ const THIRTY_SIXTH_ARTICLE = {
       ],
     };
 
-    const ARTICLES = [FEATURED_ARTICLE, SECOND_ARTICLE, THIRD_ARTICLE, FOURTH_ARTICLE, FIFTH_ARTICLE, SIXTH_ARTICLE, SEVENTH_ARTICLE, EIGHTH_ARTICLE, NINTH_ARTICLE, TENTH_ARTICLE, ELEVENTH_ARTICLE, TWELFTH_ARTICLE, THIRTEENTH_ARTICLE, FOURTEENTH_ARTICLE, FIFTEENTH_ARTICLE, SIXTEENTH_ARTICLE, SEVENTEENTH_ARTICLE, EIGHTEENTH_ARTICLE, NINETEENTH_ARTICLE, TWENTIETH_ARTICLE, TWENTY_FIRST_ARTICLE, TWENTY_SECOND_ARTICLE, TWENTY_THIRD_ARTICLE, TWENTY_FOURTH_ARTICLE, TWENTY_FIFTH_ARTICLE, TWENTY_SEVENTH_ARTICLE, TWENTY_EIGHTH_ARTICLE, TWENTY_NINTH_ARTICLE, THIRTY_FIRST_ARTICLE, THIRTY_SECOND_ARTICLE, THIRTY_THIRD_ARTICLE, THIRTY_FOURTH_ARTICLE, THIRTY_FIFTH_ARTICLE, THIRTY_SIXTH_ARTICLE, THIRTY_SEVENTH_ARTICLE, THIRTY_EIGHTH_ARTICLE, THIRTY_NINTH_ARTICLE, FORTIETH_ARTICLE, FORTY_FIRST_ARTICLE, FORTY_SECOND_ARTICLE, FORTY_THIRD_ARTICLE, FORTY_FOURTH_ARTICLE, FORTY_FIFTH_ARTICLE, FORTY_SIXTH_ARTICLE, FORTY_SEVENTH_ARTICLE, FORTY_EIGHTH_ARTICLE];
+    const FORTY_NINTH_ARTICLE = {
+      id: "has-this-payday-finished-its-job",
+      title: "Has This Payday Finished Its Job?",
+      summary: "A thoughtful way to look at the things we own: every payday is supposed to solve a problem, and once that problem is solved, its job may be finished.",
+      image: "/article-has-this-payday-finished-its-job.png",
+      readTime: "4 min read",
+      category: "Payday Philosophy",
+      kicker: "PURPOSE · POSSESSIONS · RETURNING MONEY",
+      alt: "A man gently placing a teddy bear into a box marked for sale in a warm living room",
+      caption: "Some purchases are not mistakes. They simply finish the work they came to do.",
+      quote: {
+        strong: "We don't spend money to own things.",
+        text: "We spend money to solve problems.",
+      },
+      sections: [
+        {
+          heading: "The paydays around the house",
+          paragraphs: [
+            "One afternoon I was walking through my house when I noticed something I'd never thought about before.",
+            "Some of my paydays had already finished their job.",
+            "The winter coat hanging in the closet had kept me warm through three winters.",
+            "The baby toys packed away in storage had filled our home with laughter.",
+            "The old coffee maker in the basement had carried us through years of early mornings before we replaced it.",
+            "None of those purchases were mistakes.",
+            "They had simply completed the work they were meant to do.",
+          ],
+        },
+        {
+          heading: "When a purchase has delivered",
+          paragraphs: [
+            "That made me wonder why so many of us feel guilty about letting things go.",
+            "We often act as though selling something means we shouldn't have bought it in the first place.",
+            "But that's only true if the purchase failed.",
+            "Most don't.",
+            "A stroller isn't meant to last forever.",
+            "Neither is a child's bicycle.",
+            "Or a college textbook.",
+            "They exist for a season of life.",
+            "When that season ends, the purchase hasn't lost its value.",
+            "It has delivered it.",
+          ],
+        },
+        {
+          heading: "The solution was the purchase",
+          paragraphs: [
+            "That's when I realized something.",
+            "We don't spend money to own things.",
+            "We spend money to solve problems.",
+            "A winter coat buys warmth.",
+            "A stroller buys easier walks with a young family.",
+            "A coffee maker buys thousands of ordinary mornings.",
+            "The object was never the real purchase.",
+            "The solution was.",
+          ],
+        },
+        {
+          heading: "Returning money",
+          paragraphs: [
+            "I sold an old piece of exercise equipment that had been sitting untouched in the corner for months.",
+            "It had already done everything I'd asked of it.",
+            "Someone else was excited to take it home.",
+            "I was happy to see it go.",
+            "The money didn't feel like profit.",
+            "It felt like something returning.",
+            "Then it hit me.",
+            "It wasn't found money.",
+            "It was returning money.",
+          ],
+        },
+        {
+          heading: "Changing shape again",
+          paragraphs: [
+            "Years earlier, that payday had changed into something useful.",
+            "Now that its work was finished, it was simply changing shape again.",
+            "Money rarely disappears.",
+            "It becomes groceries.",
+            "A bicycle.",
+            "A winter coat.",
+            "A dining room table where birthdays are celebrated.",
+            "Sometimes, years later, it quietly becomes money again.",
+          ],
+        },
+        {
+          heading: "The question",
+          paragraphs: [
+            "Now, every few months, I walk through my house and ask myself one question.",
+            "Has this payday finished its job?",
+            "The next time you open a closet, don't just see an old jacket or a forgotten appliance.",
+            "See the payday behind it.",
+            "Ask yourself one question.",
+            "Has this payday finished its job?",
+            "Because every payday funds a future.",
+            "Choose yours.",
+          ],
+        },
+      ],
+    };
+
+    const ARTICLES = [FEATURED_ARTICLE, SECOND_ARTICLE, THIRD_ARTICLE, FOURTH_ARTICLE, FIFTH_ARTICLE, SIXTH_ARTICLE, SEVENTH_ARTICLE, EIGHTH_ARTICLE, NINTH_ARTICLE, TENTH_ARTICLE, ELEVENTH_ARTICLE, TWELFTH_ARTICLE, THIRTEENTH_ARTICLE, FOURTEENTH_ARTICLE, FIFTEENTH_ARTICLE, SIXTEENTH_ARTICLE, SEVENTEENTH_ARTICLE, EIGHTEENTH_ARTICLE, NINETEENTH_ARTICLE, TWENTIETH_ARTICLE, TWENTY_FIRST_ARTICLE, TWENTY_SECOND_ARTICLE, TWENTY_THIRD_ARTICLE, TWENTY_FOURTH_ARTICLE, TWENTY_FIFTH_ARTICLE, TWENTY_SEVENTH_ARTICLE, TWENTY_EIGHTH_ARTICLE, TWENTY_NINTH_ARTICLE, THIRTY_FIRST_ARTICLE, THIRTY_SECOND_ARTICLE, THIRTY_THIRD_ARTICLE, THIRTY_FOURTH_ARTICLE, THIRTY_FIFTH_ARTICLE, THIRTY_SIXTH_ARTICLE, THIRTY_SEVENTH_ARTICLE, THIRTY_EIGHTH_ARTICLE, THIRTY_NINTH_ARTICLE, FORTIETH_ARTICLE, FORTY_FIRST_ARTICLE, FORTY_SECOND_ARTICLE, FORTY_THIRD_ARTICLE, FORTY_FOURTH_ARTICLE, FORTY_FIFTH_ARTICLE, FORTY_SIXTH_ARTICLE, FORTY_SEVENTH_ARTICLE, FORTY_EIGHTH_ARTICLE, FORTY_NINTH_ARTICLE];
 
     const ARTICLE_FAQS = {
       "you-only-get-about-1040-paydays": [
@@ -6066,6 +6166,28 @@ const THIRTY_SIXTH_ARTICLE = {
         {
           question: "How long should I try a new habit before evaluating it?",
           answer: "A month is often long enough to observe patterns without demanding perfection. Look at how you feel, what you spent, and whether the habit is sustainable.",
+        },
+      ],
+      "has-this-payday-finished-its-job": [
+        {
+          question: "What does it mean for a payday to finish its job?",
+          answer: "It means the money you spent solved the problem it was meant to solve. The item may no longer be needed, but that does not mean the original purchase was a mistake.",
+        },
+        {
+          question: "Is this article saying I should sell everything I do not use?",
+          answer: "No. The point is not constant selling. The point is noticing whether something still serves a purpose in your life or whether its season has ended.",
+        },
+        {
+          question: "How can this idea help financially?",
+          answer: "It helps you see unused items as old paydays that may still have value. Selling, donating, or repurposing them can turn clutter into usefulness again.",
+        },
+        {
+          question: "What if an item has sentimental value?",
+          answer: "Sentimental value can be a real purpose. If something still brings comfort, memory, or meaning, it may not be finished at all.",
+        },
+        {
+          question: "How often should I ask this question?",
+          answer: "A few times a year is enough for most people. Closets, storage rooms, basements, and garages often reveal paydays that quietly completed their job long ago.",
         },
       ],
       "your-routine-was-spending-your-money": [
@@ -6930,6 +7052,9 @@ const THIRTY_SIXTH_ARTICLE = {
       const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
       const mobileArticleStripRef = useRef(null);
       const [email, setEmail] = useState("");
+      const [newsletterStatus, setNewsletterStatus] = useState("idle");
+      const [newsletterError, setNewsletterError] = useState("");
+      const newsletterMessageRef = useRef(null);
       const [snapshots, setSnapshots] = useState(initialSettings.snapshots);
       const [showStartTip, setShowStartTip] = useState(() => {
         if (typeof window === "undefined") return false;
@@ -7005,6 +7130,12 @@ const THIRTY_SIXTH_ARTICLE = {
         if (Number(withdrawalRate) <= 0) setWithdrawalRate(DEFAULT_SETTINGS.withdrawalRate);
         if (Number(lifespan) < 75) setLifespan(DEFAULT_SETTINGS.lifespan);
       }, []);
+
+      useEffect(() => {
+        if (newsletterStatus === "success") {
+          newsletterMessageRef.current?.focus();
+        }
+      }, [newsletterStatus]);
 
       useEffect(() => {
         try {
@@ -7144,6 +7275,47 @@ const THIRTY_SIXTH_ARTICLE = {
         setPanel(null);
         setMobileMenuOpen(false);
         window.scrollTo({ top: 0, behavior: "auto" });
+      };
+
+      const submitNewsletter = async (event) => {
+        event.preventDefault();
+
+        const form = event.currentTarget;
+        const formData = new FormData(form);
+        const trimmedEmail = email.trim();
+
+        if (!trimmedEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(trimmedEmail)) {
+          setNewsletterStatus("error");
+          setNewsletterError("Please enter a valid email address.");
+          return;
+        }
+
+        setNewsletterStatus("loading");
+        setNewsletterError("");
+
+        try {
+          const response = await fetch("/api/subscribe", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              email: trimmedEmail,
+              company: String(formData.get("company") || ""),
+              signupPage: window.location.pathname,
+            }),
+          });
+
+          const result = await response.json().catch(() => ({}));
+          if (!response.ok || !result.ok) {
+            throw new Error(result.message || "We couldn't add you right now. Please try again.");
+          }
+
+          setEmail("");
+          form.reset();
+          setNewsletterStatus("success");
+        } catch (error) {
+          setNewsletterStatus("error");
+          setNewsletterError(error.message || "We couldn't add you right now. Please try again.");
+        }
       };
 
       const scrollMobileArticles = (position) => {
@@ -7449,10 +7621,64 @@ const THIRTY_SIXTH_ARTICLE = {
                   <p className="eyebrow muted">STAY ON TRACK</p>
                   <h3>Get your 1,040 Payday Plan.</h3>
 
-                  <div className="email-row">
-                    <input value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter your email" />
-                    <button type="button" onClick={() => email && alert(`Joined: ${email}`)}>Join</button>
-                  </div>
+                  {newsletterStatus === "success" ? (
+                    <div
+                      className="newsletter-success-panel"
+                      ref={newsletterMessageRef}
+                      tabIndex="-1"
+                      role="status"
+                      aria-live="polite"
+                    >
+                      <strong>✓ You're on the list.</strong>
+                      <p>Thanks for joining 1040 Paydays.</p>
+                      <span>I'll occasionally send thoughtful articles, practical financial ideas, and useful calculators. No spam. Unsubscribe anytime.</span>
+                    </div>
+                  ) : (
+                    <form className="newsletter-signup" onSubmit={submitNewsletter} noValidate>
+                      <label className="sr-only" htmlFor="newsletter-email">Email address</label>
+                      <div className="email-row">
+                        <input
+                          id="newsletter-email"
+                          name="email"
+                          value={email}
+                          onChange={(e) => {
+                            setEmail(e.target.value);
+                            if (newsletterStatus === "error") {
+                              setNewsletterStatus("idle");
+                              setNewsletterError("");
+                            }
+                          }}
+                          placeholder="Enter your email"
+                          type="email"
+                          autoComplete="email"
+                          inputMode="email"
+                          aria-invalid={newsletterStatus === "error" ? "true" : "false"}
+                          aria-describedby="newsletter-consent newsletter-message"
+                          disabled={newsletterStatus === "loading"}
+                        />
+                        <input
+                          className="newsletter-honeypot"
+                          type="text"
+                          name="company"
+                          tabIndex="-1"
+                          autoComplete="off"
+                          aria-hidden="true"
+                        />
+                        <button type="submit" disabled={newsletterStatus === "loading"}>
+                          {newsletterStatus === "loading" ? "Joining..." : "Join"}
+                        </button>
+                      </div>
+                      <small id="newsletter-consent">{MAILING_LIST_CONSENT_TEXT}</small>
+                      <p
+                        id="newsletter-message"
+                        className="newsletter-message"
+                        role={newsletterStatus === "error" ? "alert" : "status"}
+                        aria-live="polite"
+                      >
+                        {newsletterStatus === "error" ? newsletterError : ""}
+                      </p>
+                    </form>
+                  )}
                 </div>
               </section>
             </aside>

@@ -1277,6 +1277,83 @@ a {
   padding: 0;
 }
 
+.email-row button:disabled,
+.email-row input:disabled {
+  cursor: wait;
+  opacity: .7;
+}
+
+.newsletter-signup small {
+  display: block;
+  margin-top: 8px;
+  font-size: 11px;
+  line-height: 1.35;
+  color: var(--muted);
+}
+
+.newsletter-message {
+  min-height: 16px;
+  margin: 6px 0 0;
+  font-size: 12px;
+  font-weight: 800;
+  color: #a33a2c;
+}
+
+.newsletter-honeypot {
+  position: absolute !important;
+  left: -10000px !important;
+  width: 1px !important;
+  height: 1px !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+.newsletter-success-panel {
+  margin-top: 10px;
+  border: 1px solid #cfddef;
+  border-radius: 10px;
+  padding: 12px;
+  background: #f8fbff;
+  animation: newsletterFadeIn .22s ease-out;
+  outline: 0;
+}
+
+.newsletter-success-panel strong {
+  display: block;
+  color: var(--ink);
+  font-size: 14px;
+}
+
+.newsletter-success-panel p {
+  margin: 6px 0 2px;
+  color: var(--ink);
+  font-weight: 850;
+}
+
+.newsletter-success-panel span {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+@keyframes newsletterFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .newsletter-success-panel {
+    animation: none;
+  }
+}
+
 .footer {
   background: linear-gradient(90deg, #031126, #08264f);
   color: white;

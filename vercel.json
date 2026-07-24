@@ -188,6 +188,10 @@
     {
       "source": "/learn/the-raise-you-already-got",
       "destination": "/index.html"
+    },
+    {
+      "source": "/learn/has-this-payday-finished-its-job",
+      "destination": "/index.html"
     }
   ]
 }
