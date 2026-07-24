@@ -192,6 +192,10 @@
     {
       "source": "/learn/has-this-payday-finished-its-job",
       "destination": "/index.html"
+    },
+    {
+      "source": "/learn/the-kitchen-i-coveted",
+      "destination": "/index.html"
     }
   ]
 }

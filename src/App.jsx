@@ -5901,7 +5901,122 @@ const THIRTY_SIXTH_ARTICLE = {
       ],
     };
 
-    const ARTICLES = [FEATURED_ARTICLE, SECOND_ARTICLE, THIRD_ARTICLE, FOURTH_ARTICLE, FIFTH_ARTICLE, SIXTH_ARTICLE, SEVENTH_ARTICLE, EIGHTH_ARTICLE, NINTH_ARTICLE, TENTH_ARTICLE, ELEVENTH_ARTICLE, TWELFTH_ARTICLE, THIRTEENTH_ARTICLE, FOURTEENTH_ARTICLE, FIFTEENTH_ARTICLE, SIXTEENTH_ARTICLE, SEVENTEENTH_ARTICLE, EIGHTEENTH_ARTICLE, NINETEENTH_ARTICLE, TWENTIETH_ARTICLE, TWENTY_FIRST_ARTICLE, TWENTY_SECOND_ARTICLE, TWENTY_THIRD_ARTICLE, TWENTY_FOURTH_ARTICLE, TWENTY_FIFTH_ARTICLE, TWENTY_SEVENTH_ARTICLE, TWENTY_EIGHTH_ARTICLE, TWENTY_NINTH_ARTICLE, THIRTY_FIRST_ARTICLE, THIRTY_SECOND_ARTICLE, THIRTY_THIRD_ARTICLE, THIRTY_FOURTH_ARTICLE, THIRTY_FIFTH_ARTICLE, THIRTY_SIXTH_ARTICLE, THIRTY_SEVENTH_ARTICLE, THIRTY_EIGHTH_ARTICLE, THIRTY_NINTH_ARTICLE, FORTIETH_ARTICLE, FORTY_FIRST_ARTICLE, FORTY_SECOND_ARTICLE, FORTY_THIRD_ARTICLE, FORTY_FOURTH_ARTICLE, FORTY_FIFTH_ARTICLE, FORTY_SIXTH_ARTICLE, FORTY_SEVENTH_ARTICLE, FORTY_EIGHTH_ARTICLE, FORTY_NINTH_ARTICLE];
+    const FIFTIETH_ARTICLE = {
+      id: "the-kitchen-i-coveted",
+      title: "The Kitchen I Coveted",
+      summary: "Sometimes we do not need a different life. We need to see the one we already have again.",
+      image: "/article-kitchen-i-coveted.png",
+      readTime: "4 min read",
+      category: "Payday Philosophy",
+      kicker: "COMPARISON · GRATITUDE · HOME",
+      alt: "A woman holding a mug in a warm kitchen beside a stove and window",
+      caption: "It was not a showroom. It was my life.",
+      quote: {
+        strong: "Nothing in my kitchen had changed.",
+        text: "Only what I'd been comparing it to.",
+      },
+      sections: [
+        {
+          heading: "Saturday mornings",
+          paragraphs: [
+            "For a while, Saturday mornings followed the same routine.",
+            "I'd climb into my little black Chevy and drive to Tim Hortons.",
+            "I'd wait in the drive-through line for a sausage breakfast sandwich, an orange juice and, if I was feeling a little greedy, an apple fritter.",
+            "Then I'd head home, settle onto the couch and turn on a home renovation show.",
+            "One episode became two.",
+            "Sometimes two turned into four.",
+          ],
+        },
+        {
+          heading: "The same kitchen",
+          paragraphs: [
+            "A few hours later, I'd get up for a glass of water or whatever had me wandering into the kitchen.",
+            "Almost every time, I'd look around and think my kitchen didn't seem quite as nice as it had that morning.",
+            "It never made much sense.",
+            "Nothing had changed.",
+            "The cupboards were the same.",
+            "The mocha oak floor I'd been so excited to install was still there.",
+            "The stove still made breakfast.",
+            "The room was exactly the same one I'd been proud of.",
+            "Still, every Saturday it seemed to lose a little something.",
+          ],
+        },
+        {
+          heading: "The renovation I imagined",
+          paragraphs: [
+            "I started thinking about what it would cost to renovate.",
+            "A brand-new kitchen.",
+            "New cabinets.",
+            "New countertops.",
+            "New appliances.",
+            "A complete gut remodel.",
+            "Thirty thousand dollars.",
+            "And for what?",
+            "My kitchen still worked.",
+            "I just couldn't see it the way I used to.",
+          ],
+        },
+        {
+          heading: "The stove on the screen",
+          paragraphs: [
+            "Then one Saturday, something caught my attention.",
+            "A couple stood in the middle of their newly renovated kitchen while the camera slowly pulled back to reveal the finished room.",
+            "The host was talking.",
+            "I wasn't really listening.",
+            "I was looking at the stove.",
+            "It looked familiar.",
+            "I leaned forward.",
+            "Then I picked up the remote and paused the show.",
+            "It was my stove.",
+            "Not one that looked like mine.",
+            "My stove.",
+            "I actually got up and walked into my own kitchen.",
+            "There it was.",
+            "The same knobs.",
+            "The same handle.",
+            "The same oven door.",
+            "I laughed.",
+          ],
+        },
+        {
+          heading: "What changed",
+          paragraphs: [
+            "For months, I'd been convinced my kitchen looked dated.",
+            "Meanwhile, my stove had just been featured in someone's dream renovation.",
+            "Nothing in my kitchen had changed.",
+            "Only what I'd been comparing it to.",
+            "Every Saturday, I'd spend hours looking at homes that had been cleaned, painted, staged and professionally lit.",
+            "Then I'd walk into the room where breakfast had been made.",
+            "Where groceries were unpacked.",
+            "Where yesterday's mail sat on the counter.",
+            "Where a dish towel hung over the oven handle.",
+            "Where my little rescue dog had left toys across the floor.",
+            "It wasn't a showroom.",
+            "It was my life.",
+          ],
+        },
+        {
+          heading: "Seeing it again",
+          paragraphs: [
+            "For years, I thought I wanted a different kitchen.",
+            "Looking back, I don't think I did.",
+            "I wanted the feeling I had when this one was still new.",
+            "The funny thing is, if I walked into someone else's house tomorrow and they had my kitchen, I'd probably think it looked beautiful.",
+            "Not because it was different.",
+            "Because it wasn't mine.",
+            "That's the trap.",
+            "We don't always replace things because they're worn out.",
+            "Sometimes we replace them because we've stopped seeing them.",
+            "I still enjoy watching home renovation shows.",
+            "I still admire beautiful homes.",
+            "But I'm not trying to live in a showroom.",
+            "I'm trying to build a life.",
+          ],
+        },
+      ],
+    };
+
+    const ARTICLES = [FEATURED_ARTICLE, SECOND_ARTICLE, THIRD_ARTICLE, FOURTH_ARTICLE, FIFTH_ARTICLE, SIXTH_ARTICLE, SEVENTH_ARTICLE, EIGHTH_ARTICLE, NINTH_ARTICLE, TENTH_ARTICLE, ELEVENTH_ARTICLE, TWELFTH_ARTICLE, THIRTEENTH_ARTICLE, FOURTEENTH_ARTICLE, FIFTEENTH_ARTICLE, SIXTEENTH_ARTICLE, SEVENTEENTH_ARTICLE, EIGHTEENTH_ARTICLE, NINETEENTH_ARTICLE, TWENTIETH_ARTICLE, TWENTY_FIRST_ARTICLE, TWENTY_SECOND_ARTICLE, TWENTY_THIRD_ARTICLE, TWENTY_FOURTH_ARTICLE, TWENTY_FIFTH_ARTICLE, TWENTY_SEVENTH_ARTICLE, TWENTY_EIGHTH_ARTICLE, TWENTY_NINTH_ARTICLE, THIRTY_FIRST_ARTICLE, THIRTY_SECOND_ARTICLE, THIRTY_THIRD_ARTICLE, THIRTY_FOURTH_ARTICLE, THIRTY_FIFTH_ARTICLE, THIRTY_SIXTH_ARTICLE, THIRTY_SEVENTH_ARTICLE, THIRTY_EIGHTH_ARTICLE, THIRTY_NINTH_ARTICLE, FORTIETH_ARTICLE, FORTY_FIRST_ARTICLE, FORTY_SECOND_ARTICLE, FORTY_THIRD_ARTICLE, FORTY_FOURTH_ARTICLE, FORTY_FIFTH_ARTICLE, FORTY_SIXTH_ARTICLE, FORTY_SEVENTH_ARTICLE, FORTY_EIGHTH_ARTICLE, FORTY_NINTH_ARTICLE, FIFTIETH_ARTICLE];
 
     const ARTICLE_FAQS = {
       "you-only-get-about-1040-paydays": [
@@ -6188,6 +6303,28 @@ const THIRTY_SIXTH_ARTICLE = {
         {
           question: "How often should I ask this question?",
           answer: "A few times a year is enough for most people. Closets, storage rooms, basements, and garages often reveal paydays that quietly completed their job long ago.",
+        },
+      ],
+      "the-kitchen-i-coveted": [
+        {
+          question: "What is the main lesson in this story?",
+          answer: "The story is about how comparison can make a perfectly good life feel lacking. Sometimes the problem is not what we own, but the way we have stopped seeing it.",
+        },
+        {
+          question: "Does this mean home improvements are bad?",
+          answer: "No. Renovating can make sense when something is broken, unsafe, inefficient, or truly important to your daily life. The key is knowing whether the desire comes from need or comparison.",
+        },
+        {
+          question: "Why do renovation shows make people want to spend?",
+          answer: "They show homes that have been cleaned, staged, edited, and professionally lit. After watching that, an ordinary lived-in room can start to feel worse even when nothing about it changed.",
+        },
+        {
+          question: "How can I avoid expensive comparison spending?",
+          answer: "Pause before replacing something that still works. Ask whether you would admire it in someone else's home and whether you are buying a real improvement or trying to recover a feeling.",
+        },
+        {
+          question: "What is the takeaway?",
+          answer: "You do not have to live in a showroom to build a beautiful life. Sometimes gratitude starts by seeing the room you already have with fresh eyes.",
         },
       ],
       "your-routine-was-spending-your-money": [
