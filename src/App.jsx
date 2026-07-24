@@ -7207,7 +7207,14 @@ const THIRTY_SIXTH_ARTICLE = {
       newsletterError,
       newsletterMessageRef,
       submitNewsletter,
+      idPrefix = "newsletter",
+      buttonLabel = "Join",
+      placeholder = "Enter your email",
     }) {
+      const emailId = `${idPrefix}-email`;
+      const consentId = `${idPrefix}-consent`;
+      const messageId = `${idPrefix}-message`;
+
       if (newsletterStatus === "success") {
         return (
           <div
@@ -7226,10 +7233,10 @@ const THIRTY_SIXTH_ARTICLE = {
 
       return (
         <form className="newsletter-signup" onSubmit={submitNewsletter} noValidate>
-          <label className="sr-only" htmlFor="newsletter-email">Email address</label>
+          <label className="sr-only" htmlFor={emailId}>Email address</label>
           <div className="email-row">
             <input
-              id="newsletter-email"
+              id={emailId}
               name="email"
               value={email}
               onChange={(event) => {
@@ -7239,12 +7246,12 @@ const THIRTY_SIXTH_ARTICLE = {
                   setNewsletterError("");
                 }
               }}
-              placeholder="Enter your email"
+              placeholder={placeholder}
               type="email"
               autoComplete="email"
               inputMode="email"
               aria-invalid={newsletterStatus === "error" ? "true" : "false"}
-              aria-describedby="newsletter-consent newsletter-message"
+              aria-describedby={`${consentId} ${messageId}`}
               disabled={newsletterStatus === "loading"}
             />
             <input
@@ -7256,12 +7263,12 @@ const THIRTY_SIXTH_ARTICLE = {
               aria-hidden="true"
             />
             <button type="submit" disabled={newsletterStatus === "loading"}>
-              {newsletterStatus === "loading" ? "Joining..." : "Join"}
+              {newsletterStatus === "loading" ? "Joining..." : buttonLabel}
             </button>
           </div>
-          <small id="newsletter-consent">{MAILING_LIST_CONSENT_TEXT}</small>
+          <small id={consentId}>{MAILING_LIST_CONSENT_TEXT}</small>
           <p
-            id="newsletter-message"
+            id={messageId}
             className="newsletter-message"
             role={newsletterStatus === "error" ? "alert" : "status"}
             aria-live="polite"
@@ -7269,6 +7276,315 @@ const THIRTY_SIXTH_ARTICLE = {
             {newsletterStatus === "error" ? newsletterError : ""}
           </p>
         </form>
+      );
+    }
+
+    function EditorialHomePage({
+      currency,
+      setCurrency,
+      mobileMenuOpen,
+      setMobileMenuOpen,
+      navigateTo,
+      setPanel,
+      newsletterProps,
+      panel,
+    }) {
+      const cornerstoneArticle = ARTICLE_BY_ID.get(
+        "the-wealth-you-build-before-you-build-wealth"
+      );
+
+      const followLink = (event, path) => {
+        event.preventDefault();
+        navigateTo(path);
+      };
+
+      const openPanel = (name) => {
+        setMobileMenuOpen(false);
+        setPanel(name);
+      };
+
+      return (
+        <div className={`editorial-home ${panel ? "is-obscured" : ""}`}>
+          <header className="editorial-home-header">
+            <a
+              className="editorial-home-brand"
+              href="/"
+              aria-label="1040 Paydays home"
+              onClick={(event) => followLink(event, "/")}
+            >
+              <strong>1040</strong>
+              <span>PAYDAYS</span>
+            </a>
+
+            <nav className="editorial-home-nav" aria-label="Primary navigation">
+              <a href="/learn" onClick={(event) => followLink(event, "/learn")}>
+                Learn <span aria-hidden="true">⌄</span>
+              </a>
+              <button type="button" onClick={() => openPanel("calculator")}>Calculator</button>
+              <button type="button" onClick={() => openPanel("compare")}>Compare</button>
+              <button type="button" onClick={() => openPanel("how")}>How it works</button>
+            </nav>
+
+            <div className="editorial-home-actions">
+              <select
+                value={currency}
+                onChange={(event) => setCurrency(event.target.value)}
+                aria-label="Currency"
+              >
+                {currencies.map(([code, label]) => (
+                  <option key={code} value={code}>{label}</option>
+                ))}
+              </select>
+              <button
+                className="editorial-home-menu"
+                type="button"
+                aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+                aria-expanded={mobileMenuOpen}
+                aria-controls="editorial-home-mobile-nav"
+                onClick={() => setMobileMenuOpen((open) => !open)}
+              >
+                {mobileMenuOpen ? <X size={21} /> : <Menu size={21} />}
+              </button>
+              {mobileMenuOpen && (
+                <nav
+                  className="editorial-home-mobile-nav"
+                  id="editorial-home-mobile-nav"
+                  aria-label="Mobile navigation"
+                >
+                  <a href="/learn" onClick={(event) => followLink(event, "/learn")}>Learn</a>
+                  <button type="button" onClick={() => openPanel("calculator")}>Calculator</button>
+                  <button type="button" onClick={() => openPanel("compare")}>Compare</button>
+                  <button type="button" onClick={() => openPanel("how")}>How it works</button>
+                </nav>
+              )}
+            </div>
+          </header>
+
+          <main>
+            <section className="editorial-hero" aria-labelledby="editorial-home-title">
+              <div className="editorial-hero-copy">
+                <h1 id="editorial-home-title">
+                  You only get<br />
+                  about <span>1,040</span> paydays.
+                </h1>
+                <p className="editorial-hero-deck">
+                  Every payday is a decision.<br />
+                  Choose yours.
+                </p>
+                <span className="editorial-gold-rule" aria-hidden="true" />
+
+                <ol className="editorial-pillars">
+                  <li>
+                    <span>01</span>
+                    <strong>Live Today.</strong>
+                    <p>Make the most of the life you have now.</p>
+                  </li>
+                  <li>
+                    <span>02</span>
+                    <strong>Protect Tomorrow.</strong>
+                    <p>Build security for life’s uncertainties.</p>
+                  </li>
+                  <li>
+                    <span>03</span>
+                    <strong>Plan Your Future.</strong>
+                    <p>Invest with intention and grow your options.</p>
+                  </li>
+                  <li>
+                    <span>04</span>
+                    <strong>Choose What Matters.</strong>
+                    <p>Align your money with your values and goals.</p>
+                  </li>
+                </ol>
+
+                <div className="editorial-actions">
+                  <a
+                    className="editorial-primary-action"
+                    href="/learn"
+                    onClick={(event) => followLink(event, "/learn")}
+                  >
+                    Start reading <span aria-hidden="true">→</span>
+                  </a>
+                  <button type="button" onClick={() => openPanel("calculator")}>
+                    Open calculator <span aria-hidden="true">→</span>
+                  </button>
+                </div>
+              </div>
+
+              <figure className="editorial-hero-image">
+                <img
+                  src="/home-editorial-hero.jpg"
+                  alt="A blank linen journal, glass of water, and ceramic coffee mug in morning light"
+                  width="1536"
+                  height="1024"
+                  fetchPriority="high"
+                />
+              </figure>
+            </section>
+
+            <div className="editorial-paper-edge" aria-hidden="true" />
+
+            {cornerstoneArticle && (
+              <section className="editorial-cornerstone editorial-page-width" aria-labelledby="cornerstone-title">
+                <div className="editorial-cornerstone-copy">
+                  <p className="editorial-kicker">Cornerstone article</p>
+                  <h2 id="cornerstone-title">{cornerstoneArticle.title}</h2>
+                  <p>{cornerstoneArticle.summary}</p>
+                  <a
+                    href={`/learn/${cornerstoneArticle.id}`}
+                    onClick={(event) => followLink(event, `/learn/${cornerstoneArticle.id}`)}
+                  >
+                    Read the essay <span aria-hidden="true">→</span>
+                  </a>
+                </div>
+                <a
+                  className="editorial-cornerstone-image"
+                  href={`/learn/${cornerstoneArticle.id}`}
+                  onClick={(event) => followLink(event, `/learn/${cornerstoneArticle.id}`)}
+                  aria-label={`Read ${cornerstoneArticle.title}`}
+                >
+                  <img
+                    src="/home-cornerstone-reading.jpg"
+                    alt="An open book on a sunlit wooden table beside a ceramic cup and small plant"
+                    width="1792"
+                    height="887"
+                    loading="lazy"
+                  />
+                </a>
+              </section>
+            )}
+
+            <section className="editorial-start editorial-page-width" aria-labelledby="editorial-start-title">
+              <div className="editorial-section-heading">
+                <div>
+                  <p className="editorial-kicker">Start here</p>
+                  <h2 id="editorial-start-title">Three essays to understand our approach to money.</h2>
+                </div>
+                <a href="/learn" onClick={(event) => followLink(event, "/learn")}>
+                  View all articles <span aria-hidden="true">→</span>
+                </a>
+              </div>
+
+              <div className="editorial-start-grid">
+                {LEARN_START_HERE_ARTICLES.map((article) => (
+                  <article key={article.id}>
+                    <a
+                      className="editorial-start-image"
+                      href={`/learn/${article.id}`}
+                      onClick={(event) => followLink(event, `/learn/${article.id}`)}
+                      aria-label={`Read ${article.title}`}
+                    >
+                      <img
+                        src={article.image}
+                        alt={article.alt}
+                        width="800"
+                        height="450"
+                        loading="lazy"
+                      />
+                    </a>
+                    <div>
+                      <p className="editorial-article-meta">
+                        {article.category} <span>·</span> {article.readTime}
+                      </p>
+                      <h3>
+                        <a
+                          href={`/learn/${article.id}`}
+                          onClick={(event) => followLink(event, `/learn/${article.id}`)}
+                        >
+                          {article.title}
+                        </a>
+                      </h3>
+                      <p>{article.summary}</p>
+                      <a
+                        className="editorial-read-link"
+                        href={`/learn/${article.id}`}
+                        onClick={(event) => followLink(event, `/learn/${article.id}`)}
+                      >
+                        Read the essay <span aria-hidden="true">→</span>
+                      </a>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </section>
+
+            <section className="editorial-newsletter editorial-page-width" aria-labelledby="editorial-newsletter-title">
+              <div className="editorial-envelope" aria-hidden="true"><Mail size={30} /></div>
+              <div className="editorial-newsletter-copy">
+                <h2 id="editorial-newsletter-title">Thoughts worth bringing to your next payday.</h2>
+                <p>Essays, ideas and practical money decisions.</p>
+                <p>No spam. Just thoughtful writing about making every payday count.</p>
+              </div>
+              <NewsletterSignup
+                {...newsletterProps}
+                idPrefix="home-editorial"
+                buttonLabel="Join 1040 Paydays"
+                placeholder="Your email address"
+              />
+            </section>
+
+            <section className="editorial-calculator editorial-page-width" aria-labelledby="editorial-calculator-title">
+              <div className="editorial-calculator-copy">
+                <p className="editorial-kicker">Explore your future</p>
+                <h2 id="editorial-calculator-title">See what your choices could become.</h2>
+                <p>Use the 1040 Paydays calculator to explore different paths and make every payday count.</p>
+                <button className="editorial-primary-action" type="button" onClick={() => openPanel("calculator")}>
+                  Open the calculator <span aria-hidden="true">→</span>
+                </button>
+              </div>
+              <figure>
+                <img
+                  src="/home-calculator-planning.jpg"
+                  alt="A planning notebook, phone, and fountain pen with simple navy and gold growth lines"
+                  width="1536"
+                  height="1024"
+                  loading="lazy"
+                />
+              </figure>
+            </section>
+
+            <section className="editorial-topics editorial-page-width" aria-labelledby="editorial-topics-title">
+              <p className="editorial-kicker" id="editorial-topics-title">Browse by topic</p>
+              <div className="editorial-topic-list">
+                {LEARN_EDITORIAL_CONFIG.clusters.map((cluster, index) => (
+                  <a
+                    key={cluster.slug}
+                    href={`/learn/${cluster.slug}`}
+                    onClick={(event) => followLink(event, `/learn/${cluster.slug}`)}
+                  >
+                    <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+                    <strong>{cluster.title}</strong>
+                  </a>
+                ))}
+                <a href="/learn" onClick={(event) => followLink(event, "/learn")}>
+                  <span aria-hidden="true">05</span>
+                  <strong>All Essays</strong>
+                </a>
+              </div>
+            </section>
+          </main>
+
+          <footer className="editorial-home-footer">
+            <div className="editorial-footer-inner">
+              <div className="editorial-envelope is-dark" aria-hidden="true"><Mail size={28} /></div>
+              <div>
+                <h2>Make Every Payday Count.</h2>
+                <p>Join readers building a better financial life, one payday at a time.</p>
+              </div>
+              <NewsletterSignup
+                {...newsletterProps}
+                idPrefix="home-footer"
+                buttonLabel="Join 1040 Paydays"
+                placeholder="Your email address"
+              />
+            </div>
+            <nav aria-label="Footer navigation">
+              <button type="button" onClick={() => openPanel("about")}>About</button>
+              <button type="button" onClick={() => openPanel("privacy")}>Privacy</button>
+              <button type="button" onClick={() => openPanel("terms")}>Terms</button>
+              <button type="button" onClick={() => openPanel("contact")}>Contact</button>
+            </nav>
+          </footer>
+        </div>
       );
     }
 
@@ -7679,7 +7995,7 @@ const THIRTY_SIXTH_ARTICLE = {
       }
 
       return (
-        <div className="app-shell">
+        <div className="home-page-host">
           {panel && (
             <SlidePanel
               panel={panel}
@@ -7705,6 +8021,19 @@ const THIRTY_SIXTH_ARTICLE = {
             />
           )}
 
+          <EditorialHomePage
+            currency={currency}
+            setCurrency={setCurrency}
+            mobileMenuOpen={mobileMenuOpen}
+            setMobileMenuOpen={setMobileMenuOpen}
+            navigateTo={navigateTo}
+            setPanel={setPanel}
+            newsletterProps={newsletterProps}
+            panel={panel}
+          />
+
+          {false && (
+            <>
           <header className="topbar">
             <a className="brand" href="#calculator">
               <strong>1040</strong><span>PAYDAYS</span>
@@ -8004,6 +8333,8 @@ const THIRTY_SIXTH_ARTICLE = {
               <a href="#contact"><Mail size={22} /></a>
             </div>
           </footer>
+            </>
+          )}
         </div>
       );
     }
@@ -8026,7 +8357,7 @@ const THIRTY_SIXTH_ARTICLE = {
       return (
         <div className="overlay">
           <aside key={panel} ref={panelRef} className={`slide-panel ${isAdvanced || isCompare || isCalculator || isLearn || isArticle ? "wide-panel" : ""} ${isLearn || isArticle ? "article-panel" : ""} ${isLearn ? "learn-library-panel" : ""}`}>
-            <button className="close-panel" onClick={close}><X size={18} /></button>
+            <button className="close-panel" type="button" aria-label="Close" onClick={close}><X size={18} /></button>
 
             {isAdvanced && (
               <>
