@@ -8575,7 +8575,25 @@ const THIRTY_SIXTH_ARTICLE = {
               {clusterArticles.map((article, index) => (
                 <article key={article.id}>
                   <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
-                  <div>
+                  <a
+                    className="learn-cluster-article-image"
+                    href={`/learn/${article.id}`}
+                    aria-label={`Read ${article.title}`}
+                    onClick={(event) => {
+                      event.preventDefault();
+                      navigateTo(`/learn/${article.id}`);
+                    }}
+                  >
+                    <img
+                      src={article.image}
+                      alt={article.alt}
+                      width="720"
+                      height="480"
+                      loading={index < 2 ? "eager" : "lazy"}
+                      decoding="async"
+                    />
+                  </a>
+                  <div className="learn-cluster-article-copy">
                     <small>{article.category} · {article.readTime}</small>
                     <h3><LearnArticleLink article={article} navigateTo={navigateTo} /></h3>
                     <p>{article.summary}</p>
