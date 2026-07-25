@@ -9438,6 +9438,36 @@ a {
   line-height: 1.15;
 }
 
+.final-payday-result-heading {
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.final-currency-picker {
+  flex: 0 0 auto;
+}
+
+.final-currency-picker select {
+  width: 56px;
+  height: 32px;
+  padding: 0 8px;
+  border: 1px solid #cbd7e6;
+  border-radius: 5px;
+  color: var(--calculator-navy);
+  background: #fff;
+  font-size: 14px;
+  font-weight: 750;
+  text-align: center;
+}
+
+.final-currency-picker select:focus {
+  border-color: var(--calculator-blue);
+  outline: 3px solid rgba(7, 94, 245, .18);
+  outline-offset: 2px;
+}
+
 .final-payday-result h2 strong {
   color: var(--calculator-blue);
 }
@@ -10003,6 +10033,14 @@ a {
   .final-payday-summary {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 14px 0;
+  }
+
+  .final-payday-result-heading {
+    gap: 10px;
+  }
+
+  .final-currency-picker select {
+    width: 50px;
   }
 
   .final-payday-summary > div:nth-child(3) {

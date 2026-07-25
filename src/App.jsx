@@ -7393,6 +7393,8 @@ const THIRTY_SIXTH_ARTICLE = {
       setMobileMenuOpen,
       navigateTo,
       setPanel,
+      currency,
+      setCurrency,
       newsletterProps,
       panel,
       money,
@@ -7455,6 +7457,11 @@ const THIRTY_SIXTH_ARTICLE = {
         : projection.balance;
       const displayGrowth = Math.max(displayBalance - projection.invested, 0);
       const displayMonthly = Math.round((displayBalance * (values.withdrawalRate / 100)) / 12);
+      const currencySymbol = {
+        USD: "$",
+        EUR: "€",
+        GBP: "£",
+      }[currency] || "$";
 
       const openPanel = (name) => {
         setMobileMenuOpen(false);
@@ -7480,6 +7487,7 @@ const THIRTY_SIXTH_ARTICLE = {
             age,
             retireAge,
             returnRate,
+            currency,
           },
         };
 
@@ -7608,7 +7616,7 @@ const THIRTY_SIXTH_ARTICLE = {
                       value={starting}
                       setValue={setStarting}
                       error={errors.starting}
-                      prefix="$"
+                      prefix={currencySymbol}
                       min="0"
                     />
                     <CalculatorNumberField
@@ -7617,7 +7625,7 @@ const THIRTY_SIXTH_ARTICLE = {
                       value={contribution}
                       setValue={setContribution}
                       error={errors.contribution}
-                      prefix="$"
+                      prefix={currencySymbol}
                       min="0"
                     />
                     <label className="final-calculator-field" htmlFor="calculator-frequency">
@@ -7693,11 +7701,27 @@ const THIRTY_SIXTH_ARTICLE = {
 
                 <div className="final-calculator-centre">
                   <section className="final-calculator-card final-payday-result">
-                    <h2>
-                      You’ve already used <strong>{paydaysUsed.toLocaleString("en-CA")}</strong> paydays.
-                      <br />
-                      <span>{paydaysRemaining.toLocaleString("en-CA")}</span> remain.
-                    </h2>
+                    <div className="final-payday-result-heading">
+                      <h2>
+                        You’ve already used <strong>{paydaysUsed.toLocaleString("en-CA")}</strong> paydays.
+                        <br />
+                        <span>{paydaysRemaining.toLocaleString("en-CA")}</span> remain.
+                      </h2>
+                      <label className="final-currency-picker" htmlFor="calculator-currency">
+                        <span className="sr-only">Currency symbol</span>
+                        <select
+                          id="calculator-currency"
+                          value={currency}
+                          onChange={(event) => setCurrency(event.target.value)}
+                          aria-label="Currency symbol"
+                          title="Changes the displayed symbol without converting exchange rates"
+                        >
+                          <option value="USD">$</option>
+                          <option value="EUR">€</option>
+                          <option value="GBP">£</option>
+                        </select>
+                      </label>
+                    </div>
                     <div className="final-payday-summary" aria-label="Payday summary">
                       <div><CalendarDays aria-hidden="true" /><span>Paydays used<strong>{paydaysUsed.toLocaleString("en-CA")}</strong></span></div>
                       <div><CircleDotDashed aria-hidden="true" /><span>Paydays remaining<strong>{paydaysRemaining.toLocaleString("en-CA")}</strong></span></div>
@@ -8870,6 +8894,8 @@ const THIRTY_SIXTH_ARTICLE = {
               setMobileMenuOpen={setMobileMenuOpen}
               navigateTo={navigateTo}
               setPanel={setPanel}
+              currency={currency}
+              setCurrency={setCurrency}
               newsletterProps={newsletterProps}
               panel={panel}
               money={money}
