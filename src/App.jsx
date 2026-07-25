@@ -6242,6 +6242,14 @@ const THIRTY_SIXTH_ARTICLE = {
           publicationDateForArticle(left)
         )
       );
+    const HOME_LATEST_ARTICLES = UNIQUE_ARTICLES
+      .filter((article) => publicationDateForArticle(article))
+      .sort((left, right) =>
+        publicationDateForArticle(right).localeCompare(
+          publicationDateForArticle(left)
+        )
+      )
+      .slice(0, 3);
     const HOME_CORNERSTONE_ARTICLE_ID =
       "the-wealth-you-build-before-you-build-wealth";
     const HOME_PAGE_FIXED_ARTICLE_IDS = new Set([
@@ -8764,7 +8772,7 @@ const THIRTY_SIXTH_ARTICLE = {
                 </header>
 
                 <div className="reference-home-latest-grid">
-                  {LEARN_START_HERE_ARTICLES.map((article) => (
+                  {HOME_LATEST_ARTICLES.map((article) => (
                     <article key={article.id}>
                       <a
                         className="reference-home-latest-image"
