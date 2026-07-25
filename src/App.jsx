@@ -7432,9 +7432,27 @@ const THIRTY_SIXTH_ARTICLE = {
       },
     };
 
+    const PRIMARY_NAV_LINKS = [
+      { label: "Home", href: "/" },
+      { label: "Learn", href: "/learn" },
+      { label: "Calculator", href: "/calculator" },
+      { label: "About", href: "/about" },
+    ];
+
+    function FooterPrimaryLinks({ separated = false }) {
+      return PRIMARY_NAV_LINKS.map((link, index) => (
+        <React.Fragment key={link.href}>
+          {index > 0 && separated && <span aria-hidden="true">·</span>}
+          <a href={link.href}>{link.label}</a>
+        </React.Fragment>
+      ));
+    }
+
     function FooterLegalLinks() {
       return (
         <>
+          <FooterPrimaryLinks separated />
+          <span aria-hidden="true">·</span>
           <a href="/privacy-policy">Privacy Policy</a>
           <span aria-hidden="true">·</span>
           <a href="/terms-of-use">Terms of Use</a>
@@ -8818,7 +8836,7 @@ const THIRTY_SIXTH_ARTICLE = {
                 <p>One payday at a time. Build consistency.</p>
               </div>
               <nav className="editorial-footer-nav" aria-label="Footer navigation">
-                <button type="button" onClick={() => navigateTo("/about")}>About</button>
+                <FooterPrimaryLinks />
                 <a href="/privacy-policy">Privacy</a>
                 <a href="/terms-of-use">Terms</a>
                 <a href="/contact">Contact</a>
@@ -9718,7 +9736,7 @@ const THIRTY_SIXTH_ARTICLE = {
             </div>
 
             <nav>
-              <button onClick={() => setPanel("about")}>About</button>
+              <FooterPrimaryLinks />
               <a href="/privacy-policy">Privacy</a>
               <a href="/terms-of-use">Terms</a>
               <a href="/contact">Contact</a>
