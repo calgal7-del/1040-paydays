@@ -10781,7 +10781,7 @@ const THIRTY_SIXTH_ARTICLE = {
         : null;
       const guidePoints = bars.slice(0, -1).map((bar) => `${bar.x + bar.width / 2},${bar.top}`).join(" ");
       const timelineStops = [0, .2, .4, .6, .8, 1];
-      const ribbonColors = ["#0b2858", "#17457d", "#2c75aa", "#3f9dbe", "#72aaa2", "#f0b73a"];
+      const ribbonColors = ["#0a1a2f", "#132a47", "#1c3a5f", "#294b70", "#8f6d2f", "#d9a441"];
       const envelopeStart = bars[bars.length - 2];
       const finalBar = bars[bars.length - 1];
 
@@ -10791,8 +10791,8 @@ const THIRTY_SIXTH_ARTICLE = {
             <svg viewBox="0 0 1000 340" role="img" aria-label={`Projected contributions and growth from age ${age} to age ${retireAge}`}>
               <defs>
                 <linearGradient id="barGrowth" x1="0" x2="0" y1="1" y2="0">
-                  <stop offset="0%" stopColor="#176bff" />
-                  <stop offset="100%" stopColor="#55c3d8" />
+                  <stop offset="0%" stopColor="#d9a441" />
+                  <stop offset="100%" stopColor="#efd18f" />
                 </linearGradient>
                 <filter id="barShadow" x="-20%" y="-20%" width="140%" height="160%">
                   <feDropShadow dx="0" dy="4" stdDeviation="4" floodColor="#071936" floodOpacity=".13" />
@@ -10947,13 +10947,13 @@ const THIRTY_SIXTH_ARTICLE = {
             <svg viewBox="0 0 360 226" role="img" aria-label={`Mobile contributions and growth projection from age ${age} to age ${retireAge}`}>
               <defs>
                 <linearGradient id="mobileBarGrowth" x1="0" x2="0" y1="1" y2="0">
-                  <stop offset="0%" stopColor="#176bff" />
-                  <stop offset="100%" stopColor="#55c3d8" />
+                  <stop offset="0%" stopColor="#d9a441" />
+                  <stop offset="100%" stopColor="#efd18f" />
                 </linearGradient>
                 <linearGradient id="mobileRibbon" x1="0" x2="1">
-                  <stop offset="0%" stopColor="#0c3470" />
-                  <stop offset="58%" stopColor="#00a6a6" />
-                  <stop offset="100%" stopColor="#f5a400" />
+                  <stop offset="0%" stopColor="#0a1a2f" />
+                  <stop offset="65%" stopColor="#294b70" />
+                  <stop offset="100%" stopColor="#d9a441" />
                 </linearGradient>
               </defs>
 
