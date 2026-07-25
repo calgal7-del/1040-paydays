@@ -7498,12 +7498,24 @@ const THIRTY_SIXTH_ARTICLE = {
           </main>
 
           <footer className="reference-home-footer">
-            <nav className="reference-home-footer-nav" aria-label="Footer navigation">
-              <button type="button" onClick={() => openPanel("about")}>About</button>
-              <a href="#facebook">Facebook</a>
-              <a href="#twitter">Twitter</a>
-              <a href="#instagram">Instagram</a>
-            </nav>
+            <div className="reference-home-footer-inner">
+              <p className="reference-home-copyright">
+                © 2026 1040 Paydays. All rights reserved.
+              </p>
+              <p>
+                The content, design, illustrations, branding, and original editorial articles on this website are protected by copyright and may not be reproduced or distributed without written permission.
+              </p>
+              <p>
+                1040 Paydays is for educational purposes only and does not provide financial, tax, legal, or investment advice.
+              </p>
+              <nav className="reference-home-footer-nav" aria-label="Legal and contact navigation">
+                <button type="button" onClick={() => openPanel("privacy")}>Privacy Policy</button>
+                <span aria-hidden="true">·</span>
+                <button type="button" onClick={() => openPanel("terms")}>Terms of Use</button>
+                <span aria-hidden="true">·</span>
+                <button type="button" onClick={() => openPanel("contact")}>Contact</button>
+              </nav>
+            </div>
           </footer>
         </div>
       );

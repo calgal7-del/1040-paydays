@@ -8626,8 +8626,8 @@ a {
 
 .reference-home-hero {
   position: relative;
-  height: clamp(500px, 33.2vw, 520px);
-  min-height: 500px;
+  height: clamp(290px, 21vw, 320px);
+  min-height: 290px;
   overflow: hidden;
   color: #fff;
   background: #556b80;
@@ -8638,7 +8638,7 @@ a {
   height: 100%;
   display: block;
   object-fit: cover;
-  object-position: center 52%;
+  object-position: center 38%;
 }
 
 .reference-home-hero-overlay {
@@ -8655,7 +8655,7 @@ a {
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  padding: 86px 32px 40px;
+  padding: 50px 32px 32px;
   text-align: center;
 }
 
@@ -8761,6 +8761,9 @@ a {
 }
 
 .reference-home-philosophy svg {
+  display: block;
+  justify-self: center;
+  margin-top: 1px;
   color: var(--reference-navy);
 }
 
@@ -8860,30 +8863,50 @@ a {
 }
 
 .reference-home-footer {
-  min-height: 60px;
-  display: grid;
-  place-items: center;
-  padding: 10px 24px 18px;
+  padding: 8px 24px 10px;
   background: #fff;
+}
+
+.reference-home-footer-inner {
+  width: min(1280px, 100%);
+  display: grid;
+  justify-items: center;
+  gap: 3px;
+  margin-inline: auto;
+  color: #536078;
+  font-size: 10px;
+  line-height: 1.3;
+  text-align: center;
+}
+
+.reference-home-footer-inner p {
+  margin: 0;
+}
+
+.reference-home-copyright {
+  color: var(--reference-navy);
+  font-size: 11px;
+  font-weight: 750;
 }
 
 .reference-home-footer-nav {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 34px;
+  gap: 9px;
+  margin-top: 1px;
 }
 
 .reference-home-footer-nav a,
 .reference-home-footer-nav button {
-  min-height: 40px;
+  min-height: 24px;
   display: inline-flex;
   align-items: center;
   border: 0;
   padding: 0;
   color: #233c68;
   background: transparent;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 650;
 }
 
@@ -8899,6 +8922,31 @@ a {
 .reference-home input:focus-visible {
   outline: 3px solid rgba(23, 59, 140, .38);
   outline-offset: 3px;
+}
+
+@media (min-width: 821px) and (max-height: 820px) {
+  .reference-home-hero {
+    height: 186px;
+    min-height: 186px;
+  }
+
+  .reference-home-hero-copy {
+    padding: 10px 32px;
+  }
+
+  .reference-home-hero h1 {
+    font-size: clamp(42px, 3.6vw, 50px);
+  }
+
+  .reference-home-hero p {
+    margin-top: 6px;
+    font-size: 19px;
+  }
+
+  .reference-home-hero-copy > a {
+    min-height: 42px;
+    margin-top: 8px;
+  }
 }
 
 @media (max-width: 1050px) {
