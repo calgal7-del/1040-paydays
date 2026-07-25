@@ -8412,10 +8412,6 @@ const THIRTY_SIXTH_ARTICLE = {
               </nav>
 
               <div className="learn-index-actions">
-                <a className="learn-index-subscribe" href="/#home-newsletter">
-                  <Mail size={16} aria-hidden="true" />
-                  Subscribe
-                </a>
                 <button
                   className="learn-index-menu-button"
                   type="button"
