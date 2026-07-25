@@ -11708,3 +11708,57 @@ body {
     transition: none;
   }
 }
+
+/* Homepage desktop hero containment */
+@media (min-width: 821px) {
+  .reference-home-hero {
+    height: auto;
+    min-height: 0;
+    overflow: visible;
+    isolation: isolate;
+  }
+
+  .reference-home-hero > img {
+    position: absolute;
+    z-index: -2;
+    inset: 0;
+  }
+
+  .reference-home-hero-overlay {
+    z-index: -1;
+  }
+
+  .reference-home-hero-copy {
+    position: relative;
+    inset: auto;
+    min-height: 0;
+    justify-content: flex-start;
+    padding: 52px 32px 64px;
+  }
+
+  .reference-home-hero-copy > a {
+    position: relative;
+    margin-top: 28px;
+    margin-bottom: 0;
+    transform: none;
+  }
+
+  .reference-home-philosophy {
+    position: relative;
+    z-index: auto;
+    margin-top: 0;
+    transform: none;
+  }
+}
+
+@media (min-width: 1024px) and (max-height: 850px) {
+  .reference-home-hero {
+    height: auto;
+    min-height: 0;
+  }
+
+  .reference-home-hero-copy {
+    padding-top: 48px;
+    padding-bottom: 58px;
+  }
+}
