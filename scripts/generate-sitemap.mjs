@@ -57,6 +57,7 @@ const clusterPaths = LEARN_EDITORIAL_CONFIG.clusters.map(
 const lastmod = new Date().toISOString().slice(0, 10);
 const publicPaths = [
   "/",
+  "/about",
   "/calculator",
   "/learn",
   ...clusterPaths,
@@ -87,6 +88,7 @@ writeFileSync(sitemapPath, sitemap);
 console.log(`Generated ${sitemapPath} with ${publicPaths.length} URLs.`);
 
 const appRewritePaths = [
+  "/about",
   "/calculator",
   "/learn",
   ...clusterPaths,

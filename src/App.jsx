@@ -16,6 +16,7 @@
       X,
       Menu,
       BookOpen,
+      BarChart3,
     } from "lucide-react";
     import "./App.css";
     import { LEARN_EDITORIAL_CONFIG } from "./learnConfig.mjs";
@@ -26,6 +27,12 @@
     const MAILING_LIST_CONSENT_TEXT =
       "Join the 1040 Paydays mailing list for new articles, practical financial ideas, calculators, and occasional updates. You can unsubscribe at any time.";
     const SITE_URL = "https://www.1040paydays.com";
+    const PAYDAY_PRINCIPLE_ICONS = {
+      liveToday: Sun,
+      protectTomorrow: Lock,
+      planYourFuture: BarChart3,
+      chooseWhatMatters: Heart,
+    };
 
     const DEFAULT_SETTINGS = {
       currency: "USD",
@@ -7534,10 +7541,10 @@ const THIRTY_SIXTH_ARTICLE = {
       };
 
       const principles = [
-        [Sun, "Live Today", "Make the most of the life you have now."],
-        [Lock, "Protect Tomorrow", "Prepare for life's ups and downs."],
-        [CalendarDays, "Plan Your Future", "Save and invest one payday at a time to create more choices."],
-        [Heart, "Choose What Matters", "Align your money with your values and goals."],
+        [PAYDAY_PRINCIPLE_ICONS.liveToday, "Live Today", "Make the most of the life you have now."],
+        [PAYDAY_PRINCIPLE_ICONS.protectTomorrow, "Protect Tomorrow", "Prepare for life's ups and downs."],
+        [PAYDAY_PRINCIPLE_ICONS.planYourFuture, "Plan Your Future", "Save and invest one payday at a time to create more choices."],
+        [PAYDAY_PRINCIPLE_ICONS.chooseWhatMatters, "Choose What Matters", "Align your money with your values and goals."],
       ];
 
       return (
@@ -7561,7 +7568,7 @@ const THIRTY_SIXTH_ARTICLE = {
                 <button type="button" onClick={() => navigateTo("/")}>Home</button>
                 <button type="button" onClick={() => navigateTo("/learn")}>Learn</button>
                 <button type="button" className="active" aria-current="page">Calculator</button>
-                <button type="button" onClick={() => openPanel("about")}>About</button>
+                <button type="button" onClick={() => navigateTo("/about")}>About</button>
               </nav>
 
               <div className="learn-index-actions">
@@ -7593,7 +7600,7 @@ const THIRTY_SIXTH_ARTICLE = {
                     <button type="button" onClick={() => navigateTo("/")}>Home</button>
                     <button type="button" onClick={() => navigateTo("/learn")}>Learn</button>
                     <button type="button" aria-current="page" onClick={() => setMobileMenuOpen(false)}>Calculator</button>
-                    <button type="button" onClick={() => openPanel("about")}>About</button>
+                    <button type="button" onClick={() => navigateTo("/about")}>About</button>
                   </nav>
                 )}
               </div>
@@ -7909,6 +7916,177 @@ const THIRTY_SIXTH_ARTICLE = {
       );
     }
 
+    function AboutPage({
+      mobileMenuOpen,
+      setMobileMenuOpen,
+      navigateTo,
+      openPanel,
+      newsletterProps,
+      panel,
+    }) {
+      const principles = [
+        [PAYDAY_PRINCIPLE_ICONS.liveToday, "LIVE TODAY", "Make the most of the life you have now."],
+        [PAYDAY_PRINCIPLE_ICONS.protectTomorrow, "PROTECT TOMORROW", "Prepare for life’s ups and downs."],
+        [PAYDAY_PRINCIPLE_ICONS.planYourFuture, "PLAN YOUR FUTURE", "Save and invest one payday at a time."],
+        [PAYDAY_PRINCIPLE_ICONS.chooseWhatMatters, "CHOOSE WHAT MATTERS", "Align your money with your values and goals."],
+      ];
+
+      return (
+        <div className={`about-page ${panel ? "is-obscured" : ""}`}>
+          <header className="learn-index-header">
+            <div className="learn-index-container learn-index-header-inner">
+              <a
+                className="learn-index-brand"
+                href="/"
+                aria-label="1040 Paydays home"
+                onClick={(event) => {
+                  event.preventDefault();
+                  navigateTo("/");
+                }}
+              >
+                <strong>1040</strong>
+                <span>PAYDAYS</span>
+              </a>
+
+              <nav className="learn-index-nav" aria-label="Primary navigation">
+                <button type="button" onClick={() => navigateTo("/")}>Home</button>
+                <button type="button" onClick={() => navigateTo("/learn")}>Learn</button>
+                <button type="button" onClick={() => navigateTo("/calculator")}>Calculator</button>
+                <button type="button" className="active" aria-current="page">About</button>
+              </nav>
+
+              <div className="learn-index-actions">
+                <a className="learn-index-subscribe" href="#about-newsletter">
+                  <Mail size={16} aria-hidden="true" />
+                  Subscribe
+                </a>
+                <button
+                  className="learn-index-menu-button"
+                  type="button"
+                  aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+                  aria-expanded={mobileMenuOpen}
+                  aria-controls="about-mobile-navigation"
+                  onClick={() => setMobileMenuOpen((open) => !open)}
+                >
+                  {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+                  <span>Menu</span>
+                </button>
+                {mobileMenuOpen && (
+                  <nav
+                    className="learn-index-mobile-nav"
+                    id="about-mobile-navigation"
+                    aria-label="Mobile navigation"
+                  >
+                    <button type="button" onClick={() => navigateTo("/")}>Home</button>
+                    <button type="button" onClick={() => navigateTo("/learn")}>Learn</button>
+                    <button type="button" onClick={() => navigateTo("/calculator")}>Calculator</button>
+                    <button type="button" aria-current="page" onClick={() => setMobileMenuOpen(false)}>About</button>
+                  </nav>
+                )}
+              </div>
+            </div>
+          </header>
+
+          <main className="about-page-main">
+            <div className="reference-home-container about-page-container">
+              <section className="about-page-top" aria-labelledby="about-page-title">
+                <div className="about-page-copy">
+                  <h1 id="about-page-title">Our Philosophy</h1>
+                  <div className="about-page-rule" aria-hidden="true" />
+
+                  <div className="about-page-prose">
+                    <p>
+                      Most people think about money in dollars.<br />
+                      <strong>We think about it in paydays.</strong>
+                    </p>
+                    <p>
+                      Over a working life, most people receive about 1,040 paydays.<br />
+                      Each one is a limited opportunity to shape the life you want.<br />
+                      Once a payday passes, the decision that came with it is gone.
+                    </p>
+                    <p className="about-page-belief-label">1040 Paydays was built around a simple belief:</p>
+                    <blockquote className="about-page-belief">
+                      Small decisions, made consistently, have far more power<br />
+                      than dramatic changes that rarely last.
+                    </blockquote>
+                    <ul className="about-page-statements">
+                      <li>Live well today.</li>
+                      <li>Protect yourself from tomorrow’s uncertainties.</li>
+                      <li>Save and invest so future opportunities become possible.</li>
+                      <li>Spend with intention on what matters most.</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <figure className="about-calculator-frame">
+                  <div className="about-browser-bar" aria-hidden="true">
+                    <span /><span /><span />
+                  </div>
+                  <div className="about-calculator-viewport">
+                    <iframe
+                      src="/calculator"
+                      title="1040 Paydays calculator showing payday inputs, projected future value, and investment growth"
+                      loading="lazy"
+                      tabIndex="-1"
+                      aria-hidden="true"
+                    />
+                  </div>
+                  <figcaption className="sr-only">
+                    1040 Paydays calculator showing payday inputs, projected future value, and investment growth.
+                  </figcaption>
+                </figure>
+              </section>
+
+              <section className="about-principles" aria-label="The 1040 Paydays philosophy">
+                {principles.map(([Icon, title, description]) => (
+                  <article key={title}>
+                    <Icon aria-hidden="true" />
+                    <h2>{title}</h2>
+                    <p>{description}</p>
+                  </article>
+                ))}
+              </section>
+            </div>
+          </main>
+
+          <section
+            className="reference-home-newsletter"
+            id="about-newsletter"
+            aria-labelledby="about-newsletter-title"
+          >
+            <div className="reference-home-container reference-home-newsletter-inner">
+              <h2 id="about-newsletter-title">Get new ideas in your inbox.</h2>
+              <NewsletterSignup
+                {...newsletterProps}
+                idPrefix="about"
+                buttonLabel="Subscribe"
+                placeholder="Enter your email"
+              />
+            </div>
+          </section>
+
+          <footer className="reference-home-footer">
+            <div className="reference-home-footer-inner">
+              <p className="reference-home-copyright">© 2026 1040 Paydays. All rights reserved.</p>
+              <p>
+                The content, design, illustrations, branding, and original editorial articles on this website are protected by copyright and may not be reproduced or distributed without written permission.
+              </p>
+              <p>
+                1040 Paydays is for educational purposes only and does not provide financial, tax, legal, or investment advice.
+              </p>
+              <nav className="reference-home-footer-nav" aria-label="Legal and contact navigation">
+                <button type="button" onClick={() => openPanel("privacy")}>Privacy Policy</button>
+                <span aria-hidden="true">·</span>
+                <button type="button" onClick={() => openPanel("terms")}>Terms of Use</button>
+                <span aria-hidden="true">·</span>
+                <button type="button" onClick={() => openPanel("contact")}>Contact</button>
+              </nav>
+            </div>
+          </footer>
+        </div>
+      );
+    }
+
     function ReferenceHomePage({
       mobileMenuOpen,
       setMobileMenuOpen,
@@ -7931,22 +8109,22 @@ const THIRTY_SIXTH_ARTICLE = {
         {
           title: "Live Today",
           description: "Make the most of the life you have now.",
-          Icon: Sun,
+          Icon: PAYDAY_PRINCIPLE_ICONS.liveToday,
         },
         {
           title: "Protect Tomorrow",
           description: "Prepare for life's ups and downs.",
-          Icon: Lock,
+          Icon: PAYDAY_PRINCIPLE_ICONS.protectTomorrow,
         },
         {
           title: "Plan Your Future",
           description: "Save and invest one payday at a time to create more choices.",
-          Icon: CalendarDays,
+          Icon: PAYDAY_PRINCIPLE_ICONS.planYourFuture,
         },
         {
           title: "Choose What Matters",
           description: "Align your money with your values and goals.",
-          Icon: Heart,
+          Icon: PAYDAY_PRINCIPLE_ICONS.chooseWhatMatters,
         },
       ];
 
@@ -7968,7 +8146,7 @@ const THIRTY_SIXTH_ARTICLE = {
                 <button type="button" className="active" aria-current="page">Home</button>
                 <button type="button" onClick={() => navigateTo("/learn")}>Learn</button>
                 <button type="button" onClick={() => navigateTo("/calculator")}>Calculator</button>
-                <button type="button" onClick={() => openPanel("about")}>About</button>
+                <button type="button" onClick={() => navigateTo("/about")}>About</button>
               </nav>
 
               <div className="learn-index-actions">
@@ -7992,7 +8170,7 @@ const THIRTY_SIXTH_ARTICLE = {
                     <button type="button" aria-current="page" onClick={() => setMobileMenuOpen(false)}>Home</button>
                     <button type="button" onClick={() => navigateTo("/learn")}>Learn</button>
                     <button type="button" onClick={() => navigateTo("/calculator")}>Calculator</button>
-                    <button type="button" onClick={() => openPanel("about")}>About</button>
+                    <button type="button" onClick={() => navigateTo("/about")}>About</button>
                   </nav>
                 )}
               </div>
@@ -8439,7 +8617,7 @@ const THIRTY_SIXTH_ARTICLE = {
                 <p>One payday at a time. Build consistency.</p>
               </div>
               <nav className="editorial-footer-nav" aria-label="Footer navigation">
-                <button type="button" onClick={() => openPanel("about")}>About</button>
+                <button type="button" onClick={() => navigateTo("/about")}>About</button>
                 <button type="button" onClick={() => openPanel("privacy")}>Privacy</button>
                 <button type="button" onClick={() => openPanel("terms")}>Terms</button>
                 <button type="button" onClick={() => openPanel("contact")}>Contact</button>
@@ -8524,6 +8702,7 @@ const THIRTY_SIXTH_ARTICLE = {
         const article = ARTICLE_BY_ID.get(routeSlug);
         const isLearnIndex = normalizedPath === "/learn";
         const isCalculatorRoute = normalizedPath === "/calculator";
+        const isAboutRoute = normalizedPath === "/about";
         const isLearnRoute = isLearnIndex || Boolean(cluster) || Boolean(article);
         const title = article
           ? `${article.title} | 1040 Paydays`
@@ -8533,6 +8712,8 @@ const THIRTY_SIXTH_ARTICLE = {
               ? "Learn | 1040 Paydays"
               : isCalculatorRoute
                 ? "Calculator | 1040 Paydays"
+                : isAboutRoute
+                  ? "About 1040 Paydays | Our Philosophy"
               : "1040 Paydays | Savings and Retirement Calculator by Paycheck";
         const description = article
           ? article.summary
@@ -8542,8 +8723,10 @@ const THIRTY_SIXTH_ARTICLE = {
               ? "Thoughtful articles and stories to help you make better financial decisions—one payday at a time."
               : isCalculatorRoute
                 ? "Build a payday-by-payday savings plan and explore how regular contributions may grow over time."
+                : isAboutRoute
+                  ? "Learn the philosophy behind 1040 Paydays and how small, consistent financial decisions can help create more freedom, security, and choice over time."
               : "Estimate how much you can save from every paycheck. Use 1040 Paydays to plan savings, retirement, and future growth with a simple calculator.";
-        const canonicalPath = isLearnRoute || isCalculatorRoute ? normalizedPath : "/";
+        const canonicalPath = isLearnRoute || isCalculatorRoute || isAboutRoute ? normalizedPath : "/";
         const canonicalUrl = `${SITE_URL}${canonicalPath === "/" ? "/" : canonicalPath}`;
 
         const setMeta = (selector, attribute, value) => {
@@ -8910,6 +9093,45 @@ const THIRTY_SIXTH_ARTICLE = {
               investedShare={investedShare}
               snapshots={snapshots}
               setSnapshots={setSnapshots}
+            />
+          </div>
+        );
+      }
+
+      if (normalizedRoute === "/about") {
+        return (
+          <div className="home-page-host">
+            {panel && (
+              <SlidePanel
+                panel={panel}
+                close={() => setPanel(null)}
+                navigate={setPanel}
+                money={money}
+                projection={projection}
+                compare={compare}
+                snapshots={snapshots}
+                setSnapshots={setSnapshots}
+                compareControls={{
+                  compareExtraSavings,
+                  setCompareExtraSavings,
+                  compareReturn,
+                  setCompareReturn,
+                  compareRetireAge,
+                  setCompareRetireAge,
+                  compareWaitYears,
+                  setCompareWaitYears,
+                }}
+                values={{ starting, contribution, frequency, age, retireAge, returnRate, withdrawalRate, lifespan, inflation, feeRate, contributionGrowth, retirementYears }}
+                setters={{ setStarting, setContribution, setFrequency, setAge, setRetireAge, setReturnRate, setWithdrawalRate, setLifespan, setInflation, setFeeRate, setContributionGrowth }}
+              />
+            )}
+            <AboutPage
+              mobileMenuOpen={mobileMenuOpen}
+              setMobileMenuOpen={setMobileMenuOpen}
+              navigateTo={navigateTo}
+              openPanel={setPanel}
+              newsletterProps={newsletterProps}
+              panel={panel}
             />
           </div>
         );
@@ -9350,10 +9572,6 @@ const THIRTY_SIXTH_ARTICLE = {
               </>
             )}
 
-            {panel === "about" && (
-              <AboutPanel close={close} />
-            )}
-
             {panel === "privacy" && (
               <PrivacyPanel close={close} />
             )}
@@ -9454,8 +9672,6 @@ const THIRTY_SIXTH_ARTICLE = {
       newsletterProps,
     }) {
       const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-      const isLearnIndex = !article && !cluster && !notFound;
-
       const goHomePanel = (panelName) => {
         setMobileMenuOpen(false);
         openHomePanel(panelName);
@@ -9463,106 +9679,63 @@ const THIRTY_SIXTH_ARTICLE = {
 
       return (
         <div className="learn-route-shell">
-          {isLearnIndex ? (
-            <header className="learn-index-header">
-              <div className="learn-index-container learn-index-header-inner">
-                <a
-                  className="learn-index-brand"
-                  href="/"
-                  onClick={(event) => {
-                    event.preventDefault();
-                    navigateTo("/");
-                  }}
-                >
-                  <strong>1040</strong>
-                  <span>PAYDAYS</span>
-                </a>
-
-                <nav className="learn-index-nav" aria-label="Primary navigation">
-                  <button type="button" onClick={() => navigateTo("/")}>Home</button>
-                  <button type="button" className="active" aria-current="page">Learn</button>
-                  <button type="button" onClick={() => navigateTo("/calculator")}>Calculator</button>
-                  <button type="button" onClick={() => goHomePanel("about")}>About</button>
-                </nav>
-
-                <div className="learn-index-actions">
-                  <a className="learn-index-subscribe" href="#learn-newsletter">
-                    <Mail size={16} aria-hidden="true" />
-                    Subscribe
-                  </a>
-                  <button
-                    className="learn-index-menu-button"
-                    type="button"
-                    aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
-                    aria-expanded={mobileMenuOpen}
-                    aria-controls="learn-index-mobile-navigation"
-                    onClick={() => setMobileMenuOpen((open) => !open)}
-                  >
-                    {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
-                    <span>Menu</span>
-                  </button>
-
-                  {mobileMenuOpen && (
-                    <nav
-                      className="learn-index-mobile-nav"
-                      id="learn-index-mobile-navigation"
-                      aria-label="Mobile navigation"
-                    >
-                      <button type="button" onClick={() => navigateTo("/")}>Home</button>
-                      <button type="button" aria-current="page" onClick={() => setMobileMenuOpen(false)}>Learn</button>
-                      <button type="button" onClick={() => navigateTo("/calculator")}>Calculator</button>
-                      <button type="button" onClick={() => goHomePanel("about")}>About</button>
-                    </nav>
-                  )}
-                </div>
-              </div>
-            </header>
-          ) : (
-            <header className="topbar">
+          <header className="learn-index-header">
+            <div className="learn-index-container learn-index-header-inner">
               <a
-                className="brand"
+                className="learn-index-brand"
                 href="/"
+                aria-label="1040 Paydays home"
                 onClick={(event) => {
                   event.preventDefault();
                   navigateTo("/");
                 }}
               >
-                <strong>1040</strong><span>PAYDAYS</span>
+                <strong>1040</strong>
+                <span>PAYDAYS</span>
               </a>
 
-              <nav className="topnav" aria-label="Primary navigation">
-                <button onClick={() => navigateTo("/calculator")}>Calculator</button>
-                <button onClick={() => goHomePanel("how")}>How it works</button>
-                <button onClick={() => goHomePanel("compare")}>Compare</button>
-                <button className="active" onClick={() => navigateTo("/learn")}>Learn</button>
+              <nav className="learn-index-nav" aria-label="Primary navigation">
+                <button type="button" onClick={() => navigateTo("/")}>Home</button>
+                <button type="button" className="active" aria-current="page" onClick={() => navigateTo("/learn")}>Learn</button>
+                <button type="button" onClick={() => navigateTo("/calculator")}>Calculator</button>
+                <button type="button" onClick={() => navigateTo("/about")}>About</button>
               </nav>
 
-              <div className="top-actions">
-                <select value={currency} onChange={(event) => setCurrency(event.target.value)} className="currency-select" aria-label="Currency">
-                  {currencies.map(([code, label]) => <option key={code} value={code}>{label}</option>)}
-                </select>
+              <div className="learn-index-actions">
+                <a
+                  className="learn-index-subscribe"
+                  href={article ? "#article-newsletter" : "#learn-newsletter"}
+                >
+                  <Mail size={16} aria-hidden="true" />
+                  Subscribe
+                </a>
                 <button
-                  className="mobile-menu-button"
+                  className="learn-index-menu-button"
                   type="button"
                   aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
                   aria-expanded={mobileMenuOpen}
-                  aria-controls="learn-mobile-navigation"
+                  aria-controls="learn-index-mobile-navigation"
                   onClick={() => setMobileMenuOpen((open) => !open)}
                 >
-                  {mobileMenuOpen ? <X size={19} /> : <Menu size={19} />}
+                  {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+                  <span>Menu</span>
                 </button>
 
                 {mobileMenuOpen && (
-                  <nav className="mobile-nav-menu" id="learn-mobile-navigation" aria-label="Mobile navigation">
+                  <nav
+                    className="learn-index-mobile-nav"
+                    id="learn-index-mobile-navigation"
+                    aria-label="Mobile navigation"
+                  >
+                    <button type="button" onClick={() => navigateTo("/")}>Home</button>
+                    <button type="button" aria-current="page" onClick={() => navigateTo("/learn")}>Learn</button>
                     <button type="button" onClick={() => navigateTo("/calculator")}>Calculator</button>
-                    <button type="button" onClick={() => goHomePanel("how")}>How it works</button>
-                    <button type="button" onClick={() => goHomePanel("compare")}>Compare</button>
-                    <button type="button" onClick={() => navigateTo("/learn")}>Learn</button>
+                    <button type="button" onClick={() => navigateTo("/about")}>About</button>
                   </nav>
                 )}
               </div>
-            </header>
-          )}
+            </div>
+          </header>
 
           {notFound ? (
             <NotFoundPage navigateTo={navigateTo} />
@@ -9581,30 +9754,44 @@ const THIRTY_SIXTH_ARTICLE = {
             <LearnPage
               navigateTo={navigateTo}
               newsletterProps={newsletterProps}
-              openAbout={() => goHomePanel("about")}
+              openAbout={() => navigateTo("/about")}
             />
           )}
 
-          <footer className="footer">
-            <div className="learn-footer-inner">
-              <div>
-                <strong>1040 Paydays</strong>
-                <p>One payday at a time.<br />Build consistency.</p>
+          {article && (
+            <section
+              className="reference-home-newsletter article-page-newsletter"
+              id="article-newsletter"
+              aria-labelledby="article-newsletter-title"
+            >
+              <div className="reference-home-container reference-home-newsletter-inner">
+                <h2 id="article-newsletter-title">Get new ideas in your inbox.</h2>
+                <NewsletterSignup
+                  {...newsletterProps}
+                  idPrefix={`article-${article.id}`}
+                  buttonLabel="Subscribe"
+                  placeholder="Enter your email"
+                />
               </div>
+            </section>
+          )}
 
-              <nav aria-label="Footer navigation">
-                <button onClick={() => goHomePanel("about")}>About</button>
-                <button onClick={() => goHomePanel("privacy")}>Privacy</button>
-                <button onClick={() => goHomePanel("terms")}>Terms</button>
-                <button onClick={() => goHomePanel("contact")}>Contact</button>
+          <footer className="reference-home-footer">
+            <div className="reference-home-footer-inner">
+              <p className="reference-home-copyright">© 2026 1040 Paydays. All rights reserved.</p>
+              <p>
+                The content, design, illustrations, branding, and original editorial articles on this website are protected by copyright and may not be reproduced or distributed without written permission.
+              </p>
+              <p>
+                1040 Paydays is for educational purposes only and does not provide financial, tax, legal, or investment advice.
+              </p>
+              <nav className="reference-home-footer-nav" aria-label="Legal and contact navigation">
+                <button type="button" onClick={() => goHomePanel("privacy")}>Privacy Policy</button>
+                <span aria-hidden="true">·</span>
+                <button type="button" onClick={() => goHomePanel("terms")}>Terms of Use</button>
+                <span aria-hidden="true">·</span>
+                <button type="button" onClick={() => goHomePanel("contact")}>Contact</button>
               </nav>
-
-              <div className="socials">
-                <a href="#facebook" aria-label="Facebook"><Facebook size={22} /></a>
-                <a href="#instagram" aria-label="Instagram"><Instagram size={22} /></a>
-                <a href="#youtube" aria-label="YouTube"><Youtube size={22} /></a>
-                <a href="mailto:hello@1040paydays.com" aria-label="Email"><Mail size={22} /></a>
-              </div>
             </div>
           </footer>
         </div>
@@ -9817,22 +10004,22 @@ const THIRTY_SIXTH_ARTICLE = {
         {
           title: "Live Today",
           description: "Make the most of the life you have now.",
-          Icon: Sun,
+          Icon: PAYDAY_PRINCIPLE_ICONS.liveToday,
         },
         {
           title: "Protect Tomorrow",
           description: "Prepare for life’s ups and downs.",
-          Icon: Lock,
+          Icon: PAYDAY_PRINCIPLE_ICONS.protectTomorrow,
         },
         {
           title: "Plan Your Future",
           description: "Save and invest one payday at a time to create more choices.",
-          Icon: BookOpen,
+          Icon: PAYDAY_PRINCIPLE_ICONS.planYourFuture,
         },
         {
           title: "Choose What Matters",
           description: "Align your money with your values and goals.",
-          Icon: UserRound,
+          Icon: PAYDAY_PRINCIPLE_ICONS.chooseWhatMatters,
         },
       ];
 
@@ -9889,25 +10076,9 @@ const THIRTY_SIXTH_ARTICLE = {
     function LearnPage({ navigateTo, newsletterProps, openAbout }) {
       return (
         <main className="learn-page learn-library-page">
-          <section className="learn-library-hero learn-index-container" aria-labelledby="learn-title">
-            <img
-              src="/home-cornerstone-reading.jpg"
-              alt="An open journal on a sunlit wooden table beside a ceramic cup and small plant"
-              width="1792"
-              height="887"
-              decoding="async"
-              fetchpriority="high"
-            />
-            <div className="learn-library-hero-overlay" aria-hidden="true" />
-            <div className="learn-library-hero-copy">
-              <h1 id="learn-title">
-                <span>Ideas that help you make</span>
-                <span>better financial decisions—</span>
-                <span>one payday at a time.</span>
-              </h1>
-              <p>Thoughtful lessons and stories to help you make the most of your 1,040 paydays.</p>
-              <a href="#learn-content">Start reading</a>
-            </div>
+          <section className="learn-library-intro learn-index-container" aria-labelledby="learn-title">
+            <h1 id="learn-title">Payday Journal</h1>
+            <p>Thoughtful lessons and stories to help you make the most of your 1,040 paydays.</p>
           </section>
 
           <div className="learn-library-layout learn-index-container" id="learn-content">
@@ -10264,43 +10435,6 @@ const THIRTY_SIXTH_ARTICLE = {
           <p className="panel-text">{text}</p>
           <button className="ok-button" onClick={() => document.querySelector(".close-panel")?.click()}>OK</button>
         </>
-      );
-    }
-
-    function AboutPanel({ close }) {
-      return (
-        <section className="about-panel">
-          <div className="panel-icon"><BookOpen /></div>
-          <p className="eyebrow">ABOUT</p>
-          <h2>Founder, 1040 Paydays</h2>
-
-          <p>
-            1040 Paydays is a passion project created by someone with an MBA and a lifelong
-            interest in personal finance, investing, and the power of small financial decisions.
-          </p>
-          <p>
-            The idea is simple: most of us receive only about <strong>1,040 paydays</strong>
-            {" "}during our working lives. Every paycheck is a decision—one that can move us
-            closer to financial freedom or further away from it.
-          </p>
-          <p>
-            This site was created to make those decisions a little easier through practical
-            articles, interactive calculators, and thoughtful tools that help people build
-            wealth one payday at a time.
-          </p>
-          <p>
-            Whether you're saving for your first emergency fund, investing for retirement,
-            paying off debt, or simply trying to make smarter choices with each paycheck,
-            the goal is the same:
-          </p>
-
-          <div className="about-progress">
-            <strong>Every payday is a decision.</strong>
-            <span>Choose yours.</span>
-          </div>
-
-          <button className="ok-button" type="button" onClick={close}>Back to the calculator</button>
-        </section>
       );
     }
 
