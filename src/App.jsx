@@ -8706,7 +8706,7 @@ const THIRTY_SIXTH_ARTICLE = {
                       <div>
                         <strong>{title}</strong>
                         <p>{statement}</p>
-                        <span>Explore this philosophy</span>
+                        <span>Explore</span>
                       </div>
                     </a>
                   </li>
