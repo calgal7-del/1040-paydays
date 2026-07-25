@@ -11758,7 +11758,20 @@ body {
   }
 
   .reference-home-hero-copy {
-    padding-top: 48px;
-    padding-bottom: 58px;
+    padding: 52px 32px 64px;
+  }
+
+  .reference-home-hero h1 {
+    font-size: clamp(48px, 4.35vw, 67px);
+  }
+
+  .reference-home-hero p {
+    margin-top: 24px;
+    font-size: clamp(21px, 1.85vw, 28px);
+  }
+
+  .reference-home-hero-copy > a {
+    min-height: 54px;
+    margin-top: 28px;
   }
 }
