@@ -6019,6 +6019,7 @@ const THIRTY_SIXTH_ARTICLE = {
 
     const ARTICLES = [FEATURED_ARTICLE, SECOND_ARTICLE, THIRD_ARTICLE, FOURTH_ARTICLE, FIFTH_ARTICLE, SIXTH_ARTICLE, SEVENTH_ARTICLE, EIGHTH_ARTICLE, NINTH_ARTICLE, TENTH_ARTICLE, ELEVENTH_ARTICLE, TWELFTH_ARTICLE, THIRTEENTH_ARTICLE, FOURTEENTH_ARTICLE, FIFTEENTH_ARTICLE, SIXTEENTH_ARTICLE, SEVENTEENTH_ARTICLE, EIGHTEENTH_ARTICLE, NINETEENTH_ARTICLE, TWENTIETH_ARTICLE, TWENTY_FIRST_ARTICLE, TWENTY_SECOND_ARTICLE, TWENTY_THIRD_ARTICLE, TWENTY_FOURTH_ARTICLE, TWENTY_FIFTH_ARTICLE, TWENTY_SEVENTH_ARTICLE, TWENTY_EIGHTH_ARTICLE, TWENTY_NINTH_ARTICLE, THIRTY_FIRST_ARTICLE, THIRTY_SECOND_ARTICLE, THIRTY_THIRD_ARTICLE, THIRTY_FOURTH_ARTICLE, THIRTY_FIFTH_ARTICLE, THIRTY_SIXTH_ARTICLE, THIRTY_SEVENTH_ARTICLE, THIRTY_EIGHTH_ARTICLE, THIRTY_NINTH_ARTICLE, FORTIETH_ARTICLE, FORTY_FIRST_ARTICLE, FORTY_SECOND_ARTICLE, FORTY_THIRD_ARTICLE, FORTY_FOURTH_ARTICLE, FORTY_FIFTH_ARTICLE, FORTY_SIXTH_ARTICLE, FORTY_SEVENTH_ARTICLE, FORTY_EIGHTH_ARTICLE, FORTY_NINTH_ARTICLE, FIFTIETH_ARTICLE];
     const ARTICLE_BY_ID = new Map(ARTICLES.map((article) => [article.id, article]));
+    const UNIQUE_ARTICLES = Array.from(ARTICLE_BY_ID.values());
     const LEARN_CLUSTER_BY_SLUG = new Map(
       LEARN_EDITORIAL_CONFIG.clusters.map((cluster) => [cluster.slug, cluster])
     );
@@ -6037,16 +6038,55 @@ const THIRTY_SIXTH_ARTICLE = {
 
     function articlesForCluster(cluster) {
       if (!cluster) return [];
-      return ARTICLES.filter((article) => cluster.categories.includes(article.category));
+      const configuredSlugs = new Set(cluster.articleSlugs || []);
+      const configuredCategories = new Set(cluster.categories || []);
+      return UNIQUE_ARTICLES.filter(
+        (article) =>
+          configuredSlugs.has(article.id) ||
+          configuredCategories.has(article.category)
+      );
     }
 
-    const LEARN_FEATURED_ARTICLE =
-      configuredArticles([LEARN_EDITORIAL_CONFIG.featuredSlug], "featuredSlug")[0] ||
-      null;
     const LEARN_START_HERE_ARTICLES = configuredArticles(
       LEARN_EDITORIAL_CONFIG.startHereSlugs,
       "startHereSlugs"
     ).slice(0, 3);
+    const LEARN_START_HERE_IDS = new Set(
+      LEARN_START_HERE_ARTICLES.map((article) => article.id)
+    );
+    const publicationDateForArticle = (article) =>
+      LEARN_EDITORIAL_CONFIG.temporaryPublicationDates[article.id] || "";
+    if (import.meta.env.DEV) {
+      const configuredDateSlugs = Object.keys(
+        LEARN_EDITORIAL_CONFIG.temporaryPublicationDates
+      );
+      const unknownDateSlugs = configuredDateSlugs.filter(
+        (slug) => !ARTICLE_BY_ID.has(slug)
+      );
+      const missingDateSlugs = UNIQUE_ARTICLES
+        .filter((article) => !publicationDateForArticle(article))
+        .map((article) => article.id);
+
+      if (unknownDateSlugs.length || missingDateSlugs.length) {
+        console.warn(
+          `[Learn configuration] Temporary publication dates are out of sync. Unknown: ${unknownDateSlugs.join(", ") || "none"}. Missing: ${missingDateSlugs.join(", ") || "none"}.`
+        );
+      }
+    }
+    const formatPublicationDate = (date) =>
+      new Intl.DateTimeFormat("en-CA", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+        timeZone: "UTC",
+      }).format(new Date(`${date}T00:00:00Z`));
+    const LEARN_MORE_ARTICLES = UNIQUE_ARTICLES
+      .filter((article) => !LEARN_START_HERE_IDS.has(article.id))
+      .sort((left, right) =>
+        publicationDateForArticle(right).localeCompare(
+          publicationDateForArticle(left)
+        )
+      );
     const HOME_CORNERSTONE_ARTICLE_ID =
       "the-wealth-you-build-before-you-build-wealth";
     const HOME_PAGE_FIXED_ARTICLE_IDS = new Set([
@@ -7755,7 +7795,7 @@ const THIRTY_SIXTH_ARTICLE = {
           : cluster
             ? cluster.intro
             : isLearnIndex
-              ? "Essays and guides to help you save more, spend with intention, build wealth, and create more freedom."
+              ? "Thoughtful articles and stories to help you make better financial decisions—one payday at a time."
               : "Estimate how much you can save from every paycheck. Use 1040 Paydays to plan savings, retirement, and future growth with a simple calculator.";
         const canonicalPath = isLearnRoute ? normalizedPath : "/";
         const canonicalUrl = `${SITE_URL}${canonicalPath === "/" ? "/" : canonicalPath}`;
@@ -7788,7 +7828,7 @@ const THIRTY_SIXTH_ARTICLE = {
 
         const existingStructuredData = document.getElementById("learn-structured-data");
         const collectionArticles = isLearnIndex
-          ? ARTICLES
+          ? UNIQUE_ARTICLES
           : cluster
             ? articlesForCluster(cluster)
             : [];
@@ -8616,6 +8656,7 @@ const THIRTY_SIXTH_ARTICLE = {
       newsletterProps,
     }) {
       const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+      const isLearnIndex = !article && !cluster && !notFound;
 
       const goHomePanel = (panelName) => {
         setMobileMenuOpen(false);
@@ -8624,50 +8665,106 @@ const THIRTY_SIXTH_ARTICLE = {
 
       return (
         <div className="learn-route-shell">
-          <header className="topbar">
-            <a
-              className="brand"
-              href="/"
-              onClick={(event) => {
-                event.preventDefault();
-                navigateTo("/");
-              }}
-            >
-              <strong>1040</strong><span>PAYDAYS</span>
-            </a>
+          {isLearnIndex ? (
+            <header className="learn-index-header">
+              <div className="learn-index-container learn-index-header-inner">
+                <a
+                  className="learn-index-brand"
+                  href="/"
+                  onClick={(event) => {
+                    event.preventDefault();
+                    navigateTo("/");
+                  }}
+                >
+                  <strong>1040</strong>
+                  <span>PAYDAYS</span>
+                </a>
 
-            <nav className="topnav" aria-label="Primary navigation">
-              <button onClick={() => goHomePanel("calculator")}>Calculator</button>
-              <button onClick={() => goHomePanel("how")}>How it works</button>
-              <button onClick={() => goHomePanel("compare")}>Compare</button>
-              <button className="active" onClick={() => navigateTo("/learn")}>Learn</button>
-            </nav>
-
-            <div className="top-actions">
-              <select value={currency} onChange={(event) => setCurrency(event.target.value)} className="currency-select" aria-label="Currency">
-                {currencies.map(([code, label]) => <option key={code} value={code}>{label}</option>)}
-              </select>
-              <button
-                className="mobile-menu-button"
-                type="button"
-                aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
-                aria-expanded={mobileMenuOpen}
-                aria-controls="learn-mobile-navigation"
-                onClick={() => setMobileMenuOpen((open) => !open)}
-              >
-                {mobileMenuOpen ? <X size={19} /> : <Menu size={19} />}
-              </button>
-
-              {mobileMenuOpen && (
-                <nav className="mobile-nav-menu" id="learn-mobile-navigation" aria-label="Mobile navigation">
+                <nav className="learn-index-nav" aria-label="Primary navigation">
+                  <button type="button" onClick={() => navigateTo("/")}>Home</button>
+                  <button type="button" className="active" aria-current="page">Learn</button>
                   <button type="button" onClick={() => goHomePanel("calculator")}>Calculator</button>
-                  <button type="button" onClick={() => goHomePanel("how")}>How it works</button>
-                  <button type="button" onClick={() => goHomePanel("compare")}>Compare</button>
-                  <button type="button" onClick={() => navigateTo("/learn")}>Learn</button>
+                  <button type="button" onClick={() => goHomePanel("about")}>About</button>
                 </nav>
-              )}
-            </div>
-          </header>
+
+                <div className="learn-index-actions">
+                  <a className="learn-index-subscribe" href="#learn-newsletter">
+                    <Mail size={16} aria-hidden="true" />
+                    Subscribe
+                  </a>
+                  <button
+                    className="learn-index-menu-button"
+                    type="button"
+                    aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+                    aria-expanded={mobileMenuOpen}
+                    aria-controls="learn-index-mobile-navigation"
+                    onClick={() => setMobileMenuOpen((open) => !open)}
+                  >
+                    {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+                    <span>Menu</span>
+                  </button>
+
+                  {mobileMenuOpen && (
+                    <nav
+                      className="learn-index-mobile-nav"
+                      id="learn-index-mobile-navigation"
+                      aria-label="Mobile navigation"
+                    >
+                      <button type="button" onClick={() => navigateTo("/")}>Home</button>
+                      <button type="button" aria-current="page" onClick={() => setMobileMenuOpen(false)}>Learn</button>
+                      <button type="button" onClick={() => goHomePanel("calculator")}>Calculator</button>
+                      <button type="button" onClick={() => goHomePanel("about")}>About</button>
+                    </nav>
+                  )}
+                </div>
+              </div>
+            </header>
+          ) : (
+            <header className="topbar">
+              <a
+                className="brand"
+                href="/"
+                onClick={(event) => {
+                  event.preventDefault();
+                  navigateTo("/");
+                }}
+              >
+                <strong>1040</strong><span>PAYDAYS</span>
+              </a>
+
+              <nav className="topnav" aria-label="Primary navigation">
+                <button onClick={() => goHomePanel("calculator")}>Calculator</button>
+                <button onClick={() => goHomePanel("how")}>How it works</button>
+                <button onClick={() => goHomePanel("compare")}>Compare</button>
+                <button className="active" onClick={() => navigateTo("/learn")}>Learn</button>
+              </nav>
+
+              <div className="top-actions">
+                <select value={currency} onChange={(event) => setCurrency(event.target.value)} className="currency-select" aria-label="Currency">
+                  {currencies.map(([code, label]) => <option key={code} value={code}>{label}</option>)}
+                </select>
+                <button
+                  className="mobile-menu-button"
+                  type="button"
+                  aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+                  aria-expanded={mobileMenuOpen}
+                  aria-controls="learn-mobile-navigation"
+                  onClick={() => setMobileMenuOpen((open) => !open)}
+                >
+                  {mobileMenuOpen ? <X size={19} /> : <Menu size={19} />}
+                </button>
+
+                {mobileMenuOpen && (
+                  <nav className="mobile-nav-menu" id="learn-mobile-navigation" aria-label="Mobile navigation">
+                    <button type="button" onClick={() => goHomePanel("calculator")}>Calculator</button>
+                    <button type="button" onClick={() => goHomePanel("how")}>How it works</button>
+                    <button type="button" onClick={() => goHomePanel("compare")}>Compare</button>
+                    <button type="button" onClick={() => navigateTo("/learn")}>Learn</button>
+                  </nav>
+                )}
+              </div>
+            </header>
+          )}
 
           {notFound ? (
             <NotFoundPage navigateTo={navigateTo} />
@@ -8683,27 +8780,33 @@ const THIRTY_SIXTH_ARTICLE = {
           ) : cluster ? (
             <LearnClusterPage cluster={cluster} navigateTo={navigateTo} />
           ) : (
-            <LearnPage navigateTo={navigateTo} newsletterProps={newsletterProps} />
+            <LearnPage
+              navigateTo={navigateTo}
+              newsletterProps={newsletterProps}
+              openAbout={() => goHomePanel("about")}
+            />
           )}
 
           <footer className="footer">
-            <div>
-              <strong>1040 Paydays</strong>
-              <p>One payday at a time.<br />Build consistency.</p>
-            </div>
+            <div className="learn-footer-inner">
+              <div>
+                <strong>1040 Paydays</strong>
+                <p>One payday at a time.<br />Build consistency.</p>
+              </div>
 
-            <nav aria-label="Footer navigation">
-              <button onClick={() => goHomePanel("about")}>About</button>
-              <button onClick={() => goHomePanel("privacy")}>Privacy</button>
-              <button onClick={() => goHomePanel("terms")}>Terms</button>
-              <button onClick={() => goHomePanel("contact")}>Contact</button>
-            </nav>
+              <nav aria-label="Footer navigation">
+                <button onClick={() => goHomePanel("about")}>About</button>
+                <button onClick={() => goHomePanel("privacy")}>Privacy</button>
+                <button onClick={() => goHomePanel("terms")}>Terms</button>
+                <button onClick={() => goHomePanel("contact")}>Contact</button>
+              </nav>
 
-            <div className="socials">
-              <a href="#facebook" aria-label="Facebook"><Facebook size={22} /></a>
-              <a href="#instagram" aria-label="Instagram"><Instagram size={22} /></a>
-              <a href="#youtube" aria-label="YouTube"><Youtube size={22} /></a>
-              <a href="mailto:hello@1040paydays.com" aria-label="Email"><Mail size={22} /></a>
+              <div className="socials">
+                <a href="#facebook" aria-label="Facebook"><Facebook size={22} /></a>
+                <a href="#instagram" aria-label="Instagram"><Instagram size={22} /></a>
+                <a href="#youtube" aria-label="YouTube"><Youtube size={22} /></a>
+                <a href="mailto:hello@1040paydays.com" aria-label="Email"><Mail size={22} /></a>
+              </div>
             </div>
           </footer>
         </div>
@@ -8748,7 +8851,7 @@ const THIRTY_SIXTH_ARTICLE = {
       );
     }
 
-    function LearnArticleLink({ article, navigateTo, className = "" }) {
+    function LearnArticleLink({ article, navigateTo, className = "", children }) {
       return (
         <a
           className={className}
@@ -8758,195 +8861,269 @@ const THIRTY_SIXTH_ARTICLE = {
             navigateTo(`/learn/${article.id}`);
           }}
         >
-          {article.title}
+          {children || article.title}
         </a>
       );
     }
 
-    function LearnPage({ navigateTo, newsletterProps }) {
-      return (
-        <main className="learn-page editorial-learn">
-          <section className="editorial-hero" aria-labelledby="learn-title">
-            <div className="editorial-hero-copy">
-              <p className="eyebrow">THE 1040 PAYDAYS PHILOSOPHY</p>
-              <h1 id="learn-title">You only get about 1,040 paydays.</h1>
-              <p>
-                We believe money is a tool for the life you want. Our essays and guides help you save more, spend with intention, build wealth, and create more freedom.
-              </p>
-              <div className="editorial-hero-actions">
-                <a className="editorial-primary-link" href="#learn-content">Start exploring</a>
-                <a className="editorial-secondary-link" href="#all-articles">View all articles</a>
-              </div>
-            </div>
+    function LearnStartHere({ navigateTo }) {
+      if (!LEARN_START_HERE_ARTICLES.length) return null;
 
-            {LEARN_FEATURED_ARTICLE && (
-              <div className="editorial-feature">
+      return (
+        <section className="learn-library-start" aria-labelledby="start-here-heading">
+          <header className="learn-library-section-heading">
+            <p>START HERE</p>
+            <h2 id="start-here-heading">New to 1040 Paydays? Begin with these 3 articles.</h2>
+          </header>
+          <div className="learn-library-start-grid">
+            {LEARN_START_HERE_ARTICLES.map((article, index) => (
+              <article key={article.id}>
                 <a
-                  href={`/learn/${LEARN_FEATURED_ARTICLE.id}`}
-                  aria-label={`Read ${LEARN_FEATURED_ARTICLE.title}`}
+                  className="learn-library-start-image"
+                  href={`/learn/${article.id}`}
+                  aria-label={`Read ${article.title}`}
                   onClick={(event) => {
                     event.preventDefault();
-                    navigateTo(`/learn/${LEARN_FEATURED_ARTICLE.id}`);
+                    navigateTo(`/learn/${article.id}`);
                   }}
                 >
                   <img
-                    src={LEARN_FEATURED_ARTICLE.image}
-                    alt={LEARN_FEATURED_ARTICLE.alt}
-                    width="1200"
-                    height="800"
+                    src={article.image}
+                    alt={article.alt}
+                    width="800"
+                    height="450"
+                    loading="lazy"
                     decoding="async"
-                    fetchpriority="high"
                   />
+                  <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
                 </a>
-              </div>
-            )}
-          </section>
-
-          <div id="learn-content" className="editorial-content">
-            {LEARN_START_HERE_ARTICLES.length > 0 && (
-              <section className="editorial-start" aria-labelledby="start-here-heading">
-                <header className="editorial-section-heading">
-                  <div>
-                    <p className="eyebrow">START HERE</p>
-                    <h2 id="start-here-heading">Three essays to understand our approach to money.</h2>
-                  </div>
-                </header>
-                <div className="editorial-start-list">
-                  {LEARN_START_HERE_ARTICLES.map((article, index) => (
-                    <article key={article.id}>
-                      <span aria-hidden="true">0{index + 1}</span>
-                      <div>
-                        <small>{article.category} · {article.readTime}</small>
-                        <h3>
-                          <LearnArticleLink article={article} navigateTo={navigateTo} />
-                        </h3>
-                        <p>{article.summary}</p>
-                      </div>
-                    </article>
-                  ))}
-                </div>
-              </section>
-            )}
-
-            <section className="editorial-topics" aria-labelledby="topics-heading">
-              <header className="editorial-section-heading">
                 <div>
-                  <p className="eyebrow">EXPLORE BY TOPIC</p>
-                  <h2 id="topics-heading">Ideas for every part of your financial life.</h2>
+                  <h3><LearnArticleLink article={article} navigateTo={navigateTo} /></h3>
+                  <p>{article.summary}</p>
+                  <LearnArticleLink
+                    article={article}
+                    navigateTo={navigateTo}
+                    className="learn-library-read-link"
+                  >
+                    Read more <span aria-hidden="true">→</span>
+                  </LearnArticleLink>
                 </div>
-                <p>Each collection uses the categories already attached to these essays.</p>
-              </header>
+              </article>
+            ))}
+          </div>
+        </section>
+      );
+    }
 
-              <div className="editorial-clusters">
-                {LEARN_EDITORIAL_CONFIG.clusters.map((cluster, clusterIndex) => {
-                  const clusterArticles = articlesForCluster(cluster).slice(0, 4);
-                  if (!clusterArticles.length) return null;
-                  const [leadArticle, ...supportingArticles] = clusterArticles;
-                  const clusterVariant = clusterIndex % 2 === 0 ? "is-standard" : "is-reversed";
+    function LearnTopics({ navigateTo }) {
+      return (
+        <section className="learn-library-topics" aria-labelledby="topics-heading">
+          <header className="learn-library-section-heading">
+            <p>EXPLORE BY TOPIC</p>
+            <h2 id="topics-heading">Browse lessons and stories organized by what matters most.</h2>
+          </header>
+          <div className="learn-library-topic-grid">
+            {LEARN_EDITORIAL_CONFIG.topics.map((topic) => {
+              const cluster = LEARN_CLUSTER_BY_SLUG.get(topic.clusterSlug);
+              const topicArticle = articlesForCluster(cluster)[0];
+              if (!cluster || !topicArticle) return null;
 
-                  return (
-                    <section className={`editorial-cluster ${clusterVariant}`} key={cluster.slug} aria-labelledby={`cluster-${cluster.slug}`}>
-                      <header>
-                        <p className="eyebrow">TOPIC</p>
-                        <h2 id={`cluster-${cluster.slug}`}>{cluster.title}</h2>
-                        <p className="editorial-cluster-thesis">{cluster.thesis}</p>
-                        <a
-                          className="editorial-topic-link"
-                          href={`/learn/${cluster.slug}`}
-                          onClick={(event) => {
-                            event.preventDefault();
-                            navigateTo(`/learn/${cluster.slug}`);
-                          }}
-                        >
-                          Explore {cluster.title} <span aria-hidden="true">→</span>
-                        </a>
-                      </header>
-                      <div className="editorial-cluster-stories">
-                        <article className="editorial-cluster-lead">
-                          <a
-                            href={`/learn/${leadArticle.id}`}
-                            onClick={(event) => {
-                              event.preventDefault();
-                              navigateTo(`/learn/${leadArticle.id}`);
-                            }}
-                          >
-                            <img
-                              src={leadArticle.image}
-                              alt={leadArticle.alt}
-                              width="900"
-                              height="600"
-                              loading="lazy"
-                              decoding="async"
-                            />
-                            <span>{leadArticle.category} · {leadArticle.readTime}</span>
-                            <h3>{leadArticle.title}</h3>
-                            <p>{leadArticle.summary}</p>
-                          </a>
-                        </article>
-                        <div className="editorial-cluster-supporting">
-                          {supportingArticles.map((article) => (
-                            <article key={article.id}>
-                              <img
-                                src={article.image}
-                                alt={article.alt}
-                                width="320"
-                                height="240"
-                                loading="lazy"
-                                decoding="async"
-                              />
-                              <div>
-                                <small>{article.category} · {article.readTime}</small>
-                                <h3><LearnArticleLink article={article} navigateTo={navigateTo} /></h3>
-                              </div>
-                            </article>
-                          ))}
-                        </div>
-                      </div>
-                    </section>
-                  );
-                })}
-              </div>
-            </section>
+              return (
+                <a
+                  href={`/learn/${cluster.slug}`}
+                  key={topic.clusterSlug}
+                  onClick={(event) => {
+                    event.preventDefault();
+                    navigateTo(`/learn/${cluster.slug}`);
+                  }}
+                >
+                  <img
+                    src={topicArticle.image}
+                    alt=""
+                    width="360"
+                    height="220"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <span>
+                    <strong>{topic.title}</strong>
+                    <small>{topic.description}</small>
+                  </span>
+                </a>
+              );
+            })}
+          </div>
+        </section>
+      );
+    }
 
-            <section className="editorial-archive" id="all-articles" aria-labelledby="archive-heading">
-              <header className="editorial-section-heading">
-                <div>
-                  <p className="eyebrow">ALL ARTICLES</p>
-                  <h2 id="archive-heading">More from 1040 Paydays</h2>
-                </div>
-                <p>Browse the complete collection. No article is hidden from this archive.</p>
-              </header>
-              <div className="editorial-archive-list">
-                {ARTICLES.map((article) => (
-                  <article key={article.id}>
+    function LearnArticleArchive({ navigateTo }) {
+      return (
+        <section className="learn-library-archive" id="all-articles" aria-labelledby="archive-heading">
+          <header className="learn-library-section-heading">
+            <p>LATEST ARTICLES</p>
+            <h2 id="archive-heading">Fresh ideas and stories to help you on your journey.</h2>
+          </header>
+          <div className="learn-library-article-list">
+            {LEARN_MORE_ARTICLES.map((article) => {
+              const publicationDate = publicationDateForArticle(article);
+
+              return (
+                <article key={article.id}>
+                  <a
+                    className="learn-library-article-image"
+                    href={`/learn/${article.id}`}
+                    aria-label={`Read ${article.title}`}
+                    onClick={(event) => {
+                      event.preventDefault();
+                      navigateTo(`/learn/${article.id}`);
+                    }}
+                  >
                     <img
                       src={article.image}
                       alt={article.alt}
-                      width="240"
+                      width="320"
                       height="180"
                       loading="lazy"
                       decoding="async"
                     />
-                    <div className="editorial-archive-copy">
-                      <div>
-                        <span>{article.category}</span>
-                        <small>{article.readTime}</small>
-                      </div>
-                      <h3><LearnArticleLink article={article} navigateTo={navigateTo} /></h3>
-                    </div>
-                  </article>
-                ))}
-              </div>
-            </section>
+                  </a>
+                  <div>
+                    <small>
+                      {article.category}
+                      {publicationDate && (
+                        <> · <time dateTime={publicationDate}>{formatPublicationDate(publicationDate)}</time></>
+                      )}
+                      {" · "}{article.readTime}
+                    </small>
+                    <h3><LearnArticleLink article={article} navigateTo={navigateTo} /></h3>
+                    <p>{article.summary}</p>
+                  </div>
+                  <LearnArticleLink
+                    article={article}
+                    navigateTo={navigateTo}
+                    className="learn-library-row-link"
+                  >
+                    Read <span aria-hidden="true">→</span>
+                  </LearnArticleLink>
+                </article>
+              );
+            })}
+          </div>
+        </section>
+      );
+    }
 
-            <section className="editorial-newsletter" aria-labelledby="learn-newsletter-heading">
-              <div>
-                <p className="eyebrow">STAY ON TRACK</p>
-                <h2 id="learn-newsletter-heading">Get your 1,040 Payday Plan.</h2>
-                <p>Join the mailing list for thoughtful articles, practical financial ideas, and useful calculators.</p>
-              </div>
-              <NewsletterSignup {...newsletterProps} />
-            </section>
+    function LearnPhilosophy() {
+      const principles = [
+        {
+          title: "Live Today",
+          description: "Make the most of the life you have now.",
+          Icon: Sun,
+        },
+        {
+          title: "Protect Tomorrow",
+          description: "Prepare for life’s ups and downs.",
+          Icon: Lock,
+        },
+        {
+          title: "Plan Your Future",
+          description: "Save and invest one payday at a time to create more choices.",
+          Icon: BookOpen,
+        },
+        {
+          title: "Choose What Matters",
+          description: "Align your money with your values and goals.",
+          Icon: UserRound,
+        },
+      ];
+
+      return (
+        <section className="learn-library-sidebar-card learn-library-philosophy" aria-labelledby="philosophy-heading">
+          <h2 id="philosophy-heading">The 1040 Paydays Philosophy</h2>
+          <ol>
+            {principles.map(({ title, description, Icon }) => (
+              <li key={title}>
+                <Icon size={20} strokeWidth={1.8} aria-hidden="true" />
+                <div>
+                  <strong>{title}</strong>
+                  <p>{description}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </section>
+      );
+    }
+
+    function LearnNewsletter({ newsletterProps }) {
+      return (
+        <section
+          className="learn-library-sidebar-card learn-library-newsletter"
+          id="learn-newsletter"
+          aria-labelledby="learn-newsletter-heading"
+        >
+          <h2 id="learn-newsletter-heading">Get new ideas in your inbox</h2>
+          <p>Thoughtful articles about money, choices, and building a life that matters—one payday at a time.</p>
+          <NewsletterSignup
+            {...newsletterProps}
+            idPrefix="learn-sidebar"
+            buttonLabel="Subscribe"
+            placeholder="Your email address"
+          />
+        </section>
+      );
+    }
+
+    function LearnAbout({ openAbout }) {
+      return (
+        <section className="learn-library-sidebar-card learn-library-about" aria-labelledby="learn-about-heading">
+          <h2 id="learn-about-heading">About 1040 Paydays</h2>
+          <strong>A new way to think about money and life.</strong>
+          <p>You do not need more financial noise. You need a clearer way to make decisions across the paydays you have.</p>
+          <button type="button" onClick={openAbout}>
+            Learn more about the mission <span aria-hidden="true">→</span>
+          </button>
+        </section>
+      );
+    }
+
+    function LearnPage({ navigateTo, newsletterProps, openAbout }) {
+      return (
+        <main className="learn-page learn-library-page">
+          <section className="learn-library-hero learn-index-container" aria-labelledby="learn-title">
+            <img
+              src="/home-cornerstone-reading.jpg"
+              alt="An open journal on a sunlit wooden table beside a ceramic cup and small plant"
+              width="1792"
+              height="887"
+              decoding="async"
+              fetchpriority="high"
+            />
+            <div className="learn-library-hero-overlay" aria-hidden="true" />
+            <div className="learn-library-hero-copy">
+              <h1 id="learn-title">
+                <span>Ideas that help you make</span>
+                <span>better financial decisions—</span>
+                <span>one payday at a time.</span>
+              </h1>
+              <p>Thoughtful lessons and stories to help you make the most of your 1,040 paydays.</p>
+              <a href="#learn-content">Start reading</a>
+            </div>
+          </section>
+
+          <div className="learn-library-layout learn-index-container" id="learn-content">
+            <div className="learn-library-main">
+              <LearnStartHere navigateTo={navigateTo} />
+              <LearnTopics navigateTo={navigateTo} />
+              <LearnArticleArchive navigateTo={navigateTo} />
+            </div>
+
+            <aside className="learn-library-sidebar" aria-label="About 1040 Paydays">
+              <LearnPhilosophy />
+              <LearnNewsletter newsletterProps={newsletterProps} />
+              <LearnAbout openAbout={openAbout} />
+            </aside>
           </div>
         </main>
       );
@@ -9006,7 +9183,15 @@ const THIRTY_SIXTH_ARTICLE = {
                     />
                   </a>
                   <div className="learn-cluster-article-copy">
-                    <small>{article.category} · {article.readTime}</small>
+                    <small>
+                      {article.category}
+                      {publicationDateForArticle(article) && (
+                        <> · <time dateTime={publicationDateForArticle(article)}>
+                          {formatPublicationDate(publicationDateForArticle(article))}
+                        </time></>
+                      )}
+                      {" · "}{article.readTime}
+                    </small>
                     <h3><LearnArticleLink article={article} navigateTo={navigateTo} /></h3>
                     <p>{article.summary}</p>
                   </div>
@@ -9080,6 +9265,7 @@ const THIRTY_SIXTH_ARTICLE = {
 
     function ArticlePanel({ article, close, backToLearn, openArticle }) {
       const relatedArticles = ARTICLES.filter((item) => item.id !== article.id);
+      const publicationDate = publicationDateForArticle(article);
       const faqs = ARTICLE_FAQS[article.id] || [];
       const articleIndex = ARTICLES.findIndex((item) => item.id === article.id);
       const previousArticle = ARTICLES[(articleIndex - 1 + ARTICLES.length) % ARTICLES.length];
@@ -9114,6 +9300,12 @@ const THIRTY_SIXTH_ARTICLE = {
               <span>1040 Paydays</span>
               <span>•</span>
               <span>{article.readTime}</span>
+              {publicationDate && (
+                <>
+                  <span>•</span>
+                  <time dateTime={publicationDate}>{formatPublicationDate(publicationDate)}</time>
+                </>
+              )}
             </div>
           </header>
 

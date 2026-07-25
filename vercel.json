@@ -22,6 +22,26 @@
       "destination": "/index.html"
     },
     {
+      "source": "/learn/foundations",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/learn/spending",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/learn/saving-and-investing",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/learn/retirement",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/learn/life-and-values",
+      "destination": "/index.html"
+    },
+    {
       "source": "/learn/you-only-get-about-1040-paydays",
       "destination": "/index.html"
     },
