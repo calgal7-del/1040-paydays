@@ -10786,6 +10786,7 @@ a {
 }
 
 .about-calculator-frame {
+  position: relative;
   min-width: 0;
   overflow: hidden;
   margin: 0;
@@ -10795,6 +10796,23 @@ a {
   box-shadow: 0 24px 55px rgba(14, 43, 84, .14);
   transform: perspective(1400px) rotateY(-3deg) rotateX(1deg) rotateZ(-.5deg);
   transform-origin: center;
+}
+
+.about-calculator-link {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+}
+
+.about-calculator-link:focus-visible {
+  outline: 3px solid rgba(7, 94, 245, .5);
+  outline-offset: -5px;
+}
+
+.philosophy-calculator-frame {
+  width: min(100%, 680px);
+  margin: 0 0 52px;
+  transform: none;
 }
 
 .about-browser-bar {

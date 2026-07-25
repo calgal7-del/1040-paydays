@@ -8319,6 +8319,15 @@ const THIRTY_SIXTH_ARTICLE = {
                       aria-hidden="true"
                     />
                   </div>
+                  <a
+                    className="about-calculator-link"
+                    href="/calculator"
+                    aria-label="Open the 1040 Paydays calculator"
+                    onClick={(event) => {
+                      event.preventDefault();
+                      navigateTo("/calculator");
+                    }}
+                  />
                   <figcaption className="sr-only">
                     1040 Paydays calculator showing payday inputs, projected future value, and investment growth.
                   </figcaption>
@@ -8462,6 +8471,32 @@ const THIRTY_SIXTH_ARTICLE = {
                   ))}
                 </div>
               </section>
+
+              {page.slug === "plan-your-future" && (
+                <figure className="about-calculator-frame philosophy-calculator-frame">
+                  <div className="about-browser-bar" aria-hidden="true">
+                    <span /><span /><span />
+                  </div>
+                  <div className="about-calculator-viewport">
+                    <iframe
+                      src="/calculator"
+                      title="1040 Paydays calculator showing payday inputs, projected future value, and investment growth"
+                      loading="lazy"
+                      tabIndex="-1"
+                      aria-hidden="true"
+                    />
+                  </div>
+                  <a
+                    className="about-calculator-link"
+                    href="/calculator"
+                    aria-label="Open the 1040 Paydays calculator"
+                    onClick={(event) => followLink(event, "/calculator")}
+                  />
+                  <figcaption className="sr-only">
+                    1040 Paydays calculator showing payday inputs, projected future value, and investment growth.
+                  </figcaption>
+                </figure>
+              )}
 
               <section className="philosophy-page-articles" aria-labelledby="philosophy-start-title">
                 <header>
