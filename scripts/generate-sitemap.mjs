@@ -1,6 +1,7 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { LEARN_EDITORIAL_CONFIG } from "../src/learnConfig.mjs";
+import { PHILOSOPHY_PAGES } from "../src/philosophyConfig.mjs";
 
 const SITE_URL = "https://www.1040paydays.com";
 const appSourcePath = resolve("src/App.jsx");
@@ -53,6 +54,9 @@ const articleIds = getArticlesList(appSource).map((articleName) =>
 const clusterPaths = LEARN_EDITORIAL_CONFIG.clusters.map(
   (cluster) => `/learn/${cluster.slug}`
 );
+const philosophyPaths = PHILOSOPHY_PAGES.map(
+  (page) => `/philosophy/${page.slug}`
+);
 const standalonePagePaths = [
   "/privacy-policy",
   "/terms-of-use",
@@ -66,6 +70,7 @@ const publicPaths = [
   "/calculator",
   "/learn",
   ...standalonePagePaths,
+  ...philosophyPaths,
   ...clusterPaths,
   ...articleIds.map((id) => `/learn/${id}`),
 ];
@@ -98,6 +103,7 @@ const appRewritePaths = [
   "/calculator",
   "/learn",
   ...standalonePagePaths,
+  ...philosophyPaths,
   ...clusterPaths,
   ...articleIds.map((id) => `/learn/${id}`),
 ];

@@ -26,6 +26,22 @@
       "destination": "/index.html"
     },
     {
+      "source": "/philosophy/live-today",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/philosophy/protect-tomorrow",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/philosophy/plan-your-future",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/philosophy/choose-what-matters",
+      "destination": "/index.html"
+    },
+    {
       "source": "/learn/saving-money",
       "destination": "/index.html"
     },

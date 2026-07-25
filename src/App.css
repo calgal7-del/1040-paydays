@@ -8737,6 +8737,36 @@ a {
   background: #102f78;
 }
 
+.reference-home-introduction {
+  display: grid;
+  grid-template-columns: minmax(230px, .65fr) minmax(0, 1.35fr);
+  gap: 54px;
+  padding: 38px 0 8px;
+}
+
+.reference-home-introduction h2 {
+  margin: 0;
+  color: var(--reference-navy);
+  font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+  font-size: clamp(28px, 2.4vw, 36px);
+  line-height: 1.15;
+}
+
+.reference-home-introduction > div {
+  max-width: 72ch;
+}
+
+.reference-home-introduction p {
+  margin: 0 0 10px;
+  color: #233c68;
+  font-size: 16px;
+  line-height: 1.62;
+}
+
+.reference-home-introduction p:last-child {
+  margin-bottom: 0;
+}
+
 .reference-home-philosophy {
   scroll-margin-top: 92px;
   padding: 36px 0 30px;
@@ -8784,16 +8814,36 @@ a {
 .reference-home-philosophy li {
   min-width: 0;
   min-height: 116px;
+  border-left: 1px solid var(--reference-border);
+}
+
+.reference-home-philosophy li > a {
+  min-height: 116px;
   display: grid;
   grid-template-columns: 44px minmax(0, 1fr);
   gap: 16px;
   align-content: start;
   padding: 10px 28px;
-  border-left: 1px solid var(--reference-border);
+  color: inherit;
+  text-decoration: none;
+  transition: background-color 180ms ease, transform 180ms ease;
 }
 
 .reference-home-philosophy li:first-child {
   border-left: 0;
+}
+
+.reference-home-philosophy li > a:hover {
+  background: #f8f9fb;
+  transform: translateY(-1px);
+}
+
+.reference-home-philosophy li > a:focus-visible {
+  position: relative;
+  z-index: 2;
+  border-radius: 4px;
+  outline: 3px solid rgba(13, 77, 155, .35);
+  outline-offset: 2px;
 }
 
 .reference-home-philosophy svg {
@@ -8818,6 +8868,199 @@ a {
   color: #233c68;
   font-size: 15px;
   line-height: 1.45;
+}
+
+.reference-home-philosophy li > a div > span {
+  display: inline-block;
+  margin-top: 13px;
+  color: var(--reference-blue);
+  font-size: 13px;
+  font-weight: 750;
+  line-height: 1.3;
+}
+
+.philosophy-page-shell {
+  min-height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  color: var(--reference-navy);
+  background: #fff;
+}
+
+.philosophy-page-main {
+  padding: 32px 0 68px;
+}
+
+.philosophy-breadcrumbs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 42px;
+  color: #5c6e8d;
+  font-size: 13px;
+}
+
+.philosophy-breadcrumbs a {
+  color: var(--reference-blue);
+  text-decoration: none;
+}
+
+.philosophy-breadcrumbs a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.philosophy-page-intro {
+  max-width: 820px;
+  padding-bottom: 52px;
+}
+
+.philosophy-page-number {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+  color: var(--reference-blue);
+}
+
+.philosophy-page-number span {
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: .12em;
+}
+
+.philosophy-page-intro h1 {
+  margin: 0;
+  color: var(--reference-navy);
+  font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+  font-size: clamp(46px, 5vw, 68px);
+  line-height: 1.02;
+}
+
+.philosophy-page-statement {
+  margin: 18px 0 30px;
+  color: var(--reference-blue);
+  font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+  font-size: clamp(22px, 2.4vw, 30px);
+  line-height: 1.3;
+}
+
+.philosophy-page-description {
+  max-width: 70ch;
+}
+
+.philosophy-page-description p {
+  margin: 0 0 13px;
+  color: #233c68;
+  font-size: 17px;
+  line-height: 1.65;
+}
+
+.philosophy-page-articles {
+  padding: 48px 0 52px;
+  border-top: 1px solid var(--reference-border);
+}
+
+.philosophy-page-articles > header {
+  margin-bottom: 24px;
+}
+
+.philosophy-page-articles > header p {
+  margin: 0 0 5px;
+  color: var(--reference-blue);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .09em;
+}
+
+.philosophy-page-articles > header h2,
+.philosophy-page-more h2 {
+  margin: 0;
+  color: var(--reference-navy);
+  font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+  font-size: clamp(30px, 3vw, 40px);
+  line-height: 1.15;
+}
+
+.philosophy-view-all {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 24px;
+  color: var(--reference-blue);
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.philosophy-view-all:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.philosophy-page-more {
+  padding-top: 44px;
+  border-top: 1px solid var(--reference-border);
+}
+
+.philosophy-page-more > div {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.philosophy-page-more a {
+  min-height: 116px;
+  display: grid;
+  grid-template-columns: auto auto minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  border: 1px solid var(--reference-border);
+  border-radius: 5px;
+  padding: 22px;
+  color: var(--reference-navy);
+  text-decoration: none;
+  transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+}
+
+.philosophy-page-more a:hover {
+  border-color: rgba(13, 77, 155, .35);
+  box-shadow: 0 8px 18px rgba(10, 30, 70, .06);
+  transform: translateY(-1px);
+}
+
+.philosophy-page-more a:focus-visible {
+  outline: 3px solid rgba(13, 77, 155, .35);
+  outline-offset: 2px;
+}
+
+.philosophy-page-more svg {
+  color: var(--reference-blue);
+}
+
+.philosophy-page-more a span {
+  color: #6c7c96;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.philosophy-page-more a strong {
+  font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+  font-size: 20px;
+  line-height: 1.2;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reference-home-philosophy li > a,
+  .philosophy-page-more a {
+    transition: none;
+  }
+
+  .reference-home-philosophy li > a:hover,
+  .philosophy-page-more a:hover {
+    transform: none;
+  }
 }
 
 .reference-home-latest {
@@ -9126,6 +9369,10 @@ a {
   }
 
   .reference-home-philosophy li {
+    min-height: 116px;
+  }
+
+  .reference-home-philosophy li > a {
     grid-template-columns: 36px minmax(0, 1fr);
     gap: 12px;
     padding-inline: 18px;
@@ -9223,6 +9470,12 @@ a {
     font-size: clamp(42px, 7vw, 56px);
   }
 
+  .reference-home-introduction {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    padding-top: 32px;
+  }
+
   .reference-home-philosophy {
     padding-top: 34px;
   }
@@ -9233,6 +9486,10 @@ a {
   }
 
   .reference-home-philosophy li {
+    min-height: 138px;
+  }
+
+  .reference-home-philosophy li > a {
     min-height: 138px;
   }
 
@@ -9257,6 +9514,14 @@ a {
     grid-template-columns: 1fr;
     gap: 14px;
     padding-block: 22px 16px;
+  }
+
+  .philosophy-page-main {
+    padding-top: 26px;
+  }
+
+  .philosophy-page-more > div {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -9334,20 +9599,60 @@ a {
   .reference-home-philosophy li,
   .reference-home-philosophy li:nth-child(3) {
     min-height: 0;
-    grid-template-columns: 38px minmax(0, 1fr);
-    padding: 20px 4px;
     border-top: 1px solid var(--reference-border);
     border-left: 0;
   }
 
+  .reference-home-philosophy li > a,
+  .reference-home-philosophy li:nth-child(3) > a {
+    min-height: 0;
+    grid-template-columns: 38px minmax(0, 1fr);
+    padding: 20px 4px;
+  }
+
   .reference-home-philosophy li:first-child {
-    padding-top: 4px;
     border-top: 0;
+  }
+
+  .reference-home-philosophy li:first-child > a {
+    padding-top: 4px;
   }
 
   .reference-home-philosophy p {
     max-width: none;
     margin-top: 7px;
+  }
+
+  .reference-home-philosophy li > a div > span {
+    margin-top: 9px;
+  }
+
+  .philosophy-page-main {
+    padding: 20px 0 52px;
+  }
+
+  .philosophy-breadcrumbs {
+    margin-bottom: 30px;
+  }
+
+  .philosophy-page-intro {
+    padding-bottom: 40px;
+  }
+
+  .philosophy-page-intro h1 {
+    font-size: clamp(42px, 12vw, 54px);
+  }
+
+  .philosophy-page-description p {
+    font-size: 16px;
+  }
+
+  .philosophy-page-articles {
+    padding: 38px 0 42px;
+  }
+
+  .philosophy-page-more {
+    padding-top: 36px;
   }
 
   .reference-home-latest {

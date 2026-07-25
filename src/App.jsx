@@ -20,6 +20,7 @@
     } from "lucide-react";
     import "./App.css";
     import { LEARN_EDITORIAL_CONFIG } from "./learnConfig.mjs";
+    import { PHILOSOPHY_PAGES } from "./philosophyConfig.mjs";
 
     const PAYDAYS_TOTAL = 1040;
     const STORAGE_KEY = "1040-paydays-settings";
@@ -6158,6 +6159,9 @@ const THIRTY_SIXTH_ARTICLE = {
     const ARTICLES = [FEATURED_ARTICLE, SECOND_ARTICLE, THIRD_ARTICLE, FOURTH_ARTICLE, FIFTH_ARTICLE, SIXTH_ARTICLE, SEVENTH_ARTICLE, EIGHTH_ARTICLE, NINTH_ARTICLE, TENTH_ARTICLE, ELEVENTH_ARTICLE, TWELFTH_ARTICLE, THIRTEENTH_ARTICLE, FOURTEENTH_ARTICLE, FIFTEENTH_ARTICLE, SIXTEENTH_ARTICLE, SEVENTEENTH_ARTICLE, EIGHTEENTH_ARTICLE, NINETEENTH_ARTICLE, TWENTIETH_ARTICLE, TWENTY_FIRST_ARTICLE, TWENTY_SECOND_ARTICLE, TWENTY_THIRD_ARTICLE, TWENTY_FOURTH_ARTICLE, TWENTY_FIFTH_ARTICLE, TWENTY_SEVENTH_ARTICLE, TWENTY_EIGHTH_ARTICLE, TWENTY_NINTH_ARTICLE, THIRTY_FIRST_ARTICLE, THIRTY_SECOND_ARTICLE, THIRTY_THIRD_ARTICLE, THIRTY_FOURTH_ARTICLE, THIRTY_FIFTH_ARTICLE, THIRTY_SIXTH_ARTICLE, THIRTY_SEVENTH_ARTICLE, THIRTY_EIGHTH_ARTICLE, THIRTY_NINTH_ARTICLE, FORTIETH_ARTICLE, FORTY_FIRST_ARTICLE, FORTY_SECOND_ARTICLE, FORTY_THIRD_ARTICLE, FORTY_FOURTH_ARTICLE, FORTY_FIFTH_ARTICLE, FORTY_SIXTH_ARTICLE, FORTY_SEVENTH_ARTICLE, FORTY_EIGHTH_ARTICLE, FORTY_NINTH_ARTICLE, FIFTIETH_ARTICLE, FIFTY_FIRST_ARTICLE];
     const ARTICLE_BY_ID = new Map(ARTICLES.map((article) => [article.id, article]));
     const UNIQUE_ARTICLES = Array.from(ARTICLE_BY_ID.values());
+    const PHILOSOPHY_BY_SLUG = new Map(
+      PHILOSOPHY_PAGES.map((page) => [page.slug, page])
+    );
     const LEARN_CLUSTER_BY_SLUG = new Map(
       LEARN_EDITORIAL_CONFIG.clusters.map((cluster) => [cluster.slug, cluster])
     );
@@ -8367,6 +8371,207 @@ const THIRTY_SIXTH_ARTICLE = {
       );
     }
 
+    function PhilosophyPage({
+      page,
+      mobileMenuOpen,
+      setMobileMenuOpen,
+      navigateTo,
+    }) {
+      const articles = configuredArticles(
+        page.articleSlugs,
+        `philosophy page "${page.slug}"`
+      ).slice(0, 3);
+      const otherPages = PHILOSOPHY_PAGES.filter(
+        (item) => item.slug !== page.slug
+      );
+      const Icon = PAYDAY_PRINCIPLE_ICONS[page.iconKey];
+      const followLink = (event, path) => {
+        event.preventDefault();
+        navigateTo(path);
+      };
+
+      return (
+        <div className="philosophy-page-shell">
+          <header className="learn-index-header">
+            <div className="learn-index-container learn-index-header-inner">
+              <a
+                className="learn-index-brand"
+                href="/"
+                aria-label="1040 Paydays home"
+                onClick={(event) => followLink(event, "/")}
+              >
+                <strong>1040</strong>
+                <span>PAYDAYS</span>
+              </a>
+
+              <nav className="learn-index-nav" aria-label="Primary navigation">
+                <button type="button" onClick={() => navigateTo("/")}>Home</button>
+                <button type="button" onClick={() => navigateTo("/learn")}>Learn</button>
+                <button type="button" onClick={() => navigateTo("/calculator")}>Calculator</button>
+                <button type="button" onClick={() => navigateTo("/about")}>About</button>
+              </nav>
+
+              <div className="learn-index-actions">
+                <a className="learn-index-subscribe" href="/#home-newsletter">
+                  <Mail size={16} aria-hidden="true" />
+                  Subscribe
+                </a>
+                <button
+                  className="learn-index-menu-button"
+                  type="button"
+                  aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+                  aria-expanded={mobileMenuOpen}
+                  aria-controls="philosophy-mobile-navigation"
+                  onClick={() => setMobileMenuOpen((open) => !open)}
+                >
+                  {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+                  <span>Menu</span>
+                </button>
+                {mobileMenuOpen && (
+                  <nav
+                    className="learn-index-mobile-nav"
+                    id="philosophy-mobile-navigation"
+                    aria-label="Mobile navigation"
+                  >
+                    <button type="button" onClick={() => navigateTo("/")}>Home</button>
+                    <button type="button" onClick={() => navigateTo("/learn")}>Learn</button>
+                    <button type="button" onClick={() => navigateTo("/calculator")}>Calculator</button>
+                    <button type="button" onClick={() => navigateTo("/about")}>About</button>
+                  </nav>
+                )}
+              </div>
+            </div>
+          </header>
+
+          <main className="philosophy-page-main">
+            <div className="reference-home-container">
+              <nav className="philosophy-breadcrumbs" aria-label="Breadcrumb">
+                <a href="/" onClick={(event) => followLink(event, "/")}>Home</a>
+                <span aria-hidden="true">/</span>
+                <span>Philosophy</span>
+                <span aria-hidden="true">/</span>
+                <span aria-current="page">{page.title}</span>
+              </nav>
+
+              <section className="philosophy-page-intro" aria-labelledby="philosophy-page-title">
+                <div className="philosophy-page-number" aria-hidden="true">
+                  <Icon size={34} strokeWidth={1.7} fill="none" />
+                  <span>{page.number}</span>
+                </div>
+                <h1 id="philosophy-page-title">{page.title}</h1>
+                <p className="philosophy-page-statement">{page.statement}</p>
+                <div className="philosophy-page-description">
+                  {page.description.map((paragraph) => (
+                    <p key={paragraph}>{paragraph}</p>
+                  ))}
+                </div>
+              </section>
+
+              <section className="philosophy-page-articles" aria-labelledby="philosophy-start-title">
+                <header>
+                  <p>PAYDAY JOURNAL</p>
+                  <h2 id="philosophy-start-title">Start here</h2>
+                </header>
+                <div className="reference-home-latest-grid">
+                  {articles.map((article) => (
+                    <article key={article.id}>
+                      <a
+                        className="reference-home-latest-image"
+                        href={`/learn/${article.id}`}
+                        aria-label={`Read ${article.title}`}
+                        onClick={(event) =>
+                          followLink(event, `/learn/${article.id}`)
+                        }
+                      >
+                        <img
+                          src={article.image}
+                          alt={article.alt}
+                          width="800"
+                          height="450"
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      </a>
+                      <div className="reference-home-latest-copy">
+                        <p className="reference-home-latest-category">
+                          {article.category} <span aria-hidden="true">·</span> {article.readTime}
+                        </p>
+                        <h3>
+                          <a
+                            href={`/learn/${article.id}`}
+                            onClick={(event) =>
+                              followLink(event, `/learn/${article.id}`)
+                            }
+                          >
+                            {article.title}
+                          </a>
+                        </h3>
+                        <p>{article.summary}</p>
+                        <a
+                          className="reference-home-latest-link"
+                          href={`/learn/${article.id}`}
+                          aria-label={`Read article: ${article.title}`}
+                          onClick={(event) =>
+                            followLink(event, `/learn/${article.id}`)
+                          }
+                        >
+                          Read article <span aria-hidden="true">→</span>
+                        </a>
+                      </div>
+                    </article>
+                  ))}
+                </div>
+                <a
+                  className="philosophy-view-all"
+                  href="/learn"
+                  onClick={(event) => followLink(event, "/learn")}
+                >
+                  View all articles <span aria-hidden="true">→</span>
+                </a>
+              </section>
+
+              <section className="philosophy-page-more" aria-labelledby="philosophy-more-title">
+                <h2 id="philosophy-more-title">Explore the other philosophies</h2>
+                <div>
+                  {otherPages.map((item) => {
+                    const OtherIcon = PAYDAY_PRINCIPLE_ICONS[item.iconKey];
+                    return (
+                      <a
+                        key={item.slug}
+                        href={`/philosophy/${item.slug}`}
+                        onClick={(event) =>
+                          followLink(event, `/philosophy/${item.slug}`)
+                        }
+                      >
+                        <OtherIcon size={26} strokeWidth={1.7} fill="none" aria-hidden="true" />
+                        <span>{item.number}</span>
+                        <strong>{item.title}</strong>
+                      </a>
+                    );
+                  })}
+                </div>
+              </section>
+            </div>
+          </main>
+
+          <footer className="reference-home-footer">
+            <div className="reference-home-footer-inner">
+              <p className="reference-home-copyright">© 2026 1040 Paydays. All rights reserved.</p>
+              <p>
+                The content, design, illustrations, branding, and original editorial articles on this website are protected by copyright and may not be reproduced or distributed without written permission.
+              </p>
+              <p>
+                1040 Paydays is for educational purposes only and does not provide financial, tax, legal, or investment advice.
+              </p>
+              <nav className="reference-home-footer-nav" aria-label="Legal and contact navigation">
+                <FooterLegalLinks />
+              </nav>
+            </div>
+          </footer>
+        </div>
+      );
+    }
+
     function ReferenceHomePage({
       mobileMenuOpen,
       setMobileMenuOpen,
@@ -8379,28 +8584,10 @@ const THIRTY_SIXTH_ARTICLE = {
         navigateTo(path);
       };
 
-      const principles = [
-        {
-          title: "Live Today",
-          description: "Make the most of the life you have now.",
-          Icon: PAYDAY_PRINCIPLE_ICONS.liveToday,
-        },
-        {
-          title: "Protect Tomorrow",
-          description: "Prepare for life's ups and downs.",
-          Icon: PAYDAY_PRINCIPLE_ICONS.protectTomorrow,
-        },
-        {
-          title: "Plan Your Future",
-          description: "Save and invest one payday at a time to create more choices.",
-          Icon: PAYDAY_PRINCIPLE_ICONS.planYourFuture,
-        },
-        {
-          title: "Choose What Matters",
-          description: "Align your money with your values and goals.",
-          Icon: PAYDAY_PRINCIPLE_ICONS.chooseWhatMatters,
-        },
-      ];
+      const principles = PHILOSOPHY_PAGES.map((page) => ({
+        ...page,
+        Icon: PAYDAY_PRINCIPLE_ICONS[page.iconKey],
+      }));
 
       return (
         <div className={`reference-home ${panel ? "is-obscured" : ""}`}>
@@ -8478,6 +8665,20 @@ const THIRTY_SIXTH_ARTICLE = {
             </section>
 
             <section
+              className="reference-home-introduction reference-home-container"
+              aria-labelledby="reference-home-introduction-title"
+            >
+              <h2 id="reference-home-introduction-title">What is 1040 Paydays?</h2>
+              <div>
+                <p>
+                  Most people will receive only about 1,040 paydays during their working lives.
+                  1040 Paydays is a personal finance resource with practical articles,
+                  interactive calculators, and tools to help you make every payday count.
+                </p>
+              </div>
+            </section>
+
+            <section
               className="reference-home-philosophy reference-home-container"
               id="home-philosophy"
               aria-labelledby="reference-philosophy-title"
@@ -8488,18 +8689,26 @@ const THIRTY_SIXTH_ARTICLE = {
                 <span aria-hidden="true" />
               </div>
               <ol>
-                {principles.map(({ title, description, Icon }) => (
-                  <li key={title}>
-                    <Icon
-                      size={32}
-                      strokeWidth={1.7}
-                      fill="none"
-                      aria-hidden="true"
-                    />
-                    <div>
-                      <strong>{title}</strong>
-                      <p>{description}</p>
-                    </div>
+                {principles.map(({ slug, title, statement, Icon }) => (
+                  <li key={slug}>
+                    <a
+                      href={`/philosophy/${slug}`}
+                      onClick={(event) =>
+                        followLink(event, `/philosophy/${slug}`)
+                      }
+                    >
+                      <Icon
+                        size={32}
+                        strokeWidth={1.7}
+                        fill="none"
+                        aria-hidden="true"
+                      />
+                      <div>
+                        <strong>{title}</strong>
+                        <p>{statement}</p>
+                        <span>Explore this philosophy</span>
+                      </div>
+                    </a>
                   </li>
                 ))}
               </ol>
@@ -9049,6 +9258,10 @@ const THIRTY_SIXTH_ARTICLE = {
           : "";
         const cluster = LEARN_CLUSTER_BY_SLUG.get(routeSlug);
         const article = ARTICLE_BY_ID.get(routeSlug);
+        const philosophySlug = normalizedPath.startsWith("/philosophy/")
+          ? normalizedPath.slice("/philosophy/".length)
+          : "";
+        const philosophyPage = PHILOSOPHY_BY_SLUG.get(philosophySlug);
         const isLearnIndex = normalizedPath === "/learn";
         const isCalculatorRoute = normalizedPath === "/calculator";
         const isAboutRoute = normalizedPath === "/about";
@@ -9056,32 +9269,36 @@ const THIRTY_SIXTH_ARTICLE = {
         const isLearnRoute = isLearnIndex || Boolean(cluster) || Boolean(article);
         const title = article
           ? `${article.title} | 1040 Paydays`
-          : cluster
-            ? `${cluster.title} | Learn | 1040 Paydays`
-            : isLearnIndex
-              ? "Learn | 1040 Paydays"
-              : isCalculatorRoute
-                ? "Calculator | 1040 Paydays"
-                : isAboutRoute
-                  ? "About 1040 Paydays | Our Philosophy"
-                  : legalPage
-                    ? legalPage.metaTitle
-              : "1040 Paydays | Savings and Retirement Calculator by Paycheck";
+          : philosophyPage
+            ? philosophyPage.metaTitle
+            : cluster
+              ? `${cluster.title} | Learn | 1040 Paydays`
+              : isLearnIndex
+                ? "Learn | 1040 Paydays"
+                : isCalculatorRoute
+                  ? "Calculator | 1040 Paydays"
+                  : isAboutRoute
+                    ? "About 1040 Paydays | Our Philosophy"
+                    : legalPage
+                      ? legalPage.metaTitle
+                      : "1040 Paydays | Savings and Retirement Calculator by Paycheck";
         const description = article
           ? article.summary
-          : cluster
-            ? cluster.intro
-            : isLearnIndex
-              ? "Thoughtful articles and stories to help you make better financial decisions—one payday at a time."
-              : isCalculatorRoute
-                ? "Build a payday-by-payday savings plan and explore how regular contributions may grow over time."
-                : isAboutRoute
-                  ? "Learn the philosophy behind 1040 Paydays and how small, consistent financial decisions can help create more freedom, security, and choice over time."
-                  : legalPage
-                    ? legalPage.description
-              : "Estimate how much you can save from every paycheck. Use 1040 Paydays to plan savings, retirement, and future growth with a simple calculator.";
+          : philosophyPage
+            ? philosophyPage.metaDescription
+            : cluster
+              ? cluster.intro
+              : isLearnIndex
+                ? "Thoughtful articles and stories to help you make better financial decisions—one payday at a time."
+                : isCalculatorRoute
+                  ? "Build a payday-by-payday savings plan and explore how regular contributions may grow over time."
+                  : isAboutRoute
+                    ? "Learn the philosophy behind 1040 Paydays and how small, consistent financial decisions can help create more freedom, security, and choice over time."
+                    : legalPage
+                      ? legalPage.description
+                      : "Estimate how much you can save from every paycheck. Use 1040 Paydays to plan savings, retirement, and future growth with a simple calculator.";
         const canonicalPath =
-          isLearnRoute || isCalculatorRoute || isAboutRoute || legalPage
+          isLearnRoute || philosophyPage || isCalculatorRoute || isAboutRoute || legalPage
             ? normalizedPath
             : "/";
         const canonicalUrl = `${SITE_URL}${canonicalPath === "/" ? "/" : canonicalPath}`;
@@ -9127,6 +9344,11 @@ const THIRTY_SIXTH_ARTICLE = {
         const existingStructuredData = document.getElementById("learn-structured-data");
         const collectionArticles = isLearnIndex
           ? UNIQUE_ARTICLES
+          : philosophyPage
+            ? configuredArticles(
+                philosophyPage.articleSlugs,
+                `philosophy page "${philosophyPage.slug}"`
+              )
           : cluster
             ? articlesForCluster(cluster)
             : [];
@@ -9423,6 +9645,25 @@ const THIRTY_SIXTH_ARTICLE = {
         return (
           <LegalPage
             page={legalPage}
+            mobileMenuOpen={mobileMenuOpen}
+            setMobileMenuOpen={setMobileMenuOpen}
+            navigateTo={navigateTo}
+          />
+        );
+      }
+
+      if (normalizedRoute.startsWith("/philosophy/")) {
+        const philosophyPage = PHILOSOPHY_BY_SLUG.get(
+          normalizedRoute.slice("/philosophy/".length)
+        );
+
+        if (!philosophyPage) {
+          return <NotFoundPage navigateTo={navigateTo} />;
+        }
+
+        return (
+          <PhilosophyPage
+            page={philosophyPage}
             mobileMenuOpen={mobileMenuOpen}
             setMobileMenuOpen={setMobileMenuOpen}
             navigateTo={navigateTo}
