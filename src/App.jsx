@@ -6055,6 +6055,19 @@ const THIRTY_SIXTH_ARTICLE = {
       );
     }
 
+    function clusterForArticle(article) {
+      if (!article) return null;
+      return (
+        LEARN_EDITORIAL_CONFIG.clusters.find((cluster) =>
+          (cluster.articleSlugs || []).includes(article.id)
+        ) ||
+        LEARN_EDITORIAL_CONFIG.clusters.find((cluster) =>
+          (cluster.categories || []).includes(article.category)
+        ) ||
+        null
+      );
+    }
+
     const LEARN_START_HERE_ARTICLES = configuredArticles(
       LEARN_EDITORIAL_CONFIG.startHereSlugs,
       "startHereSlugs"
@@ -9746,34 +9759,22 @@ const THIRTY_SIXTH_ARTICLE = {
                 close={() => goHomePanel(null)}
                 backToLearn={() => navigateTo("/learn")}
                 openArticle={(nextArticle) => navigateTo(`/learn/${nextArticle.id}`)}
+                navigateTo={navigateTo}
+                newsletterProps={newsletterProps}
               />
             </main>
           ) : cluster ? (
-            <LearnClusterPage cluster={cluster} navigateTo={navigateTo} />
+            <LearnClusterPage
+              cluster={cluster}
+              navigateTo={navigateTo}
+              newsletterProps={newsletterProps}
+            />
           ) : (
             <LearnPage
               navigateTo={navigateTo}
               newsletterProps={newsletterProps}
               openAbout={() => navigateTo("/about")}
             />
-          )}
-
-          {article && (
-            <section
-              className="reference-home-newsletter article-page-newsletter"
-              id="article-newsletter"
-              aria-labelledby="article-newsletter-title"
-            >
-              <div className="reference-home-container reference-home-newsletter-inner">
-                <h2 id="article-newsletter-title">Get new ideas in your inbox.</h2>
-                <NewsletterSignup
-                  {...newsletterProps}
-                  idPrefix={`article-${article.id}`}
-                  buttonLabel="Subscribe"
-                  placeholder="Enter your email"
-                />
-              </div>
-            </section>
           )}
 
           <footer className="reference-home-footer">
@@ -10098,8 +10099,10 @@ const THIRTY_SIXTH_ARTICLE = {
       );
     }
 
-    function LearnClusterPage({ cluster, navigateTo }) {
+    function LearnClusterPage({ cluster, navigateTo, newsletterProps }) {
       const clusterArticles = articlesForCluster(cluster);
+      const featuredArticle = clusterArticles[0];
+      const essentialArticles = clusterArticles.slice(1);
       const relatedClusters = LEARN_EDITORIAL_CONFIG.clusters.filter(
         (item) => item.slug !== cluster.slug && articlesForCluster(item).length
       );
@@ -10127,10 +10130,40 @@ const THIRTY_SIXTH_ARTICLE = {
             <p>{cluster.intro}</p>
           </header>
 
-          <section className="learn-cluster-index" aria-labelledby="cluster-articles-heading">
-            <h2 id="cluster-articles-heading">Articles in this collection</h2>
-            <div>
-              {clusterArticles.map((article, index) => (
+          {featuredArticle && (
+            <section className="learn-cluster-feature" aria-labelledby="cluster-start-heading">
+              <a
+                href={`/learn/${featuredArticle.id}`}
+                aria-label={`Read ${featuredArticle.title}`}
+                onClick={(event) => {
+                  event.preventDefault();
+                  navigateTo(`/learn/${featuredArticle.id}`);
+                }}
+              >
+                <img
+                  src={featuredArticle.image}
+                  alt={featuredArticle.alt}
+                  decoding="async"
+                />
+              </a>
+              <div>
+                <p className="article-section-kicker">START HERE</p>
+                <h2 id="cluster-start-heading">
+                  <LearnArticleLink article={featuredArticle} navigateTo={navigateTo} />
+                </h2>
+                <p>{featuredArticle.summary}</p>
+                <small>
+                  {featuredArticle.category} · {featuredArticle.readTime}
+                </small>
+              </div>
+            </section>
+          )}
+
+          {essentialArticles.length > 0 && (
+            <section className="learn-cluster-index" aria-labelledby="cluster-articles-heading">
+              <h2 id="cluster-articles-heading">Essentials</h2>
+              <div>
+                {essentialArticles.map((article, index) => (
                 <article key={article.id}>
                   <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
                   <a
@@ -10166,6 +10199,33 @@ const THIRTY_SIXTH_ARTICLE = {
                   </div>
                 </article>
               ))}
+              </div>
+            </section>
+          )}
+
+          <section className="learn-cluster-companions" aria-label="Tools and newsletter">
+            <div className="learn-cluster-tool">
+              <p className="article-section-kicker">1040 PAYDAYS CALCULATOR</p>
+              <h2>See what one payday decision could become.</h2>
+              <p>Explore how regular saving or investing may grow over time.</p>
+              <a
+                href="/calculator"
+                onClick={(event) => {
+                  event.preventDefault();
+                  navigateTo("/calculator");
+                }}
+              >
+                Open Calculator <span aria-hidden="true">→</span>
+              </a>
+            </div>
+            <div className="learn-cluster-newsletter" id="learn-newsletter">
+              <h2>Get new ideas in your inbox.</h2>
+              <NewsletterSignup
+                {...newsletterProps}
+                idPrefix={`cluster-${cluster.slug}`}
+                buttonLabel="Subscribe"
+                placeholder="Enter your email"
+              />
             </div>
           </section>
 
@@ -10232,119 +10292,295 @@ const THIRTY_SIXTH_ARTICLE = {
       );
     }
 
-    function ArticlePanel({ article, close, backToLearn, openArticle }) {
-      const relatedArticles = ARTICLES.filter((item) => item.id !== article.id);
+    function ArticleSidebar({
+      article,
+      cluster,
+      recommendedArticles,
+      relatedArticles,
+      navigateTo,
+      newsletterProps,
+    }) {
+      return (
+        <aside className="article-sidebar" aria-label="More from 1040 Paydays">
+          {cluster && (
+            <section>
+              <p className="article-sidebar-label">ABOUT THIS TOPIC</p>
+              <h2>About {cluster.title}</h2>
+              <p>{cluster.intro}</p>
+              <a
+                href={`/learn/${cluster.slug}`}
+                onClick={(event) => {
+                  event.preventDefault();
+                  navigateTo(`/learn/${cluster.slug}`);
+                }}
+              >
+                Explore all {cluster.title.toLowerCase()} articles <span aria-hidden="true">→</span>
+              </a>
+            </section>
+          )}
+
+          {recommendedArticles.length > 0 && (
+            <section>
+              <p className="article-sidebar-label">RECOMMENDED</p>
+              <h2>Continue exploring</h2>
+              <ol className="article-sidebar-numbered">
+                {recommendedArticles.map((item, index) => (
+                  <li key={item.id}>
+                    <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+                    <LearnArticleLink article={item} navigateTo={navigateTo} />
+                  </li>
+                ))}
+              </ol>
+            </section>
+          )}
+
+          {relatedArticles.length > 0 && (
+            <section>
+              <p className="article-sidebar-label">MORE TO READ</p>
+              <h2>From the journal</h2>
+              <div className="article-sidebar-stories">
+                {relatedArticles.map((item) => (
+                  <article key={item.id}>
+                    <LearnArticleLink article={item} navigateTo={navigateTo}>
+                      <img
+                        src={item.image}
+                        alt=""
+                        width="180"
+                        height="120"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </LearnArticleLink>
+                    <div>
+                      <small>{item.category} · {item.readTime}</small>
+                      <h3><LearnArticleLink article={item} navigateTo={navigateTo} /></h3>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </section>
+          )}
+
+          <section className="article-sidebar-calculator">
+            <p className="article-sidebar-label">USE THE CALCULATOR</p>
+            <h2>See what one payday decision could become.</h2>
+            <p>Explore how regular saving or investing may grow over time.</p>
+            <a
+              href="/calculator"
+              onClick={(event) => {
+                event.preventDefault();
+                navigateTo("/calculator");
+              }}
+            >
+              Open Calculator <span aria-hidden="true">→</span>
+            </a>
+          </section>
+
+          <section className="article-sidebar-newsletter" id="article-newsletter">
+            <p className="article-sidebar-label">STAY IN TOUCH</p>
+            <h2>Get new ideas in your inbox.</h2>
+            <NewsletterSignup
+              {...newsletterProps}
+              idPrefix={`article-${article.id}`}
+              buttonLabel="Subscribe"
+              placeholder="Enter your email"
+            />
+          </section>
+        </aside>
+      );
+    }
+
+    function ArticlePanel({
+      article,
+      close,
+      backToLearn,
+      openArticle,
+      navigateTo,
+      newsletterProps,
+    }) {
       const publicationDate = publicationDateForArticle(article);
       const faqs = ARTICLE_FAQS[article.id] || [];
       const articleIndex = ARTICLES.findIndex((item) => item.id === article.id);
       const previousArticle = ARTICLES[(articleIndex - 1 + ARTICLES.length) % ARTICLES.length];
       const nextArticle = ARTICLES[(articleIndex + 1) % ARTICLES.length];
+      const cluster = clusterForArticle(article);
+      const sameTopicArticles = articlesForCluster(cluster).filter(
+        (item) => item.id !== article.id
+      );
+      const fallbackArticles = ARTICLES.filter(
+        (item) =>
+          item.id !== article.id &&
+          !sameTopicArticles.some((sameTopic) => sameTopic.id === item.id)
+      );
+      const recommendedArticles = [...sameTopicArticles, ...fallbackArticles].slice(0, 5);
+      const relatedArticles = [...sameTopicArticles, ...fallbackArticles].slice(0, 3);
       const jumpToArticle = (nextItem) => {
         openArticle(nextItem);
         requestAnimationFrame(() => {
           document.querySelector(".learn-route-shell")?.scrollTo({ top: 0, behavior: "smooth" });
         });
       };
-      const renderArticlePager = () => (
-        <nav className="article-dot-nav" aria-label="Article navigation">
-          <button type="button" onClick={() => jumpToArticle(previousArticle)} aria-label={`Previous article: ${previousArticle.title}`} />
-          <button type="button" className="is-current" aria-current="page" aria-label={`Current article: ${article.title}`} disabled />
-          <button type="button" onClick={() => jumpToArticle(nextArticle)} aria-label={`Next article: ${nextArticle.title}`} />
-          <span>Next: {nextArticle.title}</span>
-        </nav>
-      );
 
       return (
-        <article className="learn-article">
-          <div className="article-toolbar">
-            <button type="button" onClick={backToLearn}>← All articles</button>
-            <span>LEARN · KNOWLEDGE &amp; INSIGHTS</span>
-          </div>
-
-          <header className="article-header">
-            <p className="article-kicker">{article.kicker}</p>
-            <h1>{article.title}</h1>
-            <p className="article-summary">{article.summary}</p>
-            <div className="article-meta">
-              <span>1040 Paydays</span>
-              <span>•</span>
-              <span>{article.readTime}</span>
-              {publicationDate && (
+        <div className="article-editorial-layout">
+          <article className="learn-article">
+            <nav className="article-breadcrumbs" aria-label="Breadcrumb">
+              <button type="button" onClick={backToLearn}>Learn</button>
+              <span aria-hidden="true">/</span>
+              {cluster && (
                 <>
-                  <span>•</span>
-                  <time dateTime={publicationDate}>{formatPublicationDate(publicationDate)}</time>
+                  <a
+                    href={`/learn/${cluster.slug}`}
+                    onClick={(event) => {
+                      event.preventDefault();
+                      navigateTo(`/learn/${cluster.slug}`);
+                    }}
+                  >
+                    {cluster.title}
+                  </a>
+                  <span aria-hidden="true">/</span>
                 </>
               )}
-            </div>
-          </header>
+              <span aria-current="page">{article.title}</span>
+            </nav>
 
-          <figure className="article-hero">
-            <img src={article.image} alt={article.alt} />
-            <figcaption>{article.caption}</figcaption>
-          </figure>
-
-          <div className="article-quick-pager">
-            <p>Tap a dot to keep reading</p>
-            {renderArticlePager()}
-          </div>
-
-          <div className="article-body">
-            {article.sections.map((section, sectionIndex) => (
-              <React.Fragment key={section.heading}>
-                <section>
-                  <h2>{section.heading}</h2>
-                  {section.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
-                </section>
-                {sectionIndex === 1 && (
-                  <blockquote>
-                    <strong>{article.quote.strong}</strong>
-                    <span>{article.quote.text}</span>
-                  </blockquote>
+            <header className="article-header">
+              <p className="article-kicker">{article.kicker || article.category}</p>
+              <h1>{article.title}</h1>
+              {article.summary && <p className="article-summary">{article.summary}</p>}
+              <div className="article-meta">
+                <span>By 1040 Paydays</span>
+                {publicationDate && (
+                  <>
+                    <span aria-hidden="true">•</span>
+                    <time dateTime={publicationDate}>{formatPublicationDate(publicationDate)}</time>
+                  </>
                 )}
-              </React.Fragment>
-            ))}
-          </div>
-
-          {renderArticlePager()}
-
-          <section className="article-faqs">
-            <p className="article-section-kicker">FREQUENTLY ASKED QUESTIONS</p>
-            <h2>Five questions to take with you.</h2>
-            <div>
-              {faqs.map((faq) => (
-                <details key={faq.question}>
-                  <summary>{faq.question}</summary>
-                  <p>{faq.answer}</p>
-                </details>
-              ))}
-            </div>
-          </section>
-
-          <section className="related-articles">
-            <div className="related-heading">
-              <div>
-                <p className="article-section-kicker">KEEP READING</p>
-                <h2>Another payday. Another perspective.</h2>
+                <span aria-hidden="true">•</span>
+                <span>{article.readTime}</span>
               </div>
-              <span>Swipe to explore →</span>
+            </header>
+
+            <figure className="article-hero">
+              <img
+                src={article.image}
+                alt={article.alt}
+                decoding="async"
+              />
+              {article.caption && <figcaption>{article.caption}</figcaption>}
+            </figure>
+
+            <div className="article-share" aria-label="Share this article">
+              <span>SHARE</span>
+              <a
+                href={`mailto:?subject=${encodeURIComponent(article.title)}&body=${encodeURIComponent(`${SITE_URL}/learn/${article.id}`)}`}
+              >
+                Email
+              </a>
+              <button
+                type="button"
+                onClick={() => navigator.clipboard?.writeText(`${SITE_URL}/learn/${article.id}`)}
+              >
+                Copy link
+              </button>
             </div>
-            <div className="related-article-strip">
-              {relatedArticles.map((related) => (
-                <button type="button" key={related.id} onClick={() => openArticle(related)}>
-                  <img src={related.image} alt="" />
-                  <span>{related.readTime}</span>
-                  <strong>{related.title}</strong>
-                  <em>Read next →</em>
-                </button>
+
+            <div className="article-body">
+              {article.sections.map((section, sectionIndex) => (
+                <React.Fragment key={section.heading}>
+                  <section>
+                    <h2>{section.heading}</h2>
+                    {section.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+                  </section>
+                  {sectionIndex === 1 && article.quote && (
+                    <blockquote>
+                      <strong>{article.quote.strong}</strong>
+                      <span>{article.quote.text}</span>
+                    </blockquote>
+                  )}
+                </React.Fragment>
               ))}
             </div>
-          </section>
 
-          <footer className="article-footer-cta">
-            <p>See where you are on your own 1,040-payday journey.</p>
-            <button type="button" onClick={close}>Back to the calculator</button>
-          </footer>
-        </article>
+            {faqs.length > 0 && (
+              <section className="article-faqs">
+                <p className="article-section-kicker">FREQUENTLY ASKED QUESTIONS</p>
+                <h2>Questions to take with you.</h2>
+                <div>
+                  {faqs.map((faq) => (
+                    <details key={faq.question}>
+                      <summary>{faq.question}</summary>
+                      <p>{faq.answer}</p>
+                    </details>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            <nav className="article-previous-next" aria-label="Previous and next articles">
+              <button type="button" onClick={() => jumpToArticle(previousArticle)}>
+                <span>Previous article</span>
+                <strong>{previousArticle.title}</strong>
+              </button>
+              <button type="button" onClick={() => jumpToArticle(nextArticle)}>
+                <span>Next article</span>
+                <strong>{nextArticle.title}</strong>
+              </button>
+            </nav>
+
+            <section className="related-articles" aria-labelledby="continue-learning-heading">
+              <div className="related-heading">
+                <div>
+                  <p className="article-section-kicker">CONTINUE LEARNING</p>
+                  <h2 id="continue-learning-heading">More from the Payday Journal</h2>
+                </div>
+              </div>
+              <div className="related-article-grid">
+                {relatedArticles.map((related) => (
+                  <article key={related.id}>
+                    <LearnArticleLink article={related} navigateTo={navigateTo}>
+                      <img
+                        src={related.image}
+                        alt=""
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </LearnArticleLink>
+                    <small>{related.category} · {related.readTime}</small>
+                    <h3><LearnArticleLink article={related} navigateTo={navigateTo} /></h3>
+                  </article>
+                ))}
+              </div>
+            </section>
+
+            <footer className="article-author">
+              <div className="article-author-mark" aria-hidden="true">1040</div>
+              <div>
+                <p className="article-section-kicker">ABOUT THE AUTHOR</p>
+                <h2>1040 Paydays</h2>
+                <p>Practical tools and thoughtful personal finance guidance designed to help readers make better decisions one payday at a time.</p>
+                <a
+                  href="/about"
+                  onClick={(event) => {
+                    event.preventDefault();
+                    navigateTo("/about");
+                  }}
+                >
+                  Learn more about 1040 Paydays <span aria-hidden="true">→</span>
+                </a>
+              </div>
+            </footer>
+          </article>
+
+          <ArticleSidebar
+            article={article}
+            cluster={cluster}
+            recommendedArticles={recommendedArticles}
+            relatedArticles={relatedArticles}
+            navigateTo={navigateTo}
+            newsletterProps={newsletterProps}
+          />
+        </div>
       );
     }
 
