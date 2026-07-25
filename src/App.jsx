@@ -7345,6 +7345,546 @@ const THIRTY_SIXTH_ARTICLE = {
       );
     }
 
+    function CalculatorNumberField({
+      id,
+      label,
+      value,
+      setValue,
+      error = "",
+      prefix = "",
+      suffix = "",
+      min,
+      max,
+      step = "1",
+    }) {
+      const errorId = `${id}-error`;
+
+      return (
+        <label className="final-calculator-field" htmlFor={id}>
+          <span>{label}</span>
+          <div className="final-calculator-input-wrap">
+            {prefix && <span aria-hidden="true">{prefix}</span>}
+            <input
+              id={id}
+              type="number"
+              value={value}
+              min={min}
+              max={max}
+              step={step}
+              aria-invalid={error ? "true" : "false"}
+              aria-describedby={error ? errorId : undefined}
+              onChange={(event) => {
+                const nextValue = event.target.value;
+                setValue(nextValue === "" ? "" : Number(nextValue));
+              }}
+              onBlur={() => {
+                if (value === "") setValue(0);
+              }}
+            />
+            {suffix && <span aria-hidden="true">{suffix}</span>}
+          </div>
+          {error && <small id={errorId} className="final-calculator-error">{error}</small>}
+        </label>
+      );
+    }
+
+    function CalculatorPage({
+      mobileMenuOpen,
+      setMobileMenuOpen,
+      navigateTo,
+      setPanel,
+      newsletterProps,
+      panel,
+      money,
+      projection,
+      compare,
+      values,
+      setters,
+      paydaysUsed,
+      paydaysRemaining,
+      yearsRemaining,
+      hasRetirementPlan,
+      investedShare,
+      snapshots,
+      setSnapshots,
+    }) {
+      const [saveStatus, setSaveStatus] = useState("idle");
+      const [saveMessage, setSaveMessage] = useState("");
+      const [newsletterHighlighted, setNewsletterHighlighted] = useState(false);
+      const [logScale, setLogScale] = useState(false);
+      const [inflationAdjusted, setInflationAdjusted] = useState(false);
+      const newsletterHighlightTimer = useRef(null);
+
+      useEffect(() => (
+        () => window.clearTimeout(newsletterHighlightTimer.current)
+      ), []);
+
+      const {
+        starting,
+        contribution,
+        frequency,
+        age,
+        retireAge,
+        returnRate,
+        inflation,
+      } = values;
+      const {
+        setStarting,
+        setContribution,
+        setFrequency,
+        setAge,
+        setRetireAge,
+        setReturnRate,
+      } = setters;
+
+      const errors = {
+        starting: Number(starting) < 0 ? "Starting balance cannot be negative." : "",
+        contribution: Number(contribution) < 0 ? "Contribution cannot be negative." : "",
+        age: Number(age) < 16 || Number(age) > 99 ? "Enter an age between 16 and 99." : "",
+        retireAge: Number(retireAge) <= Number(age) || Number(retireAge) > 100
+          ? "Retirement age must be greater than current age and no more than 100."
+          : "",
+        returnRate: Number(returnRate) < -20 || Number(returnRate) > 30
+          ? "Expected return must be between -20% and 30%."
+          : "",
+      };
+      const hasErrors = Object.values(errors).some(Boolean);
+      const scenarioB = compare.find((item) => item.label.startsWith("Save +$")) || compare[1];
+      const displayBalance = inflationAdjusted && yearsRemaining > 0
+        ? Math.round(projection.balance / Math.pow(1 + Math.max(Number(inflation), 0) / 100, yearsRemaining))
+        : projection.balance;
+      const displayGrowth = Math.max(displayBalance - projection.invested, 0);
+      const displayMonthly = Math.round((displayBalance * (values.withdrawalRate / 100)) / 12);
+
+      const openPanel = (name) => {
+        setMobileMenuOpen(false);
+        setPanel(name);
+      };
+
+      const savePlan = () => {
+        if (hasErrors) {
+          setSaveStatus("error");
+          setSaveMessage("Correct the highlighted calculator fields before saving.");
+          return;
+        }
+
+        const savedProjection = {
+          id: Date.now(),
+          balance: projection.balance,
+          monthly: projection.monthly,
+          date: new Date().toLocaleDateString(),
+          inputs: {
+            starting,
+            contribution,
+            frequency,
+            age,
+            retireAge,
+            returnRate,
+          },
+        };
+
+        try {
+          setSnapshots([savedProjection, ...snapshots]);
+          setSaveStatus("success");
+          setSaveMessage("Your plan is saved on this device.");
+        } catch {
+          setSaveStatus("error");
+          setSaveMessage("This browser could not save your plan. Please check its storage settings.");
+        }
+      };
+
+      const focusNewsletter = (event) => {
+        event.preventDefault();
+        setMobileMenuOpen(false);
+        setNewsletterHighlighted(true);
+        window.clearTimeout(newsletterHighlightTimer.current);
+
+        document.getElementById("calculator-newsletter")?.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+        });
+
+        window.requestAnimationFrame(() => {
+          document.getElementById("calculator-footer-email")?.focus({ preventScroll: true });
+        });
+
+        newsletterHighlightTimer.current = window.setTimeout(
+          () => setNewsletterHighlighted(false),
+          1800
+        );
+      };
+
+      const runProjection = () => {
+        if (hasErrors) {
+          document.querySelector(".final-calculator-field [aria-invalid='true']")?.focus();
+          return;
+        }
+        document.querySelector(".final-calculator-projection")?.scrollIntoView({
+          behavior: "smooth",
+          block: "nearest",
+        });
+      };
+
+      const principles = [
+        [Sun, "Live Today", "Make the most of the life you have now."],
+        [Lock, "Protect Tomorrow", "Prepare for life's ups and downs."],
+        [CalendarDays, "Plan Your Future", "Save and invest one payday at a time to create more choices."],
+        [Heart, "Choose What Matters", "Align your money with your values and goals."],
+      ];
+
+      return (
+        <div className={`final-calculator-page ${panel ? "is-obscured" : ""}`}>
+          <header className="learn-index-header">
+            <div className="learn-index-container learn-index-header-inner">
+              <a
+                className="learn-index-brand"
+                href="/"
+                aria-label="1040 Paydays home"
+                onClick={(event) => {
+                  event.preventDefault();
+                  navigateTo("/");
+                }}
+              >
+                <strong>1040</strong>
+                <span>PAYDAYS</span>
+              </a>
+
+              <nav className="learn-index-nav" aria-label="Primary navigation">
+                <button type="button" onClick={() => navigateTo("/")}>Home</button>
+                <button type="button" onClick={() => navigateTo("/learn")}>Learn</button>
+                <button type="button" className="active" aria-current="page">Calculator</button>
+                <button type="button" onClick={() => openPanel("about")}>About</button>
+              </nav>
+
+              <div className="learn-index-actions">
+                <a
+                  className="learn-index-subscribe"
+                  href="#calculator-newsletter"
+                  onClick={focusNewsletter}
+                >
+                  <Mail size={16} aria-hidden="true" />
+                  Subscribe
+                </a>
+                <button
+                  className="learn-index-menu-button"
+                  type="button"
+                  aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+                  aria-expanded={mobileMenuOpen}
+                  aria-controls="calculator-mobile-navigation"
+                  onClick={() => setMobileMenuOpen((open) => !open)}
+                >
+                  {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+                  <span>Menu</span>
+                </button>
+                {mobileMenuOpen && (
+                  <nav
+                    className="learn-index-mobile-nav"
+                    id="calculator-mobile-navigation"
+                    aria-label="Mobile navigation"
+                  >
+                    <button type="button" onClick={() => navigateTo("/")}>Home</button>
+                    <button type="button" onClick={() => navigateTo("/learn")}>Learn</button>
+                    <button type="button" aria-current="page" onClick={() => setMobileMenuOpen(false)}>Calculator</button>
+                    <button type="button" onClick={() => openPanel("about")}>About</button>
+                  </nav>
+                )}
+              </div>
+            </div>
+          </header>
+
+          <main className="final-calculator-main">
+            <div className="final-calculator-container">
+              <div className="final-calculator-shell">
+                <section className="final-calculator-card final-calculator-inputs">
+                  <header>
+                    <h1>Build your payday plan.</h1>
+                    <p>Just a few numbers to see your future.</p>
+                  </header>
+
+                  <div className="final-calculator-fields">
+                    <CalculatorNumberField
+                      id="calculator-starting"
+                      label="Starting balance"
+                      value={starting}
+                      setValue={setStarting}
+                      error={errors.starting}
+                      prefix="$"
+                      min="0"
+                    />
+                    <CalculatorNumberField
+                      id="calculator-contribution"
+                      label="Contribution each payday"
+                      value={contribution}
+                      setValue={setContribution}
+                      error={errors.contribution}
+                      prefix="$"
+                      min="0"
+                    />
+                    <label className="final-calculator-field" htmlFor="calculator-frequency">
+                      <span>Pay frequency</span>
+                      <select
+                        id="calculator-frequency"
+                        value={frequency}
+                        onChange={(event) => setFrequency(event.target.value)}
+                      >
+                        <option>Biweekly</option>
+                        <option>Weekly</option>
+                        <option>Monthly</option>
+                      </select>
+                    </label>
+                    <div className="final-calculator-field-split">
+                      <CalculatorNumberField
+                        id="calculator-age"
+                        label="Current age"
+                        value={age}
+                        setValue={setAge}
+                        error={errors.age}
+                        min="16"
+                        max="99"
+                      />
+                      <CalculatorNumberField
+                        id="calculator-retirement-age"
+                        label="Retire at age"
+                        value={retireAge}
+                        setValue={setRetireAge}
+                        error={errors.retireAge}
+                        min="17"
+                        max="100"
+                      />
+                    </div>
+                    <CalculatorNumberField
+                      id="calculator-return"
+                      label="Expected return (annual)"
+                      value={returnRate}
+                      setValue={setReturnRate}
+                      error={errors.returnRate}
+                      suffix="%"
+                      min="-20"
+                      max="30"
+                      step="0.1"
+                    />
+                  </div>
+
+                  <button
+                    type="button"
+                    className="final-calculator-advanced"
+                    onClick={() => openPanel("advanced")}
+                  >
+                    <SlidersHorizontal size={15} aria-hidden="true" />
+                    Advanced assumptions
+                  </button>
+
+                  <div className="final-calculator-trust">
+                    <span><Lock size={13} aria-hidden="true" /> No account needed</span>
+                    <span><BookOpen size={13} aria-hidden="true" /> Saved on your device</span>
+                    <button type="button" onClick={() => openPanel("privacy")}>
+                      <ShieldAlert size={13} aria-hidden="true" /> Privacy settings
+                    </button>
+                  </div>
+
+                  <button
+                    type="button"
+                    className="final-calculator-primary final-calculator-run"
+                    onClick={runProjection}
+                  >
+                    Run projection
+                  </button>
+                </section>
+
+                <div className="final-calculator-centre">
+                  <section className="final-calculator-card final-payday-result">
+                    <h2>
+                      You’ve already used <strong>{paydaysUsed.toLocaleString("en-CA")}</strong> paydays.
+                      <br />
+                      <span>{paydaysRemaining.toLocaleString("en-CA")}</span> remain.
+                    </h2>
+                    <div className="final-payday-summary" aria-label="Payday summary">
+                      <div><CalendarDays aria-hidden="true" /><span>Paydays used<strong>{paydaysUsed.toLocaleString("en-CA")}</strong></span></div>
+                      <div><CircleDotDashed aria-hidden="true" /><span>Paydays remaining<strong>{paydaysRemaining.toLocaleString("en-CA")}</strong></span></div>
+                      <div><UserRound aria-hidden="true" /><span>Current age<strong>{age}</strong></span></div>
+                      <div><Sun aria-hidden="true" /><span>Years remaining<strong>{yearsRemaining}</strong></span></div>
+                    </div>
+                  </section>
+
+                  <section className="final-calculator-card final-calculator-projection">
+                    <div className="final-projection-heading">
+                      <div>
+                        <h2>Your projected future value</h2>
+                        <p>(payday by payday)</p>
+                      </div>
+                      <div className="final-projection-toggles">
+                        <label>
+                          <input
+                            type="checkbox"
+                            checked={logScale}
+                            onChange={(event) => setLogScale(event.target.checked)}
+                          />
+                          Log scale
+                        </label>
+                        <label>
+                          <input
+                            type="checkbox"
+                            checked={inflationAdjusted}
+                            onChange={(event) => setInflationAdjusted(event.target.checked)}
+                          />
+                          Inflation adjusted
+                        </label>
+                      </div>
+                      <div className="final-projection-total">
+                        <span>At age {retireAge}</span>
+                        <strong>{money(displayBalance)}</strong>
+                      </div>
+                    </div>
+
+                    <p className="sr-only">
+                      At age {retireAge}, the projected account value is {money(displayBalance)},
+                      consisting of {money(projection.invested)} in contributions and
+                      {" "}{money(displayGrowth)} in projected investment growth.
+                    </p>
+
+                    <div className={`final-projection-chart ${logScale ? "is-log-scale" : ""}`}>
+                      <ProjectionChart
+                        age={age}
+                        retireAge={retireAge}
+                        money={money}
+                        balance={displayBalance}
+                        invested={projection.invested}
+                        starting={starting}
+                        paydaysUsed={paydaysUsed}
+                        hasPlan={hasRetirementPlan}
+                      />
+                    </div>
+
+                    <div className="final-projection-legend" aria-label="Chart legend">
+                      <span><i className="contributions" />Your contributions</span>
+                      <span><i className="growth" />Investment growth</span>
+                      <span><i className="range" />Projected range</span>
+                    </div>
+
+                    <div className="final-projection-controls">
+                      <button type="button" className="active">Scenario A</button>
+                      <button
+                        type="button"
+                        onClick={() => setContribution(Math.max(0, Number(contribution) + 100))}
+                      >
+                        Scenario B: +$100 per payday
+                        {scenarioB && <span>{money(scenarioB.value)}</span>}
+                      </button>
+                      <button type="button" className="link" onClick={() => openPanel("compare")}>
+                        View math →
+                      </button>
+                    </div>
+                  </section>
+                </div>
+
+                <aside className="final-calculator-sidebar">
+                  <section className="final-outlook-card">
+                    <div className="final-outlook-topline">
+                      <span>Your outlook</span>
+                      <em>Projection</em>
+                    </div>
+                    <p>At age {retireAge}</p>
+                    <strong className="final-outlook-value">{money(displayBalance)}</strong>
+                    <p>Projected future value</p>
+
+                    <div className="final-outlook-mix">
+                      <div><span>Your contributions</span><span>Investment growth</span></div>
+                      <div
+                        className="final-outlook-bar"
+                        role="img"
+                        aria-label={`${Math.round(investedShare)} percent contributions and ${Math.round(100 - investedShare)} percent growth`}
+                      >
+                        <span style={{ width: `${investedShare}%` }} />
+                        <span style={{ width: `${100 - investedShare}%` }} />
+                      </div>
+                    </div>
+
+                    <dl>
+                      <div><dt>You invested</dt><dd>{money(projection.invested)}</dd></div>
+                      <div><dt>Growth</dt><dd>{money(displayGrowth)}</dd></div>
+                      <div><dt>Est. monthly income</dt><dd>{money(displayMonthly)}/mo</dd></div>
+                      <div><dt>Paydays remaining</dt><dd>{paydaysRemaining.toLocaleString("en-CA")}</dd></div>
+                    </dl>
+                  </section>
+
+                  <section className="final-calculator-card final-save-plan">
+                    <span className="final-save-eyebrow">Save your payday plan</span>
+                    <h2>Keep it for later.</h2>
+                    <p>Save your inputs and projection on this device so you can return and track your progress.</p>
+                    <div className="final-save-actions">
+                      <button type="button" onClick={savePlan}>Save your plan</button>
+                      {snapshots.length > 0 && (
+                        <button
+                          type="button"
+                          className="final-view-plans"
+                          onClick={() => openPanel("journal")}
+                        >
+                          View saved plans ({snapshots.length})
+                        </button>
+                      )}
+                    </div>
+                    <p className="final-save-privacy"><Lock size={13} aria-hidden="true" /> Saved privately in this browser.</p>
+                    <p
+                      id="save-plan-message"
+                      className={`final-save-message ${saveStatus}`}
+                      role={saveStatus === "error" ? "alert" : "status"}
+                      aria-live="polite"
+                    >
+                      {saveMessage}
+                    </p>
+                  </section>
+                </aside>
+              </div>
+
+              <section className="final-calculator-philosophy" aria-label="The 1040 Paydays philosophy">
+                {principles.map(([Icon, title, description]) => (
+                  <div key={title}>
+                    <Icon size={24} fill="none" aria-hidden="true" />
+                    <span><strong>{title}</strong><p>{description}</p></span>
+                  </div>
+                ))}
+              </section>
+            </div>
+          </main>
+
+          <section
+            className={`reference-home-newsletter final-calculator-newsletter ${newsletterHighlighted ? "is-highlighted" : ""}`}
+            id="calculator-newsletter"
+            aria-labelledby="calculator-newsletter-title"
+          >
+            <div className="reference-home-container reference-home-newsletter-inner">
+              <h2 id="calculator-newsletter-title">Get new ideas in your inbox.</h2>
+              <NewsletterSignup
+                {...newsletterProps}
+                idPrefix="calculator-footer"
+                buttonLabel="Subscribe"
+                placeholder="Enter your email"
+              />
+            </div>
+          </section>
+
+          <footer className="reference-home-footer">
+            <div className="reference-home-footer-inner">
+              <p className="reference-home-copyright">© 2026 1040 Paydays. All rights reserved.</p>
+              <p>
+                The content, design, illustrations, branding, and original editorial articles on this website are protected by copyright and may not be reproduced or distributed without written permission.
+              </p>
+              <p>
+                1040 Paydays is for educational purposes only and does not provide financial, tax, legal, or investment advice.
+              </p>
+              <nav className="reference-home-footer-nav" aria-label="Legal and contact navigation">
+                <button type="button" onClick={() => openPanel("privacy")}>Privacy Policy</button>
+                <span aria-hidden="true">·</span>
+                <button type="button" onClick={() => openPanel("terms")}>Terms of Use</button>
+                <span aria-hidden="true">·</span>
+                <button type="button" onClick={() => openPanel("contact")}>Contact</button>
+              </nav>
+            </div>
+          </footer>
+        </div>
+      );
+    }
+
     function ReferenceHomePage({
       mobileMenuOpen,
       setMobileMenuOpen,
@@ -7403,7 +7943,7 @@ const THIRTY_SIXTH_ARTICLE = {
               <nav className="learn-index-nav" aria-label="Primary navigation">
                 <button type="button" className="active" aria-current="page">Home</button>
                 <button type="button" onClick={() => navigateTo("/learn")}>Learn</button>
-                <button type="button" onClick={() => openPanel("calculator")}>Calculator</button>
+                <button type="button" onClick={() => navigateTo("/calculator")}>Calculator</button>
                 <button type="button" onClick={() => openPanel("about")}>About</button>
               </nav>
 
@@ -7427,7 +7967,7 @@ const THIRTY_SIXTH_ARTICLE = {
                   >
                     <button type="button" aria-current="page" onClick={() => setMobileMenuOpen(false)}>Home</button>
                     <button type="button" onClick={() => navigateTo("/learn")}>Learn</button>
-                    <button type="button" onClick={() => openPanel("calculator")}>Calculator</button>
+                    <button type="button" onClick={() => navigateTo("/calculator")}>Calculator</button>
                     <button type="button" onClick={() => openPanel("about")}>About</button>
                   </nav>
                 )}
@@ -7959,6 +8499,7 @@ const THIRTY_SIXTH_ARTICLE = {
         const cluster = LEARN_CLUSTER_BY_SLUG.get(routeSlug);
         const article = ARTICLE_BY_ID.get(routeSlug);
         const isLearnIndex = normalizedPath === "/learn";
+        const isCalculatorRoute = normalizedPath === "/calculator";
         const isLearnRoute = isLearnIndex || Boolean(cluster) || Boolean(article);
         const title = article
           ? `${article.title} | 1040 Paydays`
@@ -7966,6 +8507,8 @@ const THIRTY_SIXTH_ARTICLE = {
             ? `${cluster.title} | Learn | 1040 Paydays`
             : isLearnIndex
               ? "Learn | 1040 Paydays"
+              : isCalculatorRoute
+                ? "Calculator | 1040 Paydays"
               : "1040 Paydays | Savings and Retirement Calculator by Paycheck";
         const description = article
           ? article.summary
@@ -7973,8 +8516,10 @@ const THIRTY_SIXTH_ARTICLE = {
             ? cluster.intro
             : isLearnIndex
               ? "Thoughtful articles and stories to help you make better financial decisions—one payday at a time."
+              : isCalculatorRoute
+                ? "Build a payday-by-payday savings plan and explore how regular contributions may grow over time."
               : "Estimate how much you can save from every paycheck. Use 1040 Paydays to plan savings, retirement, and future growth with a simple calculator.";
-        const canonicalPath = isLearnRoute ? normalizedPath : "/";
+        const canonicalPath = isLearnRoute || isCalculatorRoute ? normalizedPath : "/";
         const canonicalUrl = `${SITE_URL}${canonicalPath === "/" ? "/" : canonicalPath}`;
 
         const setMeta = (selector, attribute, value) => {
@@ -8289,6 +8834,58 @@ const THIRTY_SIXTH_ARTICLE = {
             openHomePanel={openHomePanel}
             newsletterProps={newsletterProps}
           />
+        );
+      }
+
+      if (normalizedRoute === "/calculator") {
+        return (
+          <div className="home-page-host">
+            {panel && (
+              <SlidePanel
+                panel={panel}
+                close={() => setPanel(null)}
+                navigate={setPanel}
+                money={money}
+                projection={projection}
+                compare={compare}
+                snapshots={snapshots}
+                setSnapshots={setSnapshots}
+                compareControls={{
+                  compareExtraSavings,
+                  setCompareExtraSavings,
+                  compareReturn,
+                  setCompareReturn,
+                  compareRetireAge,
+                  setCompareRetireAge,
+                  compareWaitYears,
+                  setCompareWaitYears,
+                }}
+                values={{ starting, contribution, frequency, age, retireAge, returnRate, withdrawalRate, lifespan, inflation, feeRate, contributionGrowth, retirementYears }}
+                setters={{ setStarting, setContribution, setFrequency, setAge, setRetireAge, setReturnRate, setWithdrawalRate, setLifespan, setInflation, setFeeRate, setContributionGrowth }}
+              />
+            )}
+
+            <CalculatorPage
+              mobileMenuOpen={mobileMenuOpen}
+              setMobileMenuOpen={setMobileMenuOpen}
+              navigateTo={navigateTo}
+              setPanel={setPanel}
+              newsletterProps={newsletterProps}
+              panel={panel}
+              money={money}
+              projection={projection}
+              compare={compare}
+              values={{ starting, contribution, frequency, age, retireAge, returnRate, withdrawalRate, lifespan, inflation, feeRate, contributionGrowth, retirementYears }}
+              setters={{ setStarting, setContribution, setFrequency, setAge, setRetireAge, setReturnRate, setWithdrawalRate, setLifespan, setInflation, setFeeRate, setContributionGrowth }}
+              paydaysUsed={paydaysUsed}
+              paydaysRemaining={paydaysRemaining}
+              yearsRemaining={yearsRemaining}
+              hasRetirementPlan={hasRetirementPlan}
+              investedShare={investedShare}
+              snapshots={snapshots}
+              setSnapshots={setSnapshots}
+            />
+          </div>
         );
       }
 
@@ -8720,7 +9317,7 @@ const THIRTY_SIXTH_ARTICLE = {
                     ))}
                   </div>
                 ) : (
-                  <p className="panel-text">No projections have been saved yet. Save one from the Payday Journal card to compare your progress later.</p>
+                  <p className="panel-text">No plans have been saved yet. Save one from the Calculator page to compare your progress later.</p>
                 )}
                 <button className="danger-button" onClick={() => setSnapshots([])}>Erase past projections</button>
                 <button className="ok-button" onClick={close}>OK</button>
@@ -8858,7 +9455,7 @@ const THIRTY_SIXTH_ARTICLE = {
                 <nav className="learn-index-nav" aria-label="Primary navigation">
                   <button type="button" onClick={() => navigateTo("/")}>Home</button>
                   <button type="button" className="active" aria-current="page">Learn</button>
-                  <button type="button" onClick={() => goHomePanel("calculator")}>Calculator</button>
+                  <button type="button" onClick={() => navigateTo("/calculator")}>Calculator</button>
                   <button type="button" onClick={() => goHomePanel("about")}>About</button>
                 </nav>
 
@@ -8887,7 +9484,7 @@ const THIRTY_SIXTH_ARTICLE = {
                     >
                       <button type="button" onClick={() => navigateTo("/")}>Home</button>
                       <button type="button" aria-current="page" onClick={() => setMobileMenuOpen(false)}>Learn</button>
-                      <button type="button" onClick={() => goHomePanel("calculator")}>Calculator</button>
+                      <button type="button" onClick={() => navigateTo("/calculator")}>Calculator</button>
                       <button type="button" onClick={() => goHomePanel("about")}>About</button>
                     </nav>
                   )}
@@ -8908,7 +9505,7 @@ const THIRTY_SIXTH_ARTICLE = {
               </a>
 
               <nav className="topnav" aria-label="Primary navigation">
-                <button onClick={() => goHomePanel("calculator")}>Calculator</button>
+                <button onClick={() => navigateTo("/calculator")}>Calculator</button>
                 <button onClick={() => goHomePanel("how")}>How it works</button>
                 <button onClick={() => goHomePanel("compare")}>Compare</button>
                 <button className="active" onClick={() => navigateTo("/learn")}>Learn</button>
@@ -8931,7 +9528,7 @@ const THIRTY_SIXTH_ARTICLE = {
 
                 {mobileMenuOpen && (
                   <nav className="mobile-nav-menu" id="learn-mobile-navigation" aria-label="Mobile navigation">
-                    <button type="button" onClick={() => goHomePanel("calculator")}>Calculator</button>
+                    <button type="button" onClick={() => navigateTo("/calculator")}>Calculator</button>
                     <button type="button" onClick={() => goHomePanel("how")}>How it works</button>
                     <button type="button" onClick={() => goHomePanel("compare")}>Compare</button>
                     <button type="button" onClick={() => navigateTo("/learn")}>Learn</button>
