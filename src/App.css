@@ -8498,3 +8498,663 @@ a {
     transform: none;
   }
 }
+
+/* Reference homepage */
+.reference-home {
+  --reference-blue: #173b8c;
+  --reference-navy: #102a5c;
+  --reference-copy: #3f4c61;
+  --reference-border: #e2e5ea;
+  min-height: 100%;
+  color: var(--reference-navy);
+  background: #fff;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  transition: filter 180ms ease;
+}
+
+.reference-home.is-obscured {
+  filter: blur(6px);
+  pointer-events: none;
+  user-select: none;
+}
+
+.reference-home-container {
+  width: min(1280px, calc(100% - 64px));
+  margin-inline: auto;
+}
+
+.reference-home-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  height: 80px;
+  color: var(--reference-navy);
+  background: rgba(255, 255, 255, .98);
+  border-bottom: 1px solid var(--reference-border);
+}
+
+.reference-home-header-inner {
+  height: 80px;
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr) 220px;
+  align-items: center;
+}
+
+.reference-home-brand {
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  color: var(--reference-navy);
+  line-height: .8;
+}
+
+.reference-home-brand strong {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 31px;
+  font-weight: 700;
+  letter-spacing: -.8px;
+}
+
+.reference-home-brand span {
+  margin-top: 9px;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 3.7px;
+}
+
+.reference-home-nav {
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 48px;
+}
+
+.reference-home-nav a,
+.reference-home-nav button {
+  height: 100%;
+  display: inline-flex;
+  align-items: center;
+  border: 0;
+  border-bottom: 3px solid transparent;
+  padding: 3px 0 0;
+  color: var(--reference-navy);
+  background: transparent;
+  font-size: 15px;
+  font-weight: 750;
+}
+
+.reference-home-nav a:hover,
+.reference-home-nav button:hover {
+  color: var(--reference-blue);
+}
+
+.reference-home-nav .is-active {
+  border-bottom-color: var(--reference-blue);
+}
+
+.reference-home-actions {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.reference-home-subscribe {
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  border-radius: 8px;
+  padding: 0 20px;
+  color: #fff;
+  background: var(--reference-blue);
+  font-size: 14px;
+  font-weight: 800;
+  transition: background-color 180ms ease;
+}
+
+.reference-home-subscribe:hover {
+  background: #102f78;
+}
+
+.reference-home-menu,
+.reference-home-mobile-nav {
+  display: none;
+}
+
+.reference-home-hero {
+  position: relative;
+  height: clamp(500px, 33.2vw, 520px);
+  min-height: 500px;
+  overflow: hidden;
+  color: #fff;
+  background: #556b80;
+}
+
+.reference-home-hero > img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center 52%;
+}
+
+.reference-home-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(7, 26, 59, .28);
+}
+
+.reference-home-hero-copy {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 86px 32px 40px;
+  text-align: center;
+}
+
+.reference-home-hero h1 {
+  max-width: 1100px;
+  margin: 0;
+  color: #fff;
+  font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+  font-size: clamp(48px, 4.35vw, 67px);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -.025em;
+  text-shadow: 0 2px 12px rgba(5, 20, 45, .34);
+}
+
+.reference-home-hero p {
+  margin: 24px 0 0;
+  color: #fff;
+  font-size: clamp(21px, 1.85vw, 28px);
+  font-weight: 450;
+  line-height: 1.35;
+  text-shadow: 0 2px 10px rgba(5, 20, 45, .4);
+}
+
+.reference-home-hero-copy > a {
+  min-width: 270px;
+  min-height: 54px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 28px;
+  border-radius: 8px;
+  padding: 0 24px;
+  color: #fff;
+  background: var(--reference-blue);
+  box-shadow: 0 4px 12px rgba(10, 30, 70, .15);
+  font-size: 17px;
+  font-weight: 800;
+  transition: background-color 180ms ease;
+}
+
+.reference-home-hero-copy > a:hover {
+  background: #102f78;
+}
+
+.reference-home-philosophy {
+  scroll-margin-top: 92px;
+  padding: 36px 0 30px;
+}
+
+.reference-home-philosophy-heading {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(40px, 1fr) auto minmax(40px, 1fr);
+  align-items: center;
+  gap: 18px;
+  margin-bottom: -17px;
+}
+
+.reference-home-philosophy-heading > span {
+  height: 1px;
+  background: var(--reference-border);
+}
+
+.reference-home-philosophy h2 {
+  margin: 0;
+  padding: 0 18px;
+  color: var(--reference-navy);
+  background: #fff;
+  font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+  font-size: clamp(30px, 2.6vw, 40px);
+  font-weight: 700;
+  line-height: 1.1;
+  text-align: center;
+}
+
+.reference-home-philosophy ol {
+  min-height: 210px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: center;
+  margin: 0;
+  border: 1px solid var(--reference-border);
+  border-radius: 5px;
+  padding: 42px 26px 26px;
+  list-style: none;
+}
+
+.reference-home-philosophy li {
+  min-width: 0;
+  min-height: 116px;
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  gap: 16px;
+  align-content: start;
+  padding: 10px 28px;
+  border-left: 1px solid var(--reference-border);
+}
+
+.reference-home-philosophy li:first-child {
+  border-left: 0;
+}
+
+.reference-home-philosophy svg {
+  color: var(--reference-navy);
+}
+
+.reference-home-philosophy strong {
+  display: block;
+  color: var(--reference-navy);
+  font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+  font-size: clamp(20px, 1.65vw, 25px);
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.reference-home-philosophy p {
+  max-width: 24ch;
+  margin: 14px 0 0;
+  color: #233c68;
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+.reference-home-newsletter {
+  border-top: 1px solid #f1f2f5;
+  border-bottom: 1px solid #f1f2f5;
+  background: #fbfbfc;
+}
+
+.reference-home-newsletter-inner {
+  min-height: 104px;
+  display: grid;
+  grid-template-columns: 320px minmax(0, 1fr);
+  gap: 48px;
+  align-items: center;
+  padding: 18px 0 12px;
+}
+
+.reference-home-newsletter h2 {
+  margin: 0;
+  color: var(--reference-navy);
+  font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+  font-size: 25px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.reference-home-newsletter .newsletter-signup {
+  min-width: 0;
+}
+
+.reference-home-newsletter .email-row {
+  grid-template-columns: minmax(0, 1fr) 190px;
+  gap: 0;
+  margin: 0;
+}
+
+.reference-home-newsletter .email-row input,
+.reference-home-newsletter .email-row button {
+  height: 54px;
+  border-radius: 0;
+}
+
+.reference-home-newsletter .email-row input {
+  border: 1px solid #d5dae2;
+  border-radius: 8px 0 0 8px;
+  padding: 0 20px;
+  color: var(--reference-navy);
+  background: #fff;
+  font-size: 15px;
+}
+
+.reference-home-newsletter .email-row button {
+  border: 0;
+  border-radius: 0 8px 8px 0;
+  color: #fff;
+  background: var(--reference-blue);
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.reference-home-newsletter .email-row button:hover {
+  background: #102f78;
+}
+
+.reference-home-newsletter .newsletter-signup small {
+  margin-top: 5px;
+  color: #6a7484;
+  font-size: 9px;
+  line-height: 1.25;
+}
+
+.reference-home-newsletter .newsletter-message {
+  min-height: 0;
+  margin: 2px 0 0;
+}
+
+.reference-home-newsletter .newsletter-success-panel {
+  margin: 0;
+}
+
+.reference-home-footer {
+  min-height: 60px;
+  display: grid;
+  place-items: center;
+  padding: 10px 24px 18px;
+  background: #fff;
+}
+
+.reference-home-footer-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 34px;
+}
+
+.reference-home-footer-nav a,
+.reference-home-footer-nav button {
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  border: 0;
+  padding: 0;
+  color: #233c68;
+  background: transparent;
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.reference-home-footer-nav a:hover,
+.reference-home-footer-nav button:hover {
+  color: var(--reference-blue);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.reference-home a:focus-visible,
+.reference-home button:focus-visible,
+.reference-home input:focus-visible {
+  outline: 3px solid rgba(23, 59, 140, .38);
+  outline-offset: 3px;
+}
+
+@media (max-width: 1050px) {
+  .reference-home-header-inner {
+    grid-template-columns: 180px minmax(0, 1fr) 180px;
+  }
+
+  .reference-home-nav {
+    gap: 32px;
+  }
+
+  .reference-home-philosophy ol {
+    padding-inline: 16px;
+  }
+
+  .reference-home-philosophy li {
+    grid-template-columns: 36px minmax(0, 1fr);
+    gap: 12px;
+    padding-inline: 18px;
+  }
+
+  .reference-home-philosophy svg {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+@media (max-width: 820px) {
+  .reference-home-container {
+    width: min(100% - 36px, 720px);
+  }
+
+  .reference-home-header,
+  .reference-home-header-inner {
+    height: 68px;
+  }
+
+  .reference-home-header-inner {
+    grid-template-columns: 1fr auto;
+  }
+
+  .reference-home-nav {
+    display: none;
+  }
+
+  .reference-home-actions {
+    gap: 8px;
+  }
+
+  .reference-home-subscribe {
+    min-height: 44px;
+    padding-inline: 14px;
+  }
+
+  .reference-home-menu {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border: 0;
+    padding: 0 8px;
+    color: var(--reference-navy);
+    background: transparent;
+    font-size: 13px;
+    font-weight: 800;
+  }
+
+  .reference-home-mobile-nav {
+    position: absolute;
+    z-index: 5;
+    top: calc(100% + 12px);
+    right: 0;
+    width: min(260px, calc(100vw - 36px));
+    display: grid;
+    overflow: hidden;
+    border: 1px solid var(--reference-border);
+    border-radius: 6px;
+    background: #fff;
+    box-shadow: 0 12px 30px rgba(10, 34, 75, .12);
+  }
+
+  .reference-home-mobile-nav a,
+  .reference-home-mobile-nav button {
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    border: 0;
+    border-bottom: 1px solid var(--reference-border);
+    padding: 0 18px;
+    color: var(--reference-navy);
+    background: #fff;
+    font-weight: 750;
+    text-align: left;
+  }
+
+  .reference-home-mobile-nav button:last-child {
+    border-bottom: 0;
+  }
+
+  .reference-home-hero {
+    height: 470px;
+    min-height: 470px;
+  }
+
+  .reference-home-hero-copy {
+    justify-content: center;
+    padding: 36px 24px;
+  }
+
+  .reference-home-hero h1 {
+    font-size: clamp(42px, 7vw, 56px);
+  }
+
+  .reference-home-philosophy {
+    padding-top: 34px;
+  }
+
+  .reference-home-philosophy ol {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding: 40px 18px 20px;
+  }
+
+  .reference-home-philosophy li {
+    min-height: 138px;
+  }
+
+  .reference-home-philosophy li:nth-child(3) {
+    border-left: 0;
+  }
+
+  .reference-home-philosophy li:nth-child(n + 3) {
+    border-top: 1px solid var(--reference-border);
+    padding-top: 24px;
+  }
+
+  .reference-home-newsletter-inner {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    padding-block: 22px 16px;
+  }
+}
+
+@media (max-width: 560px) {
+  .reference-home-container {
+    width: calc(100% - 28px);
+  }
+
+  .reference-home-brand strong {
+    font-size: 28px;
+  }
+
+  .reference-home-brand span {
+    font-size: 9px;
+  }
+
+  .reference-home-subscribe {
+    min-width: 44px;
+    padding-inline: 12px;
+  }
+
+  .reference-home-menu span {
+    display: none;
+  }
+
+  .reference-home-hero {
+    height: 430px;
+    min-height: 430px;
+  }
+
+  .reference-home-hero > img {
+    object-position: 58% center;
+  }
+
+  .reference-home-hero-copy {
+    padding: 32px 18px;
+  }
+
+  .reference-home-hero h1 {
+    font-size: clamp(38px, 10.8vw, 48px);
+    line-height: 1.02;
+  }
+
+  .reference-home-hero p {
+    max-width: 310px;
+    margin-top: 18px;
+    font-size: 19px;
+  }
+
+  .reference-home-hero-copy > a {
+    min-width: 0;
+    width: min(100%, 310px);
+    margin-top: 24px;
+  }
+
+  .reference-home-philosophy-heading {
+    grid-template-columns: 1fr;
+    margin-bottom: 16px;
+  }
+
+  .reference-home-philosophy-heading > span {
+    display: none;
+  }
+
+  .reference-home-philosophy h2 {
+    padding: 0;
+    font-size: 31px;
+  }
+
+  .reference-home-philosophy ol {
+    grid-template-columns: 1fr;
+    padding: 18px;
+  }
+
+  .reference-home-philosophy li,
+  .reference-home-philosophy li:nth-child(3) {
+    min-height: 0;
+    grid-template-columns: 38px minmax(0, 1fr);
+    padding: 20px 4px;
+    border-top: 1px solid var(--reference-border);
+    border-left: 0;
+  }
+
+  .reference-home-philosophy li:first-child {
+    padding-top: 4px;
+    border-top: 0;
+  }
+
+  .reference-home-philosophy p {
+    max-width: none;
+    margin-top: 7px;
+  }
+
+  .reference-home-newsletter h2 {
+    font-size: 23px;
+  }
+
+  .reference-home-newsletter .email-row {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .reference-home-newsletter .email-row input,
+  .reference-home-newsletter .email-row button {
+    border-radius: 8px;
+  }
+
+  .reference-home-footer-nav {
+    flex-wrap: wrap;
+    gap: 8px 24px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reference-home,
+  .reference-home-subscribe,
+  .reference-home-hero-copy > a {
+    transition: none;
+  }
+}

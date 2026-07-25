@@ -5,6 +5,7 @@
       UserRound,
       Sun,
       Lock,
+      Heart,
       Mail,
       Camera,
       Facebook,
@@ -7344,6 +7345,170 @@ const THIRTY_SIXTH_ARTICLE = {
       );
     }
 
+    function ReferenceHomePage({
+      mobileMenuOpen,
+      setMobileMenuOpen,
+      navigateTo,
+      setPanel,
+      newsletterProps,
+      panel,
+    }) {
+      const followLink = (event, path) => {
+        event.preventDefault();
+        navigateTo(path);
+      };
+
+      const openPanel = (name) => {
+        setMobileMenuOpen(false);
+        setPanel(name);
+      };
+
+      const principles = [
+        {
+          title: "Live Today",
+          description: "Make the most of the life you have now.",
+          Icon: Sun,
+        },
+        {
+          title: "Protect Tomorrow",
+          description: "Prepare for life's ups and downs.",
+          Icon: Lock,
+        },
+        {
+          title: "Plan Your Future",
+          description: "Save and invest one payday at a time to create more choices.",
+          Icon: CalendarDays,
+        },
+        {
+          title: "Choose What Matters",
+          description: "Align your money with your values and goals.",
+          Icon: Heart,
+        },
+      ];
+
+      return (
+        <div className={`reference-home ${panel ? "is-obscured" : ""}`}>
+          <header className="learn-index-header">
+            <div className="learn-index-container learn-index-header-inner">
+              <a
+                className="learn-index-brand"
+                href="/"
+                aria-label="1040 Paydays home"
+                onClick={(event) => followLink(event, "/")}
+              >
+                <strong>1040</strong>
+                <span>PAYDAYS</span>
+              </a>
+
+              <nav className="learn-index-nav" aria-label="Primary navigation">
+                <button type="button" className="active" aria-current="page">Home</button>
+                <button type="button" onClick={() => navigateTo("/learn")}>Learn</button>
+                <button type="button" onClick={() => openPanel("calculator")}>Calculator</button>
+                <button type="button" onClick={() => openPanel("about")}>About</button>
+              </nav>
+
+              <div className="learn-index-actions">
+                <button
+                  className="learn-index-menu-button"
+                  type="button"
+                  aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+                  aria-expanded={mobileMenuOpen}
+                  aria-controls="learn-index-mobile-navigation"
+                  onClick={() => setMobileMenuOpen((open) => !open)}
+                >
+                  {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+                  <span>Menu</span>
+                </button>
+                {mobileMenuOpen && (
+                  <nav
+                    className="learn-index-mobile-nav"
+                    id="learn-index-mobile-navigation"
+                    aria-label="Mobile navigation"
+                  >
+                    <button type="button" aria-current="page" onClick={() => setMobileMenuOpen(false)}>Home</button>
+                    <button type="button" onClick={() => navigateTo("/learn")}>Learn</button>
+                    <button type="button" onClick={() => openPanel("calculator")}>Calculator</button>
+                    <button type="button" onClick={() => openPanel("about")}>About</button>
+                  </nav>
+                )}
+              </div>
+            </div>
+          </header>
+
+          <main>
+            <section className="reference-home-hero" aria-labelledby="reference-home-title">
+              <img
+                src="/home-mountain-sunrise-hero.png"
+                alt="Sunrise over a mountain valley with evergreen trees in the foreground"
+                width="1983"
+                height="793"
+                fetchpriority="high"
+              />
+              <div className="reference-home-hero-overlay" aria-hidden="true" />
+              <div className="reference-home-hero-copy">
+                <h1 id="reference-home-title">You only get about 1,040 paydays.</h1>
+                <p>Every payday is a decision. Choose yours.</p>
+                <a href="#home-philosophy">Explore the Philosophy</a>
+              </div>
+            </section>
+
+            <section
+              className="reference-home-philosophy reference-home-container"
+              id="home-philosophy"
+              aria-labelledby="reference-philosophy-title"
+            >
+              <div className="reference-home-philosophy-heading">
+                <span aria-hidden="true" />
+                <h2 id="reference-philosophy-title">The 1040 Paydays Philosophy</h2>
+                <span aria-hidden="true" />
+              </div>
+              <ol>
+                {principles.map(({ title, description, Icon }) => (
+                  <li key={title}>
+                    <Icon
+                      size={32}
+                      strokeWidth={1.7}
+                      fill="none"
+                      aria-hidden="true"
+                    />
+                    <div>
+                      <strong>{title}</strong>
+                      <p>{description}</p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </section>
+
+            <section
+              className="reference-home-newsletter"
+              id="home-newsletter"
+              aria-labelledby="reference-newsletter-title"
+            >
+              <div className="reference-home-container reference-home-newsletter-inner">
+                <h2 id="reference-newsletter-title">Get new ideas in your inbox.</h2>
+                <NewsletterSignup
+                  {...newsletterProps}
+                  idPrefix="home-reference"
+                  buttonLabel="Subscribe"
+                  placeholder="Enter your email"
+                />
+              </div>
+            </section>
+          </main>
+
+          <footer className="reference-home-footer">
+            <nav className="reference-home-footer-nav" aria-label="Footer navigation">
+              <button type="button" onClick={() => openPanel("about")}>About</button>
+              <a href="#facebook">Facebook</a>
+              <a href="#twitter">Twitter</a>
+              <a href="#instagram">Instagram</a>
+            </nav>
+          </footer>
+        </div>
+      );
+    }
+
     function EditorialHomePage({
       currency,
       setCurrency,
@@ -8142,9 +8307,7 @@ const THIRTY_SIXTH_ARTICLE = {
             />
           )}
 
-          <EditorialHomePage
-            currency={currency}
-            setCurrency={setCurrency}
+          <ReferenceHomePage
             mobileMenuOpen={mobileMenuOpen}
             setMobileMenuOpen={setMobileMenuOpen}
             navigateTo={navigateTo}
