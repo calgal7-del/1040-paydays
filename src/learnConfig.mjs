@@ -123,7 +123,7 @@ export const LEARN_EDITORIAL_CONFIG = {
       description: "Align money with what matters.",
     },
   ],
-  // First appearance of each article slug in repository history.
+  // Publication date (YYYY-MM-DD). Future dates remain private until that date.
   verifiedPublicationDates: {
     "you-only-get-about-1040-paydays": "2026-07-05",
     "who-wants-to-go-home": "2026-07-05",
@@ -179,3 +179,19 @@ export const LEARN_EDITORIAL_CONFIG = {
     "should-you-save-or-pay-off-debt-first": "2026-07-25",
   },
 };
+
+export function localPublicationDate(date = new Date()) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+export function isArticlePublished(articleSlug, date = new Date()) {
+  const publicationDate =
+    LEARN_EDITORIAL_CONFIG.verifiedPublicationDates[articleSlug];
+
+  return Boolean(
+    publicationDate && publicationDate <= localPublicationDate(date)
+  );
+}

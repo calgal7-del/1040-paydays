@@ -1,6 +1,9 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
-import { LEARN_EDITORIAL_CONFIG } from "../src/learnConfig.mjs";
+import {
+  LEARN_EDITORIAL_CONFIG,
+  isArticlePublished,
+} from "../src/learnConfig.mjs";
 import { PHILOSOPHY_PAGES } from "../src/philosophyConfig.mjs";
 
 const SITE_URL = "https://www.1040paydays.com";
@@ -51,6 +54,9 @@ function getArticleId(source, articleConstantName) {
 const articleIds = getArticlesList(appSource).map((articleName) =>
   getArticleId(appSource, articleName)
 );
+const publishedArticleIds = articleIds.filter((articleId) =>
+  isArticlePublished(articleId)
+);
 const clusterPaths = LEARN_EDITORIAL_CONFIG.clusters.map(
   (cluster) => `/learn/${cluster.slug}`
 );
@@ -72,7 +78,7 @@ const publicPaths = [
   ...standalonePagePaths,
   ...philosophyPaths,
   ...clusterPaths,
-  ...articleIds.map((id) => `/learn/${id}`),
+  ...publishedArticleIds.map((id) => `/learn/${id}`),
 ];
 
 const urls = publicPaths.map((path) => {

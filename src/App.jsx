@@ -19,7 +19,10 @@
       BarChart3,
     } from "lucide-react";
     import "./App.css";
-    import { LEARN_EDITORIAL_CONFIG } from "./learnConfig.mjs";
+    import {
+      LEARN_EDITORIAL_CONFIG,
+      isArticlePublished,
+    } from "./learnConfig.mjs";
     import { PHILOSOPHY_PAGES } from "./philosophyConfig.mjs";
 
     const PAYDAYS_TOTAL = 1040;
@@ -6159,6 +6162,12 @@ const THIRTY_SIXTH_ARTICLE = {
     const ARTICLES = [FEATURED_ARTICLE, SECOND_ARTICLE, THIRD_ARTICLE, FOURTH_ARTICLE, FIFTH_ARTICLE, SIXTH_ARTICLE, SEVENTH_ARTICLE, EIGHTH_ARTICLE, NINTH_ARTICLE, TENTH_ARTICLE, ELEVENTH_ARTICLE, TWELFTH_ARTICLE, THIRTEENTH_ARTICLE, FOURTEENTH_ARTICLE, FIFTEENTH_ARTICLE, SIXTEENTH_ARTICLE, SEVENTEENTH_ARTICLE, EIGHTEENTH_ARTICLE, NINETEENTH_ARTICLE, TWENTIETH_ARTICLE, TWENTY_FIRST_ARTICLE, TWENTY_SECOND_ARTICLE, TWENTY_THIRD_ARTICLE, TWENTY_FOURTH_ARTICLE, TWENTY_FIFTH_ARTICLE, TWENTY_SEVENTH_ARTICLE, TWENTY_EIGHTH_ARTICLE, TWENTY_NINTH_ARTICLE, THIRTY_FIRST_ARTICLE, THIRTY_SECOND_ARTICLE, THIRTY_THIRD_ARTICLE, THIRTY_FOURTH_ARTICLE, THIRTY_FIFTH_ARTICLE, THIRTY_SIXTH_ARTICLE, THIRTY_SEVENTH_ARTICLE, THIRTY_EIGHTH_ARTICLE, THIRTY_NINTH_ARTICLE, FORTIETH_ARTICLE, FORTY_FIRST_ARTICLE, FORTY_SECOND_ARTICLE, FORTY_THIRD_ARTICLE, FORTY_FOURTH_ARTICLE, FORTY_FIFTH_ARTICLE, FORTY_SIXTH_ARTICLE, FORTY_SEVENTH_ARTICLE, FORTY_EIGHTH_ARTICLE, FORTY_NINTH_ARTICLE, FIFTIETH_ARTICLE, FIFTY_FIRST_ARTICLE];
     const ARTICLE_BY_ID = new Map(ARTICLES.map((article) => [article.id, article]));
     const UNIQUE_ARTICLES = Array.from(ARTICLE_BY_ID.values());
+    const PUBLISHED_ARTICLES = UNIQUE_ARTICLES.filter((article) =>
+      isArticlePublished(article.id)
+    );
+    const PUBLISHED_ARTICLE_BY_ID = new Map(
+      PUBLISHED_ARTICLES.map((article) => [article.id, article])
+    );
     const PHILOSOPHY_BY_SLUG = new Map(
       PHILOSOPHY_PAGES.map((page) => [page.slug, page])
     );
@@ -6175,14 +6184,16 @@ const THIRTY_SIXTH_ARTICLE = {
         );
       }
 
-      return slugs.map((slug) => ARTICLE_BY_ID.get(slug)).filter(Boolean);
+      return slugs
+        .map((slug) => PUBLISHED_ARTICLE_BY_ID.get(slug))
+        .filter(Boolean);
     }
 
     function articlesForCluster(cluster) {
       if (!cluster) return [];
       const configuredSlugs = new Set(cluster.articleSlugs || []);
       const configuredCategories = new Set(cluster.categories || []);
-      return UNIQUE_ARTICLES.filter(
+      return PUBLISHED_ARTICLES.filter(
         (article) =>
           configuredSlugs.has(article.id) ||
           configuredCategories.has(article.category)
@@ -6235,14 +6246,14 @@ const THIRTY_SIXTH_ARTICLE = {
         year: "numeric",
         timeZone: "UTC",
       }).format(new Date(`${date}T00:00:00Z`));
-    const LEARN_MORE_ARTICLES = UNIQUE_ARTICLES
+    const LEARN_MORE_ARTICLES = PUBLISHED_ARTICLES
       .filter((article) => !LEARN_START_HERE_IDS.has(article.id))
       .sort((left, right) =>
         publicationDateForArticle(right).localeCompare(
           publicationDateForArticle(left)
         )
       );
-    const HOME_LATEST_ARTICLES = UNIQUE_ARTICLES
+    const HOME_LATEST_ARTICLES = PUBLISHED_ARTICLES
       .filter((article) => publicationDateForArticle(article))
       .sort((left, right) =>
         publicationDateForArticle(right).localeCompare(
@@ -6256,7 +6267,7 @@ const THIRTY_SIXTH_ARTICLE = {
       HOME_CORNERSTONE_ARTICLE_ID,
       ...LEARN_START_HERE_ARTICLES.map((article) => article.id),
     ]);
-    const HOME_DAILY_ARTICLE_POOL = ARTICLES.filter(
+    const HOME_DAILY_ARTICLE_POOL = PUBLISHED_ARTICLES.filter(
       (article) =>
         article.image &&
         article.alt &&
@@ -8623,6 +8634,33 @@ const THIRTY_SIXTH_ARTICLE = {
         navigateTo(path);
       };
 
+      const scrollToNewsletter = (event) => {
+        event.preventDefault();
+        setMobileMenuOpen(false);
+
+        const newsletter = document.getElementById("home-newsletter");
+        const scrollContainer = newsletter?.closest(".home-page-host");
+        if (!newsletter || !scrollContainer) return;
+
+        const targetTop =
+          scrollContainer.scrollTop
+          + newsletter.getBoundingClientRect().top
+          - scrollContainer.getBoundingClientRect().top;
+        const reduceMotion = window.matchMedia(
+          "(prefers-reduced-motion: reduce)"
+        ).matches;
+
+        scrollContainer.scrollTo({
+          top: targetTop,
+          behavior: reduceMotion ? "auto" : "smooth",
+        });
+        window.history.replaceState(
+          window.history.state,
+          "",
+          "#home-newsletter"
+        );
+      };
+
       const principles = PHILOSOPHY_PAGES.map((page) => ({
         ...page,
         Icon: PAYDAY_PRINCIPLE_ICONS[page.iconKey],
@@ -8650,7 +8688,11 @@ const THIRTY_SIXTH_ARTICLE = {
               </nav>
 
               <div className="learn-index-actions">
-                <a className="learn-index-subscribe" href="#home-newsletter">
+                <a
+                  className="learn-index-subscribe"
+                  href="#home-newsletter"
+                  onClick={scrollToNewsletter}
+                >
                   <Mail size={16} aria-hidden="true" />
                   Subscribe
                 </a>
@@ -8870,7 +8912,9 @@ const THIRTY_SIXTH_ARTICLE = {
       newsletterProps,
       panel,
     }) {
-      const cornerstoneArticle = ARTICLE_BY_ID.get(HOME_CORNERSTONE_ARTICLE_ID);
+      const cornerstoneArticle = PUBLISHED_ARTICLE_BY_ID.get(
+        HOME_CORNERSTONE_ARTICLE_ID
+      );
       const [dailyArticle, setDailyArticle] = useState(() =>
         homeArticleForDate(new Date())
       );
@@ -9296,7 +9340,7 @@ const THIRTY_SIXTH_ARTICLE = {
           ? normalizedPath.slice("/learn/".length)
           : "";
         const cluster = LEARN_CLUSTER_BY_SLUG.get(routeSlug);
-        const article = ARTICLE_BY_ID.get(routeSlug);
+        const article = PUBLISHED_ARTICLE_BY_ID.get(routeSlug);
         const philosophySlug = normalizedPath.startsWith("/philosophy/")
           ? normalizedPath.slice("/philosophy/".length)
           : "";
@@ -9382,7 +9426,7 @@ const THIRTY_SIXTH_ARTICLE = {
 
         const existingStructuredData = document.getElementById("learn-structured-data");
         const collectionArticles = isLearnIndex
-          ? UNIQUE_ARTICLES
+          ? PUBLISHED_ARTICLES
           : philosophyPage
             ? configuredArticles(
                 philosophyPage.articleSlugs,
@@ -9714,7 +9758,9 @@ const THIRTY_SIXTH_ARTICLE = {
         const isNestedLearnRoute = normalizedRoute.startsWith("/learn/");
         const routeSlug = isNestedLearnRoute ? normalizedRoute.slice("/learn/".length) : "";
         const activeCluster = isNestedLearnRoute ? LEARN_CLUSTER_BY_SLUG.get(routeSlug) : null;
-        const activeArticle = isNestedLearnRoute && !activeCluster ? ARTICLE_BY_ID.get(routeSlug) : null;
+        const activeArticle = isNestedLearnRoute && !activeCluster
+          ? PUBLISHED_ARTICLE_BY_ID.get(routeSlug)
+          : null;
         const notFound = isNestedLearnRoute && !activeCluster && !activeArticle;
 
         return (
@@ -10122,7 +10168,7 @@ const THIRTY_SIXTH_ARTICLE = {
               <h2>Every payday is a decision. <span>Choose yours.</span></h2>
               <p>Swipe through practical stories about the choices that shape your financial future.</p>
               <div className="mobile-home-article-strip" ref={mobileArticleStripRef}>
-                {ARTICLES.map((article) => (
+                {PUBLISHED_ARTICLES.map((article) => (
                   <button type="button" key={article.id} onClick={() => setPanel(`article:${article.id}`)}>
                     <img src={article.image} alt={article.alt} />
                     <span>{article.category} · {article.readTime}</span>
@@ -10172,7 +10218,9 @@ const THIRTY_SIXTH_ARTICLE = {
       const isLearn = panel === "learn";
       const isArticle = panel?.startsWith("article:");
       const activeArticle = isArticle
-        ? ARTICLES.find((article) => article.id === panel.slice("article:".length)) || FEATURED_ARTICLE
+        ? PUBLISHED_ARTICLES.find(
+            (article) => article.id === panel.slice("article:".length)
+          ) || PUBLISHED_ARTICLES[0]
         : null;
       const panelRef = useRef(null);
 
@@ -10929,7 +10977,7 @@ const THIRTY_SIXTH_ARTICLE = {
           </div>
 
           <div className="learn-article-grid">
-            {ARTICLES.map((article) => (
+            {PUBLISHED_ARTICLES.map((article) => (
               <button className="learn-article-card" type="button" key={article.id} onClick={() => onOpenArticle(article)}>
                 <img src={article.image} alt={article.alt} />
                 <div className="learn-card-content">
@@ -11085,14 +11133,21 @@ const THIRTY_SIXTH_ARTICLE = {
     }) {
       const publicationDate = publicationDateForArticle(article);
       const faqs = ARTICLE_FAQS[article.id] || [];
-      const articleIndex = ARTICLES.findIndex((item) => item.id === article.id);
-      const previousArticle = ARTICLES[(articleIndex - 1 + ARTICLES.length) % ARTICLES.length];
-      const nextArticle = ARTICLES[(articleIndex + 1) % ARTICLES.length];
+      const articleIndex = PUBLISHED_ARTICLES.findIndex(
+        (item) => item.id === article.id
+      );
+      const previousArticle =
+        PUBLISHED_ARTICLES[
+          (articleIndex - 1 + PUBLISHED_ARTICLES.length) %
+            PUBLISHED_ARTICLES.length
+        ];
+      const nextArticle =
+        PUBLISHED_ARTICLES[(articleIndex + 1) % PUBLISHED_ARTICLES.length];
       const cluster = clusterForArticle(article);
       const sameTopicArticles = articlesForCluster(cluster).filter(
         (item) => item.id !== article.id
       );
-      const fallbackArticles = ARTICLES.filter(
+      const fallbackArticles = PUBLISHED_ARTICLES.filter(
         (item) =>
           item.id !== article.id &&
           !sameTopicArticles.some((sameTopic) => sameTopic.id === item.id)
