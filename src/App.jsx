@@ -6076,10 +6076,10 @@ const THIRTY_SIXTH_ARTICLE = {
       LEARN_START_HERE_ARTICLES.map((article) => article.id)
     );
     const publicationDateForArticle = (article) =>
-      LEARN_EDITORIAL_CONFIG.temporaryPublicationDates[article.id] || "";
+      LEARN_EDITORIAL_CONFIG.verifiedPublicationDates[article.id] || "";
     if (import.meta.env.DEV) {
       const configuredDateSlugs = Object.keys(
-        LEARN_EDITORIAL_CONFIG.temporaryPublicationDates
+        LEARN_EDITORIAL_CONFIG.verifiedPublicationDates
       );
       const unknownDateSlugs = configuredDateSlugs.filter(
         (slug) => !ARTICLE_BY_ID.has(slug)
@@ -6090,13 +6090,13 @@ const THIRTY_SIXTH_ARTICLE = {
 
       if (unknownDateSlugs.length || missingDateSlugs.length) {
         console.warn(
-          `[Learn configuration] Temporary publication dates are out of sync. Unknown: ${unknownDateSlugs.join(", ") || "none"}. Missing: ${missingDateSlugs.join(", ") || "none"}.`
+          `[Learn configuration] Verified publication dates are out of sync. Unknown: ${unknownDateSlugs.join(", ") || "none"}. Missing: ${missingDateSlugs.join(", ") || "none"}.`
         );
       }
     }
     const formatPublicationDate = (date) =>
       new Intl.DateTimeFormat("en-CA", {
-        month: "short",
+        month: "long",
         day: "numeric",
         year: "numeric",
         timeZone: "UTC",
@@ -7408,6 +7408,134 @@ const THIRTY_SIXTH_ARTICLE = {
       );
     }
 
+    const LEGAL_PAGE_CONFIG = {
+      "/privacy-policy": {
+        key: "privacy",
+        title: "Privacy Policy",
+        metaTitle: "Privacy Policy | 1040 Paydays",
+        description:
+          "Read the 1040 Paydays Privacy Policy and learn how information, cookies, analytics, and third-party services may be handled.",
+      },
+      "/terms-of-use": {
+        key: "terms",
+        title: "Terms of Use",
+        metaTitle: "Terms of Use | 1040 Paydays",
+        description:
+          "Read the terms governing the use of the 1040 Paydays website, articles, tools, and educational content.",
+      },
+      "/contact": {
+        key: "contact",
+        title: "Contact",
+        metaTitle: "Contact | 1040 Paydays",
+        description:
+          "Contact 1040 Paydays with questions, feedback, corrections, or general inquiries.",
+      },
+    };
+
+    function FooterLegalLinks() {
+      return (
+        <>
+          <a href="/privacy-policy">Privacy Policy</a>
+          <span aria-hidden="true">·</span>
+          <a href="/terms-of-use">Terms of Use</a>
+          <span aria-hidden="true">·</span>
+          <a href="/contact">Contact</a>
+        </>
+      );
+    }
+
+    function LegalPage({
+      page,
+      mobileMenuOpen,
+      setMobileMenuOpen,
+      navigateTo,
+    }) {
+      return (
+        <div className="legal-page-shell">
+          <header className="learn-index-header">
+            <div className="learn-index-container learn-index-header-inner">
+              <a
+                className="learn-index-brand"
+                href="/"
+                aria-label="1040 Paydays home"
+                onClick={(event) => {
+                  event.preventDefault();
+                  navigateTo("/");
+                }}
+              >
+                <strong>1040</strong>
+                <span>PAYDAYS</span>
+              </a>
+
+              <nav className="learn-index-nav" aria-label="Primary navigation">
+                <button type="button" onClick={() => navigateTo("/")}>Home</button>
+                <button type="button" onClick={() => navigateTo("/learn")}>Learn</button>
+                <button type="button" onClick={() => navigateTo("/calculator")}>Calculator</button>
+                <button type="button" onClick={() => navigateTo("/about")}>About</button>
+              </nav>
+
+              <div className="learn-index-actions">
+                <a className="learn-index-subscribe" href="/#home-newsletter">
+                  <Mail size={16} aria-hidden="true" />
+                  Subscribe
+                </a>
+                <button
+                  className="learn-index-menu-button"
+                  type="button"
+                  aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+                  aria-expanded={mobileMenuOpen}
+                  aria-controls="legal-page-mobile-navigation"
+                  onClick={() => setMobileMenuOpen((open) => !open)}
+                >
+                  {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+                  <span>Menu</span>
+                </button>
+                {mobileMenuOpen && (
+                  <nav
+                    className="learn-index-mobile-nav"
+                    id="legal-page-mobile-navigation"
+                    aria-label="Mobile navigation"
+                  >
+                    <button type="button" onClick={() => navigateTo("/")}>Home</button>
+                    <button type="button" onClick={() => navigateTo("/learn")}>Learn</button>
+                    <button type="button" onClick={() => navigateTo("/calculator")}>Calculator</button>
+                    <button type="button" onClick={() => navigateTo("/about")}>About</button>
+                  </nav>
+                )}
+              </div>
+            </div>
+          </header>
+
+          <main className="legal-page-main">
+            <article className="legal-page-content">
+              <header className="legal-page-heading">
+                <p>1040 PAYDAYS</p>
+                <h1>{page.title}</h1>
+              </header>
+              {page.key === "privacy" && <PrivacyPolicyContent />}
+              {page.key === "terms" && <TermsOfUseContent />}
+              {page.key === "contact" && <ContactContent />}
+            </article>
+          </main>
+
+          <footer className="reference-home-footer">
+            <div className="reference-home-footer-inner">
+              <p className="reference-home-copyright">© 2026 1040 Paydays. All rights reserved.</p>
+              <p>
+                The content, design, illustrations, branding, and original editorial articles on this website are protected by copyright and may not be reproduced or distributed without written permission.
+              </p>
+              <p>
+                1040 Paydays is for educational purposes only and does not provide financial, tax, legal, or investment advice.
+              </p>
+              <nav className="reference-home-footer-nav" aria-label="Legal and contact navigation">
+                <FooterLegalLinks />
+              </nav>
+            </div>
+          </footer>
+        </div>
+      );
+    }
+
     function CalculatorPage({
       mobileMenuOpen,
       setMobileMenuOpen,
@@ -7705,9 +7833,9 @@ const THIRTY_SIXTH_ARTICLE = {
                   <div className="final-calculator-trust">
                     <span><Lock size={13} aria-hidden="true" /> No account needed</span>
                     <span><BookOpen size={13} aria-hidden="true" /> Saved on your device</span>
-                    <button type="button" onClick={() => openPanel("privacy")}>
+                    <a href="/privacy-policy">
                       <ShieldAlert size={13} aria-hidden="true" /> Privacy settings
-                    </button>
+                    </a>
                   </div>
 
                   <button
@@ -7917,11 +8045,7 @@ const THIRTY_SIXTH_ARTICLE = {
                 1040 Paydays is for educational purposes only and does not provide financial, tax, legal, or investment advice.
               </p>
               <nav className="reference-home-footer-nav" aria-label="Legal and contact navigation">
-                <button type="button" onClick={() => openPanel("privacy")}>Privacy Policy</button>
-                <span aria-hidden="true">·</span>
-                <button type="button" onClick={() => openPanel("terms")}>Terms of Use</button>
-                <span aria-hidden="true">·</span>
-                <button type="button" onClick={() => openPanel("contact")}>Contact</button>
+                <FooterLegalLinks />
               </nav>
             </div>
           </footer>
@@ -7933,7 +8057,6 @@ const THIRTY_SIXTH_ARTICLE = {
       mobileMenuOpen,
       setMobileMenuOpen,
       navigateTo,
-      openPanel,
       newsletterProps,
       panel,
     }) {
@@ -8088,11 +8211,7 @@ const THIRTY_SIXTH_ARTICLE = {
                 1040 Paydays is for educational purposes only and does not provide financial, tax, legal, or investment advice.
               </p>
               <nav className="reference-home-footer-nav" aria-label="Legal and contact navigation">
-                <button type="button" onClick={() => openPanel("privacy")}>Privacy Policy</button>
-                <span aria-hidden="true">·</span>
-                <button type="button" onClick={() => openPanel("terms")}>Terms of Use</button>
-                <span aria-hidden="true">·</span>
-                <button type="button" onClick={() => openPanel("contact")}>Contact</button>
+                <FooterLegalLinks />
               </nav>
             </div>
           </footer>
@@ -8104,18 +8223,12 @@ const THIRTY_SIXTH_ARTICLE = {
       mobileMenuOpen,
       setMobileMenuOpen,
       navigateTo,
-      setPanel,
       newsletterProps,
       panel,
     }) {
       const followLink = (event, path) => {
         event.preventDefault();
         navigateTo(path);
-      };
-
-      const openPanel = (name) => {
-        setMobileMenuOpen(false);
-        setPanel(name);
       };
 
       const principles = [
@@ -8343,11 +8456,7 @@ const THIRTY_SIXTH_ARTICLE = {
                 1040 Paydays is for educational purposes only and does not provide financial, tax, legal, or investment advice.
               </p>
               <nav className="reference-home-footer-nav" aria-label="Legal and contact navigation">
-                <button type="button" onClick={() => openPanel("privacy")}>Privacy Policy</button>
-                <span aria-hidden="true">·</span>
-                <button type="button" onClick={() => openPanel("terms")}>Terms of Use</button>
-                <span aria-hidden="true">·</span>
-                <button type="button" onClick={() => openPanel("contact")}>Contact</button>
+                <FooterLegalLinks />
               </nav>
             </div>
           </footer>
@@ -8710,9 +8819,9 @@ const THIRTY_SIXTH_ARTICLE = {
               </div>
               <nav className="editorial-footer-nav" aria-label="Footer navigation">
                 <button type="button" onClick={() => navigateTo("/about")}>About</button>
-                <button type="button" onClick={() => openPanel("privacy")}>Privacy</button>
-                <button type="button" onClick={() => openPanel("terms")}>Terms</button>
-                <button type="button" onClick={() => openPanel("contact")}>Contact</button>
+                <a href="/privacy-policy">Privacy</a>
+                <a href="/terms-of-use">Terms</a>
+                <a href="/contact">Contact</a>
               </nav>
             </div>
           </footer>
@@ -8795,6 +8904,7 @@ const THIRTY_SIXTH_ARTICLE = {
         const isLearnIndex = normalizedPath === "/learn";
         const isCalculatorRoute = normalizedPath === "/calculator";
         const isAboutRoute = normalizedPath === "/about";
+        const legalPage = LEGAL_PAGE_CONFIG[normalizedPath];
         const isLearnRoute = isLearnIndex || Boolean(cluster) || Boolean(article);
         const title = article
           ? `${article.title} | 1040 Paydays`
@@ -8806,6 +8916,8 @@ const THIRTY_SIXTH_ARTICLE = {
                 ? "Calculator | 1040 Paydays"
                 : isAboutRoute
                   ? "About 1040 Paydays | Our Philosophy"
+                  : legalPage
+                    ? legalPage.metaTitle
               : "1040 Paydays | Savings and Retirement Calculator by Paycheck";
         const description = article
           ? article.summary
@@ -8817,8 +8929,13 @@ const THIRTY_SIXTH_ARTICLE = {
                 ? "Build a payday-by-payday savings plan and explore how regular contributions may grow over time."
                 : isAboutRoute
                   ? "Learn the philosophy behind 1040 Paydays and how small, consistent financial decisions can help create more freedom, security, and choice over time."
+                  : legalPage
+                    ? legalPage.description
               : "Estimate how much you can save from every paycheck. Use 1040 Paydays to plan savings, retirement, and future growth with a simple calculator.";
-        const canonicalPath = isLearnRoute || isCalculatorRoute || isAboutRoute ? normalizedPath : "/";
+        const canonicalPath =
+          isLearnRoute || isCalculatorRoute || isAboutRoute || legalPage
+            ? normalizedPath
+            : "/";
         const canonicalUrl = `${SITE_URL}${canonicalPath === "/" ? "/" : canonicalPath}`;
 
         const setMeta = (selector, attribute, value) => {
@@ -8838,6 +8955,18 @@ const THIRTY_SIXTH_ARTICLE = {
         setMeta('meta[property="og:description"]', ["property", "og:description"], description);
         setMeta('meta[property="og:type"]', ["property", "og:type"], article ? "article" : "website");
         setMeta('meta[property="og:url"]', ["property", "og:url"], canonicalUrl);
+        const publicationDate = article ? publicationDateForArticle(article) : "";
+        if (publicationDate) {
+          setMeta(
+            'meta[property="article:published_time"]',
+            ["property", "article:published_time"],
+            publicationDate
+          );
+        } else {
+          document.head
+            .querySelector('meta[property="article:published_time"]')
+            ?.remove();
+        }
 
         let canonical = document.head.querySelector('link[rel="canonical"]');
         if (!canonical) {
@@ -8854,7 +8983,33 @@ const THIRTY_SIXTH_ARTICLE = {
             ? articlesForCluster(cluster)
             : [];
 
-        if (collectionArticles.length) {
+        if (article) {
+          const structuredData = {
+            "@context": "https://schema.org",
+            "@type": "Article",
+            headline: article.title,
+            description: article.summary,
+            url: canonicalUrl,
+            mainEntityOfPage: canonicalUrl,
+            image: new URL(article.image, SITE_URL).href,
+            author: {
+              "@type": "Organization",
+              name: "1040 Paydays Editorial Team",
+              url: `${SITE_URL}/`,
+            },
+            publisher: {
+              "@type": "Organization",
+              name: "1040 Paydays",
+              url: `${SITE_URL}/`,
+            },
+            ...(publicationDate ? { datePublished: publicationDate } : {}),
+          };
+          const script = existingStructuredData || document.createElement("script");
+          script.id = "learn-structured-data";
+          script.type = "application/ld+json";
+          script.textContent = JSON.stringify(structuredData);
+          if (!existingStructuredData) document.head.appendChild(script);
+        } else if (collectionArticles.length) {
           const structuredData = {
             "@context": "https://schema.org",
             "@type": "CollectionPage",
@@ -9104,6 +9259,7 @@ const THIRTY_SIXTH_ARTICLE = {
       };
 
       const normalizedRoute = route.length > 1 ? route.replace(/\/+$/, "") : route;
+      const legalPage = LEGAL_PAGE_CONFIG[normalizedRoute];
       const newsletterProps = {
         email,
         setEmail,
@@ -9114,6 +9270,17 @@ const THIRTY_SIXTH_ARTICLE = {
         newsletterMessageRef,
         submitNewsletter,
       };
+
+      if (legalPage) {
+        return (
+          <LegalPage
+            page={legalPage}
+            mobileMenuOpen={mobileMenuOpen}
+            setMobileMenuOpen={setMobileMenuOpen}
+            navigateTo={navigateTo}
+          />
+        );
+      }
 
       if (normalizedRoute === "/learn" || normalizedRoute.startsWith("/learn/")) {
         const isNestedLearnRoute = normalizedRoute.startsWith("/learn/");
@@ -9221,7 +9388,6 @@ const THIRTY_SIXTH_ARTICLE = {
               mobileMenuOpen={mobileMenuOpen}
               setMobileMenuOpen={setMobileMenuOpen}
               navigateTo={navigateTo}
-              openPanel={setPanel}
               newsletterProps={newsletterProps}
               panel={panel}
             />
@@ -9260,7 +9426,6 @@ const THIRTY_SIXTH_ARTICLE = {
             mobileMenuOpen={mobileMenuOpen}
             setMobileMenuOpen={setMobileMenuOpen}
             navigateTo={navigateTo}
-            setPanel={setPanel}
             newsletterProps={newsletterProps}
             panel={panel}
           />
@@ -9404,7 +9569,7 @@ const THIRTY_SIXTH_ARTICLE = {
                   <span>•</span>
                   <span>Saved on your device</span>
                   <span>•</span>
-                  <button onClick={() => setPanel("privacy")}>Privacy settings</button>
+                  <a href="/privacy-policy">Privacy settings</a>
                 </div>
               </section>
 
@@ -9554,16 +9719,16 @@ const THIRTY_SIXTH_ARTICLE = {
 
             <nav>
               <button onClick={() => setPanel("about")}>About</button>
-              <button onClick={() => setPanel("privacy")}>Privacy</button>
-              <button onClick={() => setPanel("terms")}>Terms</button>
-              <button onClick={() => setPanel("contact")}>Contact</button>
+              <a href="/privacy-policy">Privacy</a>
+              <a href="/terms-of-use">Terms</a>
+              <a href="/contact">Contact</a>
             </nav>
 
             <div className="socials">
               <a href="#facebook"><Facebook size={22} /></a>
               <a href="#instagram"><Instagram size={22} /></a>
               <a href="#youtube"><Youtube size={22} /></a>
-              <a href="#contact"><Mail size={22} /></a>
+              <a href="/contact" aria-label="Contact 1040 Paydays"><Mail size={22} /></a>
             </div>
           </footer>
             </>
@@ -9664,19 +9829,7 @@ const THIRTY_SIXTH_ARTICLE = {
               </>
             )}
 
-            {panel === "privacy" && (
-              <PrivacyPanel close={close} />
-            )}
-
-            {panel === "terms" && (
-              <TermsPanel close={close} />
-            )}
-
-            {panel === "contact" && (
-              <ContactPanel close={close} />
-            )}
-
-            {!isArticle && !["advanced", "calculator", "how", "learn", "compare", "journal", "about", "privacy", "terms", "contact"].includes(panel) && (
+            {!isArticle && !["advanced", "calculator", "how", "learn", "compare", "journal", "about"].includes(panel) && (
               <PanelContent icon={<BookOpen />} title="Coming soon" text="This section can be expanded with formulas, examples, articles, and more payday planning tools." />
             )}
           </aside>
@@ -9866,11 +10019,7 @@ const THIRTY_SIXTH_ARTICLE = {
                 1040 Paydays is for educational purposes only and does not provide financial, tax, legal, or investment advice.
               </p>
               <nav className="reference-home-footer-nav" aria-label="Legal and contact navigation">
-                <button type="button" onClick={() => goHomePanel("privacy")}>Privacy Policy</button>
-                <span aria-hidden="true">·</span>
-                <button type="button" onClick={() => goHomePanel("terms")}>Terms of Use</button>
-                <span aria-hidden="true">·</span>
-                <button type="button" onClick={() => goHomePanel("contact")}>Contact</button>
+                <FooterLegalLinks />
               </nav>
             </div>
           </footer>
@@ -10057,7 +10206,9 @@ const THIRTY_SIXTH_ARTICLE = {
                     <small>
                       {article.category}
                       {publicationDate && (
-                        <> · <time dateTime={publicationDate}>{formatPublicationDate(publicationDate)}</time></>
+                        <> · <time dateTime={publicationDate}>
+                          Published {formatPublicationDate(publicationDate)}
+                        </time></>
                       )}
                       {" · "}{article.readTime}
                     </small>
@@ -10268,7 +10419,7 @@ const THIRTY_SIXTH_ARTICLE = {
                       {article.category}
                       {publicationDateForArticle(article) && (
                         <> · <time dateTime={publicationDateForArticle(article)}>
-                          {formatPublicationDate(publicationDateForArticle(article))}
+                          Published {formatPublicationDate(publicationDateForArticle(article))}
                         </time></>
                       )}
                       {" · "}{article.readTime}
@@ -10469,6 +10620,33 @@ const THIRTY_SIXTH_ARTICLE = {
       );
     }
 
+    function EditorialBio({ navigateTo }) {
+      return (
+        <aside className="article-author" aria-labelledby="editorial-bio-heading">
+          <div className="article-author-mark" aria-hidden="true">1040</div>
+          <div>
+            <p className="article-section-kicker">ABOUT THE PUBLICATION</p>
+            <h2 id="editorial-bio-heading">About 1040 Paydays</h2>
+            <p>
+              1040 Paydays is an independent personal finance publication focused on the small
+              decisions people make with each paycheck. Its articles and tools explore saving,
+              investing, financial resilience and the choices that can create greater freedom
+              over time.
+            </p>
+            <a
+              href="/about"
+              onClick={(event) => {
+                event.preventDefault();
+                navigateTo("/about");
+              }}
+            >
+              Read our philosophy <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </aside>
+      );
+    }
+
     function ArticlePanel({
       article,
       close,
@@ -10528,11 +10706,13 @@ const THIRTY_SIXTH_ARTICLE = {
               <h1>{article.title}</h1>
               {article.summary && <p className="article-summary">{article.summary}</p>}
               <div className="article-meta">
-                <span>By 1040 Paydays</span>
+                <span>By 1040 Paydays Editorial Team</span>
                 {publicationDate && (
                   <>
                     <span aria-hidden="true">•</span>
-                    <time dateTime={publicationDate}>{formatPublicationDate(publicationDate)}</time>
+                    <time dateTime={publicationDate}>
+                      Published {formatPublicationDate(publicationDate)}
+                    </time>
                   </>
                 )}
                 <span aria-hidden="true">•</span>
@@ -10580,6 +10760,8 @@ const THIRTY_SIXTH_ARTICLE = {
                 </React.Fragment>
               ))}
             </div>
+
+            <EditorialBio navigateTo={navigateTo} />
 
             {faqs.length > 0 && (
               <section className="article-faqs">
@@ -10632,23 +10814,6 @@ const THIRTY_SIXTH_ARTICLE = {
               </div>
             </section>
 
-            <footer className="article-author">
-              <div className="article-author-mark" aria-hidden="true">1040</div>
-              <div>
-                <p className="article-section-kicker">ABOUT THE AUTHOR</p>
-                <h2>1040 Paydays</h2>
-                <p>Practical tools and thoughtful personal finance guidance designed to help readers make better decisions one payday at a time.</p>
-                <a
-                  href="/about"
-                  onClick={(event) => {
-                    event.preventDefault();
-                    navigateTo("/about");
-                  }}
-                >
-                  Learn more about 1040 Paydays <span aria-hidden="true">→</span>
-                </a>
-              </div>
-            </footer>
           </article>
 
           <ArticleSidebar
@@ -10801,27 +10966,23 @@ const THIRTY_SIXTH_ARTICLE = {
       );
     }
 
-    function PrivacyPanel({ close }) {
+    function PrivacyPolicyContent() {
       return (
-        <section className="about-panel policy-panel">
-          <div className="panel-icon"><BookOpen /></div>
-          <p className="eyebrow">PRIVACY</p>
-          <h2>Privacy Policy</h2>
-
+        <div className="legal-policy-copy">
           <p><strong>Last updated:</strong> July 2026</p>
           <p>
             1040 Paydays is built to help you explore payday planning, saving, and retirement
             ideas. We try to collect as little personal information as possible.
           </p>
 
-          <h3>Information you enter into the calculator</h3>
+          <h2>Information you enter into the calculator</h2>
           <p>
             The numbers you enter into the calculator, comparison tools, and saved projections are
             stored in your browser on your own device using local storage. They are not sent to us
             through the calculator.
           </p>
 
-          <h3>Analytics and advertising</h3>
+          <h2>Analytics and advertising</h2>
           <p>
             We use Google Analytics to understand how visitors use the site, such as which pages
             are visited and which features are used. We may also use Google AdSense to show ads.
@@ -10833,43 +10994,25 @@ const THIRTY_SIXTH_ARTICLE = {
             calculator should still be available.
           </p>
 
-          <h3>Email and contact</h3>
-          <p>
-            If you contact us by email, we will use your email address and message only to respond
-            to you. If a newsletter or email list is offered, you can unsubscribe using the
-            instructions provided in those emails.
-          </p>
-
-          <h3>Third-party links</h3>
+          <h2>Third-party links</h2>
           <p>
             The site may link to third-party websites or services. Their privacy practices are
             controlled by their own policies, not this one.
           </p>
-
-          <h3>Contact</h3>
-          <p>
-            For privacy questions, contact <a href="mailto:hello@1040paydays.com">hello@1040paydays.com</a>.
-          </p>
-
-          <button className="ok-button" onClick={close}>OK</button>
-        </section>
+        </div>
       );
     }
 
-    function TermsPanel({ close }) {
+    function TermsOfUseContent() {
       return (
-        <section className="about-panel policy-panel">
-          <div className="panel-icon"><BookOpen /></div>
-          <p className="eyebrow">TERMS</p>
-          <h2>Terms of Use</h2>
-
+        <div className="legal-policy-copy">
           <p><strong>Last updated:</strong> July 2026</p>
           <p>
             By using 1040 Paydays, you agree to use the site for personal, educational, and
             informational purposes.
           </p>
 
-          <h3>Educational content only</h3>
+          <h2>Educational content only</h2>
           <p>
             The calculator, articles, examples, and projections are provided for general education.
             They are not financial, investment, tax, legal, mortgage, or retirement advice. Your
@@ -10877,48 +11020,40 @@ const THIRTY_SIXTH_ARTICLE = {
             before making important decisions.
           </p>
 
-          <h3>Calculator estimates</h3>
+          <h2>Calculator estimates</h2>
           <p>
             Results are estimates based on the numbers and assumptions you enter. Actual outcomes
             can be different because of market returns, fees, inflation, taxes, income changes,
             contribution changes, timing, and other life events.
           </p>
 
-          <h3>Your responsibility</h3>
+          <h2>Your responsibility</h2>
           <p>
             You are responsible for the decisions you make using the information on this site.
             Please review your own numbers carefully and do not rely on any example as a guarantee
             of future results.
           </p>
 
-          <h3>Site availability and accuracy</h3>
+          <h2>Site availability and accuracy</h2>
           <p>
             We do our best to keep the site useful and accurate, but we cannot promise that every
             feature, calculation, article, or link will always be complete, current, or error-free.
             The site may change or be unavailable from time to time.
           </p>
 
-          <h3>Advertising and third-party services</h3>
+          <h2>Advertising and third-party services</h2>
           <p>
             The site may display ads or link to third-party websites. We are not responsible for the
             content, products, services, or policies of third-party sites.
           </p>
 
-          <h3>Contact</h3>
-          <p>
-            For questions about these terms, contact <a href="mailto:hello@1040paydays.com">hello@1040paydays.com</a>.
-          </p>
-
-          <button className="ok-button" onClick={close}>OK</button>
-        </section>
+        </div>
       );
     }
 
-    function ContactPanel({ close }) {
+    function ContactContent() {
       return (
-        <section className="contact-panel">
-          <div className="panel-icon"><Mail /></div>
-          <p className="eyebrow">CONTACT</p>
+        <div className="contact-panel legal-contact-copy">
           <h2>I'd love to hear from you.</h2>
           <p className="contact-intro">
             Whether you have a question, found an error, want to share your own payday story,
@@ -10948,9 +11083,7 @@ const THIRTY_SIXTH_ARTICLE = {
             <span>Every payday funds a future.</span>
             <strong>Choose yours.</strong>
           </div>
-
-          <button className="ok-button" type="button" onClick={close}>Back to the calculator</button>
-        </section>
+        </div>
       );
     }
 

@@ -2105,23 +2105,6 @@ a {
   color: var(--blue);
 }
 
-.policy-panel h3 {
-  margin: 24px 0 9px;
-  color: var(--ink);
-  font-size: 16px;
-  line-height: 1.25;
-}
-
-.policy-panel a {
-  color: var(--blue);
-  font-weight: 850;
-  text-decoration: none;
-}
-
-.policy-panel a:hover {
-  text-decoration: underline;
-}
-
 .about-progress {
   margin: 24px 0 16px;
   border: 1px solid #d5e2f4;
@@ -2162,14 +2145,6 @@ a {
 .contact-panel {
   padding-top: 8px;
   color: #445778;
-}
-
-.contact-panel .panel-icon {
-  margin-bottom: 20px;
-}
-
-.contact-panel .eyebrow {
-  margin: 0 0 8px;
 }
 
 .contact-panel h2 {
@@ -8160,8 +8135,11 @@ a {
   gap: 8px;
 }
 
-.editorial-footer-nav button {
+.editorial-footer-nav button,
+.editorial-footer-nav a {
   min-height: 40px;
+  display: inline-flex;
+  align-items: center;
   border: 0;
   padding: 0 10px;
   color: #c5cfdd;
@@ -8170,7 +8148,8 @@ a {
   font-weight: 700;
 }
 
-.editorial-footer-nav button:hover {
+.editorial-footer-nav button:hover,
+.editorial-footer-nav a:hover {
   color: #fff;
 }
 
@@ -9620,18 +9599,21 @@ a {
 }
 
 .final-calculator-trust span,
-.final-calculator-trust button {
+.final-calculator-trust button,
+.final-calculator-trust a {
   display: flex;
   gap: 8px;
   align-items: center;
 }
 
-.final-calculator-trust button {
+.final-calculator-trust button,
+.final-calculator-trust a {
   padding: 0;
   border: 0;
   color: inherit;
   background: transparent;
   font: inherit;
+  text-decoration: none;
 }
 
 .final-calculator-primary,
@@ -11268,9 +11250,11 @@ body {
   display: grid;
   grid-template-columns: 74px minmax(0, 1fr);
   gap: 22px;
-  margin-bottom: 6px;
+  margin-top: 48px;
+  margin-bottom: 46px;
   padding: 30px 0;
   border-top: 1px solid var(--brand-line);
+  border-bottom: 1px solid var(--brand-line);
 }
 
 .article-author-mark {
@@ -11773,5 +11757,119 @@ body {
   .reference-home-hero-copy > a {
     min-height: 54px;
     margin-top: 28px;
+  }
+}
+
+/* Standalone privacy, terms, and contact pages */
+.legal-page-shell {
+  height: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  overflow-y: auto;
+  color: var(--brand-navy);
+  background: #fff;
+}
+
+.legal-page-main {
+  flex: 1;
+  padding: clamp(48px, 7vw, 84px) 24px clamp(64px, 8vw, 96px);
+}
+
+.legal-page-content {
+  width: 100%;
+  max-width: 760px;
+  margin-inline: auto;
+}
+
+.legal-page-heading {
+  margin-bottom: 36px;
+  padding-bottom: 25px;
+  border-bottom: 1px solid var(--brand-line);
+}
+
+.legal-page-heading > p {
+  margin: 0 0 10px;
+  color: var(--brand-blue);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .09em;
+}
+
+.legal-page-heading h1 {
+  margin: 0;
+  color: var(--brand-navy);
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(42px, 6vw, 62px);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -.035em;
+}
+
+.legal-policy-copy {
+  color: #34445a;
+  font-size: 17px;
+  line-height: 1.75;
+}
+
+.legal-policy-copy > p {
+  margin: 0 0 22px;
+}
+
+.legal-policy-copy h2 {
+  margin: 38px 0 10px;
+  color: var(--brand-navy);
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 25px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.legal-policy-copy a,
+.legal-contact-copy a:not(.contact-email-card) {
+  color: var(--brand-blue);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.legal-contact-copy {
+  max-width: 600px;
+  padding-top: 0;
+}
+
+.legal-contact-copy h2 {
+  max-width: none;
+  margin: 0 0 14px;
+  font-size: clamp(30px, 4vw, 40px);
+}
+
+.legal-page-shell a:focus-visible,
+.legal-page-shell button:focus-visible {
+  outline: 3px solid rgba(23, 59, 140, .38);
+  outline-offset: 3px;
+}
+
+@media (max-width: 560px) {
+  .legal-page-main {
+    padding: 38px 20px 62px;
+  }
+
+  .legal-page-heading {
+    margin-bottom: 28px;
+  }
+
+  .legal-policy-copy {
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  .legal-policy-copy h2 {
+    margin-top: 32px;
+    font-size: 23px;
+  }
+
+  .legal-contact-copy h2 {
+    font-size: 32px;
   }
 }

@@ -53,6 +53,11 @@ const articleIds = getArticlesList(appSource).map((articleName) =>
 const clusterPaths = LEARN_EDITORIAL_CONFIG.clusters.map(
   (cluster) => `/learn/${cluster.slug}`
 );
+const standalonePagePaths = [
+  "/privacy-policy",
+  "/terms-of-use",
+  "/contact",
+];
 
 const lastmod = new Date().toISOString().slice(0, 10);
 const publicPaths = [
@@ -60,6 +65,7 @@ const publicPaths = [
   "/about",
   "/calculator",
   "/learn",
+  ...standalonePagePaths,
   ...clusterPaths,
   ...articleIds.map((id) => `/learn/${id}`),
 ];
@@ -91,6 +97,7 @@ const appRewritePaths = [
   "/about",
   "/calculator",
   "/learn",
+  ...standalonePagePaths,
   ...clusterPaths,
   ...articleIds.map((id) => `/learn/${id}`),
 ];
