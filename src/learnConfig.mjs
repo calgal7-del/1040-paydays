@@ -176,5 +176,6 @@ export const LEARN_EDITORIAL_CONFIG = {
     "the-raise-you-already-got": "2026-07-22",
     "has-this-payday-finished-its-job": "2026-07-23",
     "the-kitchen-i-coveted": "2026-07-23",
+    "should-you-save-or-pay-off-debt-first": "2026-07-25",
   },
 };

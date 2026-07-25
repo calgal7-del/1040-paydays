@@ -6025,7 +6025,137 @@ const THIRTY_SIXTH_ARTICLE = {
       ],
     };
 
-    const ARTICLES = [FEATURED_ARTICLE, SECOND_ARTICLE, THIRD_ARTICLE, FOURTH_ARTICLE, FIFTH_ARTICLE, SIXTH_ARTICLE, SEVENTH_ARTICLE, EIGHTH_ARTICLE, NINTH_ARTICLE, TENTH_ARTICLE, ELEVENTH_ARTICLE, TWELFTH_ARTICLE, THIRTEENTH_ARTICLE, FOURTEENTH_ARTICLE, FIFTEENTH_ARTICLE, SIXTEENTH_ARTICLE, SEVENTEENTH_ARTICLE, EIGHTEENTH_ARTICLE, NINETEENTH_ARTICLE, TWENTIETH_ARTICLE, TWENTY_FIRST_ARTICLE, TWENTY_SECOND_ARTICLE, TWENTY_THIRD_ARTICLE, TWENTY_FOURTH_ARTICLE, TWENTY_FIFTH_ARTICLE, TWENTY_SEVENTH_ARTICLE, TWENTY_EIGHTH_ARTICLE, TWENTY_NINTH_ARTICLE, THIRTY_FIRST_ARTICLE, THIRTY_SECOND_ARTICLE, THIRTY_THIRD_ARTICLE, THIRTY_FOURTH_ARTICLE, THIRTY_FIFTH_ARTICLE, THIRTY_SIXTH_ARTICLE, THIRTY_SEVENTH_ARTICLE, THIRTY_EIGHTH_ARTICLE, THIRTY_NINTH_ARTICLE, FORTIETH_ARTICLE, FORTY_FIRST_ARTICLE, FORTY_SECOND_ARTICLE, FORTY_THIRD_ARTICLE, FORTY_FOURTH_ARTICLE, FORTY_FIFTH_ARTICLE, FORTY_SIXTH_ARTICLE, FORTY_SEVENTH_ARTICLE, FORTY_EIGHTH_ARTICLE, FORTY_NINTH_ARTICLE, FIFTIETH_ARTICLE];
+    const FIFTY_FIRST_ARTICLE = {
+      id: "should-you-save-or-pay-off-debt-first",
+      title: "Should You Save or Pay Off Debt First?",
+      summary: "If you have high interest debt and little or no savings, your first priority is usually to build a small emergency fund before putting every extra dollar toward debt.",
+      image: "/article-save-or-pay-off-debt-first.png",
+      readTime: "6 min read",
+      category: "Debt",
+      kicker: "SAVING · DEBT",
+      alt: "A savings piggy bank and a stone marked debt balanced on a seesaw",
+      intro: [
+        "Not a large emergency fund. Just enough to keep the next ordinary problem from becoming another balance on your credit card.",
+        "After that, shift your focus to paying off the debt.",
+        "On paper, the math is simple. If your credit card charges 20 percent interest while your savings account earns only a few percent, every extra dollar belongs on the card.",
+        "Real life is rarely that simple.",
+        "You can spend months paying down a balance only to face an $800 car repair the following week. Without any savings, that repair goes right back on the credit card. The balance climbs again, and much of your progress disappears.",
+        "The numbers may have been right, but the plan was fragile.",
+        "Sometimes the best financial decision is the one that keeps you from borrowing again.",
+      ],
+      sections: [
+        {
+          heading: "Why Saving First Can Make Sense",
+          paragraphs: [
+            "A small emergency fund is not a luxury. It is a cushion between you and the next unexpected expense.",
+            "It will not earn much interest, and it is never going to make you feel wealthy. That is not its purpose. Its job is to keep an unexpected bill from becoming more debt.",
+            "When the furnace stops working, the tire blows out, the dog needs emergency surgery, or your hours at work are cut, having cash on hand gives you options.",
+            "The better question is not simply, \"Should I save or pay off debt first?\"",
+            "It is, \"Which choice makes my finances stronger next month?\"",
+            "Putting an extra $2,000 toward debt while leaving your bank account empty can improve the numbers today. It can also leave you one unexpected expense away from borrowing all over again.",
+            "The opposite can happen too. Keeping $20,000 in cash while paying 20 percent interest on a credit card gives you plenty of security, but you are paying a high price for it.",
+            "Most people need something between those two extremes.",
+          ],
+        },
+        {
+          heading: "How Much Emergency Fund Should You Have Before Paying Off Debt?",
+          paragraphs: [
+            "There is no single number that works for everyone.",
+            "For some people, $1,000 is enough to start attacking debt with confidence. For others, that amount barely covers one repair. If you own an older vehicle, have children, own a home, or have income that changes from month to month, your first layer of savings may need to be larger.",
+            "Many people think about emergency savings in broad terms.",
+            "Something might happen.",
+            "That is true, but it is not very useful.",
+            "A better question is this:",
+            "What is most likely to happen next?",
+            "An older vehicle is probably going to need repairs.",
+            "A roof with worn shingles will eventually need replacing.",
+            "A twenty five year old furnace is not an unexpected problem waiting somewhere in the future. It is simply waiting for the wrong day.",
+            "The same goes for an aging pet, uneven income, or a home filled with appliances that are all reaching the end of their lives.",
+            "Your emergency fund should reflect the life you actually have, not the life you wish you had.",
+            "Ask yourself:",
+            "What is wearing out?",
+            "What expense would force me to borrow tomorrow?",
+            "What problem can I already see coming?",
+            "Those questions usually produce a much better savings target than choosing an arbitrary number.",
+            "The goal is not to prepare for every possible disaster.",
+            "The goal is to keep predictable problems from becoming expensive financial setbacks.",
+          ],
+        },
+        {
+          heading: "Emergency Fund or Future Expenses?",
+          paragraphs: [
+            "There is an important difference between an emergency and an expense you know is coming.",
+            "Losing your job is an emergency.",
+            "A family crisis can be an emergency.",
+            "A medical bill that could not have been predicted is an emergency.",
+            "Replacing worn brake pads is not.",
+            "Neither is your annual insurance premium, a laptop that is nearing the end of its life, or a roof that has been showing its age for years.",
+            "These are future expenses. They may arrive at inconvenient times, but they should not come as surprises.",
+            "Treating every large bill as an emergency makes it much harder to know how much emergency savings you actually need.",
+            "It helps to separate these expenses in your mind.",
+            "Keep one fund for true emergencies.",
+            "Then gradually build smaller reserves for the costs you know are coming. Vehicle repairs. Home maintenance. Medical and dental expenses. Pet care. Annual insurance premiums. Even months when your income is lower than usual.",
+            "You do not have to fully fund every category before paying off debt. If you wait until every future expense is covered, you may never get around to paying it down.",
+            "The goal is simply to recognize what is coming and give those expenses a place in your plan.",
+          ],
+        },
+        {
+          heading: "Look for Money You Already Have",
+          paragraphs: [
+            "Before trying to cut another $300 from your budget, take a look around.",
+            "Many households already have money they have forgotten about.",
+            "There may be an old refund you never claimed, a reimbursement waiting to be submitted, store credit you forgot about, gift cards sitting in a drawer, reward points that can cover an upcoming purchase, or a subscription you no longer use.",
+            "You might also have an old phone, bicycle, or piece of furniture collecting dust that could be sold.",
+            "None of this is free money.",
+            "It has always been yours.",
+            "When money is tight, though, recovering a few hundred dollars is often easier than squeezing another few hundred dollars out of next month's budget.",
+            "That extra cash can cover a repair, pay an insurance deductible, or buy groceries during an expensive week.",
+            "More importantly, it can keep you from reaching for a credit card when something goes wrong.",
+            "That is exactly what your first emergency fund is supposed to do.",
+          ],
+        },
+        {
+          heading: "Why Paying Off Debt Without Savings Can Backfire",
+          paragraphs: [
+            "Imagine you owe $5,000 on a credit card and have no savings.",
+            "After months of hard work, you reduce the balance to $3,500.",
+            "Then your transmission fails and the repair costs $1,500.",
+            "Without cash set aside, the repair goes on the same credit card.",
+            "You are right back where you started.",
+            "Now imagine the same situation with $1,500 in emergency savings.",
+            "The repair is still frustrating.",
+            "It still costs money.",
+            "But it does not increase your debt.",
+            "You use the emergency fund, rebuild it over the next few months, and continue paying down the balance.",
+            "The savings did not produce the highest return on paper.",
+            "They protected the progress you had already made.",
+          ],
+        },
+        {
+          heading: "When to Stop Saving and Start Paying Off Debt",
+          paragraphs: [
+            "Your emergency fund needs a finish line.",
+            "Without one, it is easy to keep saving because it feels safer than making a large debt payment.",
+            "Cash provides comfort.",
+            "Sending money to a credit card rarely does.",
+            "But holding far more cash than you actually need while paying high interest on debt quietly works against you.",
+            "Choose a savings target that fits your situation.",
+            "It might be enough to cover a major vehicle repair.",
+            "One month of essential expenses.",
+            "Your insurance deductible.",
+            "Replacing an aging furnace.",
+            "Whatever amount gives you confidence that one setback will not send you back into debt.",
+            "Once you reach that number, direct most of your extra money toward your highest interest debt.",
+            "Every dollar of credit card interest reduces what a future paycheck can do for you.",
+            "Keep the emergency fund intact.",
+            "It exists for a reason.",
+            "Everything above that target can go toward eliminating expensive debt.",
+          ],
+        },
+      ],
+    };
+
+    const ARTICLES = [FEATURED_ARTICLE, SECOND_ARTICLE, THIRD_ARTICLE, FOURTH_ARTICLE, FIFTH_ARTICLE, SIXTH_ARTICLE, SEVENTH_ARTICLE, EIGHTH_ARTICLE, NINTH_ARTICLE, TENTH_ARTICLE, ELEVENTH_ARTICLE, TWELFTH_ARTICLE, THIRTEENTH_ARTICLE, FOURTEENTH_ARTICLE, FIFTEENTH_ARTICLE, SIXTEENTH_ARTICLE, SEVENTEENTH_ARTICLE, EIGHTEENTH_ARTICLE, NINETEENTH_ARTICLE, TWENTIETH_ARTICLE, TWENTY_FIRST_ARTICLE, TWENTY_SECOND_ARTICLE, TWENTY_THIRD_ARTICLE, TWENTY_FOURTH_ARTICLE, TWENTY_FIFTH_ARTICLE, TWENTY_SEVENTH_ARTICLE, TWENTY_EIGHTH_ARTICLE, TWENTY_NINTH_ARTICLE, THIRTY_FIRST_ARTICLE, THIRTY_SECOND_ARTICLE, THIRTY_THIRD_ARTICLE, THIRTY_FOURTH_ARTICLE, THIRTY_FIFTH_ARTICLE, THIRTY_SIXTH_ARTICLE, THIRTY_SEVENTH_ARTICLE, THIRTY_EIGHTH_ARTICLE, THIRTY_NINTH_ARTICLE, FORTIETH_ARTICLE, FORTY_FIRST_ARTICLE, FORTY_SECOND_ARTICLE, FORTY_THIRD_ARTICLE, FORTY_FOURTH_ARTICLE, FORTY_FIFTH_ARTICLE, FORTY_SIXTH_ARTICLE, FORTY_SEVENTH_ARTICLE, FORTY_EIGHTH_ARTICLE, FORTY_NINTH_ARTICLE, FIFTIETH_ARTICLE, FIFTY_FIRST_ARTICLE];
     const ARTICLE_BY_ID = new Map(ARTICLES.map((article) => [article.id, article]));
     const UNIQUE_ARTICLES = Array.from(ARTICLE_BY_ID.values());
     const LEARN_CLUSTER_BY_SLUG = new Map(
@@ -10763,6 +10893,7 @@ const THIRTY_SIXTH_ARTICLE = {
             </div>
 
             <div className="article-body">
+              {article.intro?.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
               {article.sections.map((section, sectionIndex) => (
                 <React.Fragment key={section.heading}>
                   <section>
