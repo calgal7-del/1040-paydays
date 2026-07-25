@@ -2310,7 +2310,7 @@ const FIFTH_ARTICLE = {
     "Some of the most valuable parts of a job never appear on a pay stub.",
   quote:
     "Your salary is only part of what your job pays. The rest often shows up as money you never had to spend.",
-  content: [
+  sections: [
     {
       heading: "The 9-to-5 Club",
       paragraphs: [
