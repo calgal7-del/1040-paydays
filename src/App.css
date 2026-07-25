@@ -10868,7 +10868,13 @@ a {
   margin-top: clamp(28px, 3vw, 38px);
 }
 
+.about-principles > a {
+  display: block;
+  border-radius: 8px;
+}
+
 .about-principles article {
+  height: 100%;
   min-height: 142px;
   display: grid;
   place-items: center;

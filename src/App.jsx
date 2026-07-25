@@ -8232,10 +8232,10 @@ const THIRTY_SIXTH_ARTICLE = {
       panel,
     }) {
       const principles = [
-        [PAYDAY_PRINCIPLE_ICONS.liveToday, "LIVE TODAY", "Make the most of the life you have now."],
-        [PAYDAY_PRINCIPLE_ICONS.protectTomorrow, "PROTECT TOMORROW", "Prepare for life’s ups and downs."],
-        [PAYDAY_PRINCIPLE_ICONS.planYourFuture, "PLAN YOUR FUTURE", "Save and invest one payday at a time."],
-        [PAYDAY_PRINCIPLE_ICONS.chooseWhatMatters, "CHOOSE WHAT MATTERS", "Align your money with your values and goals."],
+        [PAYDAY_PRINCIPLE_ICONS.liveToday, "LIVE TODAY", "Make the most of the life you have now.", "live-today"],
+        [PAYDAY_PRINCIPLE_ICONS.protectTomorrow, "PROTECT TOMORROW", "Prepare for life’s ups and downs.", "protect-tomorrow"],
+        [PAYDAY_PRINCIPLE_ICONS.planYourFuture, "PLAN YOUR FUTURE", "Save and invest one payday at a time.", "plan-your-future"],
+        [PAYDAY_PRINCIPLE_ICONS.chooseWhatMatters, "CHOOSE WHAT MATTERS", "Align your money with your values and goals.", "choose-what-matters"],
       ];
 
       return (
@@ -8354,12 +8354,22 @@ const THIRTY_SIXTH_ARTICLE = {
               </section>
 
               <section className="about-principles" aria-label="The 1040 Paydays philosophy">
-                {principles.map(([Icon, title, description]) => (
-                  <article key={title}>
-                    <Icon aria-hidden="true" />
-                    <h2>{title}</h2>
-                    <p>{description}</p>
-                  </article>
+                {principles.map(([Icon, title, description, slug]) => (
+                  <a
+                    key={slug}
+                    href={`/philosophy/${slug}`}
+                    aria-label={`${title}: ${description}`}
+                    onClick={(event) => {
+                      event.preventDefault();
+                      navigateTo(`/philosophy/${slug}`);
+                    }}
+                  >
+                    <article>
+                      <Icon aria-hidden="true" />
+                      <h2>{title}</h2>
+                      <p>{description}</p>
+                    </article>
+                  </a>
                 ))}
               </section>
             </div>
