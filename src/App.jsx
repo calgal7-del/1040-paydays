@@ -8163,6 +8163,10 @@ const THIRTY_SIXTH_ARTICLE = {
               </nav>
 
               <div className="learn-index-actions">
+                <a className="learn-index-subscribe" href="#home-newsletter">
+                  <Mail size={16} aria-hidden="true" />
+                  Subscribe
+                </a>
                 <button
                   className="learn-index-menu-button"
                   type="button"
@@ -8203,7 +8207,12 @@ const THIRTY_SIXTH_ARTICLE = {
               <div className="reference-home-hero-copy">
                 <h1 id="reference-home-title">You only get about 1,040 paydays.</h1>
                 <p>Every payday is a decision. Choose yours.</p>
-                <a href="#home-philosophy">Explore the Philosophy</a>
+                <a
+                  href="/about"
+                  onClick={(event) => followLink(event, "/about")}
+                >
+                  Explore the Philosophy
+                </a>
               </div>
             </section>
 
@@ -8233,6 +8242,76 @@ const THIRTY_SIXTH_ARTICLE = {
                   </li>
                 ))}
               </ol>
+            </section>
+
+            <section
+              className="reference-home-latest"
+              aria-labelledby="reference-latest-title"
+            >
+              <div className="reference-home-container">
+                <header className="reference-home-latest-heading">
+                  <div>
+                    <h2 id="reference-latest-title">Latest Ideas</h2>
+                    <p>Fresh perspectives to help you make the most of every payday.</p>
+                  </div>
+                  <a
+                    href="/learn"
+                    onClick={(event) => followLink(event, "/learn")}
+                  >
+                    Explore all articles <span aria-hidden="true">→</span>
+                  </a>
+                </header>
+
+                <div className="reference-home-latest-grid">
+                  {LEARN_START_HERE_ARTICLES.map((article) => (
+                    <article key={article.id}>
+                      <a
+                        className="reference-home-latest-image"
+                        href={`/learn/${article.id}`}
+                        aria-label={`Read ${article.title}`}
+                        onClick={(event) =>
+                          followLink(event, `/learn/${article.id}`)
+                        }
+                      >
+                        <img
+                          src={article.image}
+                          alt={article.alt}
+                          width="800"
+                          height="450"
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      </a>
+                      <div className="reference-home-latest-copy">
+                        <p className="reference-home-latest-category">
+                          {article.category}
+                        </p>
+                        <h3>
+                          <a
+                            href={`/learn/${article.id}`}
+                            onClick={(event) =>
+                              followLink(event, `/learn/${article.id}`)
+                            }
+                          >
+                            {article.title}
+                          </a>
+                        </h3>
+                        <p>{article.summary}</p>
+                        <a
+                          className="reference-home-latest-link"
+                          href={`/learn/${article.id}`}
+                          aria-label={`Read article: ${article.title}`}
+                          onClick={(event) =>
+                            followLink(event, `/learn/${article.id}`)
+                          }
+                        >
+                          Read article <span aria-hidden="true">→</span>
+                        </a>
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              </div>
             </section>
 
             <section
