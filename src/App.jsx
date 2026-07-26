@@ -9498,7 +9498,7 @@ const THIRTY_SIXTH_ARTICLE = {
             >
               <div className="reference-home-philosophy-heading">
                 <span aria-hidden="true" />
-                <h2 id="reference-philosophy-title">The 1040 Paydays Principles</h2>
+                <h2 id="reference-philosophy-title">The Payday Principles</h2>
                 <span aria-hidden="true" />
               </div>
               <ol>
