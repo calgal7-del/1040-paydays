@@ -272,6 +272,10 @@
     {
       "source": "/learn/should-you-save-or-pay-off-debt-first",
       "destination": "/prerender-learn--should-you-save-or-pay-off-debt-first.html"
+    },
+    {
+      "source": "/learn/the-cheapest-thing-you-can-buy-is-patience",
+      "destination": "/prerender-learn--the-cheapest-thing-you-can-buy-is-patience.html"
     }
   ]
 }

@@ -63,6 +63,7 @@ export const LEARN_EDITORIAL_CONFIG = {
         "my-sofa-isnt-broken",
         "why-saying-no-feels-so-hard",
         "the-kitchen-i-coveted",
+        "the-cheapest-thing-you-can-buy-is-patience",
       ],
     },
     {
@@ -177,6 +178,7 @@ export const LEARN_EDITORIAL_CONFIG = {
     "has-this-payday-finished-its-job": "2026-07-23",
     "the-kitchen-i-coveted": "2026-07-23",
     "should-you-save-or-pay-off-debt-first": "2026-07-25",
+    "the-cheapest-thing-you-can-buy-is-patience": "2026-07-25",
   },
 };
 
