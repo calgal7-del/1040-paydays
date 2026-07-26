@@ -185,6 +185,7 @@ export const LEARN_EDITORIAL_CONFIG = {
     "what-your-paycheck-really-buys": "2026-07-25",
     "the-people-youre-trying-to-impress-know-the-least-about-your-money":
       "2026-07-25",
+    "the-hardest-part-about-saving-10000": "2026-07-26",
   },
 };
 
