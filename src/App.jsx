@@ -17,7 +17,6 @@
       Menu,
       BookOpen,
       BarChart3,
-      PiggyBank,
     } from "lucide-react";
     import "./App.css";
     import {
@@ -8899,28 +8898,25 @@ const THIRTY_SIXTH_ARTICLE = {
                   1040 Paydays measures it one payday at a time.
                 </h2>
 
-                <div className="about-page-opportunities">
-                  <div>
-                    <PiggyBank aria-hidden="true" />
-                    <h3>Build savings</h3>
-                    <p>Create a stronger financial foundation.</p>
-                  </div>
-                  <div>
-                    <BarChart3 aria-hidden="true" />
-                    <h3>Invest</h3>
-                    <p>Turn small contributions into long-term growth.</p>
-                  </div>
-                  <div>
-                    <ShieldAlert aria-hidden="true" />
-                    <h3>Prepare for the unexpected</h3>
-                    <p>Protect yourself from life&apos;s ups and downs.</p>
-                  </div>
-                  <div>
-                    <Heart aria-hidden="true" />
-                    <h3>Spend intentionally</h3>
-                    <p>Align your money with your values and goals.</p>
-                  </div>
-                </div>
+                <section className="about-principles" aria-label="The 1040 Paydays philosophy">
+                  {principles.map(([Icon, title, description, slug]) => (
+                    <a
+                      key={slug}
+                      href={`/philosophy/${slug}`}
+                      aria-label={`${title}: ${description}`}
+                      onClick={(event) => {
+                        event.preventDefault();
+                        navigateTo(`/philosophy/${slug}`);
+                      }}
+                    >
+                      <article>
+                        <Icon aria-hidden="true" />
+                        <h3>{title}</h3>
+                        <p>{description}</p>
+                      </article>
+                    </a>
+                  ))}
+                </section>
 
                 <p className="about-page-editorial-thesis">
                   Those small decisions repeated over about 1,040 paydays shape your
@@ -8946,26 +8942,6 @@ const THIRTY_SIXTH_ARTICLE = {
                 <p className="about-page-decision">
                   Because every payday is a decision. <strong>Choose yours.</strong>
                 </p>
-              </section>
-
-              <section className="about-principles" aria-label="The 1040 Paydays philosophy">
-                {principles.map(([Icon, title, description, slug]) => (
-                  <a
-                    key={slug}
-                    href={`/philosophy/${slug}`}
-                    aria-label={`${title}: ${description}`}
-                    onClick={(event) => {
-                      event.preventDefault();
-                      navigateTo(`/philosophy/${slug}`);
-                    }}
-                  >
-                    <article>
-                      <Icon aria-hidden="true" />
-                      <h2>{title}</h2>
-                      <p>{description}</p>
-                    </article>
-                  </a>
-                ))}
               </section>
             </div>
           </main>

@@ -10904,7 +10904,8 @@ a {
   stroke-width: 1.7;
 }
 
-.about-principles h2 {
+.about-principles h2,
+.about-principles h3 {
   margin: 0;
   color: var(--about-navy);
   font-family: inherit;
@@ -10994,49 +10995,6 @@ a {
   letter-spacing: -.03em;
   line-height: 1.2;
   text-align: center;
-}
-
-.about-page-opportunities {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  margin: clamp(26px, 2.5vw, 32px) 0 0;
-}
-
-.about-page-opportunities > div {
-  min-width: 0;
-  padding: 2px clamp(18px, 2.1vw, 28px);
-  border-left: 1px solid var(--about-border);
-  text-align: center;
-}
-
-.about-page-opportunities > div:first-child {
-  border-left: 0;
-}
-
-.about-page-opportunities svg {
-  width: 29px;
-  height: 29px;
-  margin-bottom: 12px;
-  color: var(--about-blue);
-  fill: none;
-  stroke-width: 1.6;
-}
-
-.about-page-opportunities h3 {
-  margin: 0;
-  color: var(--about-navy);
-  font-family: "Playfair Display", Georgia, "Times New Roman", serif;
-  font-size: clamp(17px, 1.45vw, 21px);
-  font-weight: 600;
-  line-height: 1.25;
-}
-
-.about-page-opportunities p {
-  max-width: 24ch;
-  margin: 7px auto 0;
-  color: #52627a;
-  font-size: 13px;
-  line-height: 1.5;
 }
 
 .about-page-editorial-thesis {
@@ -11167,15 +11125,6 @@ a {
     margin-top: 42px;
   }
 
-  .about-page-opportunities {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    row-gap: 34px;
-  }
-
-  .about-page-opportunities > div:nth-child(odd) {
-    border-left: 0;
-  }
-
   .about-page-closing-columns {
     grid-template-columns: 1fr;
     gap: 0;
@@ -11236,23 +11185,6 @@ a {
 
   .about-page-editorial-lede {
     font-size: 30px;
-  }
-
-  .about-page-opportunities {
-    grid-template-columns: 1fr;
-    row-gap: 0;
-    margin-top: 26px;
-  }
-
-  .about-page-opportunities > div,
-  .about-page-opportunities > div:nth-child(odd) {
-    padding: 17px 0;
-    border-top: 1px solid var(--about-border);
-    border-left: 0;
-  }
-
-  .about-page-opportunities > div:first-child {
-    border-top: 0;
   }
 
   .about-page-editorial-thesis {
