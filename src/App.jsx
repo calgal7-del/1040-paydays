@@ -7794,6 +7794,94 @@ const THIRTY_SIXTH_ARTICLE = {
       },
     };
 
+    const PHILOSOPHY_PAGE_TITLES = {
+      "live-today": "Live Today: Enjoy Life With Intention | 1040 Paydays",
+      "protect-tomorrow":
+        "Protect Tomorrow: Build Financial Resilience | 1040 Paydays",
+      "plan-your-future":
+        "Plan Your Future: Save and Invest With Purpose | 1040 Paydays",
+      "choose-what-matters":
+        "Choose What Matters: Align Money With Values | 1040 Paydays",
+    };
+
+    function articlePageTitle(article) {
+      const title = `${article.title} | 1040 Paydays`;
+      if (title.length >= 45) return title;
+
+      const contextualTitle =
+        `${article.title}: ${article.category} | 1040 Paydays`;
+      return contextualTitle.length >= 45
+        ? contextualTitle
+        : `${article.title}: Personal Finance Essay | 1040 Paydays`;
+    }
+
+    export function pageMetadataForRoute(route) {
+      const normalizedPath =
+        route.length > 1 ? route.replace(/\/+$/, "") : route;
+      const routeSlug = normalizedPath.startsWith("/learn/")
+        ? normalizedPath.slice("/learn/".length)
+        : "";
+      const cluster = LEARN_CLUSTER_BY_SLUG.get(routeSlug);
+      const article = PUBLISHED_ARTICLE_BY_ID.get(routeSlug);
+      const philosophySlug = normalizedPath.startsWith("/philosophy/")
+        ? normalizedPath.slice("/philosophy/".length)
+        : "";
+      const philosophyPage = PHILOSOPHY_BY_SLUG.get(philosophySlug);
+      const legalPage = LEGAL_PAGE_CONFIG[normalizedPath];
+      const isLearnIndex = normalizedPath === "/learn";
+      const isCalculatorRoute = normalizedPath === "/calculator";
+      const isAboutRoute = normalizedPath === "/about";
+      const isLearnRoute = isLearnIndex || Boolean(cluster) || Boolean(article);
+      const title = article
+        ? articlePageTitle(article)
+        : philosophyPage
+          ? PHILOSOPHY_PAGE_TITLES[philosophyPage.slug]
+          : cluster
+            ? `Personal Finance ${cluster.title} Articles | 1040 Paydays`
+            : isLearnIndex
+              ? "Personal Finance Articles and Guides | 1040 Paydays"
+              : isCalculatorRoute
+                ? "Payday Savings and Retirement Calculator | 1040 Paydays"
+                : isAboutRoute
+                  ? "Our Personal Finance Philosophy | 1040 Paydays"
+                  : normalizedPath === "/privacy-policy"
+                    ? "Privacy Policy and Data Practices | 1040 Paydays"
+                    : normalizedPath === "/terms-of-use"
+                      ? "Website and Calculator Terms of Use | 1040 Paydays"
+                      : normalizedPath === "/contact"
+                        ? "Contact Us for Questions and Feedback | 1040 Paydays"
+                        : "Savings and Retirement Calculator | 1040 Paydays";
+      const description = article
+        ? article.summary
+        : philosophyPage
+          ? philosophyPage.metaDescription
+          : cluster
+            ? cluster.intro
+            : isLearnIndex
+              ? "Thoughtful articles and stories to help you make better financial decisions—one payday at a time."
+              : isCalculatorRoute
+                ? "Build a payday-by-payday savings plan and explore how regular contributions may grow over time."
+                : isAboutRoute
+                  ? "Learn the philosophy behind 1040 Paydays and how small, consistent financial decisions can help create more freedom, security, and choice over time."
+                  : legalPage
+                    ? legalPage.description
+                    : SITE_DESCRIPTION;
+      const canonicalPath =
+        isLearnRoute ||
+        philosophyPage ||
+        isCalculatorRoute ||
+        isAboutRoute ||
+        legalPage
+          ? normalizedPath
+          : "/";
+
+      return {
+        title,
+        description,
+        canonicalUrl: `${SITE_URL}${canonicalPath === "/" ? "/" : canonicalPath}`,
+      };
+    }
+
     const PRIMARY_NAV_LINKS = [
       { label: "Home", href: "/" },
       { label: "Learn", href: "/learn" },
@@ -9558,52 +9646,9 @@ const THIRTY_SIXTH_ARTICLE = {
         const routeSlug = normalizedPath.startsWith("/learn/")
           ? normalizedPath.slice("/learn/".length)
           : "";
-        const cluster = LEARN_CLUSTER_BY_SLUG.get(routeSlug);
         const article = PUBLISHED_ARTICLE_BY_ID.get(routeSlug);
-        const philosophySlug = normalizedPath.startsWith("/philosophy/")
-          ? normalizedPath.slice("/philosophy/".length)
-          : "";
-        const philosophyPage = PHILOSOPHY_BY_SLUG.get(philosophySlug);
-        const isLearnIndex = normalizedPath === "/learn";
-        const isCalculatorRoute = normalizedPath === "/calculator";
-        const isAboutRoute = normalizedPath === "/about";
-        const legalPage = LEGAL_PAGE_CONFIG[normalizedPath];
-        const isLearnRoute = isLearnIndex || Boolean(cluster) || Boolean(article);
-        const title = article
-          ? `${article.title} | 1040 Paydays`
-          : philosophyPage
-            ? philosophyPage.metaTitle
-            : cluster
-              ? `${cluster.title} | Learn | 1040 Paydays`
-              : isLearnIndex
-                ? "Learn | 1040 Paydays"
-                : isCalculatorRoute
-                  ? "Calculator | 1040 Paydays"
-                  : isAboutRoute
-                    ? "About 1040 Paydays | Our Philosophy"
-                    : legalPage
-                      ? legalPage.metaTitle
-                      : "1040 Paydays | Savings and Retirement Calculator by Paycheck";
-        const description = article
-          ? article.summary
-          : philosophyPage
-            ? philosophyPage.metaDescription
-            : cluster
-              ? cluster.intro
-              : isLearnIndex
-                ? "Thoughtful articles and stories to help you make better financial decisions—one payday at a time."
-                : isCalculatorRoute
-                  ? "Build a payday-by-payday savings plan and explore how regular contributions may grow over time."
-                  : isAboutRoute
-                    ? "Learn the philosophy behind 1040 Paydays and how small, consistent financial decisions can help create more freedom, security, and choice over time."
-                    : legalPage
-                      ? legalPage.description
-                      : "Estimate how much you can save from every paycheck. Use 1040 Paydays to plan savings, retirement, and future growth with a simple calculator.";
-        const canonicalPath =
-          isLearnRoute || philosophyPage || isCalculatorRoute || isAboutRoute || legalPage
-            ? normalizedPath
-            : "/";
-        const canonicalUrl = `${SITE_URL}${canonicalPath === "/" ? "/" : canonicalPath}`;
+        const { title, description, canonicalUrl } =
+          pageMetadataForRoute(normalizedPath);
 
         const setMeta = (selector, attribute, value) => {
           let element = document.head.querySelector(selector);

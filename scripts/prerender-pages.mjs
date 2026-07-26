@@ -9,6 +9,13 @@ const distAppPath = resolve("dist/app.html");
 const vercelPath = resolve("vercel.json");
 const rootPlaceholder = '<div id="root"></div>';
 const siteUrl = "https://www.1040paydays.com";
+const renderedTitles = new Map();
+
+const escapeHtml = (value) =>
+  value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
 
 globalThis.window = {
   location: {
@@ -27,13 +34,23 @@ const vite = await createServer({
 });
 
 try {
-  const { default: App } = await vite.ssrLoadModule("/src/App.jsx");
+  const { default: App, pageMetadataForRoute } =
+    await vite.ssrLoadModule("/src/App.jsx");
   const indexHtml = readFileSync(distIndexPath, "utf8");
   if (!indexHtml.includes(rootPlaceholder)) {
     throw new Error("Could not find the empty root element in dist/index.html.");
   }
 
   const renderRoute = (route) => {
+    const { title } = pageMetadataForRoute(route);
+    const duplicateRoute = renderedTitles.get(title);
+    if (duplicateRoute) {
+      throw new Error(
+        `Routes "${duplicateRoute}" and "${route}" share the title "${title}".`
+      );
+    }
+    renderedTitles.set(title, route);
+
     globalThis.window.location.pathname = route;
     globalThis.window.location.href = `${siteUrl}${route}`;
 
@@ -60,10 +77,22 @@ try {
     }
     JSON.parse(structuredDataScripts[0][1]);
 
-    return indexHtml.replace(
-      rootPlaceholder,
-      `<div id="root" data-prerendered="${route}">${markup}</div>`
-    );
+    const pageHtml = indexHtml
+      .replace(
+        rootPlaceholder,
+        `<div id="root" data-prerendered="${route}">${markup}</div>`
+      )
+      .replace(/<title>[\s\S]*?<\/title>/i, `<title>${escapeHtml(title)}</title>`);
+    const headMarkup = pageHtml.match(/<head>([\s\S]*?)<\/head>/i)?.[1] || "";
+    const titleCount = (headMarkup.match(/<title(?:\s|>)/gi) || []).length;
+
+    if (titleCount !== 1) {
+      throw new Error(
+        `Expected "${route}" to contain exactly one title tag, found ${titleCount}.`
+      );
+    }
+
+    return pageHtml;
   };
 
   writeFileSync(distAppPath, indexHtml);
