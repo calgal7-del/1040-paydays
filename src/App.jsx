@@ -17,6 +17,7 @@
       Menu,
       BookOpen,
       BarChart3,
+      PiggyBank,
     } from "lucide-react";
     import "./App.css";
     import {
@@ -8832,25 +8833,35 @@ const THIRTY_SIXTH_ARTICLE = {
 
                   <div className="about-page-prose">
                     <p>
-                      Most people think about money in dollars.<br />
-                      <strong>We think about it in paydays.</strong>
+                      Most personal finance websites tell you <strong>how</strong> to save,
+                      invest, budget, or retire.
                     </p>
-                    <p>
-                      Over a working life, most people receive about 1,040 paydays.<br />
-                      Each one is a limited opportunity to shape the life you want.<br />
-                      Once a payday passes, the decision that came with it is gone.
+                    <p>1040 Paydays starts with a different question.</p>
+                    <p className="about-page-question">
+                      How many opportunities will you have to make those decisions?
                     </p>
-                    <p className="about-page-belief-label">1040 Paydays was built around a simple belief:</p>
-                    <blockquote className="about-page-belief">
-                      Small decisions, made consistently, have far more power<br />
-                      than dramatic changes that rarely last.
-                    </blockquote>
-                    <ul className="about-page-statements">
-                      <li>Live well today.</li>
-                      <li>Protect yourself from tomorrow’s uncertainties.</li>
-                      <li>Save and invest so future opportunities become possible.</li>
-                      <li>Spend with intention on what matters most.</li>
-                    </ul>
+                    <p>For most people, a full-time career lasts about 40 years.</p>
+                    <p>Most people receive 26 biweekly paydays every year.</p>
+                    <div
+                      className="about-page-formula"
+                      aria-label="40 years times 26 paydays equals about 1,040 paydays"
+                    >
+                      <span>
+                        <strong>40</strong>
+                        <small>years</small>
+                      </span>
+                      <b aria-hidden="true">×</b>
+                      <span>
+                        <strong>26</strong>
+                        <small>paydays</small>
+                      </span>
+                      <b aria-hidden="true">=</b>
+                      <span>
+                        <strong>1,040</strong>
+                        <small>paydays</small>
+                      </span>
+                    </div>
+                    <p>That simple calculation became the foundation of this website.</p>
                   </div>
                 </div>
 
@@ -8880,6 +8891,61 @@ const THIRTY_SIXTH_ARTICLE = {
                     1040 Paydays calculator showing payday inputs, projected future value, and investment growth.
                   </figcaption>
                 </figure>
+              </section>
+
+              <section className="about-page-editorial" aria-labelledby="about-page-measure">
+                <h2 id="about-page-measure" className="about-page-editorial-lede">
+                  Instead of measuring financial success by one retirement number,
+                  1040 Paydays measures it one payday at a time.
+                </h2>
+
+                <div className="about-page-opportunities">
+                  <div>
+                    <PiggyBank aria-hidden="true" />
+                    <h3>Build savings</h3>
+                    <p>Create a stronger financial foundation.</p>
+                  </div>
+                  <div>
+                    <BarChart3 aria-hidden="true" />
+                    <h3>Invest</h3>
+                    <p>Turn small contributions into long-term growth.</p>
+                  </div>
+                  <div>
+                    <ShieldAlert aria-hidden="true" />
+                    <h3>Prepare for the unexpected</h3>
+                    <p>Protect yourself from life&apos;s ups and downs.</p>
+                  </div>
+                  <div>
+                    <Heart aria-hidden="true" />
+                    <h3>Spend intentionally</h3>
+                    <p>Align your money with your values and goals.</p>
+                  </div>
+                </div>
+
+                <p className="about-page-editorial-thesis">
+                  Those small decisions repeated over about 1,040 paydays shape your
+                  financial future far more than one dramatic financial move ever could.
+                </p>
+              </section>
+
+              <section className="about-page-editorial-closing" aria-label="Our goal">
+                <div className="about-page-closing-columns">
+                  <p>
+                    Whether you&apos;re just beginning your financial journey or planning for
+                    retirement, we invite you to explore our articles, use our interactive
+                    tools, and discover practical ideas that can help you make every payday
+                    count.
+                  </p>
+                  <div>
+                    <p>
+                      Our goal isn&apos;t to promise quick riches or perfect financial decisions.
+                    </p>
+                    <p>It&apos;s to help you make one better decision every payday.</p>
+                  </div>
+                </div>
+                <p className="about-page-decision">
+                  Because every payday is a decision. <strong>Choose yours.</strong>
+                </p>
               </section>
 
               <section className="about-principles" aria-label="The 1040 Paydays philosophy">
