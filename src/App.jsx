@@ -68,7 +68,7 @@
   image: "/article-1040-paydays.png",
   readTime: "4 min read",
   category: "Payday philosophy",
-  kicker: "THE PAYDAY PHILOSOPHY",
+  kicker: "THE PAYDAY PRINCIPLES",
   alt: "A woman sitting at her office desk during the workday",
   caption:
     "Most people think about money in dollars. I think about it in paydays.",
@@ -4521,7 +4521,7 @@ const THIRTY_SIXTH_ARTICLE = {
   image: "/article-expensive-word-later.png",
   readTime: "5 min read",
   category: "Payday Philosophy",
-  kicker: "PAYDAY PHILOSOPHY · PROCRASTINATION · MOMENTUM",
+  kicker: "PAYDAY PRINCIPLES · PROCRASTINATION · MOMENTUM",
   alt: "A small chip spreading across a vehicle windshield",
   caption:
     "Small problems rarely announce when they're about to become expensive.",
@@ -4691,7 +4691,7 @@ const THIRTY_SIXTH_ARTICLE = {
   image: "/article-phone-chargers-drawer.png",
   readTime: "5 min read",
   category: "Payday Philosophy",
-  kicker: "PAYDAY PHILOSOPHY · DECISIONS · SIMPLICITY",
+  kicker: "PAYDAY PRINCIPLES · DECISIONS · SIMPLICITY",
   alt: "A drawer overflowing with old phone chargers and cables",
   caption:
     "Sometimes what we're really holding onto isn't the object. It's the possibility.",
@@ -4875,7 +4875,7 @@ const THIRTY_SIXTH_ARTICLE = {
   image: "/article-forgotten-potatoes.png",
   readTime: "4 min read",
   category: "Payday Philosophy",
-  kicker: "PAYDAY PHILOSOPHY · GROWTH · CONSISTENCY",
+  kicker: "PAYDAY PRINCIPLES · GROWTH · CONSISTENCY",
   alt: "A brown paper bag filled with sprouting potatoes beside wilted flowers in garden pots",
   caption:
     "Growth does not always happen where we expect it.",
@@ -4971,7 +4971,7 @@ const THIRTY_SIXTH_ARTICLE = {
   image: "/article-money-flows-downhill.png",
   readTime: "4 min read",
   category: "Payday Philosophy",
-  kicker: "PAYDAY PHILOSOPHY · HABITS · SYSTEMS",
+  kicker: "PAYDAY PRINCIPLES · HABITS · SYSTEMS",
   alt: "Rainwater flowing through shallow channels on a hillside",
   caption: "Money usually follows the paths we've already created.",
   quote: {
@@ -5050,7 +5050,7 @@ const THIRTY_SIXTH_ARTICLE = {
   image: "/article-money-has-memory.png",
   readTime: "4 min read",
   category: "Payday Philosophy",
-  kicker: "PAYDAY PHILOSOPHY · CHOICES · LONG-TERM THINKING",
+  kicker: "PAYDAY PRINCIPLES · CHOICES · LONG-TERM THINKING",
   alt: "A notebook beside graduation papers representing an investment in learning",
   caption: "The money is gone. What it left behind isn't.",
   quote: {
@@ -6173,7 +6173,7 @@ const THIRTY_SIXTH_ARTICLE = {
       image: "/article-cheapest-thing-patience.png",
       readTime: "5 min read",
       category: "Payday Philosophy",
-      kicker: "PAYDAY PHILOSOPHY · SPENDING",
+      kicker: "PAYDAY PRINCIPLES · SPENDING",
       alt: "A cupboard filled with mismatched plates, bowls, and mugs",
       intro: [
         "Years ago, I decided it was finally time to buy a matching set of dinner plates.",
@@ -6248,7 +6248,7 @@ const THIRTY_SIXTH_ARTICLE = {
       image: "/article-money-is-never-just-money.png",
       readTime: "4 min read",
       category: "Payday Philosophy",
-      kicker: "PAYDAY PHILOSOPHY · MONEY & LIFE",
+      kicker: "PAYDAY PRINCIPLES · MONEY & LIFE",
       alt: "A person holding an open wallet with a few coins and a banknote",
       intro: [
         "It was never just the money.",
@@ -6295,7 +6295,7 @@ const THIRTY_SIXTH_ARTICLE = {
       image: "/article-what-your-paycheck-really-buys.png",
       readTime: "4 min read",
       category: "Payday Philosophy",
-      kicker: "PAYDAY PHILOSOPHY · SPENDING",
+      kicker: "PAYDAY PRINCIPLES · SPENDING",
       alt: "An open cupboard stocked with pantry staples and household supplies",
       intro: [
         "The month I challenged myself to shop from my own cupboards changed the way I think about money.",
@@ -6349,7 +6349,7 @@ const THIRTY_SIXTH_ARTICLE = {
       image: "/article-people-youre-trying-to-impress.png",
       readTime: "3 min read",
       category: "Payday Philosophy",
-      kicker: "PAYDAY PHILOSOPHY · SPENDING",
+      kicker: "PAYDAY PRINCIPLES · SPENDING",
       alt: "Two people walking past a large house with a front porch",
       intro: [
         "I once heard a story that has stayed with me.",
@@ -6405,6 +6405,8 @@ const THIRTY_SIXTH_ARTICLE = {
       image: "/article-hardest-part-saving-10000.png",
       readTime: "6 min read",
       category: "Saving",
+      paydayPrinciple: "Protect Tomorrow",
+      topics: ["Saving", "Emergency Funds", "Banking"],
       kicker: "SAVING · FINANCIAL GOALS · EMERGENCY FUNDS",
       alt: "A person holding a smartphone displaying financial charts",
       intro: [
@@ -6551,6 +6553,12 @@ const THIRTY_SIXTH_ARTICLE = {
     const PHILOSOPHY_BY_SLUG = new Map(
       PHILOSOPHY_PAGES.map((page) => [page.slug, page])
     );
+
+    function publicCategoryLabel(category) {
+      return /^Payday philosophy$/i.test(category)
+        ? "Payday Principles"
+        : category;
+    }
     const LEARN_CLUSTER_BY_SLUG = new Map(
       LEARN_EDITORIAL_CONFIG.clusters.map((cluster) => [cluster.slug, cluster])
     );
@@ -6686,8 +6694,8 @@ const THIRTY_SIXTH_ARTICLE = {
           answer: "Wherever you are on your 1,040-payday journey, your next payday is still an opportunity to move in the right direction.",
         },
         {
-          question: "What is the payday philosophy?",
-          answer: "It is the idea that every paycheck is a choice. You may not control how many paydays you get, but you can decide what each one becomes.",
+          question: "What are the Payday Principles?",
+          answer: "They express the idea that every paycheck is a choice. You may not control how many paydays you get, but you can decide what each one becomes.",
         },
       ],
       "who-wants-to-go-home": [
@@ -7911,7 +7919,8 @@ const THIRTY_SIXTH_ARTICLE = {
               "@type": "WebPage",
               "@id": canonicalUrl,
             },
-            articleSection: article.category,
+            articleSection:
+              article.topics || publicCategoryLabel(article.category),
           });
           graph.push(breadcrumbSchema(breadcrumbs, canonicalUrl));
 
@@ -8183,7 +8192,7 @@ const THIRTY_SIXTH_ARTICLE = {
       if (title.length >= 45) return title;
 
       const contextualTitle =
-        `${article.title}: ${article.category} | 1040 Paydays`;
+        `${article.title}: ${publicCategoryLabel(article.category)} | 1040 Paydays`;
       return contextualTitle.length >= 45
         ? contextualTitle
         : `${article.title}: Personal Finance Essay | 1040 Paydays`;
@@ -8217,7 +8226,7 @@ const THIRTY_SIXTH_ARTICLE = {
               : isCalculatorRoute
                 ? "Payday Savings and Retirement Calculator | 1040 Paydays"
                 : isAboutRoute
-                  ? "Our Personal Finance Philosophy | 1040 Paydays"
+                  ? "Our Payday Principles | 1040 Paydays"
                   : normalizedPath === "/privacy-policy"
                     ? "Privacy Policy and Data Practices | 1040 Paydays"
                     : normalizedPath === "/terms-of-use"
@@ -8236,7 +8245,7 @@ const THIRTY_SIXTH_ARTICLE = {
               : isCalculatorRoute
                 ? "Build a payday-by-payday savings plan and explore how regular contributions may grow over time."
                 : isAboutRoute
-                  ? "Learn the philosophy behind 1040 Paydays and how small, consistent financial decisions can help create more freedom, security, and choice over time."
+                  ? "Learn the Payday Principles behind 1040 Paydays and how small, consistent financial decisions can help create more freedom, security, and choice over time."
                   : legalPage
                     ? legalPage.description
                     : SITE_DESCRIPTION;
@@ -8850,7 +8859,7 @@ const THIRTY_SIXTH_ARTICLE = {
                 </aside>
               </div>
 
-              <section className="final-calculator-philosophy" aria-label="The 1040 Paydays philosophy">
+              <section className="final-calculator-philosophy" aria-label="The 1040 Paydays Principles">
                 {principles.map(([Icon, title, description]) => (
                   <div key={title}>
                     <Icon size={24} fill="none" aria-hidden="true" />
@@ -8969,7 +8978,7 @@ const THIRTY_SIXTH_ARTICLE = {
             <div className="reference-home-container about-page-container">
               <section className="about-page-top" aria-labelledby="about-page-title">
                 <div className="about-page-copy">
-                  <h1 id="about-page-title">Our Philosophy</h1>
+                  <h1 id="about-page-title">Our Payday Principles</h1>
                   <div className="about-page-rule" aria-hidden="true" />
 
                   <div className="about-page-prose">
@@ -9040,7 +9049,7 @@ const THIRTY_SIXTH_ARTICLE = {
                   1040 Paydays measures it one payday at a time.
                 </h2>
 
-                <section className="about-principles" aria-label="The 1040 Paydays philosophy">
+                <section className="about-principles" aria-label="The 1040 Paydays Principles">
                   {principles.map(([Icon, title, description, slug]) => (
                     <a
                       key={slug}
@@ -9195,7 +9204,7 @@ const THIRTY_SIXTH_ARTICLE = {
               <nav className="philosophy-breadcrumbs" aria-label="Breadcrumb">
                 <a href="/" onClick={(event) => followLink(event, "/")}>Home</a>
                 <span aria-hidden="true">/</span>
-                <span>Philosophy</span>
+                <span>Payday Principles</span>
                 <span aria-hidden="true">/</span>
                 <span aria-current="page">{page.title}</span>
               </nav>
@@ -9267,7 +9276,7 @@ const THIRTY_SIXTH_ARTICLE = {
                       </a>
                       <div className="reference-home-latest-copy">
                         <p className="reference-home-latest-category">
-                          {article.category} <span aria-hidden="true">·</span> {article.readTime}
+                          {publicCategoryLabel(article.category)} <span aria-hidden="true">·</span> {article.readTime}
                         </p>
                         <h3>
                           <a
@@ -9304,7 +9313,7 @@ const THIRTY_SIXTH_ARTICLE = {
               </section>
 
               <section className="philosophy-page-more" aria-labelledby="philosophy-more-title">
-                <h2 id="philosophy-more-title">Explore the other philosophies</h2>
+                <h2 id="philosophy-more-title">Explore the other Payday Principles</h2>
                 <div>
                   {otherPages.map((item) => {
                     const OtherIcon = PAYDAY_PRINCIPLE_ICONS[item.iconKey];
@@ -9463,7 +9472,7 @@ const THIRTY_SIXTH_ARTICLE = {
                   href="/about"
                   onClick={(event) => followLink(event, "/about")}
                 >
-                  Explore the Philosophy
+                  Explore the Payday Principles
                 </a>
               </div>
             </section>
@@ -9489,7 +9498,7 @@ const THIRTY_SIXTH_ARTICLE = {
             >
               <div className="reference-home-philosophy-heading">
                 <span aria-hidden="true" />
-                <h2 id="reference-philosophy-title">The 1040 Paydays Philosophy</h2>
+                <h2 id="reference-philosophy-title">The 1040 Paydays Principles</h2>
                 <span aria-hidden="true" />
               </div>
               <ol>
@@ -9558,7 +9567,7 @@ const THIRTY_SIXTH_ARTICLE = {
                       </a>
                       <div className="reference-home-latest-copy">
                         <p className="reference-home-latest-category">
-                          {article.category}
+                          {publicCategoryLabel(article.category)}
                         </p>
                         <h3>
                           <a
@@ -9800,7 +9809,7 @@ const THIRTY_SIXTH_ARTICLE = {
                       <div className="editorial-hero-article-meta">
                         <span>{dailyArticle.readTime}</span>
                         <span aria-hidden="true">|</span>
-                        <span>{dailyArticle.category}</span>
+                        <span>{publicCategoryLabel(dailyArticle.category)}</span>
                         <span className="editorial-hero-article-arrow" aria-hidden="true">
                           →
                         </span>
@@ -9894,7 +9903,7 @@ const THIRTY_SIXTH_ARTICLE = {
                     </a>
                     <div>
                       <p className="editorial-article-meta">
-                        {article.category} <span>·</span> {article.readTime}
+                        {publicCategoryLabel(article.category)} <span>·</span> {article.readTime}
                       </p>
                       <h3>
                         <a
@@ -10793,7 +10802,7 @@ const THIRTY_SIXTH_ARTICLE = {
                 {PUBLISHED_ARTICLES.map((article) => (
                   <button type="button" key={article.id} onClick={() => setPanel(`article:${article.id}`)}>
                     <img src={article.image} alt={article.alt} />
-                    <span>{article.category} · {article.readTime}</span>
+                    <span>{publicCategoryLabel(article.category)} · {article.readTime}</span>
                     <strong>{article.title}</strong>
                     <em>Read article →</em>
                   </button>
@@ -11231,35 +11240,28 @@ const THIRTY_SIXTH_ARTICLE = {
       return (
         <section className="learn-library-topics" aria-labelledby="topics-heading">
           <header className="learn-library-section-heading">
-            <p>EXPLORE BY TOPIC</p>
-            <h2 id="topics-heading">Browse lessons and stories organized by what matters most.</h2>
+            <p>PAYDAY PRINCIPLES</p>
+            <h2 id="topics-heading">Explore the Payday Principles</h2>
           </header>
-          <div className="learn-library-topic-grid">
-            {LEARN_EDITORIAL_CONFIG.topics.map((topic) => {
-              const cluster = LEARN_CLUSTER_BY_SLUG.get(topic.clusterSlug);
-              const topicArticle = articlesForCluster(cluster)[0];
-              if (!cluster || !topicArticle) return null;
+          <div className="learn-library-topic-grid learn-library-principle-grid">
+            {PHILOSOPHY_PAGES.map((principle) => {
+              const Icon = PAYDAY_PRINCIPLE_ICONS[principle.iconKey];
 
               return (
                 <a
-                  href={`/learn/${cluster.slug}`}
-                  key={topic.clusterSlug}
+                  href={`/philosophy/${principle.slug}`}
+                  key={principle.slug}
                   onClick={(event) => {
                     event.preventDefault();
-                    navigateTo(`/learn/${cluster.slug}`);
+                    navigateTo(`/philosophy/${principle.slug}`);
                   }}
                 >
-                  <img
-                    src={topicArticle.image}
-                    alt={topicArticle.alt}
-                    width="360"
-                    height="220"
-                    loading="lazy"
-                    decoding="async"
-                  />
+                  <span className="learn-library-principle-icon" aria-hidden="true">
+                    <Icon size={34} strokeWidth={1.7} />
+                  </span>
                   <span>
-                    <strong>{topic.title}</strong>
-                    <small>{topic.description}</small>
+                    <strong>{principle.title}</strong>
+                    <small>{principle.statement}</small>
                   </span>
                 </a>
               );
@@ -11302,7 +11304,7 @@ const THIRTY_SIXTH_ARTICLE = {
                   </a>
                   <div>
                     <small>
-                      {article.category}
+                      {publicCategoryLabel(article.category)}
                       {publicationDate && (
                         <> · <time dateTime={publicationDate}>
                           Published {formatPublicationDate(publicationDate)}
@@ -11354,7 +11356,7 @@ const THIRTY_SIXTH_ARTICLE = {
 
       return (
         <section className="learn-library-sidebar-card learn-library-philosophy" aria-labelledby="philosophy-heading">
-          <h2 id="philosophy-heading">The 1040 Paydays Philosophy</h2>
+          <h2 id="philosophy-heading">The 1040 Paydays Principles</h2>
           <ol>
             {principles.map(({ title, description, Icon }) => (
               <li key={title}>
@@ -11481,7 +11483,7 @@ const THIRTY_SIXTH_ARTICLE = {
                 </h2>
                 <p>{featuredArticle.summary}</p>
                 <small>
-                  {featuredArticle.category} · {featuredArticle.readTime}
+                  {publicCategoryLabel(featuredArticle.category)} · {featuredArticle.readTime}
                 </small>
               </div>
             </section>
@@ -11514,7 +11516,7 @@ const THIRTY_SIXTH_ARTICLE = {
                   </a>
                   <div className="learn-cluster-article-copy">
                     <small>
-                      {article.category}
+                      {publicCategoryLabel(article.category)}
                       {publicationDateForArticle(article) && (
                         <> · <time dateTime={publicationDateForArticle(article)}>
                           Published {formatPublicationDate(publicationDateForArticle(article))}
@@ -11592,7 +11594,7 @@ const THIRTY_SIXTH_ARTICLE = {
 
           <div className="learn-filter-row" aria-label="Article categories">
             <span className="is-active">All articles</span>
-            <span>Payday philosophy</span>
+            <span>Payday Principles</span>
             <span>Saving</span>
             <span>Investing</span>
             <span>Retirement</span>
@@ -11603,7 +11605,7 @@ const THIRTY_SIXTH_ARTICLE = {
               <button className="learn-article-card" type="button" key={article.id} onClick={() => onOpenArticle(article)}>
                 <img src={article.image} alt={article.alt} />
                 <div className="learn-card-content">
-                  <span>{article.category} · {article.readTime}</span>
+                  <span>{publicCategoryLabel(article.category)} · {article.readTime}</span>
                   <h2>{article.title}</h2>
                   <p>{article.summary}</p>
                   <strong>Read article <span aria-hidden="true">→</span></strong>
@@ -11680,7 +11682,7 @@ const THIRTY_SIXTH_ARTICLE = {
                       />
                     </LearnArticleLink>
                     <div>
-                      <small>{item.category} · {item.readTime}</small>
+                      <small>{publicCategoryLabel(item.category)} · {item.readTime}</small>
                       <h3><LearnArticleLink article={item} navigateTo={navigateTo} /></h3>
                     </div>
                   </article>
@@ -11738,7 +11740,7 @@ const THIRTY_SIXTH_ARTICLE = {
                 navigateTo("/about");
               }}
             >
-              Read our philosophy <span aria-hidden="true">→</span>
+              Read our Payday Principles <span aria-hidden="true">→</span>
             </a>
           </div>
         </aside>
@@ -11807,7 +11809,9 @@ const THIRTY_SIXTH_ARTICLE = {
             </nav>
 
             <header className="article-header">
-              <p className="article-kicker">{article.kicker || article.category}</p>
+              <p className="article-kicker">
+                {article.kicker || publicCategoryLabel(article.category)}
+              </p>
               <h1>{article.title}</h1>
               {article.summary && <p className="article-summary">{article.summary}</p>}
               <div className="article-meta">
@@ -11913,7 +11917,7 @@ const THIRTY_SIXTH_ARTICLE = {
                         decoding="async"
                       />
                     </LearnArticleLink>
-                    <small>{related.category} · {related.readTime}</small>
+                    <small>{publicCategoryLabel(related.category)} · {related.readTime}</small>
                     <h3><LearnArticleLink article={related} navigateTo={navigateTo} /></h3>
                   </article>
                 ))}
