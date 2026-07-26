@@ -284,6 +284,10 @@
     {
       "source": "/learn/what-your-paycheck-really-buys",
       "destination": "/prerender-learn--what-your-paycheck-really-buys.html"
+    },
+    {
+      "source": "/learn/the-people-youre-trying-to-impress-know-the-least-about-your-money",
+      "destination": "/prerender-learn--the-people-youre-trying-to-impress-know-the-least-about-your-money.html"
     }
   ]
 }

@@ -65,6 +65,7 @@ export const LEARN_EDITORIAL_CONFIG = {
         "the-kitchen-i-coveted",
         "the-cheapest-thing-you-can-buy-is-patience",
         "what-your-paycheck-really-buys",
+        "the-people-youre-trying-to-impress-know-the-least-about-your-money",
       ],
     },
     {
@@ -182,6 +183,8 @@ export const LEARN_EDITORIAL_CONFIG = {
     "the-cheapest-thing-you-can-buy-is-patience": "2026-07-25",
     "money-is-never-just-money": "2026-07-25",
     "what-your-paycheck-really-buys": "2026-07-25",
+    "the-people-youre-trying-to-impress-know-the-least-about-your-money":
+      "2026-07-25",
   },
 };
 

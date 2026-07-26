@@ -6342,7 +6342,62 @@ const THIRTY_SIXTH_ARTICLE = {
       sections: [],
     };
 
-    const ARTICLES = [FEATURED_ARTICLE, SECOND_ARTICLE, THIRD_ARTICLE, FOURTH_ARTICLE, FIFTH_ARTICLE, SIXTH_ARTICLE, SEVENTH_ARTICLE, EIGHTH_ARTICLE, NINTH_ARTICLE, TENTH_ARTICLE, ELEVENTH_ARTICLE, TWELFTH_ARTICLE, THIRTEENTH_ARTICLE, FOURTEENTH_ARTICLE, FIFTEENTH_ARTICLE, SIXTEENTH_ARTICLE, SEVENTEENTH_ARTICLE, EIGHTEENTH_ARTICLE, NINETEENTH_ARTICLE, TWENTIETH_ARTICLE, TWENTY_FIRST_ARTICLE, TWENTY_SECOND_ARTICLE, TWENTY_THIRD_ARTICLE, TWENTY_FOURTH_ARTICLE, TWENTY_FIFTH_ARTICLE, TWENTY_SEVENTH_ARTICLE, TWENTY_EIGHTH_ARTICLE, TWENTY_NINTH_ARTICLE, THIRTY_FIRST_ARTICLE, THIRTY_SECOND_ARTICLE, THIRTY_THIRD_ARTICLE, THIRTY_FOURTH_ARTICLE, THIRTY_FIFTH_ARTICLE, THIRTY_SIXTH_ARTICLE, THIRTY_SEVENTH_ARTICLE, THIRTY_EIGHTH_ARTICLE, THIRTY_NINTH_ARTICLE, FORTIETH_ARTICLE, FORTY_FIRST_ARTICLE, FORTY_SECOND_ARTICLE, FORTY_THIRD_ARTICLE, FORTY_FOURTH_ARTICLE, FORTY_FIFTH_ARTICLE, FORTY_SIXTH_ARTICLE, FORTY_SEVENTH_ARTICLE, FORTY_EIGHTH_ARTICLE, FORTY_NINTH_ARTICLE, FIFTIETH_ARTICLE, FIFTY_FIRST_ARTICLE, FIFTY_SECOND_ARTICLE, FIFTY_THIRD_ARTICLE, FIFTY_FOURTH_ARTICLE];
+    const FIFTY_FIFTH_ARTICLE = {
+      id: "the-people-youre-trying-to-impress-know-the-least-about-your-money",
+      title: "The People You're Trying to Impress Know the Least About Your Money",
+      summary: "They see one moment. We live the whole story.",
+      image: "/article-people-youre-trying-to-impress.png",
+      readTime: "3 min read",
+      category: "Payday Philosophy",
+      kicker: "PAYDAY PHILOSOPHY · SPENDING",
+      alt: "Two people walking past a large house with a front porch",
+      intro: [
+        "I once heard a story that has stayed with me.",
+        "Someone was sitting on their front patio when two people walked by.",
+        "One glanced at the house and said, \"Wow... they're doing well for themselves.\"",
+        "The people on the patio laughed after the strangers were out of earshot.",
+        "The strangers had no idea what they were looking at.",
+        "They didn't know whether the mortgage had been paid off years ago or whether the house had been in the family for decades. They didn't know if the furniture came from a designer showroom or a garage sale. They didn't know whether the owners had built wealth slowly or were carrying more debt than anyone could imagine.",
+        "They saw a house.",
+        "Everything else was a story they invented.",
+        "The more I thought about it, the more I realized how often we do the same thing.",
+        "We see a nice house, a newer vehicle, a vacation photo, a watch, or even a smile, and we fill in the blanks ourselves.",
+        "Successful.",
+        "Comfortable.",
+        "Wealthy.",
+        "Financially secure.",
+        "Most of the time, we're just guessing.",
+        "That made me wonder.",
+        "Who are we really trying to impress?",
+        "The stranger walking past our house?",
+        "The person beside us at a red light?",
+        "Someone we haven't spoken to in years?",
+        "The people we're trying to impress usually know the least about our financial lives.",
+        "They don't know what we've sacrificed to get where we are.",
+        "They don't know what we've saved.",
+        "They don't know what we still owe.",
+        "They don't know what keeps us awake at night.",
+        "They see one moment.",
+        "We live the whole story.",
+        "There's nothing wrong with buying something that genuinely makes your life better.",
+        "The problem is buying it because you hope someone else will notice.",
+        "They probably will.",
+        "For a moment.",
+        "Then they'll get back to their own lives.",
+        "You'll still be living with the financial decision.",
+        "Before you buy something, ask yourself one question.",
+        "Who am I buying this for?",
+        "If the answer is you or your family, the choice may be worth making.",
+        "If the answer is someone else's opinion, it might be worth waiting.",
+        "Every payday gives us choices.",
+        "Before spending one to impress someone else, ask whether the purchase serves the life you are actually building.",
+        "They will see it for a moment.",
+        "You will live with the decision.",
+      ],
+      sections: [],
+    };
+
+    const ARTICLES = [FEATURED_ARTICLE, SECOND_ARTICLE, THIRD_ARTICLE, FOURTH_ARTICLE, FIFTH_ARTICLE, SIXTH_ARTICLE, SEVENTH_ARTICLE, EIGHTH_ARTICLE, NINTH_ARTICLE, TENTH_ARTICLE, ELEVENTH_ARTICLE, TWELFTH_ARTICLE, THIRTEENTH_ARTICLE, FOURTEENTH_ARTICLE, FIFTEENTH_ARTICLE, SIXTEENTH_ARTICLE, SEVENTEENTH_ARTICLE, EIGHTEENTH_ARTICLE, NINETEENTH_ARTICLE, TWENTIETH_ARTICLE, TWENTY_FIRST_ARTICLE, TWENTY_SECOND_ARTICLE, TWENTY_THIRD_ARTICLE, TWENTY_FOURTH_ARTICLE, TWENTY_FIFTH_ARTICLE, TWENTY_SEVENTH_ARTICLE, TWENTY_EIGHTH_ARTICLE, TWENTY_NINTH_ARTICLE, THIRTY_FIRST_ARTICLE, THIRTY_SECOND_ARTICLE, THIRTY_THIRD_ARTICLE, THIRTY_FOURTH_ARTICLE, THIRTY_FIFTH_ARTICLE, THIRTY_SIXTH_ARTICLE, THIRTY_SEVENTH_ARTICLE, THIRTY_EIGHTH_ARTICLE, THIRTY_NINTH_ARTICLE, FORTIETH_ARTICLE, FORTY_FIRST_ARTICLE, FORTY_SECOND_ARTICLE, FORTY_THIRD_ARTICLE, FORTY_FOURTH_ARTICLE, FORTY_FIFTH_ARTICLE, FORTY_SIXTH_ARTICLE, FORTY_SEVENTH_ARTICLE, FORTY_EIGHTH_ARTICLE, FORTY_NINTH_ARTICLE, FIFTIETH_ARTICLE, FIFTY_FIRST_ARTICLE, FIFTY_SECOND_ARTICLE, FIFTY_THIRD_ARTICLE, FIFTY_FOURTH_ARTICLE, FIFTY_FIFTH_ARTICLE];
     const ARTICLE_BY_ID = new Map(ARTICLES.map((article) => [article.id, article]));
     const UNIQUE_ARTICLES = Array.from(ARTICLE_BY_ID.values());
     const PUBLISHED_ARTICLES = UNIQUE_ARTICLES.filter((article) =>
