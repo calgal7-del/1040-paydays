@@ -116,12 +116,18 @@ const appRewritePaths = [
 
 const vercelConfig = {
   trailingSlash: false,
-  rewrites: appRewritePaths.map((path) => ({
-    source: path,
-    destination: "/index.html",
-  })),
+  rewrites: [
+    {
+      source: "/",
+      destination: "/home.html",
+    },
+    ...appRewritePaths.map((path) => ({
+      source: path,
+      destination: "/index.html",
+    })),
+  ],
 };
 
 writeFileSync(vercelPath, `${JSON.stringify(vercelConfig, null, 2)}\n`);
 
-console.log(`Generated ${vercelPath} with ${appRewritePaths.length} app rewrites.`);
+console.log(`Generated ${vercelPath} with ${vercelConfig.rewrites.length} app rewrites.`);
