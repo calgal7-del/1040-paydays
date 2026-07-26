@@ -48,6 +48,18 @@ try {
       );
     }
 
+    const structuredDataScripts = [
+      ...markup.matchAll(
+        /<script\b[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/gi
+      ),
+    ];
+    if (structuredDataScripts.length !== 1) {
+      throw new Error(
+        `Expected "${route}" to contain exactly one JSON-LD script, found ${structuredDataScripts.length}.`
+      );
+    }
+    JSON.parse(structuredDataScripts[0][1]);
+
     return indexHtml.replace(
       rootPlaceholder,
       `<div id="root" data-prerendered="${route}">${markup}</div>`

@@ -31,6 +31,12 @@
     const MAILING_LIST_CONSENT_TEXT =
       "Join the 1040 Paydays mailing list for new articles, practical financial ideas, calculators, and occasional updates. You can unsubscribe at any time.";
     const SITE_URL = "https://www.1040paydays.com";
+    const SITE_IDENTITY_URL = "https://1040paydays.com";
+    const SITE_NAME = "1040 Paydays";
+    const SITE_DESCRIPTION =
+      "Estimate how much you can save from every paycheck. Use 1040 Paydays to plan savings, retirement, and future growth with a simple calculator.";
+    const ORGANIZATION_ID = `${SITE_IDENTITY_URL}/#organization`;
+    const WEBSITE_ID = `${SITE_IDENTITY_URL}/#website`;
     const PAYDAY_PRINCIPLE_ICONS = {
       liveToday: Sun,
       protectTomorrow: Lock,
@@ -7390,6 +7396,209 @@ const THIRTY_SIXTH_ARTICLE = {
       ],
     };
 
+    const absoluteSiteUrl = (path) => new URL(path, SITE_URL).href;
+
+    function breadcrumbSchema(items, canonicalUrl) {
+      return {
+        "@type": "BreadcrumbList",
+        "@id": `${canonicalUrl}#breadcrumb`,
+        itemListElement: items.map((item, index) => ({
+          "@type": "ListItem",
+          position: index + 1,
+          name: item.name,
+          item: item.url,
+        })),
+      };
+    }
+
+    function collectionPageSchema(name, description, canonicalUrl, articles) {
+      return {
+        "@type": "CollectionPage",
+        "@id": `${canonicalUrl}#collection`,
+        name,
+        description,
+        url: canonicalUrl,
+        mainEntity: {
+          "@type": "ItemList",
+          numberOfItems: articles.length,
+          itemListElement: articles.map((article, index) => ({
+            "@type": "ListItem",
+            position: index + 1,
+            name: article.title,
+            url: `${SITE_URL}/learn/${article.id}`,
+          })),
+        },
+      };
+    }
+
+    function structuredDataForRoute(normalizedRoute) {
+      const graph = [
+        {
+          "@type": "Organization",
+          "@id": ORGANIZATION_ID,
+          name: SITE_NAME,
+          url: SITE_IDENTITY_URL,
+          description: SITE_DESCRIPTION,
+        },
+        {
+          "@type": "WebSite",
+          "@id": WEBSITE_ID,
+          name: SITE_NAME,
+          url: SITE_IDENTITY_URL,
+          description: SITE_DESCRIPTION,
+          publisher: { "@id": ORGANIZATION_ID },
+        },
+      ];
+
+      if (normalizedRoute === "/calculator") {
+        const canonicalUrl = `${SITE_URL}/calculator`;
+        graph.push({
+          "@type": "WebApplication",
+          "@id": `${canonicalUrl}#calculator`,
+          name: "1040 Paydays Calculator",
+          description:
+            "Build a payday-by-payday savings plan and explore how regular contributions may grow over time.",
+          url: canonicalUrl,
+          applicationCategory: "FinanceApplication",
+          operatingSystem: "Web",
+          isAccessibleForFree: true,
+          publisher: { "@id": ORGANIZATION_ID },
+        });
+      }
+
+      if (normalizedRoute === "/learn") {
+        graph.push(
+          collectionPageSchema(
+            "Payday Journal",
+            "Thoughtful articles and stories to help you make better financial decisions—one payday at a time.",
+            `${SITE_URL}/learn`,
+            PUBLISHED_ARTICLES
+          )
+        );
+      }
+
+      if (normalizedRoute.startsWith("/learn/")) {
+        const routeSlug = normalizedRoute.slice("/learn/".length);
+        const cluster = LEARN_CLUSTER_BY_SLUG.get(routeSlug);
+        const article = PUBLISHED_ARTICLE_BY_ID.get(routeSlug);
+
+        if (cluster) {
+          const canonicalUrl = `${SITE_URL}/learn/${cluster.slug}`;
+          graph.push(
+            collectionPageSchema(
+              cluster.title,
+              cluster.intro,
+              canonicalUrl,
+              articlesForCluster(cluster)
+            ),
+            breadcrumbSchema(
+              [
+                { name: "Home", url: `${SITE_URL}/` },
+                { name: "Learn", url: `${SITE_URL}/learn` },
+                { name: cluster.title, url: canonicalUrl },
+              ],
+              canonicalUrl
+            )
+          );
+        }
+
+        if (article) {
+          const canonicalUrl = `${SITE_URL}/learn/${article.id}`;
+          const publicationDate = publicationDateForArticle(article);
+          const clusterForCurrentArticle = clusterForArticle(article);
+          const faqs = ARTICLE_FAQS[article.id] || [];
+          const breadcrumbs = [
+            { name: "Home", url: `${SITE_URL}/` },
+            { name: "Learn", url: `${SITE_URL}/learn` },
+          ];
+
+          if (clusterForCurrentArticle) {
+            breadcrumbs.push({
+              name: clusterForCurrentArticle.title,
+              url: `${SITE_URL}/learn/${clusterForCurrentArticle.slug}`,
+            });
+          }
+          breadcrumbs.push({ name: article.title, url: canonicalUrl });
+
+          graph.push({
+            "@type": "BlogPosting",
+            "@id": `${canonicalUrl}#article`,
+            headline: article.title,
+            description: article.summary,
+            image: absoluteSiteUrl(article.image),
+            ...(publicationDate ? { datePublished: publicationDate } : {}),
+            author: {
+              "@type": "Organization",
+              name: "1040 Paydays Editorial Team",
+              url: `${SITE_URL}/about`,
+            },
+            publisher: { "@id": ORGANIZATION_ID },
+            mainEntityOfPage: {
+              "@type": "WebPage",
+              "@id": canonicalUrl,
+            },
+            articleSection: article.category,
+          });
+          graph.push(breadcrumbSchema(breadcrumbs, canonicalUrl));
+
+          if (faqs.length) {
+            graph.push({
+              "@type": "FAQPage",
+              "@id": `${canonicalUrl}#faq`,
+              mainEntity: faqs.map((faq) => ({
+                "@type": "Question",
+                name: faq.question,
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: faq.answer,
+                },
+              })),
+            });
+          }
+        }
+      }
+
+      if (normalizedRoute.startsWith("/philosophy/")) {
+        const philosophyPage = PHILOSOPHY_BY_SLUG.get(
+          normalizedRoute.slice("/philosophy/".length)
+        );
+
+        if (philosophyPage) {
+          const canonicalUrl = `${SITE_URL}/philosophy/${philosophyPage.slug}`;
+          graph.push(
+            breadcrumbSchema(
+              [
+                { name: "Home", url: `${SITE_URL}/` },
+                { name: "About", url: `${SITE_URL}/about` },
+                { name: philosophyPage.title, url: canonicalUrl },
+              ],
+              canonicalUrl
+            )
+          );
+        }
+      }
+
+      return {
+        "@context": "https://schema.org",
+        "@graph": graph,
+      };
+    }
+
+    function StructuredData({ data }) {
+      const json = JSON.stringify(data)
+        .replace(/</g, "\\u003c")
+        .replace(/\u2028/g, "\\u2028")
+        .replace(/\u2029/g, "\\u2029");
+
+      return (
+        <script
+          id="site-structured-data"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: json }}
+        />
+      );
+    }
+
     const currencies = [
       ["USD", "🇺🇸 USD"], ["CAD", "🇨🇦 CAD"], ["EUR", "🇪🇺 EUR"], ["GBP", "🇬🇧 GBP"],
       ["JPY", "🇯🇵 JPY"], ["CNY", "🇨🇳 CNY"], ["AUD", "🇦🇺 AUD"], ["CHF", "🇨🇭 CHF"],
@@ -9434,70 +9643,6 @@ const THIRTY_SIXTH_ARTICLE = {
         }
         canonical.setAttribute("href", canonicalUrl);
 
-        const existingStructuredData = document.getElementById("learn-structured-data");
-        const collectionArticles = isLearnIndex
-          ? PUBLISHED_ARTICLES
-          : philosophyPage
-            ? configuredArticles(
-                philosophyPage.articleSlugs,
-                `philosophy page "${philosophyPage.slug}"`
-              )
-          : cluster
-            ? articlesForCluster(cluster)
-            : [];
-
-        if (article) {
-          const structuredData = {
-            "@context": "https://schema.org",
-            "@type": "Article",
-            headline: article.title,
-            description: article.summary,
-            url: canonicalUrl,
-            mainEntityOfPage: canonicalUrl,
-            image: new URL(article.image, SITE_URL).href,
-            author: {
-              "@type": "Organization",
-              name: "1040 Paydays Editorial Team",
-              url: `${SITE_URL}/`,
-            },
-            publisher: {
-              "@type": "Organization",
-              name: "1040 Paydays",
-              url: `${SITE_URL}/`,
-            },
-            ...(publicationDate ? { datePublished: publicationDate } : {}),
-          };
-          const script = existingStructuredData || document.createElement("script");
-          script.id = "learn-structured-data";
-          script.type = "application/ld+json";
-          script.textContent = JSON.stringify(structuredData);
-          if (!existingStructuredData) document.head.appendChild(script);
-        } else if (collectionArticles.length) {
-          const structuredData = {
-            "@context": "https://schema.org",
-            "@type": "CollectionPage",
-            name: cluster ? cluster.title : "Learn",
-            description,
-            url: canonicalUrl,
-            mainEntity: {
-              "@type": "ItemList",
-              numberOfItems: collectionArticles.length,
-              itemListElement: collectionArticles.map((item, index) => ({
-                "@type": "ListItem",
-                position: index + 1,
-                url: `${SITE_URL}/learn/${item.id}`,
-                name: item.title,
-              })),
-            },
-          };
-          const script = existingStructuredData || document.createElement("script");
-          script.id = "learn-structured-data";
-          script.type = "application/ld+json";
-          script.textContent = JSON.stringify(structuredData);
-          if (!existingStructuredData) document.head.appendChild(script);
-        } else {
-          existingStructuredData?.remove();
-        }
       }, [route]);
 
       useEffect(() => {
@@ -9723,6 +9868,12 @@ const THIRTY_SIXTH_ARTICLE = {
 
       const normalizedRoute = route.length > 1 ? route.replace(/\/+$/, "") : route;
       const legalPage = LEGAL_PAGE_CONFIG[normalizedRoute];
+      const renderWithStructuredData = (content) => (
+        <>
+          <StructuredData data={structuredDataForRoute(normalizedRoute)} />
+          {content}
+        </>
+      );
       const newsletterProps = {
         email,
         setEmail,
@@ -9735,7 +9886,7 @@ const THIRTY_SIXTH_ARTICLE = {
       };
 
       if (legalPage) {
-        return (
+        return renderWithStructuredData(
           <LegalPage
             page={legalPage}
             mobileMenuOpen={mobileMenuOpen}
@@ -9754,7 +9905,7 @@ const THIRTY_SIXTH_ARTICLE = {
           return <NotFoundPage navigateTo={navigateTo} />;
         }
 
-        return (
+        return renderWithStructuredData(
           <PhilosophyPage
             page={philosophyPage}
             mobileMenuOpen={mobileMenuOpen}
@@ -9773,7 +9924,7 @@ const THIRTY_SIXTH_ARTICLE = {
           : null;
         const notFound = isNestedLearnRoute && !activeCluster && !activeArticle;
 
-        return (
+        return renderWithStructuredData(
           <LearnRoute
             currency={currency}
             setCurrency={setCurrency}
@@ -9788,7 +9939,7 @@ const THIRTY_SIXTH_ARTICLE = {
       }
 
       if (normalizedRoute === "/calculator") {
-        return (
+        return renderWithStructuredData(
           <div className="home-page-host">
             {panel && (
               <SlidePanel
@@ -9842,7 +9993,7 @@ const THIRTY_SIXTH_ARTICLE = {
       }
 
       if (normalizedRoute === "/about") {
-        return (
+        return renderWithStructuredData(
           <div className="home-page-host">
             {panel && (
               <SlidePanel
@@ -9879,7 +10030,7 @@ const THIRTY_SIXTH_ARTICLE = {
         );
       }
 
-      return (
+      return renderWithStructuredData(
         <div className="home-page-host">
           {panel && (
             <SlidePanel
