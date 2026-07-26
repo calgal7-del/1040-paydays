@@ -5,7 +5,7 @@ import { renderToString } from "react-dom/server";
 import { createServer } from "vite";
 
 const distIndexPath = resolve("dist/index.html");
-const distHomePath = resolve("dist/home.html");
+const distAppPath = resolve("dist/app.html");
 const rootPlaceholder = '<div id="root"></div>';
 
 globalThis.window = {
@@ -46,8 +46,10 @@ try {
     rootPlaceholder,
     `<div id="root" data-prerendered="home">${homepage}</div>`
   );
-  writeFileSync(distHomePath, homeHtml);
-  console.log(`Generated ${distHomePath} with one server-rendered H1.`);
+  writeFileSync(distAppPath, indexHtml);
+  writeFileSync(distIndexPath, homeHtml);
+  console.log(`Generated ${distIndexPath} with one server-rendered H1.`);
+  console.log(`Generated ${distAppPath} for client-rendered application routes.`);
 } finally {
   await vite.close();
   delete globalThis.window;

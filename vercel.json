@@ -2,280 +2,276 @@
   "trailingSlash": false,
   "rewrites": [
     {
-      "source": "/",
-      "destination": "/home.html"
-    },
-    {
       "source": "/about",
-      "destination": "/index.html"
+      "destination": "/app.html"
     },
     {
       "source": "/calculator",
-      "destination": "/index.html"
+      "destination": "/app.html"
     },
     {
       "source": "/learn",
-      "destination": "/index.html"
+      "destination": "/app.html"
     },
     {
       "source": "/privacy-policy",
-      "destination": "/index.html"
+      "destination": "/app.html"
     },
     {
       "source": "/terms-of-use",
-      "destination": "/index.html"
+      "destination": "/app.html"
     },
     {
       "source": "/contact",
-      "destination": "/index.html"
+      "destination": "/app.html"
     },
     {
       "source": "/philosophy/live-today",
-      "destination": "/index.html"
+      "destination": "/app.html"
     },
     {
       "source": "/philosophy/protect-tomorrow",
-      "destination": "/index.html"
+      "destination": "/app.html"
     },
     {
       "source": "/philosophy/plan-your-future",
-      "destination": "/index.html"
+      "destination": "/app.html"
     },
     {
       "source": "/philosophy/choose-what-matters",
-      "destination": "/index.html"
+      "destination": "/app.html"
     },
     {
       "source": "/learn/saving-money",
-      "destination": "/index.html"
+      "destination": "/app.html"
     },
     {
       "source": "/learn/building-wealth",
-      "destination": "/index.html"
+      "destination": "/app.html"
     },
     {
       "source": "/learn/money-and-life",
-      "destination": "/index.html"
+      "destination": "/app.html"
     },
     {
       "source": "/learn/major-money-decisions",
-      "destination": "/index.html"
+      "destination": "/app.html"
     },
     {
       "source": "/learn/foundations",
-      "destination": "/index.html"
+      "destination": "/app.html"
     },
     {
       "source": "/learn/spending",
-      "destination": "/index.html"
+      "destination": "/app.html"
     },
     {
       "source": "/learn/saving-and-investing",
-      "destination": "/index.html"
+      "destination": "/app.html"
     },
     {
       "source": "/learn/retirement",
-      "destination": "/index.html"
+      "destination": "/app.html"
     },
     {
       "source": "/learn/life-and-values",
-      "destination": "/index.html"
+      "destination": "/app.html"
     },
     {
       "source": "/learn/you-only-get-about-1040-paydays",
-      "destination": "/index.html"
+      "destination": "/app.html"
     },
     {
       "source": "/learn/who-wants-to-go-home",
-      "destination": "/index.html"
+      "destination": "/app.html"
     },
     {
       "source": "/learn/one-hundred-dollars-one-lifetime-lesson",
-      "destination": "/index.html"
+      "destination": "/app.html"
     },
     {
       "source": "/learn/when-extra-money-isnt-really-extra",
-      "destination": "/index.html"
+      "destination": "/app.html"
     },
     {
       "source": "/learn/rich-enough",
-      "destination": "/index.html"
+      "destination": "/app.html"
     },
     {
       "source": "/learn/youre-not-too-late",
-      "destination": "/index.html"
+      "destination": "/app.html"
     },
     {
       "source": "/learn/love-is-wonderful-it-just-isnt-a-financial-plan",
-      "destination": "/index.html"
+      "destination": "/app.html"
     },
     {
       "source": "/learn/the-biggest-lie-about-retirement",
-      "destination": "/index.html"
+      "destination": "/app.html"
     },
     {
       "source": "/learn/everyone-needs-a-float",
-      "destination": "/index.html"
+      "destination": "/app.html"
     },
     {
       "source": "/learn/the-number-that-really-matters",
-      "destination": "/index.html"
+      "destination": "/app.html"
     },
     {
       "source": "/learn/the-safest-envelope-is-at-the-bank",
-      "destination": "/index.html"
+      "destination": "/app.html"
     },
     {
       "source": "/learn/the-month-i-accidentally-saved-money",
-      "destination": "/index.html"
+      "destination": "/app.html"
     },
     {
       "source": "/learn/your-routine-was-spending-your-money",
-      "destination": "/index.html"
+      "destination": "/app.html"
     },
     {
       "source": "/learn/the-grocery-store-in-my-cupboard",
-      "destination": "/index.html"
+      "destination": "/app.html"
     },
     {
       "source": "/learn/your-house-is-full-of-money-you-just-cant-see-it-yet",
-      "destination": "/index.html"
+      "destination": "/app.html"
     },
     {
       "source": "/learn/the-biggest-retirement-mistake-has-nothing-to-do-with-investing",
-      "destination": "/index.html"
+      "destination": "/app.html"
     },
     {
       "source": "/learn/the-best-age-to-retire-isnt-an-age",
-      "destination": "/index.html"
+      "destination": "/app.html"
     },
     {
       "source": "/learn/the-wealth-you-build-before-you-build-wealth",
-      "destination": "/index.html"
+      "destination": "/app.html"
     },
     {
       "source": "/learn/the-little-grocery-store",
-      "destination": "/index.html"
+      "destination": "/app.html"
     },
     {
       "source": "/learn/the-hidden-paycheque-at-work",
-      "destination": "/index.html"
+      "destination": "/app.html"
     },
     {
       "source": "/learn/why-saying-no-feels-so-hard",
-      "destination": "/index.html"
+      "destination": "/app.html"
     },
     {
       "source": "/learn/ai-is-changing-the-9-to-5-club-heres-how-to-stay-in-it",
-      "destination": "/index.html"
+      "destination": "/app.html"
     },
     {
       "source": "/learn/the-10000-blueprint",
-      "destination": "/index.html"
+      "destination": "/app.html"
     },
     {
       "source": "/learn/you-saved-3-and-lost-30000",
-      "destination": "/index.html"
+      "destination": "/app.html"
     },
     {
       "source": "/learn/my-sofa-isnt-broken",
-      "destination": "/index.html"
+      "destination": "/app.html"
     },
     {
       "source": "/learn/the-most-valuable-asset-youll-ever-own",
-      "destination": "/index.html"
+      "destination": "/app.html"
     },
     {
       "source": "/learn/the-years-when-compound-interest-feels-like-nothing",
-      "destination": "/index.html"
+      "destination": "/app.html"
     },
     {
       "source": "/learn/how-to-spot-an-investment-scam-before-it-costs-you-everything",
-      "destination": "/index.html"
+      "destination": "/app.html"
     },
     {
       "source": "/learn/the-day-your-credit-score-speaks-before-you-do",
-      "destination": "/index.html"
+      "destination": "/app.html"
     },
     {
       "source": "/learn/debt-grows-best-in-the-dark",
-      "destination": "/index.html"
+      "destination": "/app.html"
     },
     {
       "source": "/learn/the-language-of-money",
-      "destination": "/index.html"
+      "destination": "/app.html"
     },
     {
       "source": "/learn/your-house-is-not-your-retirement-plan",
-      "destination": "/index.html"
+      "destination": "/app.html"
     },
     {
       "source": "/learn/the-best-financial-decision-is-the-one-you-only-make-once",
-      "destination": "/index.html"
+      "destination": "/app.html"
     },
     {
       "source": "/learn/the-most-expensive-word-in-personal-finance-is-later",
-      "destination": "/index.html"
+      "destination": "/app.html"
     },
     {
       "source": "/learn/i-have-a-chequebook-somewhere",
-      "destination": "/index.html"
+      "destination": "/app.html"
     },
     {
       "source": "/learn/the-drawer-full-of-phone-chargers",
-      "destination": "/index.html"
+      "destination": "/app.html"
     },
     {
       "source": "/learn/retirement-belonged-to-another-season",
-      "destination": "/index.html"
+      "destination": "/app.html"
     },
     {
       "source": "/learn/the-potatoes-i-forgot-about",
-      "destination": "/index.html"
+      "destination": "/app.html"
     },
     {
       "source": "/learn/why-money-flows-downhill",
-      "destination": "/index.html"
+      "destination": "/app.html"
     },
     {
       "source": "/learn/money-has-a-memory",
-      "destination": "/index.html"
+      "destination": "/app.html"
     },
     {
       "source": "/learn/fixed-vs-variable-mortgage-rates-which-one-is-right-for-you",
-      "destination": "/index.html"
+      "destination": "/app.html"
     },
     {
       "source": "/learn/what-do-you-do-when-you-have-almost-nothing-left",
-      "destination": "/index.html"
+      "destination": "/app.html"
     },
     {
       "source": "/learn/the-most-valuable-coat-i-never-owned",
-      "destination": "/index.html"
+      "destination": "/app.html"
     },
     {
       "source": "/learn/the-habit-that-outlived-the-electric-bill",
-      "destination": "/index.html"
+      "destination": "/app.html"
     },
     {
       "source": "/learn/the-room-i-chose-to-leave",
-      "destination": "/index.html"
+      "destination": "/app.html"
     },
     {
       "source": "/learn/the-raise-you-already-got",
-      "destination": "/index.html"
+      "destination": "/app.html"
     },
     {
       "source": "/learn/has-this-payday-finished-its-job",
-      "destination": "/index.html"
+      "destination": "/app.html"
     },
     {
       "source": "/learn/the-kitchen-i-coveted",
-      "destination": "/index.html"
+      "destination": "/app.html"
     },
     {
       "source": "/learn/should-you-save-or-pay-off-debt-first",
-      "destination": "/index.html"
+      "destination": "/app.html"
     }
   ]
 }
