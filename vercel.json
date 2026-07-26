@@ -276,6 +276,14 @@
     {
       "source": "/learn/the-cheapest-thing-you-can-buy-is-patience",
       "destination": "/prerender-learn--the-cheapest-thing-you-can-buy-is-patience.html"
+    },
+    {
+      "source": "/learn/money-is-never-just-money",
+      "destination": "/prerender-learn--money-is-never-just-money.html"
+    },
+    {
+      "source": "/learn/what-your-paycheck-really-buys",
+      "destination": "/prerender-learn--what-your-paycheck-really-buys.html"
     }
   ]
 }
