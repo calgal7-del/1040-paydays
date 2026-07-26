@@ -9474,7 +9474,7 @@ const THIRTY_SIXTH_ARTICLE = {
                   onClick={(event) => followLink(event, "/calculator")}
                 >
                   <Calculator size={20} strokeWidth={1.8} aria-hidden="true" />
-                  See Your 1040 Paydays
+                  Find Your 1040 Paydays
                 </a>
               </div>
             </section>
@@ -9483,7 +9483,7 @@ const THIRTY_SIXTH_ARTICLE = {
               className="reference-home-introduction reference-home-container"
               aria-labelledby="reference-home-introduction-title"
             >
-              <h2 id="reference-home-introduction-title">What is 1040 Paydays?</h2>
+              <h2 id="reference-home-introduction-title">Why 1040 Paydays?</h2>
               <div>
                 <p>
                   Most people will receive only about 1,040 paydays during their working lives.
