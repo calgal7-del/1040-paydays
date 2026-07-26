@@ -10639,7 +10639,7 @@ const THIRTY_SIXTH_ARTICLE = {
                 >
                   <img
                     src={topicArticle.image}
-                    alt=""
+                    alt={topicArticle.alt}
                     width="360"
                     height="220"
                     loading="lazy"
