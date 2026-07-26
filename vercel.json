@@ -3,275 +3,275 @@
   "rewrites": [
     {
       "source": "/about",
-      "destination": "/app.html"
+      "destination": "/prerender-about.html"
     },
     {
       "source": "/calculator",
-      "destination": "/app.html"
+      "destination": "/prerender-calculator.html"
     },
     {
       "source": "/learn",
-      "destination": "/app.html"
+      "destination": "/prerender-learn.html"
     },
     {
       "source": "/privacy-policy",
-      "destination": "/app.html"
+      "destination": "/prerender-privacy-policy.html"
     },
     {
       "source": "/terms-of-use",
-      "destination": "/app.html"
+      "destination": "/prerender-terms-of-use.html"
     },
     {
       "source": "/contact",
-      "destination": "/app.html"
+      "destination": "/prerender-contact.html"
     },
     {
       "source": "/philosophy/live-today",
-      "destination": "/app.html"
+      "destination": "/prerender-philosophy--live-today.html"
     },
     {
       "source": "/philosophy/protect-tomorrow",
-      "destination": "/app.html"
+      "destination": "/prerender-philosophy--protect-tomorrow.html"
     },
     {
       "source": "/philosophy/plan-your-future",
-      "destination": "/app.html"
+      "destination": "/prerender-philosophy--plan-your-future.html"
     },
     {
       "source": "/philosophy/choose-what-matters",
-      "destination": "/app.html"
+      "destination": "/prerender-philosophy--choose-what-matters.html"
     },
     {
       "source": "/learn/saving-money",
-      "destination": "/app.html"
+      "destination": "/prerender-learn--saving-money.html"
     },
     {
       "source": "/learn/building-wealth",
-      "destination": "/app.html"
+      "destination": "/prerender-learn--building-wealth.html"
     },
     {
       "source": "/learn/money-and-life",
-      "destination": "/app.html"
+      "destination": "/prerender-learn--money-and-life.html"
     },
     {
       "source": "/learn/major-money-decisions",
-      "destination": "/app.html"
+      "destination": "/prerender-learn--major-money-decisions.html"
     },
     {
       "source": "/learn/foundations",
-      "destination": "/app.html"
+      "destination": "/prerender-learn--foundations.html"
     },
     {
       "source": "/learn/spending",
-      "destination": "/app.html"
+      "destination": "/prerender-learn--spending.html"
     },
     {
       "source": "/learn/saving-and-investing",
-      "destination": "/app.html"
+      "destination": "/prerender-learn--saving-and-investing.html"
     },
     {
       "source": "/learn/retirement",
-      "destination": "/app.html"
+      "destination": "/prerender-learn--retirement.html"
     },
     {
       "source": "/learn/life-and-values",
-      "destination": "/app.html"
+      "destination": "/prerender-learn--life-and-values.html"
     },
     {
       "source": "/learn/you-only-get-about-1040-paydays",
-      "destination": "/app.html"
+      "destination": "/prerender-learn--you-only-get-about-1040-paydays.html"
     },
     {
       "source": "/learn/who-wants-to-go-home",
-      "destination": "/app.html"
+      "destination": "/prerender-learn--who-wants-to-go-home.html"
     },
     {
       "source": "/learn/one-hundred-dollars-one-lifetime-lesson",
-      "destination": "/app.html"
+      "destination": "/prerender-learn--one-hundred-dollars-one-lifetime-lesson.html"
     },
     {
       "source": "/learn/when-extra-money-isnt-really-extra",
-      "destination": "/app.html"
+      "destination": "/prerender-learn--when-extra-money-isnt-really-extra.html"
     },
     {
       "source": "/learn/rich-enough",
-      "destination": "/app.html"
+      "destination": "/prerender-learn--rich-enough.html"
     },
     {
       "source": "/learn/youre-not-too-late",
-      "destination": "/app.html"
+      "destination": "/prerender-learn--youre-not-too-late.html"
     },
     {
       "source": "/learn/love-is-wonderful-it-just-isnt-a-financial-plan",
-      "destination": "/app.html"
+      "destination": "/prerender-learn--love-is-wonderful-it-just-isnt-a-financial-plan.html"
     },
     {
       "source": "/learn/the-biggest-lie-about-retirement",
-      "destination": "/app.html"
+      "destination": "/prerender-learn--the-biggest-lie-about-retirement.html"
     },
     {
       "source": "/learn/everyone-needs-a-float",
-      "destination": "/app.html"
+      "destination": "/prerender-learn--everyone-needs-a-float.html"
     },
     {
       "source": "/learn/the-number-that-really-matters",
-      "destination": "/app.html"
+      "destination": "/prerender-learn--the-number-that-really-matters.html"
     },
     {
       "source": "/learn/the-safest-envelope-is-at-the-bank",
-      "destination": "/app.html"
+      "destination": "/prerender-learn--the-safest-envelope-is-at-the-bank.html"
     },
     {
       "source": "/learn/the-month-i-accidentally-saved-money",
-      "destination": "/app.html"
+      "destination": "/prerender-learn--the-month-i-accidentally-saved-money.html"
     },
     {
       "source": "/learn/your-routine-was-spending-your-money",
-      "destination": "/app.html"
+      "destination": "/prerender-learn--your-routine-was-spending-your-money.html"
     },
     {
       "source": "/learn/the-grocery-store-in-my-cupboard",
-      "destination": "/app.html"
+      "destination": "/prerender-learn--the-grocery-store-in-my-cupboard.html"
     },
     {
       "source": "/learn/your-house-is-full-of-money-you-just-cant-see-it-yet",
-      "destination": "/app.html"
+      "destination": "/prerender-learn--your-house-is-full-of-money-you-just-cant-see-it-yet.html"
     },
     {
       "source": "/learn/the-biggest-retirement-mistake-has-nothing-to-do-with-investing",
-      "destination": "/app.html"
+      "destination": "/prerender-learn--the-biggest-retirement-mistake-has-nothing-to-do-with-investing.html"
     },
     {
       "source": "/learn/the-best-age-to-retire-isnt-an-age",
-      "destination": "/app.html"
+      "destination": "/prerender-learn--the-best-age-to-retire-isnt-an-age.html"
     },
     {
       "source": "/learn/the-wealth-you-build-before-you-build-wealth",
-      "destination": "/app.html"
+      "destination": "/prerender-learn--the-wealth-you-build-before-you-build-wealth.html"
     },
     {
       "source": "/learn/the-little-grocery-store",
-      "destination": "/app.html"
+      "destination": "/prerender-learn--the-little-grocery-store.html"
     },
     {
       "source": "/learn/the-hidden-paycheque-at-work",
-      "destination": "/app.html"
+      "destination": "/prerender-learn--the-hidden-paycheque-at-work.html"
     },
     {
       "source": "/learn/why-saying-no-feels-so-hard",
-      "destination": "/app.html"
+      "destination": "/prerender-learn--why-saying-no-feels-so-hard.html"
     },
     {
       "source": "/learn/ai-is-changing-the-9-to-5-club-heres-how-to-stay-in-it",
-      "destination": "/app.html"
+      "destination": "/prerender-learn--ai-is-changing-the-9-to-5-club-heres-how-to-stay-in-it.html"
     },
     {
       "source": "/learn/the-10000-blueprint",
-      "destination": "/app.html"
+      "destination": "/prerender-learn--the-10000-blueprint.html"
     },
     {
       "source": "/learn/you-saved-3-and-lost-30000",
-      "destination": "/app.html"
+      "destination": "/prerender-learn--you-saved-3-and-lost-30000.html"
     },
     {
       "source": "/learn/my-sofa-isnt-broken",
-      "destination": "/app.html"
+      "destination": "/prerender-learn--my-sofa-isnt-broken.html"
     },
     {
       "source": "/learn/the-most-valuable-asset-youll-ever-own",
-      "destination": "/app.html"
+      "destination": "/prerender-learn--the-most-valuable-asset-youll-ever-own.html"
     },
     {
       "source": "/learn/the-years-when-compound-interest-feels-like-nothing",
-      "destination": "/app.html"
+      "destination": "/prerender-learn--the-years-when-compound-interest-feels-like-nothing.html"
     },
     {
       "source": "/learn/how-to-spot-an-investment-scam-before-it-costs-you-everything",
-      "destination": "/app.html"
+      "destination": "/prerender-learn--how-to-spot-an-investment-scam-before-it-costs-you-everything.html"
     },
     {
       "source": "/learn/the-day-your-credit-score-speaks-before-you-do",
-      "destination": "/app.html"
+      "destination": "/prerender-learn--the-day-your-credit-score-speaks-before-you-do.html"
     },
     {
       "source": "/learn/debt-grows-best-in-the-dark",
-      "destination": "/app.html"
+      "destination": "/prerender-learn--debt-grows-best-in-the-dark.html"
     },
     {
       "source": "/learn/the-language-of-money",
-      "destination": "/app.html"
+      "destination": "/prerender-learn--the-language-of-money.html"
     },
     {
       "source": "/learn/your-house-is-not-your-retirement-plan",
-      "destination": "/app.html"
+      "destination": "/prerender-learn--your-house-is-not-your-retirement-plan.html"
     },
     {
       "source": "/learn/the-best-financial-decision-is-the-one-you-only-make-once",
-      "destination": "/app.html"
+      "destination": "/prerender-learn--the-best-financial-decision-is-the-one-you-only-make-once.html"
     },
     {
       "source": "/learn/the-most-expensive-word-in-personal-finance-is-later",
-      "destination": "/app.html"
+      "destination": "/prerender-learn--the-most-expensive-word-in-personal-finance-is-later.html"
     },
     {
       "source": "/learn/i-have-a-chequebook-somewhere",
-      "destination": "/app.html"
+      "destination": "/prerender-learn--i-have-a-chequebook-somewhere.html"
     },
     {
       "source": "/learn/the-drawer-full-of-phone-chargers",
-      "destination": "/app.html"
+      "destination": "/prerender-learn--the-drawer-full-of-phone-chargers.html"
     },
     {
       "source": "/learn/retirement-belonged-to-another-season",
-      "destination": "/app.html"
+      "destination": "/prerender-learn--retirement-belonged-to-another-season.html"
     },
     {
       "source": "/learn/the-potatoes-i-forgot-about",
-      "destination": "/app.html"
+      "destination": "/prerender-learn--the-potatoes-i-forgot-about.html"
     },
     {
       "source": "/learn/why-money-flows-downhill",
-      "destination": "/app.html"
+      "destination": "/prerender-learn--why-money-flows-downhill.html"
     },
     {
       "source": "/learn/money-has-a-memory",
-      "destination": "/app.html"
+      "destination": "/prerender-learn--money-has-a-memory.html"
     },
     {
       "source": "/learn/fixed-vs-variable-mortgage-rates-which-one-is-right-for-you",
-      "destination": "/app.html"
+      "destination": "/prerender-learn--fixed-vs-variable-mortgage-rates-which-one-is-right-for-you.html"
     },
     {
       "source": "/learn/what-do-you-do-when-you-have-almost-nothing-left",
-      "destination": "/app.html"
+      "destination": "/prerender-learn--what-do-you-do-when-you-have-almost-nothing-left.html"
     },
     {
       "source": "/learn/the-most-valuable-coat-i-never-owned",
-      "destination": "/app.html"
+      "destination": "/prerender-learn--the-most-valuable-coat-i-never-owned.html"
     },
     {
       "source": "/learn/the-habit-that-outlived-the-electric-bill",
-      "destination": "/app.html"
+      "destination": "/prerender-learn--the-habit-that-outlived-the-electric-bill.html"
     },
     {
       "source": "/learn/the-room-i-chose-to-leave",
-      "destination": "/app.html"
+      "destination": "/prerender-learn--the-room-i-chose-to-leave.html"
     },
     {
       "source": "/learn/the-raise-you-already-got",
-      "destination": "/app.html"
+      "destination": "/prerender-learn--the-raise-you-already-got.html"
     },
     {
       "source": "/learn/has-this-payday-finished-its-job",
-      "destination": "/app.html"
+      "destination": "/prerender-learn--has-this-payday-finished-its-job.html"
     },
     {
       "source": "/learn/the-kitchen-i-coveted",
-      "destination": "/app.html"
+      "destination": "/prerender-learn--the-kitchen-i-coveted.html"
     },
     {
       "source": "/learn/should-you-save-or-pay-off-debt-first",
-      "destination": "/app.html"
+      "destination": "/prerender-learn--should-you-save-or-pay-off-debt-first.html"
     }
   ]
 }

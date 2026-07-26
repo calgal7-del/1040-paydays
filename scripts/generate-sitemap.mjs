@@ -113,12 +113,17 @@ const appRewritePaths = [
   ...clusterPaths,
   ...articleIds.map((id) => `/learn/${id}`),
 ];
+const publishedPathSet = new Set(publicPaths);
+const prerenderDestination = (path) =>
+  `/prerender-${path.slice(1).split("/").join("--")}.html`;
 
 const vercelConfig = {
   trailingSlash: false,
   rewrites: appRewritePaths.map((path) => ({
     source: path,
-    destination: "/app.html",
+    destination: publishedPathSet.has(path)
+      ? prerenderDestination(path)
+      : "/app.html",
   })),
 };
 

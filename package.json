@@ -12,7 +12,7 @@
     "db:migrate": "node scripts/run-migrations.mjs",
     "export:subscribers": "node scripts/export-subscribers.mjs",
     "generate:sitemap": "node scripts/generate-sitemap.mjs",
-    "build": "npm run generate:sitemap && vite build && node scripts/prerender-home.mjs",
+    "build": "npm run generate:sitemap && vite build && node scripts/prerender-pages.mjs",
     "preview": "vite preview",
     "test": "node --test"
   },
