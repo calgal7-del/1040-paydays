@@ -17,6 +17,7 @@
       Menu,
       BookOpen,
       BarChart3,
+      Calculator,
     } from "lucide-react";
     import "./App.css";
     import {
@@ -9466,14 +9467,33 @@ const THIRTY_SIXTH_ARTICLE = {
               />
               <div className="reference-home-hero-overlay" aria-hidden="true" />
               <div className="reference-home-hero-copy">
-                <h1 id="reference-home-title">You only get about 1,040 paydays.</h1>
-                <p>Every payday is a decision. Choose yours.</p>
-                <a
-                  href="/about"
-                  onClick={(event) => followLink(event, "/about")}
-                >
-                  Explore the Payday Principles
-                </a>
+                <h1 id="reference-home-title">
+                  <span>You only get</span>{" "}
+                  <span>about <em>1,040</em></span>{" "}
+                  <span>paydays.</span>
+                </h1>
+                <span className="reference-home-hero-accent" aria-hidden="true" />
+                <p>
+                  <span>Every payday is a decision.</span>
+                  <span>Choose yours.</span>
+                </p>
+                <div className="reference-home-hero-actions">
+                  <a
+                    className="reference-home-hero-cta"
+                    href="/calculator"
+                    onClick={(event) => followLink(event, "/calculator")}
+                  >
+                    <Calculator size={18} strokeWidth={1.8} aria-hidden="true" />
+                    See Your 1040 Paydays
+                  </a>
+                  <span className="reference-home-hero-note" aria-hidden="true">
+                    <svg viewBox="0 0 68 30" focusable="false">
+                      <path d="M66 5C47 4 30 11 12 23" />
+                      <path d="M17 13 11 23l12 1" />
+                    </svg>
+                    <span>See how your choices add up.</span>
+                  </span>
+                </div>
               </div>
             </section>
 
@@ -9481,13 +9501,44 @@ const THIRTY_SIXTH_ARTICLE = {
               className="reference-home-introduction reference-home-container"
               aria-labelledby="reference-home-introduction-title"
             >
-              <h2 id="reference-home-introduction-title">What is 1040 Paydays?</h2>
-              <div>
+              <div className="reference-home-introduction-copy">
+                <h2 id="reference-home-introduction-title">Why 1040 Paydays?</h2>
+                <span className="reference-home-introduction-accent" aria-hidden="true" />
                 <p>
-                  Most people will receive only about 1,040 paydays during their working lives.
+                  Most people don’t think about the total number of paydays they’ll receive
+                  during their working lives.
+                </p>
+                <p>But once you do, everything changes.</p>
+                <p>
                   1040 Paydays is a personal finance resource with practical articles,
                   interactive calculators, and tools to help you make every payday count.
                 </p>
+              </div>
+              <div className="reference-home-value-list">
+                <article>
+                  <div>
+                    <h3>1,040 Paydays</h3>
+                    <p>
+                      A working lifetime contains only about 1,040 opportunities to shape
+                      your future.
+                    </p>
+                  </div>
+                </article>
+                <article>
+                  <div>
+                    <h3>Better Decisions</h3>
+                    <p>Small choices repeated consistently create remarkable results.</p>
+                  </div>
+                </article>
+                <article>
+                  <div>
+                    <h3>Practical Guidance</h3>
+                    <p>
+                      <span>No jargon.</span>
+                      <span>Just ideas that work.</span>
+                    </p>
+                  </div>
+                </article>
               </div>
             </section>
 
