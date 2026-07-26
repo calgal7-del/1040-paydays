@@ -9467,15 +9467,27 @@ const THIRTY_SIXTH_ARTICLE = {
               />
               <div className="reference-home-hero-overlay" aria-hidden="true" />
               <div className="reference-home-hero-copy">
-                <h1 id="reference-home-title">You only get about 1,040 paydays.</h1>
+                <h1 id="reference-home-title">
+                  You only get about <em>1,040</em> paydays.
+                </h1>
                 <p>Every payday is a decision. Choose yours.</p>
-                <a
-                  href="/calculator"
-                  onClick={(event) => followLink(event, "/calculator")}
-                >
-                  <Calculator size={20} strokeWidth={1.8} aria-hidden="true" />
-                  Find Your 1040 Paydays
-                </a>
+                <div className="reference-home-hero-actions">
+                  <span className="reference-home-hero-note" aria-hidden="true">
+                    <span>See how your choices add up.</span>
+                    <svg viewBox="0 0 34 28" focusable="false">
+                      <path d="M30 3C25 12 18 18 8 22" />
+                      <path d="m13 14-5 8 9 1" />
+                    </svg>
+                  </span>
+                  <a
+                    className="reference-home-hero-cta"
+                    href="/calculator"
+                    onClick={(event) => followLink(event, "/calculator")}
+                  >
+                    <Calculator size={20} strokeWidth={1.8} aria-hidden="true" />
+                    Find Your 1040 Paydays
+                  </a>
+                </div>
               </div>
             </section>
 

@@ -8734,6 +8734,12 @@ a {
   text-shadow: 0 2px 12px rgba(5, 20, 45, .34);
 }
 
+.reference-home-hero h1 em {
+  color: var(--brand-gold, #d9a441);
+  font-style: normal;
+  font-weight: inherit;
+}
+
 .reference-home-hero p {
   margin: 24px 0 0;
   color: #fff;
@@ -8743,14 +8749,23 @@ a {
   text-shadow: 0 2px 10px rgba(5, 20, 45, .4);
 }
 
-.reference-home-hero-copy > a {
+.reference-home-hero-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  margin-top: 28px;
+  transition: transform 180ms ease;
+}
+
+.reference-home-hero-cta {
   min-width: 270px;
   min-height: 54px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  margin-top: 28px;
   border-radius: 8px;
   padding: 0 24px;
   color: #fff;
@@ -8761,14 +8776,38 @@ a {
   transition: background-color 180ms ease;
 }
 
-.reference-home-hero-copy > a:hover {
+.reference-home-hero-cta:hover {
   background: #102f78;
 }
 
-.reference-home-hero-copy > a svg {
+.reference-home-hero-cta svg {
   width: 20px;
   height: 20px;
   flex: 0 0 auto;
+}
+
+.reference-home-hero-note {
+  display: flex;
+  align-items: flex-end;
+  gap: 5px;
+  color: #f0c66d;
+  font-family: "Segoe Print", "Bradley Hand", "Comic Sans MS", cursive;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.25;
+  text-align: left;
+  transform: rotate(-2deg);
+}
+
+.reference-home-hero-note svg {
+  width: 30px;
+  height: 25px;
+  overflow: visible;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.7;
 }
 
 .reference-home-introduction {
@@ -9386,9 +9425,12 @@ a {
     font-size: 19px;
   }
 
-  .reference-home-hero-copy > a {
-    min-height: 42px;
+  .reference-home-hero-actions {
     margin-top: 8px;
+  }
+
+  .reference-home-hero-cta {
+    min-height: 42px;
   }
 }
 
@@ -9608,10 +9650,22 @@ a {
     font-size: 19px;
   }
 
-  .reference-home-hero-copy > a {
+  .reference-home-hero-actions {
+    width: 100%;
+    margin-top: 24px;
+  }
+
+  .reference-home-hero-cta {
     min-width: 0;
     width: min(100%, 310px);
-    margin-top: 24px;
+  }
+
+  .reference-home-hero-note {
+    font-size: 14px;
+  }
+
+  .reference-home-hero-note svg {
+    width: 28px;
   }
 
   .reference-home-philosophy-heading {
@@ -9745,7 +9799,7 @@ a {
 @media (prefers-reduced-motion: reduce) {
   .reference-home,
   .reference-home-subscribe,
-  .reference-home-hero-copy > a {
+  .reference-home-hero-cta {
     transition: none;
   }
 }
@@ -11328,7 +11382,7 @@ body {
 }
 
 .learn-index-subscribe,
-.reference-home-hero-copy > a,
+.reference-home-hero-cta,
 .reference-home-newsletter .email-row button,
 .final-calculator-primary,
 .final-save-plan button,
@@ -11340,7 +11394,7 @@ body {
 }
 
 .learn-index-subscribe:hover,
-.reference-home-hero-copy > a:hover,
+.reference-home-hero-cta:hover,
 .reference-home-newsletter .email-row button:hover,
 .final-calculator-primary:hover,
 .final-save-plan button:hover,
@@ -11348,6 +11402,15 @@ body {
   background: #132b49;
   box-shadow: 0 6px 14px rgba(10, 26, 47, .11);
   transform: translateY(-1px);
+}
+
+.reference-home .reference-home-hero-cta {
+  background: var(--reference-blue);
+}
+
+.reference-home .reference-home-hero-cta:hover {
+  background: #102f78;
+  transform: none;
 }
 
 .reference-home-philosophy ol,
@@ -11516,7 +11579,7 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   .learn-index-subscribe,
-  .reference-home-hero-copy > a,
+  .reference-home-hero-cta,
   .reference-home-newsletter .email-row button,
   .final-calculator-primary,
   .final-save-plan button,
@@ -12314,7 +12377,7 @@ body {
     padding: 52px 32px 64px;
   }
 
-  .reference-home-hero-copy > a {
+  .reference-home-hero-actions {
     position: relative;
     margin-top: 28px;
     margin-bottom: 0;
@@ -12348,9 +12411,24 @@ body {
     font-size: clamp(21px, 1.85vw, 28px);
   }
 
-  .reference-home-hero-copy > a {
+  .reference-home-hero-cta {
     min-height: 54px;
-    margin-top: 28px;
+  }
+}
+
+.reference-home-hero-actions:hover,
+.reference-home-hero-actions:focus-within {
+  transform: translateY(-1px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reference-home-hero-actions {
+    transition: none;
+  }
+
+  .reference-home-hero-actions:hover,
+  .reference-home-hero-actions:focus-within {
+    transform: none;
   }
 }
 
