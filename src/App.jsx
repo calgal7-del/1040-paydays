@@ -9461,8 +9461,8 @@ const THIRTY_SIXTH_ARTICLE = {
               <img
                 src="/home-mountain-sunrise-hero.png"
                 alt="Sunrise over a mountain valley with evergreen trees in the foreground"
-                width="1983"
-                height="793"
+                width="1774"
+                height="887"
                 fetchpriority="high"
               />
               <div className="reference-home-hero-overlay" aria-hidden="true" />

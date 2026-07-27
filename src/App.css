@@ -8750,16 +8750,19 @@ a {
 }
 
 .reference-home-hero-actions {
-  display: flex;
-  flex-direction: column;
+  position: relative;
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: center;
-  justify-content: center;
-  gap: 7px;
+  gap: 12px;
   margin-top: 28px;
   transition: transform 180ms ease;
 }
 
 .reference-home-hero-cta {
+  grid-column: 2;
+  grid-row: 1;
   min-width: 270px;
   min-height: 54px;
   display: inline-flex;
@@ -8787,8 +8790,11 @@ a {
 }
 
 .reference-home-hero-note {
+  grid-column: 3;
+  grid-row: 1;
+  justify-self: start;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   gap: 5px;
   color: #f0c66d;
   font-family: "Segoe Print", "Bradley Hand", "Comic Sans MS", cursive;
@@ -9652,20 +9658,27 @@ a {
 
   .reference-home-hero-actions {
     width: 100%;
+    gap: 8px;
     margin-top: 24px;
   }
 
   .reference-home-hero-cta {
     min-width: 0;
-    width: min(100%, 310px);
+    width: 270px;
+    padding-inline: 18px;
+    font-size: 16px;
   }
 
   .reference-home-hero-note {
-    font-size: 14px;
+    width: 114px;
+    gap: 3px;
+    font-size: 11.5px;
+    line-height: 1.15;
   }
 
   .reference-home-hero-note svg {
-    width: 28px;
+    width: 22px;
+    flex: 0 0 22px;
   }
 
   .reference-home-philosophy-heading {
@@ -9793,6 +9806,24 @@ a {
   .reference-home-footer-nav {
     flex-wrap: wrap;
     gap: 8px 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .reference-home-hero-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+
+  .reference-home-hero-note {
+    width: auto;
+    font-size: 13px;
+  }
+
+  .reference-home-hero-note svg {
+    width: 26px;
+    flex-basis: 26px;
   }
 }
 
