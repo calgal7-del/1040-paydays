@@ -9499,8 +9499,9 @@ const THIRTY_SIXTH_ARTICLE = {
               <div>
                 <p>
                   Most people will receive only about 1,040 paydays during their working lives.
-                  1040 Paydays is a personal finance resource with practical articles,
-                  interactive calculators, and tools to help you make every payday count.
+                  Each payday is an opportunity to shape how you live today and prepare for
+                  tomorrow. 1040 Paydays provides practical articles, calculators, and tools to
+                  help you make every payday count.
                 </p>
               </div>
             </section>
