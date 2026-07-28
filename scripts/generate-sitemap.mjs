@@ -74,6 +74,7 @@ const publicPaths = [
   "/",
   "/about",
   "/calculator",
+  "/payday-planner",
   "/learn",
   ...standalonePagePaths,
   ...philosophyPaths,
@@ -107,6 +108,7 @@ console.log(`Generated ${sitemapPath} with ${publicPaths.length} URLs.`);
 const appRewritePaths = [
   "/about",
   "/calculator",
+  "/payday-planner",
   "/learn",
   ...standalonePagePaths,
   ...philosophyPaths,

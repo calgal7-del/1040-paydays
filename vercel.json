@@ -10,6 +10,10 @@
       "destination": "/prerender-calculator.html"
     },
     {
+      "source": "/payday-planner",
+      "destination": "/prerender-payday-planner.html"
+    },
+    {
       "source": "/learn",
       "destination": "/prerender-learn.html"
     },

@@ -27,6 +27,9 @@
     import { PHILOSOPHY_PAGES } from "./philosophyConfig.mjs";
 
     const PAYDAYS_TOTAL = 1040;
+    const PaydayPlanner = React.lazy(
+      () => import("./pages/PaydayPlanner/PaydayPlanner.jsx"),
+    );
     const STORAGE_KEY = "1040-paydays-settings";
     const ONBOARDING_KEY = "1040-paydays-onboarding-seen";
     const MAILING_LIST_CONSENT_TEXT =
@@ -8214,6 +8217,7 @@ const THIRTY_SIXTH_ARTICLE = {
       const legalPage = LEGAL_PAGE_CONFIG[normalizedPath];
       const isLearnIndex = normalizedPath === "/learn";
       const isCalculatorRoute = normalizedPath === "/calculator";
+      const isPaydayPlannerRoute = normalizedPath === "/payday-planner";
       const isAboutRoute = normalizedPath === "/about";
       const isLearnRoute = isLearnIndex || Boolean(cluster) || Boolean(article);
       const title = article
@@ -8226,6 +8230,8 @@ const THIRTY_SIXTH_ARTICLE = {
               ? "Personal Finance Articles and Guides | 1040 Paydays"
               : isCalculatorRoute
                 ? "Payday Savings and Retirement Calculator | 1040 Paydays"
+                : isPaydayPlannerRoute
+                  ? "Payday Planner: Plan Each Paycheck | 1040 Paydays"
                 : isAboutRoute
                   ? "Our Payday Principles | 1040 Paydays"
                   : normalizedPath === "/privacy-policy"
@@ -8245,6 +8251,8 @@ const THIRTY_SIXTH_ARTICLE = {
               ? "Thoughtful articles and stories to help you make better financial decisions—one payday at a time."
               : isCalculatorRoute
                 ? "Build a payday-by-payday savings plan and explore how regular contributions may grow over time."
+                : isPaydayPlannerRoute
+                  ? "Assign bills, savings, goals, and everyday priorities to upcoming paydays with a private planner saved only on your device."
                 : isAboutRoute
                   ? "Learn the Payday Principles behind 1040 Paydays and how small, consistent financial decisions can help create more freedom, security, and choice over time."
                   : legalPage
@@ -8254,6 +8262,7 @@ const THIRTY_SIXTH_ARTICLE = {
         isLearnRoute ||
         philosophyPage ||
         isCalculatorRoute ||
+        isPaydayPlannerRoute ||
         isAboutRoute ||
         legalPage
           ? normalizedPath
@@ -8270,6 +8279,7 @@ const THIRTY_SIXTH_ARTICLE = {
       { label: "Home", href: "/" },
       { label: "Learn", href: "/learn" },
       { label: "Calculator", href: "/calculator" },
+      { label: "Payday Planner", href: "/payday-planner" },
       { label: "About", href: "/about" },
     ];
 
@@ -8323,6 +8333,7 @@ const THIRTY_SIXTH_ARTICLE = {
                 <button type="button" onClick={() => navigateTo("/")}>Home</button>
                 <button type="button" onClick={() => navigateTo("/learn")}>Learn</button>
                 <button type="button" onClick={() => navigateTo("/calculator")}>Calculator</button>
+                <button type="button" onClick={() => navigateTo("/payday-planner")}>Payday Planner</button>
                 <button type="button" onClick={() => navigateTo("/about")}>About</button>
               </nav>
 
@@ -8351,6 +8362,7 @@ const THIRTY_SIXTH_ARTICLE = {
                     <button type="button" onClick={() => navigateTo("/")}>Home</button>
                     <button type="button" onClick={() => navigateTo("/learn")}>Learn</button>
                     <button type="button" onClick={() => navigateTo("/calculator")}>Calculator</button>
+                <button type="button" onClick={() => navigateTo("/payday-planner")}>Payday Planner</button>
                     <button type="button" onClick={() => navigateTo("/about")}>About</button>
                   </nav>
                 )}
@@ -8561,6 +8573,7 @@ const THIRTY_SIXTH_ARTICLE = {
                 <button type="button" onClick={() => navigateTo("/")}>Home</button>
                 <button type="button" onClick={() => navigateTo("/learn")}>Learn</button>
                 <button type="button" className="active" aria-current="page">Calculator</button>
+                <button type="button" onClick={() => navigateTo("/payday-planner")}>Payday Planner</button>
                 <button type="button" onClick={() => navigateTo("/about")}>About</button>
               </nav>
 
@@ -8593,6 +8606,7 @@ const THIRTY_SIXTH_ARTICLE = {
                     <button type="button" onClick={() => navigateTo("/")}>Home</button>
                     <button type="button" onClick={() => navigateTo("/learn")}>Learn</button>
                     <button type="button" aria-current="page" onClick={() => setMobileMenuOpen(false)}>Calculator</button>
+                    <button type="button" onClick={() => navigateTo("/payday-planner")}>Payday Planner</button>
                     <button type="button" onClick={() => navigateTo("/about")}>About</button>
                   </nav>
                 )}
@@ -8940,6 +8954,7 @@ const THIRTY_SIXTH_ARTICLE = {
                 <button type="button" onClick={() => navigateTo("/")}>Home</button>
                 <button type="button" onClick={() => navigateTo("/learn")}>Learn</button>
                 <button type="button" onClick={() => navigateTo("/calculator")}>Calculator</button>
+                <button type="button" onClick={() => navigateTo("/payday-planner")}>Payday Planner</button>
                 <button type="button" className="active" aria-current="page">About</button>
               </nav>
 
@@ -8968,6 +8983,7 @@ const THIRTY_SIXTH_ARTICLE = {
                     <button type="button" onClick={() => navigateTo("/")}>Home</button>
                     <button type="button" onClick={() => navigateTo("/learn")}>Learn</button>
                     <button type="button" onClick={() => navigateTo("/calculator")}>Calculator</button>
+                <button type="button" onClick={() => navigateTo("/payday-planner")}>Payday Planner</button>
                     <button type="button" aria-current="page" onClick={() => setMobileMenuOpen(false)}>About</button>
                   </nav>
                 )}
@@ -9169,6 +9185,7 @@ const THIRTY_SIXTH_ARTICLE = {
                 <button type="button" onClick={() => navigateTo("/")}>Home</button>
                 <button type="button" onClick={() => navigateTo("/learn")}>Learn</button>
                 <button type="button" onClick={() => navigateTo("/calculator")}>Calculator</button>
+                <button type="button" onClick={() => navigateTo("/payday-planner")}>Payday Planner</button>
                 <button type="button" onClick={() => navigateTo("/about")}>About</button>
               </nav>
 
@@ -9193,6 +9210,7 @@ const THIRTY_SIXTH_ARTICLE = {
                     <button type="button" onClick={() => navigateTo("/")}>Home</button>
                     <button type="button" onClick={() => navigateTo("/learn")}>Learn</button>
                     <button type="button" onClick={() => navigateTo("/calculator")}>Calculator</button>
+                <button type="button" onClick={() => navigateTo("/payday-planner")}>Payday Planner</button>
                     <button type="button" onClick={() => navigateTo("/about")}>About</button>
                   </nav>
                 )}
@@ -9417,6 +9435,7 @@ const THIRTY_SIXTH_ARTICLE = {
                 <button type="button" className="active" aria-current="page">Home</button>
                 <button type="button" onClick={() => navigateTo("/learn")}>Learn</button>
                 <button type="button" onClick={() => navigateTo("/calculator")}>Calculator</button>
+                <button type="button" onClick={() => navigateTo("/payday-planner")}>Payday Planner</button>
                 <button type="button" onClick={() => navigateTo("/about")}>About</button>
               </nav>
 
@@ -9449,6 +9468,7 @@ const THIRTY_SIXTH_ARTICLE = {
                     <button type="button" aria-current="page" onClick={() => setMobileMenuOpen(false)}>Home</button>
                     <button type="button" onClick={() => navigateTo("/learn")}>Learn</button>
                     <button type="button" onClick={() => navigateTo("/calculator")}>Calculator</button>
+                <button type="button" onClick={() => navigateTo("/payday-planner")}>Payday Planner</button>
                     <button type="button" onClick={() => navigateTo("/about")}>About</button>
                   </nav>
                 )}
@@ -9720,6 +9740,7 @@ const THIRTY_SIXTH_ARTICLE = {
                   Learn <span aria-hidden="true">⌄</span>
                 </a>
                 <button type="button" onClick={() => openPanel("calculator")}>Calculator</button>
+                <button type="button" onClick={() => navigateTo("/payday-planner")}>Payday Planner</button>
                 <button type="button" onClick={() => openPanel("compare")}>Compare</button>
                 <button type="button" onClick={() => openPanel("how")}>How it works</button>
               </nav>
@@ -9752,6 +9773,7 @@ const THIRTY_SIXTH_ARTICLE = {
                   >
                     <a href="/learn" onClick={(event) => followLink(event, "/learn")}>Learn</a>
                     <button type="button" onClick={() => openPanel("calculator")}>Calculator</button>
+                <button type="button" onClick={() => navigateTo("/payday-planner")}>Payday Planner</button>
                     <button type="button" onClick={() => openPanel("compare")}>Compare</button>
                     <button type="button" onClick={() => openPanel("how")}>How it works</button>
                   </nav>
@@ -10477,6 +10499,25 @@ const THIRTY_SIXTH_ARTICLE = {
         );
       }
 
+      if (normalizedRoute === "/payday-planner") {
+        return renderWithStructuredData(
+          <React.Suspense
+            fallback={
+              <main className="payday-planner-shell" aria-busy="true">
+                <h1>Payday Planner</h1>
+                <p>Loading your planner…</p>
+              </main>
+            }
+          >
+            <PaydayPlanner
+              navigateTo={navigateTo}
+              mobileMenuOpen={mobileMenuOpen}
+              setMobileMenuOpen={setMobileMenuOpen}
+            />
+          </React.Suspense>
+        );
+      }
+
       if (normalizedRoute === "/about") {
         return renderWithStructuredData(
           <div className="home-page-host">
@@ -11065,6 +11106,7 @@ const THIRTY_SIXTH_ARTICLE = {
                 <button type="button" onClick={() => navigateTo("/")}>Home</button>
                 <button type="button" className="active" aria-current="page" onClick={() => navigateTo("/learn")}>Learn</button>
                 <button type="button" onClick={() => navigateTo("/calculator")}>Calculator</button>
+                <button type="button" onClick={() => navigateTo("/payday-planner")}>Payday Planner</button>
                 <button type="button" onClick={() => navigateTo("/about")}>About</button>
               </nav>
 
@@ -11097,6 +11139,7 @@ const THIRTY_SIXTH_ARTICLE = {
                     <button type="button" onClick={() => navigateTo("/")}>Home</button>
                     <button type="button" aria-current="page" onClick={() => navigateTo("/learn")}>Learn</button>
                     <button type="button" onClick={() => navigateTo("/calculator")}>Calculator</button>
+                <button type="button" onClick={() => navigateTo("/payday-planner")}>Payday Planner</button>
                     <button type="button" onClick={() => navigateTo("/about")}>About</button>
                   </nav>
                 )}
