@@ -2858,3 +2858,1363 @@
     display: none !important;
   }
 }
+
+/* =========================================================
+   FINAL MOBILE CONTROLS + COMPACT SUMMARY
+   ========================================================= */
+@media (max-width: 767px) {
+  /* Green mobile toolbar: frequency, currency, PDF, reset and erase. */
+  .pp-mobile-bar {
+    position: sticky;
+    z-index: 30;
+    top: 0;
+    display: grid !important;
+    grid-template-columns: minmax(0, 1.55fr) 46px 38px 38px 38px;
+    gap: 5px;
+    align-items: center;
+    width: 100%;
+    padding: 7px 8px !important;
+    color: #fff;
+    background: var(--forest);
+    box-shadow: 0 5px 16px rgb(13 59 35 / 18%);
+  }
+
+  /* Remove the former Total Unassigned Cash text from this toolbar. */
+  .pp-mobile-bar > span {
+    display: none !important;
+  }
+
+  .pp-mobile-select {
+    display: block;
+    min-width: 0;
+  }
+
+  .pp-mobile-select select {
+    width: 100%;
+    min-width: 0;
+    height: 34px;
+    padding: 0 22px 0 8px;
+    color: #fff;
+    background-color: transparent;
+    border: 1px solid rgb(255 255 255 / 42%);
+    border-radius: 7px;
+    font-size: 11px;
+    font-weight: 750;
+  }
+
+  .pp-mobile-select select:focus-visible,
+  .pp-mobile-bar button:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 1px;
+  }
+
+  .pp-mobile-select.is-currency select {
+    padding-inline: 3px;
+    text-align: center;
+    text-align-last: center;
+    font-size: 15px;
+  }
+
+  .pp-mobile-bar button {
+    width: 38px !important;
+    height: 34px !important;
+    min-width: 0 !important;
+    min-height: 34px !important;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 0 !important;
+    padding: 0 !important;
+    color: #fff !important;
+    background: transparent !important;
+    border: 1px solid rgb(255 255 255 / 42%) !important;
+    border-radius: 7px !important;
+    font-size: 0 !important;
+  }
+
+  .pp-mobile-bar button svg {
+    width: 18px;
+    height: 18px;
+    flex: 0 0 auto;
+  }
+
+  .pp-mobile-bar button.is-erase {
+    color: #ffe4e1 !important;
+    border-color: rgb(255 220 215 / 68%) !important;
+  }
+
+  /* Currency and erase controls now live in the green toolbar. */
+  .pp-mobile-storage-controls {
+    display: none !important;
+  }
+
+  /* The desktop Total Unassigned panel is not shown on mobile. */
+  .pp-cycle-card {
+    display: none !important;
+  }
+
+  /* Keep all four principle totals visible in one row without scrolling. */
+  .pp-metric-strip {
+    display: block !important;
+    overflow: visible !important;
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+  }
+
+  .pp-bucket-carousel {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 5px !important;
+    width: 100% !important;
+    overflow: visible !important;
+    padding: 0 !important;
+  }
+
+  .pp-metric-card {
+    min-width: 0 !important;
+    min-height: 68px !important;
+    display: flex !important;
+    flex: 1 1 auto !important;
+    flex-direction: column !important;
+    gap: 3px !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 7px 3px !important;
+    text-align: center !important;
+    background: #fff !important;
+    border: 1px solid var(--line) !important;
+    border-radius: 9px !important;
+  }
+
+  .pp-metric-icon {
+    width: 27px !important;
+    height: 27px !important;
+  }
+
+  .pp-metric-icon svg {
+    width: 15px !important;
+    height: 15px !important;
+  }
+
+  .pp-metric-card > div {
+    display: block !important;
+    min-width: 0 !important;
+    width: 100%;
+  }
+
+  .pp-metric-card h2 {
+    margin: 1px 0 2px !important;
+    overflow: hidden;
+    font-size: 8px !important;
+    line-height: 1.05 !important;
+    text-overflow: ellipsis;
+    white-space: nowrap !important;
+  }
+
+  .pp-metric-card strong {
+    display: block !important;
+    overflow: hidden;
+    font-size: 15px !important;
+    line-height: 1 !important;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .pp-metric-card span:last-child {
+    display: none !important;
+  }
+}
+
+@media (max-width: 380px) {
+  .pp-mobile-bar {
+    grid-template-columns: minmax(0, 1fr) 40px 33px 33px 33px;
+    gap: 4px;
+    padding: 6px !important;
+  }
+
+  .pp-mobile-select select {
+    height: 32px;
+    padding-left: 5px;
+    font-size: 10px;
+  }
+
+  .pp-mobile-bar button {
+    width: 33px !important;
+    height: 32px !important;
+    min-height: 32px !important;
+  }
+
+  .pp-mobile-bar button svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .pp-bucket-carousel {
+    gap: 4px !important;
+  }
+
+  .pp-metric-card {
+    min-height: 64px !important;
+    padding-inline: 2px !important;
+  }
+
+  .pp-metric-card h2 {
+    font-size: 7px !important;
+  }
+
+  .pp-metric-card strong {
+    font-size: 13px !important;
+  }
+}/* =========================================================
+   FINAL MOBILE GREEN TOOLBAR FIX
+   Matches the actual class names in PaydayPlanner.jsx
+   ========================================================= */
+
+@media (max-width: 767px) {
+  .pp-mobile-bar {
+    position: sticky !important;
+    z-index: 30 !important;
+    top: 0 !important;
+
+    display: grid !important;
+    grid-template-columns:
+      minmax(0, 1fr)
+      48px
+      38px
+      38px
+      38px !important;
+
+    gap: 5px !important;
+    align-items: center !important;
+
+    width: 100% !important;
+    padding: 8px !important;
+
+    color: #ffffff !important;
+    background: var(--forest) !important;
+    box-shadow: 0 5px 16px rgb(13 59 35 / 18%) !important;
+  }
+
+  .pp-mobile-toolbar-select {
+    display: block !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    height: 36px !important;
+
+    margin: 0 !important;
+    padding: 0 24px 0 8px !important;
+
+    color: #ffffff !important;
+    background-color: transparent !important;
+    border: 1px solid rgb(255 255 255 / 45%) !important;
+    border-radius: 7px !important;
+
+    font-size: 11px !important;
+    font-weight: 800 !important;
+  }
+
+  .pp-mobile-frequency-select {
+    min-width: 0 !important;
+  }
+
+  .pp-mobile-currency-select {
+    width: 48px !important;
+    padding: 0 4px !important;
+    font-size: 16px !important;
+    text-align: center !important;
+    text-align-last: center !important;
+  }
+
+  .pp-mobile-toolbar-select option {
+    color: #17231d !important;
+    background: #ffffff !important;
+  }
+
+  .pp-mobile-toolbar-icon {
+    display: inline-grid !important;
+    place-items: center !important;
+
+    width: 38px !important;
+    height: 36px !important;
+    min-width: 38px !important;
+    min-height: 36px !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    color: #ffffff !important;
+    background: transparent !important;
+    border: 1px solid rgb(255 255 255 / 45%) !important;
+    border-radius: 7px !important;
+  }
+
+  .pp-mobile-toolbar-icon svg {
+    display: block !important;
+    width: 18px !important;
+    height: 18px !important;
+  }
+
+  .pp-mobile-toolbar-icon.is-danger {
+    color: #ffe3df !important;
+    border-color: rgb(255 220 215 / 70%) !important;
+  }
+
+  .pp-mobile-storage-controls {
+    display: none !important;
+  }
+
+  .pp-mobile-bar > span {
+    display: none !important;
+  }
+}
+
+@media (max-width: 380px) {
+  .pp-mobile-bar {
+    grid-template-columns:
+      minmax(0, 1fr)
+      42px
+      34px
+      34px
+      34px !important;
+
+    gap: 4px !important;
+    padding: 6px !important;
+  }
+
+  .pp-mobile-toolbar-select {
+    height: 34px !important;
+    padding-left: 6px !important;
+    font-size: 10px !important;
+  }
+
+  .pp-mobile-currency-select {
+    width: 42px !important;
+    font-size: 15px !important;
+  }
+
+  .pp-mobile-toolbar-icon {
+    width: 34px !important;
+    height: 34px !important;
+    min-width: 34px !important;
+    min-height: 34px !important;
+  }
+
+  .pp-mobile-toolbar-icon svg {
+    width: 17px !important;
+    height: 17px !important;
+  }
+}/* =========================================================
+   MOBILE PRIORITY CARDS + SEPARATE PAYDAY ASSIGNMENT SECTION
+   Add this to the BOTTOM of PaydayPlanner.css
+   ========================================================= */
+
+.pp-mobile-allocation-section {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .pp-desktop-only-action {
+    display: none !important;
+  }
+
+  .pp-mobile-priority-list {
+    display: grid !important;
+    gap: 12px;
+  }
+
+  .pp-mobile-priority-card {
+    overflow: hidden;
+    border: 1px solid #dbe5df;
+    border-radius: 20px;
+    background: #fff;
+    box-shadow: 0 8px 22px rgb(20 52 37 / 7%);
+  }
+
+  .pp-mobile-priority-card-head {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+  }
+
+  .pp-mobile-priority-toggle {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto auto auto;
+    gap: 12px;
+    align-items: center;
+    width: 100%;
+    min-width: 0;
+    padding: 18px 52px 18px 18px;
+    color: inherit;
+    text-align: left;
+    background: transparent;
+    border: 0;
+  }
+
+  .pp-mobile-priority-card.is-open .pp-mobile-priority-toggle {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    padding-bottom: 12px;
+  }
+
+  .pp-mobile-priority-heading-copy {
+    display: grid;
+    min-width: 0;
+    gap: 2px;
+  }
+
+  .pp-mobile-priority-heading-copy strong {
+    overflow: hidden;
+    color: #15221b;
+    font-size: 21px;
+    line-height: 1.1;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .pp-mobile-priority-heading-copy small {
+    color: #6d7973;
+    font-size: 14px;
+  }
+
+  .pp-mobile-priority-compact-progress {
+    display: grid;
+    min-width: 58px;
+    gap: 1px;
+    text-align: center;
+  }
+
+  .pp-mobile-priority-compact-progress strong {
+    color: #155a38;
+    font-size: 18px;
+    line-height: 1;
+  }
+
+  .pp-mobile-priority-compact-progress small {
+    color: #6d7973;
+    font-size: 11px;
+  }
+
+  .pp-mobile-priority-compact-date {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    color: #194c34;
+    white-space: nowrap;
+  }
+
+  .pp-mobile-priority-compact-date strong {
+    font-size: 13px;
+  }
+
+  .pp-mobile-priority-chevron {
+    display: grid;
+    place-items: center;
+    color: #194c34;
+  }
+
+  .pp-mobile-priority-menu {
+    position: absolute;
+    top: 15px;
+    right: 14px;
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    color: #15221b;
+    background: transparent;
+    border: 0;
+    border-radius: 50%;
+  }
+
+  .pp-mobile-priority-menu:active {
+    background: #edf5f0;
+  }
+
+  .pp-mobile-priority-card-body {
+    padding: 0 18px 18px;
+  }
+
+  .pp-mobile-priority-due-row {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4px 0 18px;
+  }
+
+  .pp-mobile-priority-due-row > span {
+    color: #6d7973;
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .pp-mobile-priority-due-chip {
+    width: auto;
+    min-width: 132px;
+    padding: 10px 13px;
+    border: 1px solid #b8cebf;
+    border-radius: 12px;
+    background: #fbfdfb;
+  }
+
+  .pp-mobile-priority-progress-block {
+    display: grid;
+    gap: 10px;
+    padding: 15px 0 18px;
+    border-top: 1px solid #e3ebe6;
+  }
+
+  .pp-mobile-priority-progress-label {
+    display: flex;
+    gap: 10px;
+    align-items: baseline;
+    justify-content: space-between;
+  }
+
+  .pp-mobile-priority-progress-label strong {
+    color: #174d33;
+    font-size: 18px;
+  }
+
+  .pp-mobile-priority-progress-label span {
+    color: #6d7973;
+    font-size: 13px;
+  }
+
+  .pp-mobile-priority-progress-track {
+    overflow: hidden;
+    height: 8px;
+    background: #e4e8e6;
+    border-radius: 999px;
+  }
+
+  .pp-mobile-priority-progress-track > span {
+    display: block;
+    height: 100%;
+    background: #237447;
+    border-radius: inherit;
+  }
+
+  .pp-mobile-priority-stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    border-top: 1px solid #e3ebe6;
+  }
+
+  .pp-mobile-priority-stats > span {
+    display: grid;
+    gap: 5px;
+    min-width: 0;
+    padding: 16px 10px 2px;
+  }
+
+  .pp-mobile-priority-stats > span:first-child {
+    padding-left: 0;
+  }
+
+  .pp-mobile-priority-stats > span + span {
+    border-left: 1px solid #e3ebe6;
+  }
+
+  .pp-mobile-priority-stats small {
+    color: #6d7973;
+    font-size: 12px;
+  }
+
+  .pp-mobile-priority-stats strong {
+    overflow: hidden;
+    color: #15221b;
+    font-size: 16px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .pp-mobile-allocation-section {
+    display: block;
+    margin-top: 26px;
+  }
+
+  .pp-mobile-allocation-head {
+    align-items: flex-end;
+  }
+
+  .pp-mobile-allocation-head p {
+    max-width: 34rem;
+    margin: 5px 0 0;
+    color: #6d7973;
+    font-size: 13px;
+    line-height: 1.45;
+  }
+
+  .pp-mobile-allocation-head .pp-auto-distribute-button {
+    flex: 0 0 auto;
+  }
+
+  .pp-mobile-allocation-list {
+    display: grid;
+    gap: 12px;
+    margin-top: 14px;
+  }
+
+  .pp-mobile-allocation-card {
+    overflow: hidden;
+    border: 1px solid #dbe5df;
+    border-radius: 16px;
+    background: #fff;
+  }
+
+  .pp-mobile-allocation-card > header {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding: 14px 15px;
+    border-bottom: 1px solid #e3ebe6;
+    background: #fbfdfb;
+  }
+
+  .pp-mobile-allocation-card > header > span {
+    display: grid;
+    gap: 2px;
+  }
+
+  .pp-mobile-allocation-card > header strong {
+    color: #15221b;
+    font-size: 16px;
+  }
+
+  .pp-mobile-allocation-card > header small {
+    color: #6d7973;
+    font-size: 12px;
+  }
+
+  .pp-mobile-allocation-paydays {
+    display: grid;
+  }
+
+  .pp-mobile-allocation-row {
+    display: grid;
+    grid-template-columns: minmax(92px, 1fr) minmax(145px, 1.35fr);
+    gap: 12px;
+    align-items: center;
+    padding: 12px 14px;
+  }
+
+  .pp-mobile-allocation-row + .pp-mobile-allocation-row {
+    border-top: 1px solid #edf1ef;
+  }
+
+  .pp-mobile-allocation-payday-label {
+    display: grid;
+    gap: 2px;
+  }
+
+  .pp-mobile-allocation-payday-label strong {
+    color: #15221b;
+    font-size: 14px;
+  }
+
+  .pp-mobile-allocation-payday-label small {
+    color: #6d7973;
+    font-size: 11px;
+  }
+
+  .pp-mobile-allocation-row .pp-allocation-field {
+    width: 100%;
+  }
+}
+
+@media (max-width: 460px) {
+  .pp-mobile-priority-toggle {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+  }
+
+  .pp-mobile-priority-compact-progress {
+    grid-column: 2;
+    justify-self: start;
+    display: flex;
+    gap: 5px;
+    align-items: baseline;
+    text-align: left;
+  }
+
+  .pp-mobile-priority-compact-date {
+    grid-column: 2;
+    justify-self: start;
+  }
+
+  .pp-mobile-priority-chevron {
+    grid-column: 3;
+    grid-row: 1 / span 3;
+  }
+
+  .pp-mobile-priority-stats strong {
+    font-size: 14px;
+  }
+
+  .pp-mobile-allocation-head {
+    display: grid;
+    gap: 12px;
+  }
+
+  .pp-mobile-allocation-head .pp-auto-distribute-button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .pp-mobile-allocation-row {
+    grid-template-columns: 88px minmax(0, 1fr);
+  }
+}/* =========================================================
+   MOBILE PRIORITY CARDS — ALL DATA IN ONE CARD
+   Paste this at the BOTTOM of PaydayPlanner.css.
+   This replaces the previous mobile priority-card CSS.
+   ========================================================= */
+
+.pp-mobile-allocation-section {
+  display: none !important;
+}
+
+@media (max-width: 767px) {
+  .pp-mobile-priority-list {
+    display: grid !important;
+    gap: 12px;
+  }
+
+  .pp-mobile-priority-card {
+    overflow: hidden;
+    border: 1px solid #dbe5df;
+    border-radius: 18px;
+    background: #fff;
+    box-shadow: 0 7px 20px rgb(20 52 37 / 7%);
+  }
+
+  .pp-mobile-priority-card-head {
+    position: relative;
+  }
+
+  .pp-mobile-priority-toggle {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto auto;
+    gap: 11px;
+    align-items: center;
+    width: 100%;
+    min-width: 0;
+    padding: 16px 50px 16px 16px;
+    color: inherit;
+    text-align: left;
+    background: transparent;
+    border: 0;
+  }
+
+  .pp-mobile-priority-heading-copy {
+    display: grid;
+    min-width: 0;
+    gap: 3px;
+  }
+
+  .pp-mobile-priority-title-line {
+    display: flex;
+    gap: 9px;
+    align-items: center;
+    min-width: 0;
+  }
+
+  .pp-mobile-priority-title-line > strong {
+    overflow: hidden;
+    min-width: 0;
+    color: #15221b;
+    font-size: 20px;
+    line-height: 1.1;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .pp-mobile-priority-inline-date {
+    display: inline-flex;
+    flex: 0 0 auto;
+    gap: 4px;
+    align-items: center;
+    color: #315e48;
+    font-size: 12px;
+    font-weight: 750;
+    white-space: nowrap;
+  }
+
+  .pp-mobile-priority-heading-copy > small {
+    color: #6d7973;
+    font-size: 13px;
+  }
+
+  .pp-mobile-priority-compact-percent {
+    color: #155a38;
+    font-size: 18px;
+    font-weight: 850;
+    white-space: nowrap;
+  }
+
+  .pp-mobile-priority-chevron {
+    display: grid;
+    place-items: center;
+    color: #194c34;
+  }
+
+  .pp-mobile-priority-menu {
+    position: absolute;
+    top: 13px;
+    right: 11px;
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    color: #15221b;
+    background: transparent;
+    border: 0;
+    border-radius: 50%;
+  }
+
+  .pp-mobile-priority-menu:active {
+    background: #edf5f0;
+  }
+
+  .pp-mobile-priority-card-body {
+    padding: 0 16px 16px;
+  }
+
+  .pp-mobile-priority-progress-block {
+    display: grid;
+    gap: 9px;
+    padding: 14px 0 16px;
+    border-top: 1px solid #e3ebe6;
+  }
+
+  .pp-mobile-priority-progress-label {
+    display: flex;
+    gap: 10px;
+    align-items: baseline;
+    justify-content: space-between;
+  }
+
+  .pp-mobile-priority-progress-label strong {
+    color: #174d33;
+    font-size: 18px;
+  }
+
+  .pp-mobile-priority-progress-label span {
+    color: #6d7973;
+    font-size: 13px;
+  }
+
+  .pp-mobile-priority-progress-track {
+    overflow: hidden;
+    height: 8px;
+    background: #e4e8e6;
+    border-radius: 999px;
+  }
+
+  .pp-mobile-priority-progress-track > span {
+    display: block;
+    height: 100%;
+    background: #237447;
+    border-radius: inherit;
+  }
+
+  .pp-mobile-priority-stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    border-top: 1px solid #e3ebe6;
+    border-bottom: 1px solid #e3ebe6;
+  }
+
+  .pp-mobile-priority-stats > span {
+    display: grid;
+    gap: 4px;
+    min-width: 0;
+    padding: 13px 9px;
+  }
+
+  .pp-mobile-priority-stats > span:first-child {
+    padding-left: 0;
+  }
+
+  .pp-mobile-priority-stats > span + span {
+    border-left: 1px solid #e3ebe6;
+  }
+
+  .pp-mobile-priority-stats small {
+    color: #6d7973;
+    font-size: 11px;
+  }
+
+  .pp-mobile-priority-stats strong {
+    overflow: hidden;
+    color: #15221b;
+    font-size: 15px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .pp-mobile-priority-paydays {
+    display: grid;
+    gap: 8px;
+    padding-top: 14px;
+  }
+
+  .pp-mobile-priority-payday {
+    display: grid;
+    grid-template-columns: 70px minmax(0, 1fr);
+    gap: 10px;
+    align-items: center;
+    min-width: 0;
+  }
+
+  .pp-mobile-priority-payday-label {
+    display: grid;
+    gap: 1px;
+  }
+
+  .pp-mobile-priority-payday-label strong {
+    color: #183f2c;
+    font-size: 14px;
+  }
+
+  .pp-mobile-priority-payday-label small {
+    color: #78827d;
+    font-size: 10px;
+  }
+
+  .pp-mobile-priority-payday .pp-allocation-field {
+    display: grid !important;
+    grid-template-columns: 34px minmax(0, 1fr) !important;
+    gap: 8px !important;
+    align-items: center !important;
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .pp-mobile-priority-payday .pp-allocation-check {
+    width: 34px !important;
+    height: 34px !important;
+    min-width: 34px !important;
+  }
+
+  .pp-mobile-priority-payday .pp-money-input {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .pp-mobile-priority-payday .pp-money-input input {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .pp-priority-header-actions {
+    gap: 7px;
+  }
+
+  .pp-priority-header-actions .pp-outline-button,
+  .pp-priority-header-actions .pp-auto-distribute-button {
+    padding: 9px 10px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 420px) {
+  .pp-mobile-priority-toggle {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+  }
+
+  .pp-mobile-priority-compact-percent {
+    grid-column: 2;
+    justify-self: start;
+    font-size: 15px;
+  }
+
+  .pp-mobile-priority-chevron {
+    grid-column: 3;
+    grid-row: 1 / span 2;
+  }
+
+  .pp-mobile-priority-title-line {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .pp-mobile-priority-inline-date {
+    font-size: 11px;
+  }
+
+  .pp-mobile-priority-payday {
+    grid-template-columns: 58px minmax(0, 1fr);
+  }
+
+  .pp-mobile-priority-stats strong {
+    font-size: 13px;
+  }
+}/* =========================================================
+   COMPACT MOBILE PRIORITY CARDS
+   Paste this at the VERY BOTTOM of PaydayPlanner.css
+   ========================================================= */
+
+@media (max-width: 767px) {
+  .pp-mobile-priority-list {
+    gap: 10px !important;
+  }
+
+  .pp-mobile-priority-card {
+    border-radius: 16px !important;
+    box-shadow: 0 5px 16px rgb(20 52 37 / 6%) !important;
+  }
+
+  .pp-mobile-priority-toggle {
+    grid-template-columns: auto minmax(0, 1fr) auto !important;
+    gap: 10px !important;
+    padding: 14px 48px 12px 14px !important;
+  }
+
+  .pp-mobile-priority-card.is-open .pp-mobile-priority-toggle {
+    padding-bottom: 10px !important;
+  }
+
+  .pp-mobile-priority-heading-copy {
+    gap: 2px !important;
+  }
+
+  .pp-mobile-priority-title-line {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    gap: 5px 10px !important;
+    align-items: center !important;
+  }
+
+  .pp-mobile-priority-title-line > strong {
+    font-size: 19px !important;
+    line-height: 1.05 !important;
+  }
+
+  .pp-mobile-priority-inline-date {
+    gap: 4px !important;
+    font-size: 12px !important;
+  }
+
+  .pp-mobile-priority-heading-copy > small {
+    font-size: 12px !important;
+  }
+
+  .pp-mobile-priority-card.is-open .pp-mobile-priority-compact-percent {
+    display: none !important;
+  }
+
+  .pp-mobile-priority-compact-percent {
+    font-size: 16px !important;
+  }
+
+  .pp-mobile-priority-chevron {
+    justify-self: end !important;
+  }
+
+  .pp-mobile-priority-menu {
+    top: 9px !important;
+    right: 8px !important;
+    width: 34px !important;
+    height: 34px !important;
+  }
+
+  .pp-mobile-priority-card-body {
+    padding: 0 14px 14px !important;
+  }
+
+  .pp-mobile-priority-progress-block {
+    gap: 7px !important;
+    padding: 11px 0 12px !important;
+  }
+
+  .pp-mobile-priority-progress-label strong {
+    font-size: 17px !important;
+  }
+
+  .pp-mobile-priority-progress-label span {
+    font-size: 12px !important;
+  }
+
+  .pp-mobile-priority-progress-track {
+    height: 7px !important;
+  }
+
+  .pp-mobile-priority-stats {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+
+  .pp-mobile-priority-stats > span {
+    gap: 2px !important;
+    padding: 10px 8px !important;
+  }
+
+  .pp-mobile-priority-stats > span:first-child {
+    padding-left: 0 !important;
+  }
+
+  .pp-mobile-priority-stats small {
+    font-size: 10px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.03em !important;
+  }
+
+  .pp-mobile-priority-stats strong {
+    font-size: 14px !important;
+  }
+
+  .pp-mobile-priority-paydays {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+    padding-top: 12px !important;
+  }
+
+  .pp-mobile-priority-payday {
+    display: grid !important;
+    grid-template-columns: auto minmax(0, 1fr) !important;
+    gap: 7px !important;
+    align-items: center !important;
+    min-width: 0 !important;
+    padding: 8px !important;
+    border: 1px solid #dce6e0 !important;
+    border-radius: 12px !important;
+    background: #fbfdfb !important;
+  }
+
+  .pp-mobile-priority-payday-label {
+    min-width: 37px !important;
+    gap: 0 !important;
+  }
+
+  .pp-mobile-priority-payday-label strong {
+    font-size: 13px !important;
+    line-height: 1.05 !important;
+  }
+
+  .pp-mobile-priority-payday-label small {
+    font-size: 9px !important;
+    line-height: 1.1 !important;
+  }
+
+  .pp-mobile-priority-payday .pp-allocation-field {
+    display: grid !important;
+    grid-template-columns: 28px minmax(0, 1fr) !important;
+    gap: 5px !important;
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .pp-mobile-priority-payday .pp-allocation-check {
+    width: 28px !important;
+    height: 30px !important;
+    min-width: 28px !important;
+    min-height: 30px !important;
+    border-radius: 8px !important;
+  }
+
+  .pp-mobile-priority-payday .pp-money-input {
+    height: 30px !important;
+    min-width: 0 !important;
+    border-radius: 8px !important;
+  }
+
+  .pp-mobile-priority-payday .pp-money-input span {
+    padding-left: 6px !important;
+    font-size: 11px !important;
+  }
+
+  .pp-mobile-priority-payday .pp-money-input input {
+    min-width: 0 !important;
+    height: 28px !important;
+    padding: 0 6px 0 2px !important;
+    font-size: 13px !important;
+    text-align: right !important;
+  }
+}
+
+@media (max-width: 390px) {
+  .pp-mobile-priority-paydays {
+    grid-template-columns: 1fr !important;
+  }
+
+  .pp-mobile-priority-payday {
+    grid-template-columns: 48px minmax(0, 1fr) !important;
+  }
+}/* =========================================================
+   EDITABLE NEED + DUE DATE IN OPEN AND CLOSED MOBILE CARDS
+   Paste this at the VERY BOTTOM of PaydayPlanner.css
+   ========================================================= */
+
+@media (max-width: 767px) {
+  .pp-mobile-priority-card-head {
+    display: grid !important;
+    grid-template-columns: auto minmax(0, 1fr) auto auto !important;
+    grid-template-areas:
+      "icon title toggle menu"
+      "date date need need" !important;
+    gap: 9px 10px !important;
+    align-items: center !important;
+    padding: 14px !important;
+  }
+
+  .pp-mobile-priority-card-head > .pp-bucket-icon {
+    grid-area: icon !important;
+  }
+
+  .pp-mobile-priority-heading-copy {
+    grid-area: title !important;
+    min-width: 0 !important;
+  }
+
+  .pp-mobile-priority-heading-copy > strong {
+    overflow: hidden !important;
+    color: #15221b !important;
+    font-size: 19px !important;
+    line-height: 1.05 !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+  }
+
+  .pp-mobile-priority-heading-copy > small {
+    color: #6d7973 !important;
+    font-size: 12px !important;
+  }
+
+  .pp-mobile-priority-toggle {
+    grid-area: toggle !important;
+    display: inline-flex !important;
+    gap: 5px !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: auto !important;
+    min-width: 58px !important;
+    height: 34px !important;
+    padding: 0 8px !important;
+    color: #155a38 !important;
+    background: #f4f9f6 !important;
+    border: 1px solid #d4e3da !important;
+    border-radius: 10px !important;
+  }
+
+  .pp-mobile-priority-compact-percent {
+    font-size: 14px !important;
+    font-weight: 850 !important;
+  }
+
+  .pp-mobile-priority-menu {
+    position: static !important;
+    grid-area: menu !important;
+    width: 34px !important;
+    height: 34px !important;
+  }
+
+  .pp-mobile-priority-quick-field {
+    display: grid !important;
+    grid-template-columns: auto minmax(0, 1fr) !important;
+    gap: 7px !important;
+    align-items: center !important;
+    min-width: 0 !important;
+  }
+
+  .pp-mobile-priority-quick-field > span {
+    color: #6d7973 !important;
+    font-size: 10px !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.04em !important;
+    text-transform: uppercase !important;
+  }
+
+  .pp-mobile-priority-quick-date {
+    grid-area: date !important;
+  }
+
+  .pp-mobile-priority-quick-need {
+    grid-area: need !important;
+  }
+
+  .pp-mobile-priority-quick-date .pp-formatted-date {
+    width: 100% !important;
+    min-width: 0 !important;
+    height: 36px !important;
+    padding: 0 10px !important;
+    border: 1px solid #c9d9cf !important;
+    border-radius: 10px !important;
+    background: #fbfdfb !important;
+  }
+
+  .pp-mobile-priority-quick-date .pp-formatted-date span {
+    overflow: hidden !important;
+    font-size: 13px !important;
+    font-weight: 750 !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+  }
+
+  .pp-mobile-priority-quick-date .pp-formatted-date svg {
+    width: 15px !important;
+    height: 15px !important;
+  }
+
+  .pp-mobile-priority-need-input {
+    width: 100% !important;
+    min-width: 0 !important;
+    height: 36px !important;
+    border: 1px solid #c9d9cf !important;
+    border-radius: 10px !important;
+    background: #fbfdfb !important;
+  }
+
+  .pp-mobile-priority-need-input input {
+    width: 100% !important;
+    min-width: 0 !important;
+    height: 34px !important;
+    padding: 0 9px 0 2px !important;
+    font-size: 14px !important;
+    font-weight: 800 !important;
+    text-align: right !important;
+  }
+
+  .pp-mobile-priority-need-input > span {
+    padding-left: 9px !important;
+    font-size: 12px !important;
+  }
+
+  .pp-mobile-priority-card-body {
+    padding: 0 14px 14px !important;
+  }
+
+  .pp-mobile-priority-progress-block {
+    padding-top: 12px !important;
+  }
+
+  .pp-mobile-priority-stats-two {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .pp-mobile-priority-stats-two > span {
+    padding: 10px !important;
+  }
+
+  .pp-mobile-priority-stats-two > span:first-child {
+    padding-left: 0 !important;
+  }
+}
+
+@media (max-width: 430px) {
+  .pp-mobile-priority-card-head {
+    grid-template-columns: auto minmax(0, 1fr) auto !important;
+    grid-template-areas:
+      "icon title menu"
+      "date date toggle"
+      "need need need" !important;
+  }
+
+  .pp-mobile-priority-toggle {
+    justify-self: end !important;
+  }
+}
