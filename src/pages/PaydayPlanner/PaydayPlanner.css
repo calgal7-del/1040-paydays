@@ -2262,3 +2262,599 @@
   line-height: 1.2;
   white-space: normal;
 }
+
+/* =========================================================
+   REQUESTED PLANNER PRESENTATION REFINEMENTS
+   ========================================================= */
+
+.pp-site-page {
+  height: 100vh;
+  height: 100dvh;
+  min-height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background: #fff;
+}
+
+.pp-site-page .pp-page {
+  height: auto;
+  min-height: 0;
+  overflow: visible;
+}
+
+.pp-site-page .pp-main.learn-index-container {
+  width: min(1500px, calc(100vw - 48px)) !important;
+  margin-inline: auto;
+}
+
+.pp-formatted-date {
+  position: relative;
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  min-width: 0;
+  color: #65786d;
+  cursor: pointer;
+}
+
+.pp-formatted-date > span {
+  overflow: hidden;
+  font-size: 11px;
+  font-weight: 650;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pp-formatted-date > input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.pp-priority-due-wrap {
+  width: 100%;
+  margin: 0;
+}
+
+.pp-priority-due-control {
+  width: 100%;
+  min-height: 38px;
+  justify-content: center;
+  padding: 0 8px;
+  color: var(--forest);
+  background: #fff;
+  border: 1px solid #bfd1c5;
+  border-radius: 8px;
+}
+
+.pp-mobile-priority-list {
+  display: none;
+}
+
+.pp-payday-section,
+.pp-priority-section {
+  margin-top: 24px;
+}
+
+.pp-desktop-paydays {
+  gap: 12px;
+  align-items: stretch;
+}
+
+.pp-payday-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.pp-payday-card-head {
+  padding: 12px 14px;
+}
+
+.pp-payday-card-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 0 14px 14px;
+}
+
+.pp-income-block {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.pp-income-row {
+  padding: 12px;
+}
+
+.pp-add-source-bottom {
+  min-height: 36px;
+  display: inline-flex;
+  gap: 5px;
+  align-items: center;
+  align-self: flex-end;
+  justify-content: center;
+  margin-top: auto;
+  padding: 8px 2px 0;
+  color: var(--forest-2);
+  background: transparent;
+  border: 0;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.pp-add-source-bottom svg {
+  width: 20px;
+  height: 20px;
+}
+
+.pp-priority-section .pp-table-shell table {
+  min-width: 0 !important;
+  table-layout: fixed !important;
+}
+
+.pp-priority-section .pp-priority-table.has-1-paydays {
+  width: 781px !important;
+}
+
+.pp-priority-section .pp-priority-table.has-2-paydays {
+  width: 913px !important;
+}
+
+.pp-priority-section .pp-priority-table.has-4-paydays {
+  width: 1177px !important;
+}
+
+.pp-priority-section .pp-table-shell th,
+.pp-priority-section .pp-table-shell td {
+  padding: 12px !important;
+}
+
+.pp-priority-section .pp-col-priority {
+  width: 190px;
+}
+
+.pp-priority-section .pp-col-due {
+  width: 118px;
+}
+
+.pp-priority-section .pp-col-total {
+  width: 132px;
+}
+
+.pp-priority-section .pp-col-allocation {
+  width: 132px;
+}
+
+.pp-priority-section .pp-col-funded {
+  width: 155px;
+}
+
+.pp-priority-section .pp-col-actions {
+  width: 54px;
+}
+
+.pp-priority-section .pp-priority-total-input,
+.pp-priority-section .pp-allocation-field .pp-money-input,
+.pp-edit-grid .pp-money-input,
+.pp-dialog-form .pp-money-input {
+  width: 110px !important;
+  min-width: 100px !important;
+  overflow: visible;
+}
+
+.pp-priority-section .pp-money-input input,
+.pp-edit-grid .pp-money-input input,
+.pp-dialog-form .pp-money-input input {
+  min-width: 0;
+  text-overflow: clip;
+}
+
+.pp-priority-section .pp-priority-identity > span:last-child {
+  display: grid !important;
+}
+
+.pp-priority-section .pp-priority-identity small {
+  display: none !important;
+}
+
+.pp-priority-section .pp-priority-identity .pp-bucket-icon {
+  width: 36px;
+  height: 36px;
+  flex: 0 0 36px;
+}
+
+.pp-priority-section .pp-priority-identity .pp-bucket-icon svg,
+.pp-metric-icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+@media (min-width: 1181px) {
+  .pp-desktop-paydays {
+    align-items: stretch;
+  }
+
+  .pp-main:has(.pp-desktop-paydays > .pp-payday-card:only-child)
+    .pp-table-shell table,
+  .pp-main:has(.pp-desktop-paydays > .pp-payday-card:nth-child(2):last-child)
+    .pp-table-shell table {
+    min-width: 0 !important;
+    table-layout: fixed !important;
+  }
+
+  .pp-main:has(.pp-desktop-paydays > .pp-payday-card:only-child)
+    .pp-allocation-field .pp-money-input,
+  .pp-main:has(.pp-desktop-paydays > .pp-payday-card:nth-child(2):last-child)
+    .pp-allocation-field .pp-money-input {
+    width: 110px !important;
+    min-width: 100px !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .pp-site-page .pp-main.learn-index-container {
+    width: min(600px, calc(100vw - 22px)) !important;
+  }
+
+  .pp-payday-section,
+  .pp-priority-section {
+    margin-top: 24px;
+  }
+
+  .pp-mobile-paydays {
+    gap: 10px;
+  }
+
+  .pp-payday-card-head,
+  .pp-payday-card-body,
+  .pp-income-row {
+    padding: 12px;
+  }
+
+  .pp-payday-card {
+    border-radius: 12px;
+  }
+
+  .pp-income-date {
+    min-height: 24px;
+  }
+
+  .pp-add-source-bottom {
+    margin-top: 8px;
+  }
+
+  .pp-assigned-block {
+    display: none !important;
+  }
+
+  .pp-priority-section {
+    padding-bottom: 24px;
+  }
+
+  .pp-priority-section .pp-section-head {
+    position: static;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    min-height: 0;
+    margin-bottom: 12px;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    backdrop-filter: none;
+  }
+
+  .pp-priority-section .pp-section-head > div {
+    display: block !important;
+  }
+
+  .pp-priority-section .pp-priority-header-actions {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .pp-priority-section .pp-outline-button,
+  .pp-priority-section .pp-auto-distribute-button {
+    width: 100%;
+    min-height: 42px;
+    padding-inline: 10px;
+    font-size: 11px;
+  }
+
+  .pp-mobile-priority-list {
+    display: grid;
+    gap: 10px;
+  }
+
+  .pp-mobile-priority-card {
+    padding: 14px;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    box-shadow: 0 5px 18px rgb(16 45 28 / 5%);
+  }
+
+  .pp-mobile-priority-heading {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 40px minmax(0, 1fr) 24px;
+    gap: 10px;
+    align-items: center;
+    padding: 0;
+    color: var(--ink);
+    text-align: left;
+    background: transparent;
+    border: 0;
+  }
+
+  .pp-mobile-priority-heading .pp-bucket-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .pp-mobile-priority-heading > span:nth-child(2) {
+    min-width: 0;
+    display: grid;
+    gap: 3px;
+  }
+
+  .pp-mobile-priority-heading strong {
+    overflow: hidden;
+    font-size: 15px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .pp-mobile-priority-heading small {
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  .pp-mobile-priority-date {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 12px;
+  }
+
+  .pp-mobile-priority-date > span {
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .pp-mobile-priority-date .pp-formatted-date {
+    width: 156px;
+    min-height: 44px;
+    justify-content: center;
+    padding: 0 12px;
+    color: var(--forest);
+    background: #f8fbf9;
+    border: 1px solid #b9cbbf;
+    border-radius: 8px;
+  }
+
+  .pp-mobile-priority-date .pp-formatted-date > span {
+    font-size: 14px;
+  }
+
+  .pp-mobile-priority-date .pp-formatted-date > input {
+    z-index: 2;
+  }
+
+  .pp-mobile-priority-totals {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin: 12px 0 10px;
+    padding: 10px 0;
+    border-top: 1px solid #e8eeea;
+    border-bottom: 1px solid #e8eeea;
+  }
+
+  .pp-mobile-priority-totals span {
+    display: grid;
+    gap: 3px;
+    color: var(--muted);
+    font-size: 12px;
+  }
+
+  .pp-mobile-priority-totals span + span {
+    padding-left: 14px;
+    border-left: 1px solid #e8eeea;
+  }
+
+  .pp-mobile-priority-totals strong {
+    color: var(--ink);
+    font-size: 16px;
+  }
+
+  .pp-mobile-priority-card .pp-progress strong {
+    font-size: 13px;
+  }
+
+  .pp-mobile-priority-empty {
+    margin: 0;
+    padding: 18px;
+    color: var(--muted);
+    background: #fff;
+    border: 1px dashed #b9c9bf;
+    border-radius: 12px;
+    font-size: 12px;
+    text-align: center;
+  }
+
+  .pp-privacy-note {
+    margin-top: 12px;
+  }
+
+  /* Mobile controls and type must be touch-friendly and readable. */
+  .pp-title h1 {
+    font-size: 26px;
+  }
+
+  .pp-title p {
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  .pp-mobile-bar {
+    padding: 10px 14px;
+  }
+
+  .pp-mobile-bar span {
+    font-size: 11px;
+  }
+
+  .pp-mobile-bar strong {
+    font-size: 18px;
+  }
+
+  .pp-mobile-bar button {
+    min-height: 42px;
+    font-size: 14px;
+  }
+
+  .pp-mobile-storage-controls {
+    display: grid;
+    grid-template-columns: minmax(145px, 1.35fr) minmax(78px, .65fr) auto;
+    gap: 8px;
+    align-items: end;
+    padding: 10px 14px 12px;
+    font-size: 12px;
+  }
+
+  .pp-mobile-storage-controls label {
+    display: grid;
+    gap: 5px;
+    align-items: stretch;
+  }
+
+  .pp-mobile-storage-controls label > span {
+    font-size: 12px;
+  }
+
+  .pp-mobile-storage-controls select {
+    width: 100%;
+    min-height: 42px;
+    padding: 0 30px 0 10px;
+    font-size: 14px;
+  }
+
+  .pp-mobile-storage-controls button {
+    min-height: 42px;
+    padding: 0 6px;
+    font-size: 12px;
+  }
+
+  .pp-mobile-storage-controls p {
+    grid-column: 1 / -1;
+    font-size: 12px;
+  }
+
+  .pp-metric-card h2,
+  .pp-cycle-card span {
+    font-size: 13px;
+  }
+
+  .pp-metric-card strong {
+    font-size: 22px;
+  }
+
+  .pp-cycle-card strong {
+    font-size: 24px;
+  }
+
+  .pp-cycle-card small,
+  .pp-eyebrow {
+    font-size: 11px;
+  }
+
+  .pp-section-head h2 {
+    font-size: 27px;
+  }
+
+  .pp-payday-card-head {
+    min-height: 66px;
+  }
+
+  .pp-payday-title strong {
+    font-size: 16px;
+  }
+
+  .pp-payday-title small,
+  .pp-status {
+    font-size: 12px;
+  }
+
+  .pp-collapsed-summary {
+    font-size: 12px;
+  }
+
+  .pp-collapsed-summary strong,
+  .pp-payday-totals strong {
+    font-size: 14px;
+  }
+
+  .pp-payday-totals span {
+    font-size: 12px;
+  }
+
+  .pp-subheading h4,
+  .pp-assigned-block h4 {
+    font-size: 12px;
+  }
+
+  .pp-income-row > input {
+    font-size: 15px;
+  }
+
+  .pp-income-date .pp-formatted-date > span,
+  .pp-income-date > span {
+    font-size: 13px;
+  }
+
+  .pp-add-source-bottom {
+    min-height: 42px;
+    font-size: 14px;
+  }
+
+  .pp-mobile-priority-heading strong {
+    font-size: 17px;
+  }
+
+  .pp-mobile-priority-card .pp-progress small,
+  .pp-mobile-priority-empty,
+  .pp-privacy-note {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .pp-mobile-priority-date {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 6px;
+    align-items: stretch;
+  }
+
+  .pp-mobile-priority-date .pp-formatted-date {
+    width: 100%;
+    justify-content: flex-start;
+  }
+}
+
+@media print {
+  .pp-site-page .learn-index-header,
+  .pp-site-page .reference-home-footer {
+    display: none !important;
+  }
+}

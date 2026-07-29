@@ -7,6 +7,8 @@ import {
   ChevronUp,
   Download,
   Heart,
+  Mail,
+  Menu,
   MoreHorizontal,
   Plus,
   RefreshCw,
@@ -148,8 +150,6 @@ const INITIAL_DATA = {
   ],
 };
 
-const DEFAULT_PRIORITY_IDS = new Set(INITIAL_DATA.priorities.map((priority) => priority.id));
-
 function createEmptyPlannerData(current = INITIAL_DATA) {
   return {
     ...INITIAL_DATA,
@@ -161,17 +161,7 @@ function createEmptyPlannerData(current = INITIAL_DATA) {
       status: "Ready",
       incomes: [],
     })),
-    priorities: INITIAL_DATA.priorities.map((priority) => ({
-      ...priority,
-      totalNeededMinor: 0,
-      due: "",
-      autoPaydays: Object.fromEntries(
-        INITIAL_DATA.paydays.map((payday) => [payday.id, false]),
-      ),
-      allocations: Object.fromEntries(
-        INITIAL_DATA.paydays.map((payday) => [payday.id, 0]),
-      ),
-    })),
+    priorities: [],
   };
 }
 
@@ -189,14 +179,41 @@ const shortMoney = (minor, currency = "USD") =>
     maximumFractionDigits: 0,
   }).format((minor || 0) / 100);
 
-const readableDate = (iso) => {
+export const formatPaydayDate = (iso) => {
   if (!iso) return "Date not set";
   return new Intl.DateTimeFormat("en-CA", {
     month: "short",
     day: "numeric",
-    year: "numeric",
   }).format(new Date(`${iso}T12:00:00`));
 };
+
+function FormattedDateField({
+  value,
+  onChange,
+  ariaLabel,
+  className = "",
+  emptyLabel = "Set date",
+}) {
+  return (
+    <label className={`pp-formatted-date ${className}`}>
+      <CalendarDays size={14} aria-hidden="true" />
+      <span>{value ? formatPaydayDate(value) : emptyLabel}</span>
+      <input
+        aria-label={ariaLabel}
+        type="date"
+        value={value || ""}
+        onChange={onChange}
+        onClick={(event) => {
+          try {
+            event.currentTarget.showPicker?.();
+          } catch {
+            // The native date control still opens normally where showPicker is unavailable.
+          }
+        }}
+      />
+    </label>
+  );
+}
 
 const id = (prefix) =>
   `${prefix}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`;
@@ -447,6 +464,121 @@ function BucketIcon({ bucket, size = 20 }) {
   );
 }
 
+function PlannerSiteHeader({
+  navigateTo,
+  mobileMenuOpen,
+  setMobileMenuOpen,
+}) {
+  const goTo = (event, path) => {
+    if (!navigateTo) return;
+    event.preventDefault();
+    navigateTo(path);
+  };
+
+  const navItems = [
+    ["Home", "/"],
+    ["Learn", "/learn"],
+    ["Calculator", "/calculator"],
+    ["Payday Planner", "/payday-planner"],
+    ["About", "/about"],
+  ];
+
+  return (
+    <header className="learn-index-header">
+      <div className="learn-index-container learn-index-header-inner">
+        <a
+          className="learn-index-brand"
+          href="/"
+          aria-label="1040 Paydays home"
+          onClick={(event) => goTo(event, "/")}
+        >
+          <strong>1040</strong>
+          <span>PAYDAYS</span>
+        </a>
+
+        <nav className="learn-index-nav" aria-label="Primary navigation">
+          {navItems.map(([label, path]) => (
+            <button
+              className={path === "/payday-planner" ? "active" : ""}
+              type="button"
+              key={path}
+              onClick={() => navigateTo?.(path)}
+            >
+              {label}
+            </button>
+          ))}
+        </nav>
+
+        <div className="learn-index-actions">
+          <a className="learn-index-subscribe" href="/#home-newsletter">
+            <Mail size={16} aria-hidden="true" />
+            Subscribe
+          </a>
+          <button
+            className="learn-index-menu-button"
+            type="button"
+            aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+            aria-expanded={mobileMenuOpen}
+            aria-controls="payday-planner-mobile-navigation"
+            onClick={() => setMobileMenuOpen?.((open) => !open)}
+          >
+            {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+            <span>Menu</span>
+          </button>
+          {mobileMenuOpen && (
+            <nav
+              className="learn-index-mobile-nav"
+              id="payday-planner-mobile-navigation"
+              aria-label="Mobile navigation"
+            >
+              {navItems.map(([label, path]) => (
+                <button type="button" key={path} onClick={() => navigateTo?.(path)}>
+                  {label}
+                </button>
+              ))}
+            </nav>
+          )}
+        </div>
+      </div>
+    </header>
+  );
+}
+
+function PlannerSiteFooter() {
+  const links = [
+    ["Home", "/"],
+    ["Learn", "/learn"],
+    ["Calculator", "/calculator"],
+    ["Payday Planner", "/payday-planner"],
+    ["About", "/about"],
+    ["Privacy Policy", "/privacy-policy"],
+    ["Terms of Use", "/terms-of-use"],
+    ["Contact", "/contact"],
+  ];
+
+  return (
+    <footer className="reference-home-footer">
+      <div className="reference-home-footer-inner">
+        <p className="reference-home-copyright">© 2026 1040 Paydays. All rights reserved.</p>
+        <p>
+          The content, design, illustrations, branding, and original editorial articles on this website are protected by copyright and may not be reproduced or distributed without written permission.
+        </p>
+        <p>
+          1040 Paydays is for educational purposes only and does not provide financial, tax, legal, or investment advice.
+        </p>
+        <nav className="reference-home-footer-nav" aria-label="Legal and contact navigation">
+          {links.map(([label, href], index) => (
+            <React.Fragment key={href}>
+              {index > 0 && <span aria-hidden="true">·</span>}
+              <a href={href}>{label}</a>
+            </React.Fragment>
+          ))}
+        </nav>
+      </div>
+    </footer>
+  );
+}
+
 function MetricStrip({ totals, currency }) {
   return (
     <section className="pp-metric-strip" aria-label="Payday intention summary">
@@ -491,9 +623,6 @@ function IncomeRows({
     <div className="pp-income-block">
       <div className="pp-subheading">
         <h4>Income Sources</h4>
-        <button type="button" onClick={() => openAddSource(payday.id)}>
-          <Plus size={15} aria-hidden="true" /> Add Source
-        </button>
       </div>
       <div className="pp-income-list">
         {payday.incomes.map((income) => (
@@ -507,20 +636,16 @@ function IncomeRows({
                 updateIncome(payday.id, income.id, { name: event.target.value })
               }
             />
-            <label className="pp-income-date">
-              <span className="sr-only">{income.name} received date</span>
-              <CalendarDays size={14} aria-hidden="true" />
-              <input
-                aria-label={`${income.name} received date for ${payday.label}`}
-                type="date"
-                value={income.receivedDate || payday.date}
-                onChange={(event) =>
-                  updateIncome(payday.id, income.id, {
-                    receivedDate: event.target.value,
-                  })
-                }
-              />
-            </label>
+            <FormattedDateField
+              className="pp-income-date"
+              ariaLabel={`${income.name} received date for ${payday.label}`}
+              value={income.receivedDate || payday.date}
+              onChange={(event) =>
+                updateIncome(payday.id, income.id, {
+                  receivedDate: event.target.value,
+                })
+              }
+            />
             <MoneyField
               currency={currency}
               ariaLabel={`${income.name} amount for ${payday.label}`}
@@ -541,6 +666,13 @@ function IncomeRows({
           </div>
         ))}
       </div>
+      <button
+        className="pp-add-source-bottom"
+        type="button"
+        onClick={() => openAddSource(payday.id)}
+      >
+        <Plus size={15} aria-hidden="true" /> Add Source
+      </button>
     </div>
   );
 }
@@ -681,7 +813,7 @@ function PaydayCard({
         <span className="pp-payday-number">{index + 1}</span>
         <span className="pp-payday-title">
           <strong>{payday.label}</strong>
-          <small>{readableDate(payday.date)}</small>
+          <small>{formatPaydayDate(payday.date)}</small>
         </span>
         <span className={`pp-status is-${payday.status.toLowerCase().replaceAll(" ", "-")}`}>
           {payday.status}
@@ -713,14 +845,6 @@ function PaydayCard({
             deleteIncome={deleteIncome}
             openAddSource={openAddSource}
           />
-          {!desktop && (
-            <AssignedPriorities
-              data={data}
-              payday={payday}
-              updateAllocation={updateAllocation}
-              openPriority={openPriority}
-            />
-          )}
         </div>
       )}
     </article>
@@ -772,9 +896,71 @@ function PriorityMatrix({
         </div>
       </div>
 
+      <div className="pp-mobile-priority-list">
+        {data.priorities.length ? (
+          data.priorities.map((priority) => (
+            <article className="pp-mobile-priority-card" key={priority.id}>
+              <button
+                className="pp-mobile-priority-heading"
+                type="button"
+                onClick={() => openPriority(priority.id)}
+              >
+                <BucketIcon bucket={priority.bucket} size={22} />
+                <span>
+                  <strong>{priority.name}</strong>
+                  <small>
+                    {priority.frequency || "No frequency"}
+                  </small>
+                </span>
+                <MoreHorizontal size={20} aria-hidden="true" />
+              </button>
+              <div className="pp-mobile-priority-date">
+                <span>Due date</span>
+                <FormattedDateField
+                  ariaLabel={`${priority.name} due date, optional`}
+                  value={
+                    /^\d{4}-\d{2}-\d{2}$/.test(priority.due || "")
+                      ? priority.due
+                      : ""
+                  }
+                  onChange={(event) =>
+                    updatePriorityInline(priority.id, { due: event.target.value })
+                  }
+                />
+              </div>
+              <div className="pp-mobile-priority-totals">
+                <span>
+                  Total needed
+                  <strong>{money(priority.totalNeededMinor, data.currency)}</strong>
+                </span>
+                <span>
+                  Funded
+                  <strong>{money(priorityFunded(priority), data.currency)}</strong>
+                </span>
+              </div>
+              <Progress priority={priority} currency={data.currency} />
+            </article>
+          ))
+        ) : (
+          <p className="pp-mobile-priority-empty">
+            No priorities yet. Add one when you are ready.
+          </p>
+        )}
+      </div>
+
       <div className="pp-table-shell">
-        <table>
+        <table className={`pp-priority-table has-${visiblePaydays.length}-paydays`}>
           <caption className="sr-only">Priority allocations by payday</caption>
+          <colgroup>
+            <col className="pp-col-priority" />
+            <col className="pp-col-due" />
+            <col className="pp-col-total" />
+            {visiblePaydays.map((payday) => (
+              <col className="pp-col-allocation" key={payday.id} />
+            ))}
+            <col className="pp-col-funded" />
+            <col className="pp-col-actions" />
+          </colgroup>
           <thead>
             <tr>
               <th>Priority</th>
@@ -783,6 +969,7 @@ function PriorityMatrix({
               {visiblePaydays.map((payday, index) => (
                 <th className={`is-p${index + 1}`} key={payday.id}>
                   <span>P{index + 1}</span>
+                  <small>{formatPaydayDate(payday.date)}</small>
                 </th>
               ))}
               <th>Funded</th>
@@ -793,39 +980,27 @@ function PriorityMatrix({
             {data.priorities.map((priority) => (
               <tr key={priority.id}>
                 <td>
-                   <button
-  type="button"
-  className="pp-priority-identity"
-  onClick={() => openPriority(priority.id)}
->
-  <BucketIcon bucket={priority.bucket} size={18} />
-
-  <span>
-    <strong>{priority.name}</strong>
-    <small>{BUCKETS[priority.bucket].name}</small>
-  </span>
-</button>
-                  
+                  <button
+                    type="button"
+                    className="pp-priority-identity"
+                    onClick={() => openPriority(priority.id)}
+                  >
+                    <BucketIcon bucket={priority.bucket} size={22} />
+                    <span>
+                      <strong>{priority.name}</strong>
+                    </span>
+                  </button>
                 </td>
                 <td>
                   <div className="pp-priority-due-wrap">
-                    <input
-                      className={`pp-priority-due-input ${
-                        priority.due ? "has-value" : ""
-                      }`}
-                      type="date"
-                      aria-label={`${priority.name} due date, optional`}
+                    <FormattedDateField
+                      className="pp-priority-due-control"
+                      ariaLabel={`${priority.name} due date, optional`}
                       value={
                         /^\d{4}-\d{2}-\d{2}$/.test(priority.due || "")
                           ? priority.due
                           : ""
                       }
-                      onFocus={(event) => {
-                        event.currentTarget.showPicker?.();
-                      }}
-                      onClick={(event) => {
-                        event.currentTarget.showPicker?.();
-                      }}
                       onChange={(event) =>
                         updatePriorityInline(priority.id, { due: event.target.value })
                       }
@@ -984,7 +1159,7 @@ function PriorityDetail({
         <h3>Payday breakdown</h3>
         {data.paydays.map((payday) => (
           <div className="pp-detail-payday" key={payday.id}>
-            <span><strong>{payday.label}</strong><small>{readableDate(payday.date)}</small></span>
+            <span><strong>{payday.label}</strong><small>{formatPaydayDate(payday.date)}</small></span>
             <AllocationField
               priority={priority}
               payday={payday}
@@ -1020,7 +1195,11 @@ function PriorityDetail({
   );
 }
 
-export default function PaydayPlanner() {
+export default function PaydayPlanner({
+  navigateTo,
+  mobileMenuOpen = false,
+  setMobileMenuOpen,
+}) {
   const [data, setData] = useState(INITIAL_DATA);
   const [loaded, setLoaded] = useState(false);
   const [mobileExpanded, setMobileExpanded] = useState("p1");
@@ -1303,7 +1482,7 @@ export default function PaydayPlanner() {
   const eraseAllData = () => {
     if (
       !window.confirm(
-        "Erase all planner data? All amounts will be set to 0, payday income will be cleared, and custom priorities will be removed.",
+        "Erase all planner data? Payday income and every priority will be removed.",
       )
     ) {
       return;
@@ -1385,7 +1564,13 @@ export default function PaydayPlanner() {
       : null;
 
   return (
-    <div className="pp-page">
+    <div className="pp-site-page">
+      <PlannerSiteHeader
+        navigateTo={navigateTo}
+        mobileMenuOpen={mobileMenuOpen}
+        setMobileMenuOpen={setMobileMenuOpen}
+      />
+      <div className="pp-page">
       <header className="pp-app-header">
         <div className="pp-title">
           <h1>Payday Planner</h1>
@@ -1472,6 +1657,18 @@ export default function PaydayPlanner() {
         </button>
       </div>
       <div className="pp-mobile-storage-controls">
+        <label className="pp-mobile-frequency">
+          <span>Pay frequency</span>
+          <select
+            aria-label="Pay frequency on mobile"
+            value={data.frequency}
+            onChange={(event) => changeFrequency(event.target.value)}
+          >
+            <option value="weekly">Weekly</option>
+            <option value="biweekly">Biweekly</option>
+            <option value="monthly">Monthly</option>
+          </select>
+        </label>
         <label className="pp-mobile-currency">
           <span>Currency</span>
           <select
@@ -1492,7 +1689,7 @@ export default function PaydayPlanner() {
         <p>Data is saved in this browser. Erase after using if on a shared computer.</p>
       </div>
 
-      <main className="pp-main">
+      <main className="pp-main learn-index-container">
         <MetricStrip totals={totals} currency={data.currency} />
 
         <section className="pp-payday-section" aria-labelledby="paydays-title">
@@ -1599,6 +1796,8 @@ export default function PaydayPlanner() {
           onClear={clearPayday}
         />
       )}
+      </div>
+      <PlannerSiteFooter />
     </div>
   );
 }
