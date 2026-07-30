@@ -1,12 +1,18 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
+  ArrowLeft,
+  BookOpen,
   BriefcaseBusiness,
+  Calculator,
   CalendarDays,
+  CalendarRange,
   Check,
   ChevronDown,
   ChevronUp,
   Download,
   Heart,
+  Home,
+  Info,
   Mail,
   Menu,
   MoreHorizontal,
@@ -19,11 +25,11 @@ import {
   Target,
   Trash2,
   TrendingUp,
-  UserRound,
   X,
 } from "lucide-react";
 import { splitMinorUnitsEvenly } from "../../utils/plannerCalculations.mjs";
 import { createId, createPriority } from "../../utils/plannerDefaults.mjs";
+import { principleForPriority } from "../../config/priorityPrincipleMap.mjs";
 import "./PaydayPlanner.css";
 import MobilePriorityCard from "../../components/MobilePriorityCard";
 
@@ -102,7 +108,7 @@ const INITIAL_DATA = {
     {
       id: "mortgage",
       name: "Mortgage",
-      bucket: "protect",
+      bucket: "live",
       due: "2026-08-10",
       frequency: "Monthly",
       totalNeededMinor: 120000,
@@ -132,7 +138,7 @@ const INITIAL_DATA = {
     {
       id: "vacation",
       name: "Vacation",
-      bucket: "future",
+      bucket: "matters",
       due: "",
       frequency: "Flexible",
       totalNeededMinor: 150000,
@@ -578,38 +584,48 @@ function PlannerSiteHeader({
   );
 }
 
-function PlannerSiteFooter() {
-  const links = [
-    ["Home", "/"],
-    ["Learn", "/learn"],
-    ["Calculator", "/calculator"],
-    ["Payday Planner", "/payday-planner"],
-    ["About", "/about"],
-    ["Privacy Policy", "/privacy-policy"],
-    ["Terms of Use", "/terms-of-use"],
-    ["Contact", "/contact"],
+function MobilePlannerHeader({ navigateTo }) {
+  const goHome = () => navigateTo?.("/");
+
+  return (
+    <header className="pp-mobile-shell-header">
+      <button type="button" aria-label="Back to home" onClick={goHome}>
+        <ArrowLeft aria-hidden="true" />
+      </button>
+      <h1>1040 Payday Planner</h1>
+      <span aria-hidden="true" />
+    </header>
+  );
+}
+
+function MobilePlannerNavigation({ navigateTo }) {
+  const items = [
+    { label: "Home", path: "/", Icon: Home },
+    { label: "Learn", path: "/learn", Icon: BookOpen },
+    { label: "Calculator", path: "/calculator", Icon: Calculator },
+    { label: "Planner", path: "/payday-planner", Icon: CalendarRange },
+    { label: "About", path: "/about", Icon: Info },
   ];
 
   return (
-    <footer className="reference-home-footer">
-      <div className="reference-home-footer-inner">
-        <p className="reference-home-copyright">© 2026 1040 Paydays. All rights reserved.</p>
-        <p>
-          The content, design, illustrations, branding, and original editorial articles on this website are protected by copyright and may not be reproduced or distributed without written permission.
-        </p>
-        <p>
-          1040 Paydays is for educational purposes only and does not provide financial, tax, legal, or investment advice.
-        </p>
-        <nav className="reference-home-footer-nav" aria-label="Legal and contact navigation">
-          {links.map(([label, href], index) => (
-            <React.Fragment key={href}>
-              {index > 0 && <span aria-hidden="true">·</span>}
-              <a href={href}>{label}</a>
-            </React.Fragment>
-          ))}
-        </nav>
-      </div>
-    </footer>
+    <nav className="pp-mobile-bottom-nav" aria-label="Planner navigation">
+      {items.map(({ label, path, Icon }) => (
+        <a
+          className={path === "/payday-planner" ? "is-active" : ""}
+          href={path}
+          key={path}
+          aria-current={path === "/payday-planner" ? "page" : undefined}
+          onClick={(event) => {
+            if (!navigateTo) return;
+            event.preventDefault();
+            navigateTo(path);
+          }}
+        >
+          <Icon aria-hidden="true" />
+          <span>{label}</span>
+        </a>
+      ))}
+    </nav>
   );
 }
 
@@ -868,6 +884,7 @@ function PaydayCard({
       {!open && (
         <div className="pp-collapsed-summary">
           <span>Income <strong>{money(income, data.currency)}</strong></span>
+          <span>Assigned <strong>{money(assigned, data.currency)}</strong></span>
           <span className={remaining < 0 ? "is-negative" : ""}>
             Remaining <strong>{money(remaining, data.currency)}</strong>
           </span>
@@ -940,7 +957,10 @@ function PriorityMatrix({
         <div>
           <span className="pp-eyebrow">Your plan</span>
           <h2 id="priorities-title">Priorities</h2>
-          <span className="pp-mobile-priorities-title">Your Priorities</span>
+          <span className="pp-mobile-priorities-title">
+            <Target aria-hidden="true" />
+            Plan This Payday
+          </span>
         </div>
 
         <div className="pp-priority-header-actions">
@@ -1244,6 +1264,7 @@ export default function PaydayPlanner({
           currency: CURRENCIES[parsed.currency] ? parsed.currency : "USD",
           priorities: (parsed.priorities || INITIAL_DATA.priorities).map((priority) => ({
             ...priority,
+            bucket: principleForPriority(priority.name, priority.bucket),
             due: /^\d{4}-\d{2}-\d{2}$/.test(priority.due || "") ? priority.due : "",
             autoPaydays: priority.autoPaydays || Object.fromEntries(
               (parsed.paydays || INITIAL_DATA.paydays).map((payday) => [payday.id, false]),
@@ -1491,7 +1512,7 @@ export default function PaydayPlanner({
         {
           id: id("priority"),
           name,
-          bucket,
+          bucket: principleForPriority(name, bucket),
           due,
           frequency: "Flexible",
           totalNeededMinor,
@@ -1507,7 +1528,16 @@ export default function PaydayPlanner({
     setData((current) => ({
       ...current,
       priorities: current.priorities.map((priority) =>
-        priority.id === priorityId ? { ...priority, ...changes } : priority,
+        priority.id === priorityId
+          ? {
+              ...priority,
+              ...changes,
+              bucket: principleForPriority(
+                changes.name ?? priority.name,
+                changes.bucket ?? priority.bucket,
+              ),
+            }
+          : priority,
       ),
     }));
     setDialog(null);
@@ -1627,36 +1657,9 @@ export default function PaydayPlanner({
         mobileMenuOpen={mobileMenuOpen}
         setMobileMenuOpen={setMobileMenuOpen}
       />
+      <MobilePlannerHeader navigateTo={navigateTo} />
       <div className="pp-page">
-      <header className="pp-app-header">
-        <div className="pp-mobile-header-top">
-          <a
-            className="pp-mobile-logo"
-            href="/"
-            aria-label="1040 Paydays home"
-            onClick={(event) => {
-              if (!navigateTo) return;
-              event.preventDefault();
-              navigateTo("/");
-            }}
-          >
-            1040
-          </a>
-
-          <button
-            className="pp-mobile-profile-button"
-            type="button"
-            aria-label="Open profile"
-          >
-            <UserRound size={27} strokeWidth={2.1} aria-hidden="true" />
-          </button>
-        </div>
-
-        <div className="pp-title">
-          <h1>Payday Planner</h1>
-          <p>Plan every payday. Build your future.</p>
-        </div>
-
+      <header className="pp-app-header pp-app-header-controls-only">
         <div className="pp-header-controls" aria-label="Planner controls">
           <select
             className="pp-toolbar-select pp-frequency-select"
@@ -1799,6 +1802,7 @@ export default function PaydayPlanner({
               </span>
               <h2 id="paydays-title">Plan Your Paydays</h2>
               <span className="pp-mobile-cycle-title">
+                <CalendarDays aria-hidden="true" />
                 {visiblePaydays.length} {visiblePaydays.length === 1 ? "Payday" : "Paydays"} in This Cycle
               </span>
             </div>
@@ -1859,11 +1863,7 @@ export default function PaydayPlanner({
           openAddPriority={() => setDialog({ type: "add-priority" })}
         />
 
-
-        <footer className="pp-privacy-note">
-          <ShieldCheck aria-hidden="true" />
-          <span>Your planner is saved in this browser. We do not store or track your financial data.</span>
-        </footer>
+        <MobilePlannerNavigation navigateTo={navigateTo} />
       </main>
 
       {dialog?.type === "source" && (
@@ -1898,7 +1898,6 @@ export default function PaydayPlanner({
         />
       )}
       </div>
-      <PlannerSiteFooter />
     </div>
   );
 }

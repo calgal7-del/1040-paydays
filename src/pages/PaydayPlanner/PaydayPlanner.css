@@ -1,16 +1,16 @@
 .pp-page {
-  --forest: #0d3b23;
-  --forest-2: #17633b;
-  --sage: #f0fdf4;
+  --forest: #071b3d;
+  --forest-2: #165dca;
+  --sage: #f4f7fc;
   --ink: #1e293b;
   --muted: #64748b;
-  --line: #dce5df;
+  --line: #dce3ed;
   width: 100%;
   height: 100vh;
   height: 100dvh;
   min-height: 100%;
   overflow-y: auto;
-  background: #f7faf8;
+  background: #f7f6f2;
   color: var(--ink);
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
@@ -406,18 +406,18 @@
    ========================================================= */
 
 .pp-page {
-  --forest: #123c2c;
-  --forest-2: #1f6a49;
-  --sage: #f2f8f4;
-  --ink: #17231d;
-  --muted: #66736c;
-  --line: #e2e8e4;
-  --soft: #f7f9f8;
+  --forest: #071b3d;
+  --forest-2: #165dca;
+  --sage: #f4f7fc;
+  --ink: #1e293b;
+  --muted: #64748b;
+  --line: #dce3ed;
+  --soft: #f7f6f2;
   width: 100%;
   min-height: 100vh;
   height: 100dvh;
   overflow-y: auto;
-  background: #ffffff;
+  background: #f7f6f2;
   color: var(--ink);
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
@@ -4562,7 +4562,7 @@
     background: #f7f8f4;
   }
 
-  .pp-main.learn-index-container {
+  .pp-site-page .pp-main.learn-index-container {
     width: 100% !important;
     padding: 24px 16px 36px !important;
   }
@@ -4586,7 +4586,9 @@
   }
 
   .pp-mobile-cycle-title {
-    display: block;
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
     color: #111;
     font-size: 22px;
     font-weight: 800;
@@ -4687,12 +4689,22 @@
   }
 
   .pp-mobile-priorities-title {
-    display: block;
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
     color: #111;
     font-size: 22px;
     font-weight: 800;
     line-height: 1.2;
     letter-spacing: -.02em;
+  }
+
+  .pp-mobile-cycle-title svg,
+  .pp-mobile-priorities-title svg {
+    width: 22px;
+    height: 22px;
+    flex: 0 0 auto;
+    stroke-width: 2.25;
   }
 
   .pp-priority-header-actions {
@@ -5028,5 +5040,511 @@
   .pp-mobile-priority-payday .pp-money-input input {
     padding-right: 4px !important;
     font-size: 12px !important;
+  }
+}
+
+/* ===========================================================
+   1040 PAYDAYS MOBILE SHELL + FINAL BRAND POLISH
+   Keep this final so it safely replaces earlier prototype chrome.
+   =========================================================== */
+.pp-mobile-shell-header,
+.pp-mobile-bottom-nav {
+  display: none;
+}
+
+.pp-app-header-controls-only {
+  min-height: 72px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.pp-app-header-controls-only .pp-header-controls {
+  width: 100%;
+}
+
+.pp-payday-card.is-open {
+  border-color: #8eaddd;
+  box-shadow: 0 8px 24px rgb(7 27 61 / 9%);
+}
+
+.pp-payday-number {
+  background: var(--forest-2);
+}
+
+.pp-primary-button,
+.pp-print-button {
+  background: var(--forest);
+  border-color: var(--forest);
+}
+
+.pp-primary-button:hover,
+.pp-print-button:hover {
+  background: #0e2d5f;
+}
+
+.pp-money-input:focus-within {
+  border-color: var(--forest-2);
+  box-shadow: 0 0 0 2px rgb(22 93 202 / 12%);
+}
+
+@media (max-width: 767px) {
+  .pp-site-page {
+    min-height: 100dvh;
+    padding-bottom: 0;
+    background: #f7f6f2;
+  }
+
+  .pp-site-page .learn-index-header {
+    display: none !important;
+  }
+
+  .pp-mobile-shell-header {
+    position: sticky;
+    z-index: 70;
+    top: 0;
+    height: 56px;
+    display: grid;
+    grid-template-columns: 44px minmax(0, 1fr) 44px;
+    align-items: center;
+    padding: 0 8px;
+    color: #fff;
+    background: #071b3d;
+    border-bottom: 1px solid rgb(255 255 255 / 18%);
+    box-shadow: 0 4px 14px rgb(7 27 61 / 18%);
+  }
+
+  .pp-mobile-shell-header h1 {
+    margin: 0;
+    overflow: hidden;
+    color: #fff;
+    font: 750 17px/1.1 Inter, ui-sans-serif, system-ui, sans-serif;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .pp-mobile-shell-header button {
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    padding: 0;
+    color: #fff;
+    background: transparent;
+    border: 0;
+    border-radius: 9px;
+  }
+
+  .pp-mobile-shell-header button:focus-visible,
+  .pp-mobile-bottom-nav a:focus-visible {
+    outline: 2px solid #f0b429;
+    outline-offset: 2px;
+  }
+
+  .pp-mobile-shell-header svg {
+    width: 23px;
+    height: 23px;
+  }
+
+  .pp-page {
+    height: auto !important;
+    min-height: calc(100dvh - 56px) !important;
+    overflow: visible !important;
+    background: #f7f6f2 !important;
+  }
+
+  .pp-app-header {
+    display: none !important;
+  }
+
+  .pp-mobile-bar {
+    position: sticky !important;
+    z-index: 60 !important;
+    top: 56px !important;
+    color: #fff !important;
+    background: #071b3d !important;
+    box-shadow: 0 4px 14px rgb(7 27 61 / 16%) !important;
+  }
+
+  .pp-mobile-toolbar-select,
+  .pp-mobile-toolbar-icon {
+    border-color: rgb(255 255 255 / 38%) !important;
+  }
+
+  .pp-mobile-toolbar-select {
+    font-size: 13px !important;
+  }
+
+  .pp-site-page .pp-main.learn-index-container {
+    width: min(calc(100% - 48px), 600px) !important;
+    margin-inline: auto !important;
+    padding: 16px 0 24px !important;
+    box-sizing: border-box !important;
+  }
+
+  .pp-mobile-cycle-title,
+  .pp-mobile-priorities-title {
+    color: #111827 !important;
+    font-size: 21px !important;
+    line-height: 1.15 !important;
+    letter-spacing: -.015em !important;
+  }
+
+  .pp-payday-section .pp-section-head {
+    margin-bottom: 8px !important;
+  }
+
+  .pp-mobile-paydays {
+    width: 100% !important;
+    gap: 10px !important;
+  }
+
+  .pp-mobile-paydays .pp-payday-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    display: block !important;
+    box-sizing: border-box !important;
+    border: 1px solid #dfe4ec !important;
+    border-radius: 12px !important;
+    box-shadow: 0 5px 14px rgb(7 27 61 / 7%) !important;
+  }
+
+  .pp-mobile-paydays .pp-payday-card-head {
+    width: 100% !important;
+    min-height: 61px !important;
+    grid-template-columns: 38px minmax(0, 1fr) auto 18px !important;
+    gap: 9px !important;
+    padding: 11px 12px 5px !important;
+  }
+
+  .pp-mobile-paydays .pp-payday-number {
+    width: 38px !important;
+    height: 38px !important;
+    font-size: 16px !important;
+  }
+
+  .pp-mobile-paydays .pp-payday-title strong {
+    font-size: 18px !important;
+  }
+
+  .pp-mobile-paydays .pp-payday-title small {
+    font-size: 14px !important;
+  }
+
+  .pp-mobile-paydays .pp-status {
+    padding: 6px 10px !important;
+    font-size: 12px !important;
+  }
+
+  .pp-mobile-paydays .pp-collapsed-summary {
+    width: 100% !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0 !important;
+    padding: 7px 12px 12px !important;
+    font-size: 13px !important;
+  }
+
+  .pp-mobile-paydays .pp-collapsed-summary span {
+    display: grid;
+    gap: 2px;
+    min-width: 0;
+    padding-right: 10px;
+  }
+
+  .pp-mobile-paydays .pp-collapsed-summary span + span {
+    padding-left: 10px;
+    border-left: 1px solid #dfe4ec;
+  }
+
+  .pp-mobile-paydays .pp-collapsed-summary strong {
+    overflow: hidden;
+    font-size: 16px !important;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .pp-priority-section {
+    margin-top: 18px !important;
+  }
+
+  .pp-priority-section .pp-section-head {
+    min-height: 36px !important;
+    margin-bottom: 7px !important;
+  }
+
+  .pp-priority-header-actions .pp-outline-button {
+    width: 36px !important;
+    min-height: 36px !important;
+    color: var(--forest-2) !important;
+    border-color: #d9e0ec !important;
+    border-radius: 9px !important;
+  }
+
+  .pp-mobile-priority-list {
+    width: 100% !important;
+    display: grid !important;
+    gap: 8px !important;
+    overflow: visible;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .pp-mobile-priority-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    display: block !important;
+    box-sizing: border-box !important;
+    padding: 0 !important;
+    border: 1px solid #e1e5ec !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 12px rgb(7 27 61 / 7%) !important;
+  }
+
+  .pp-mobile-priority-card + .pp-mobile-priority-card {
+    border-top: 1px solid #e1e5ec !important;
+  }
+
+  .pp-mobile-priority-summary {
+    position: relative !important;
+    width: 100% !important;
+    min-height: 76px !important;
+    grid-template-columns: 38px minmax(60px, 92px) !important;
+    gap: 5px !important;
+    padding: 9px 9px 9px 12px !important;
+  }
+
+  .pp-mobile-priority-summary > .pp-bucket-icon {
+    display: inline-flex !important;
+    visibility: visible !important;
+    width: 38px !important;
+    height: 38px !important;
+  }
+
+  .pp-mobile-priority-summary > .pp-bucket-icon svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+
+  .pp-mobile-priority-copy {
+    gap: 2px !important;
+  }
+
+  .pp-mobile-priority-copy strong {
+    font-size: 18px !important;
+  }
+
+  .pp-mobile-priority-copy small {
+    font-size: 14px !important;
+  }
+
+  .pp-mobile-priority-row-progress {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 54px;
+    min-width: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3px;
+    align-items: center;
+    justify-items: stretch;
+    align-self: center;
+    transform: translate(-50%, -50%);
+  }
+
+  .pp-mobile-priority-row-progress-track {
+    height: 6px;
+    overflow: hidden;
+    background: #e5e7eb;
+    border-radius: 999px;
+  }
+
+  .pp-mobile-priority-row-progress-track > span {
+    display: block;
+    height: 100%;
+    background: #165dca;
+    border-radius: inherit;
+  }
+
+  .pp-mobile-priority-row-progress.is-live .pp-mobile-priority-row-progress-track > span {
+    background: #d59012;
+  }
+
+  .pp-mobile-priority-row-progress.is-protect .pp-mobile-priority-row-progress-track > span {
+    background: #23804b;
+  }
+
+  .pp-mobile-priority-row-progress.is-future .pp-mobile-priority-row-progress-track > span {
+    background: #7e3db5;
+  }
+
+  .pp-mobile-priority-row-progress.is-matters .pp-mobile-priority-row-progress-track > span {
+    background: #c94a4a;
+  }
+
+  .pp-mobile-priority-row-progress small {
+    color: #667085;
+    font-size: 12px;
+    font-weight: 750;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .pp-mobile-priority-values {
+    position: absolute;
+    top: 50%;
+    right: 29px;
+    width: 136px;
+    gap: 1px !important;
+    transform: translateY(-50%);
+  }
+
+  .pp-mobile-priority-values > span {
+    grid-template-columns: minmax(0, 1fr) auto !important;
+    gap: 6px !important;
+  }
+
+  .pp-mobile-priority-values small {
+    font-size: 11px !important;
+  }
+
+  .pp-mobile-priority-values strong {
+    font-size: 14px !important;
+  }
+
+  .pp-mobile-priority-chevron {
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    right: 3px;
+    transform: translateY(-50%);
+  }
+
+  .pp-mobile-priority-menu {
+    top: 1px !important;
+    right: 3px !important;
+    width: 24px !important;
+    height: 24px !important;
+    min-width: 24px !important;
+  }
+
+  .pp-mobile-auto-distribute {
+    min-height: 44px !important;
+    color: var(--forest) !important;
+    background: #edf2fa !important;
+    font-size: 14px !important;
+  }
+
+  .pp-privacy-note,
+  .reference-home-footer {
+    display: none !important;
+  }
+
+  .pp-mobile-bottom-nav {
+    position: static;
+    z-index: auto;
+    width: 100%;
+    min-height: 66px;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    margin-top: 10px;
+    padding: 5px 6px;
+    box-sizing: border-box;
+    background: #071b3d;
+    border: 1px solid #071b3d;
+    border-radius: 12px;
+    box-shadow: none;
+  }
+
+  .pp-mobile-bottom-nav a {
+    position: relative;
+    min-width: 0;
+    min-height: 52px;
+    display: grid;
+    place-content: center;
+    justify-items: center;
+    gap: 3px;
+    color: rgb(255 255 255 / 82%);
+    text-decoration: none;
+    border-radius: 9px;
+  }
+
+  .pp-mobile-bottom-nav a::after {
+    position: absolute;
+    right: 20%;
+    bottom: 0;
+    left: 20%;
+    height: 3px;
+    content: "";
+    background: transparent;
+    border-radius: 999px;
+  }
+
+  .pp-mobile-bottom-nav svg {
+    width: 24px;
+    height: 24px;
+    stroke-width: 2.2;
+  }
+
+  .pp-mobile-bottom-nav span {
+    overflow: hidden;
+    max-width: 100%;
+    font-size: 11px;
+    font-weight: 650;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .pp-mobile-bottom-nav a.is-active {
+    color: #f0b429;
+    font-weight: 800;
+  }
+
+  .pp-mobile-bottom-nav a.is-active::after {
+    background: #f0b429;
+  }
+}
+
+@media (max-width: 360px) {
+  .pp-mobile-shell-header h1 {
+    font-size: 15px;
+  }
+
+  .pp-mobile-bottom-nav span {
+    font-size: 9px;
+  }
+
+  .pp-mobile-priority-summary {
+    grid-template-columns: 34px minmax(52px, 74px) !important;
+    gap: 4px !important;
+    padding-inline: 8px !important;
+  }
+
+  .pp-mobile-priority-row-progress {
+    width: 42px;
+  }
+
+  .pp-mobile-priority-values {
+    right: 26px;
+    width: 118px;
+  }
+
+  .pp-mobile-priority-summary > .pp-bucket-icon {
+    width: 34px !important;
+    height: 34px !important;
+  }
+
+  .pp-mobile-priority-row-progress small {
+    display: none;
+  }
+}
+
+@media print {
+  .pp-mobile-shell-header,
+  .pp-mobile-bottom-nav {
+    display: none !important;
   }
 }

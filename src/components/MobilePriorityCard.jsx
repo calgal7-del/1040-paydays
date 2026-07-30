@@ -204,6 +204,11 @@ export default function MobilePriorityCard({
     0,
     (priority.totalNeededMinor || 0) - funded,
   );
+  const progressPercent =
+    priority.totalNeededMinor > 0
+      ? Math.min(100, (funded / priority.totalNeededMinor) * 100)
+      : 0;
+  const displayPercent = Math.round(progressPercent);
 
   const dueDate = /^\d{4}-\d{2}-\d{2}$/.test(priority.due || "")
     ? priority.due
@@ -235,6 +240,16 @@ export default function MobilePriorityCard({
             <small>
               {dueDate ? formatPaydayDate(dueDate) : priority.frequency || "No date"}
             </small>
+          </span>
+
+          <span
+            className={`pp-mobile-priority-row-progress ${BUCKETS[priority.bucket]?.className || "is-live"}`}
+            aria-label={`${displayPercent}% funded`}
+          >
+            <span className="pp-mobile-priority-row-progress-track">
+              <span style={{ width: `${progressPercent}%` }} />
+            </span>
+            <small>{displayPercent}%</small>
           </span>
 
           <span className="pp-mobile-priority-values">
