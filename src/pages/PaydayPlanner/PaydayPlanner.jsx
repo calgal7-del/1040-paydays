@@ -19,11 +19,13 @@ import {
   Target,
   Trash2,
   TrendingUp,
+  UserRound,
   X,
 } from "lucide-react";
 import { splitMinorUnitsEvenly } from "../../utils/plannerCalculations.mjs";
 import { createId, createPriority } from "../../utils/plannerDefaults.mjs";
 import "./PaydayPlanner.css";
+import MobilePriorityCard from "../../components/MobilePriorityCard";
 
 const STORAGE_KEY = "1040-paydays-payday-planner-v4";
 
@@ -237,6 +239,38 @@ function dateForFrequency(baseIso, frequency, index) {
     date.setDate(date.getDate() + index * (frequency === "weekly" ? 7 : 14));
   }
   return date.toISOString().slice(0, 10);
+}
+
+function shiftDateWithPayday(dateIso, previousPaydayDate, nextPaydayDate) {
+  if (!dateIso || !previousPaydayDate || !nextPaydayDate) return dateIso;
+  const previous = new Date(`${previousPaydayDate}T12:00:00`);
+  const next = new Date(`${nextPaydayDate}T12:00:00`);
+  const date = new Date(`${dateIso}T12:00:00`);
+  date.setTime(date.getTime() + (next.getTime() - previous.getTime()));
+  return date.toISOString().slice(0, 10);
+}
+
+function reschedulePaydays(paydays, frequency, startIndex, baseDate) {
+  return paydays.map((payday, index) => {
+    if (index < startIndex) return payday;
+    const nextDate = dateForFrequency(baseDate, frequency, index - startIndex);
+    return {
+      ...payday,
+      date: nextDate,
+      incomes: payday.incomes.map((income, incomeIndex) =>
+        incomeIndex === 0
+          ? { ...income, receivedDate: nextDate }
+          : {
+              ...income,
+              receivedDate: shiftDateWithPayday(
+                income.receivedDate,
+                payday.date,
+                nextDate,
+              ),
+            },
+      ),
+    };
+  });
 }
 
 function stampPlanner(planner) {
@@ -799,6 +833,16 @@ function PaydayCard({
   const assigned = paydayAssigned(data, payday.id);
   const remaining = income - assigned;
   const open = desktop || expanded === payday.id;
+  const planStatus =
+    income === 0
+      ? { label: "Add income", className: "is-needs-review" }
+      : remaining < 0
+        ? { label: "Over allocated", className: "is-needs-review" }
+        : assigned === 0
+          ? { label: "Not planned", className: "is-in-progress" }
+          : remaining === 0
+            ? { label: "Planned", className: "is-ready" }
+            : { label: "In progress", className: "is-in-progress" };
   return (
     <article className={`pp-payday-card ${open ? "is-open" : ""} ${desktop ? "is-desktop" : ""}`}>
       <button
@@ -815,8 +859,8 @@ function PaydayCard({
           <strong>{payday.label}</strong>
           <small>{formatPaydayDate(payday.date)}</small>
         </span>
-        <span className={`pp-status is-${payday.status.toLowerCase().replaceAll(" ", "-")}`}>
-          {payday.status}
+        <span className={`pp-status ${planStatus.className}`}>
+          {planStatus.label}
         </span>
         {open ? <ChevronUp aria-hidden="true" /> : <ChevronDown aria-hidden="true" />}
       </button>
@@ -879,16 +923,14 @@ function PriorityMatrix({
   openPriority,
   openAddPriority,
 }) {
-  const [expandedPriorityId, setExpandedPriorityId] = useState(
-    data.priorities[0]?.id || "",
-  );
+  const [expandedPriorityId, setExpandedPriorityId] = useState("");
 
   useEffect(() => {
     if (
       expandedPriorityId &&
       !data.priorities.some((priority) => priority.id === expandedPriorityId)
     ) {
-      setExpandedPriorityId(data.priorities[0]?.id || "");
+      setExpandedPriorityId("");
     }
   }, [data.priorities, expandedPriorityId]);
 
@@ -898,6 +940,7 @@ function PriorityMatrix({
         <div>
           <span className="pp-eyebrow">Your plan</span>
           <h2 id="priorities-title">Priorities</h2>
+          <span className="pp-mobile-priorities-title">Your Priorities</span>
         </div>
 
         <div className="pp-priority-header-actions">
@@ -933,146 +976,18 @@ function PriorityMatrix({
               : "";
 
             return (
-              <article
-                className={`pp-mobile-priority-card ${
-                  isOpen ? "is-open" : "is-closed"
-                }`}
-                key={priority.id}
-              >
-                <div className="pp-mobile-priority-card-head">
-                  <BucketIcon bucket={priority.bucket} size={24} />
-
-                  <div className="pp-mobile-priority-heading-copy">
-                    <strong>{priority.name}</strong>
-                    <small>{priority.frequency || "No frequency"}</small>
-                  </div>
-
-                  <label className="pp-mobile-priority-quick-field pp-mobile-priority-quick-date">
-                    <span>Due</span>
-                    <FormattedDateField
-                      ariaLabel={`${priority.name} due date, optional`}
-                      value={dueDate}
-                      emptyLabel="No date"
-                      onChange={(event) =>
-                        updatePriorityInline(priority.id, {
-                          due: event.target.value,
-                        })
-                      }
-                    />
-                  </label>
-
-                  <label className="pp-mobile-priority-quick-field pp-mobile-priority-quick-need">
-                    <span>Need</span>
-                    <MoneyField
-                      currency={data.currency}
-                      className="pp-mobile-priority-need-input"
-                      ariaLabel={`${priority.name} total needed`}
-                      valueMinor={priority.totalNeededMinor}
-                      onChangeMinor={(totalNeededMinor) =>
-                        updatePriorityInline(priority.id, {
-                          totalNeededMinor,
-                        })
-                      }
-                    />
-                  </label>
-
-                  <button
-                    className="pp-mobile-priority-toggle"
-                    type="button"
-                    aria-expanded={isOpen}
-                    aria-controls={`priority-card-body-${priority.id}`}
-                    aria-label={`${isOpen ? "Collapse" : "Expand"} ${priority.name}`}
-                    onClick={() =>
-                      setExpandedPriorityId((current) =>
-                        current === priority.id ? "" : priority.id,
-                      )
-                    }
-                  >
-                    <span className="pp-mobile-priority-compact-percent">
-                      {percent}%
-                    </span>
-                    {isOpen ? (
-                      <ChevronUp size={20} aria-hidden="true" />
-                    ) : (
-                      <ChevronDown size={20} aria-hidden="true" />
-                    )}
-                  </button>
-
-                  <button
-                    className="pp-mobile-priority-menu"
-                    type="button"
-                    aria-label={`Edit ${priority.name}`}
-                    title={`Edit ${priority.name}`}
-                    onClick={() => openPriority(priority.id)}
-                  >
-                    <MoreHorizontal size={21} aria-hidden="true" />
-                  </button>
-                </div>
-
-                {isOpen && (
-                  <div
-                    className="pp-mobile-priority-card-body"
-                    id={`priority-card-body-${priority.id}`}
-                  >
-                    <div className="pp-mobile-priority-progress-block">
-                      <div className="pp-mobile-priority-progress-label">
-                        <strong>{percent}%</strong>
-                        <span>
-                          {money(funded, data.currency)} of{" "}
-                          {money(priority.totalNeededMinor, data.currency)}
-                        </span>
-                      </div>
-
-                      <div
-                        className="pp-mobile-priority-progress-track"
-                        aria-label={`${percent}% funded`}
-                      >
-                        <span style={{ width: `${percent}%` }} />
-                      </div>
-                    </div>
-
-                    <div className="pp-mobile-priority-stats pp-mobile-priority-stats-two">
-                      <span>
-                        <small>Funded</small>
-                        <strong>{money(funded, data.currency)}</strong>
-                      </span>
-
-                      <span>
-                        <small>Left</small>
-                        <strong>{money(remaining, data.currency)}</strong>
-                      </span>
-                    </div>
-
-                    <div className="pp-mobile-priority-paydays">
-                      {visiblePaydays.map((payday, index) => (
-                        <div
-                          className="pp-mobile-priority-payday"
-                          key={payday.id}
-                        >
-                          <span className="pp-mobile-priority-payday-label">
-                            <strong>P{index + 1}</strong>
-                            <small>{formatPaydayDate(payday.date)}</small>
-                          </span>
-
-                          <AllocationField
-                            compact
-                            priority={priority}
-                            payday={payday}
-                            currency={data.currency}
-                            updateAllocation={updateAllocation}
-                            selected={Boolean(
-                              priority.autoPaydays?.[payday.id],
-                            )}
-                            onToggle={() =>
-                              toggleAutoPayday(priority.id, payday.id)
-                            }
-                          />
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </article>
+             <MobilePriorityCard
+  key={priority.id}
+  priority={priority}
+  data={data}
+  visiblePaydays={visiblePaydays}
+  isOpen={isOpen}
+  setExpandedPriorityId={setExpandedPriorityId}
+  updateAllocation={updateAllocation}
+  toggleAutoPayday={toggleAutoPayday}
+  updatePriorityInline={updatePriorityInline}
+  openPriority={openPriority}
+/>
             );
           })
         ) : (
@@ -1081,6 +996,14 @@ function PriorityMatrix({
           </p>
         )}
       </div>
+
+      <button
+        className="pp-mobile-auto-distribute"
+        type="button"
+        onClick={autoDistribute}
+      >
+        <Sparkles size={18} aria-hidden="true" /> Auto Distribute
+      </button>
 
       <div className="pp-table-shell">
         <table className={`pp-priority-table has-${visiblePaydays.length}-paydays`}>
@@ -1227,9 +1150,7 @@ function Dialog({ title, onClose, children, wide = false }) {
 
 function PriorityDetail({
   priority,
-  data,
   onClose,
-  updateAllocation,
   updatePriority,
   deletePriority,
 }) {
@@ -1237,11 +1158,9 @@ function PriorityDetail({
     name: priority.name,
     bucket: priority.bucket,
     due: priority.due,
-    frequency: priority.frequency,
-    totalNeededMinor: priority.totalNeededMinor,
   });
   return (
-    <Dialog title={`Edit ${priority.name}`} onClose={onClose} wide>
+    <Dialog title={`Edit ${priority.name}`} onClose={onClose}>
       <div className="pp-priority-detail">
         <div className="pp-edit-grid">
           <label>
@@ -1266,61 +1185,18 @@ function PriorityDetail({
               ))}
             </select>
           </label>
-          <label>
-            <span>Due date or timing</span>
-            <input
+          <div className="pp-edit-date-control">
+            <span>Due date</span>
+            <FormattedDateField
+              className="pp-edit-due-date"
+              ariaLabel={`${priority.name} due date`}
               value={draft.due}
               onChange={(event) =>
                 setDraft((current) => ({ ...current, due: event.target.value }))
               }
             />
-          </label>
-          <label>
-            <span>Frequency</span>
-            <input
-              value={draft.frequency}
-              onChange={(event) =>
-                setDraft((current) => ({ ...current, frequency: event.target.value }))
-              }
-            />
-          </label>
-          <label>
-            <span>Total needed</span>
-            <MoneyField
-              currency={data.currency}
-              ariaLabel={`${priority.name} total needed`}
-              valueMinor={draft.totalNeededMinor}
-              onChangeMinor={(totalNeededMinor) =>
-                setDraft((current) => ({ ...current, totalNeededMinor }))
-              }
-            />
-          </label>
-        </div>
-        <div className="pp-detail-summary">
-          <BucketIcon bucket={priority.bucket} size={24} />
-          <div>
-            <span>{BUCKETS[priority.bucket].name}</span>
-            <strong>{money(priorityFunded(priority), data.currency)} funded</strong>
           </div>
         </div>
-        <Progress priority={priority} currency={data.currency} />
-        <dl>
-          <div><dt>Total needed</dt><dd>{money(priority.totalNeededMinor, data.currency)}</dd></div>
-          <div><dt>Total funded</dt><dd>{money(priorityFunded(priority), data.currency)}</dd></div>
-          <div><dt>Still needed</dt><dd>{money(Math.max(0, priority.totalNeededMinor - priorityFunded(priority)), data.currency)}</dd></div>
-        </dl>
-        <h3>Payday breakdown</h3>
-        {data.paydays.map((payday) => (
-          <div className="pp-detail-payday" key={payday.id}>
-            <span><strong>{payday.label}</strong><small>{formatPaydayDate(payday.date)}</small></span>
-            <AllocationField
-              priority={priority}
-              payday={payday}
-              currency={data.currency}
-              updateAllocation={updateAllocation}
-            />
-          </div>
-        ))}
         <div className="pp-dialog-actions">
           <button
             className="pp-danger-button"
@@ -1355,7 +1231,7 @@ export default function PaydayPlanner({
 }) {
   const [data, setData] = useState(INITIAL_DATA);
   const [loaded, setLoaded] = useState(false);
-  const [mobileExpanded, setMobileExpanded] = useState("p1");
+  const [mobileExpanded, setMobileExpanded] = useState("");
   const [dialog, setDialog] = useState(null);
 
   useEffect(() => {
@@ -1456,19 +1332,35 @@ export default function PaydayPlanner({
   };
 
   const updateIncome = (paydayId, incomeId, changes) => {
-    setData((current) => ({
-      ...current,
-      paydays: current.paydays.map((payday) =>
-        payday.id === paydayId
+    setData((current) => {
+      const paydayIndex = current.paydays.findIndex((payday) => payday.id === paydayId);
+      const payday = current.paydays[paydayIndex];
+      const changesDriverDate =
+        payday?.incomes[0]?.id === incomeId &&
+        Object.prototype.hasOwnProperty.call(changes, "receivedDate");
+      const updatedPaydays = current.paydays.map((currentPayday) =>
+        currentPayday.id === paydayId
           ? {
-              ...payday,
-              incomes: payday.incomes.map((income) =>
+              ...currentPayday,
+              incomes: currentPayday.incomes.map((income) =>
                 income.id === incomeId ? { ...income, ...changes } : income,
               ),
             }
-          : payday,
-      ),
-    }));
+          : currentPayday,
+      );
+
+      return {
+        ...current,
+        paydays: changesDriverDate
+          ? reschedulePaydays(
+              updatedPaydays,
+              current.frequency,
+              paydayIndex,
+              changes.receivedDate,
+            )
+          : updatedPaydays,
+      };
+    });
   };
 
   const deleteIncome = (paydayId, incomeId) => {
@@ -1486,12 +1378,26 @@ export default function PaydayPlanner({
   };
 
   const updatePayday = (paydayId, changes) => {
-    setData((current) => ({
-      ...current,
-      paydays: current.paydays.map((payday) =>
-        payday.id === paydayId ? { ...payday, ...changes } : payday,
-      ),
-    }));
+    setData((current) => {
+      const paydayIndex = current.paydays.findIndex((payday) => payday.id === paydayId);
+      const changesDate = Object.prototype.hasOwnProperty.call(changes, "date");
+      const scheduledPaydays = changesDate
+        ? reschedulePaydays(
+            current.paydays,
+            current.frequency,
+            paydayIndex,
+            changes.date,
+          )
+        : current.paydays;
+      return {
+        ...current,
+        paydays: scheduledPaydays.map((payday) =>
+          payday.id === paydayId
+            ? { ...payday, ...changes }
+            : payday,
+        ),
+      };
+    });
     setDialog(null);
   };
 
@@ -1547,9 +1453,11 @@ export default function PaydayPlanner({
   };
 
   const addSource = (paydayId, name, receivedDate, amountMinor) => {
-    setData((current) => ({
-      ...current,
-      paydays: current.paydays.map((payday) =>
+    setData((current) => {
+      const paydayIndex = current.paydays.findIndex((payday) => payday.id === paydayId);
+      const isFirstSource = current.paydays[paydayIndex]?.incomes.length === 0;
+      const sourceDate = receivedDate || current.paydays[paydayIndex]?.date || "";
+      const updatedPaydays = current.paydays.map((payday) =>
         payday.id === paydayId
           ? {
               ...payday,
@@ -1558,18 +1466,24 @@ export default function PaydayPlanner({
                 {
                   id: id("income"),
                   name,
-                  receivedDate: receivedDate || payday.date,
+                  receivedDate: sourceDate,
                   amountMinor,
                 },
               ],
             }
           : payday,
-      ),
-    }));
+      );
+      return {
+        ...current,
+        paydays: isFirstSource
+          ? reschedulePaydays(updatedPaydays, current.frequency, paydayIndex, sourceDate)
+          : updatedPaydays,
+      };
+    });
     setDialog(null);
   };
 
-  const addPriority = (name, bucket, totalNeededMinor) => {
+  const addPriority = (name, bucket, totalNeededMinor, due) => {
     setData((current) => ({
       ...current,
       priorities: [
@@ -1578,7 +1492,7 @@ export default function PaydayPlanner({
           id: id("priority"),
           name,
           bucket,
-          due: "",
+          due,
           frequency: "Flexible",
           totalNeededMinor,
           autoPaydays: Object.fromEntries(current.paydays.map((payday) => [payday.id, false])),
@@ -1643,7 +1557,7 @@ export default function PaydayPlanner({
 
     window.localStorage.removeItem(STORAGE_KEY);
     setData((current) => createEmptyPlannerData(current));
-    setMobileExpanded("p1");
+    setMobileExpanded("");
     setDialog(null);
   };
 
@@ -1682,20 +1596,10 @@ export default function PaydayPlanner({
       return {
         ...current,
         frequency,
-        paydays: current.paydays.map((payday, index) => {
-          const nextDate = dateForFrequency(baseDate, frequency, index);
-          return {
-            ...payday,
-            date: nextDate,
-            incomes: payday.incomes.map((income) => ({
-              ...income,
-              receivedDate: nextDate,
-            })),
-          };
-        }),
+        paydays: reschedulePaydays(current.paydays, frequency, 0, baseDate),
       };
     });
-    setMobileExpanded("p1");
+    setMobileExpanded("");
   };
 
   if (!loaded) {
@@ -1725,6 +1629,29 @@ export default function PaydayPlanner({
       />
       <div className="pp-page">
       <header className="pp-app-header">
+        <div className="pp-mobile-header-top">
+          <a
+            className="pp-mobile-logo"
+            href="/"
+            aria-label="1040 Paydays home"
+            onClick={(event) => {
+              if (!navigateTo) return;
+              event.preventDefault();
+              navigateTo("/");
+            }}
+          >
+            1040
+          </a>
+
+          <button
+            className="pp-mobile-profile-button"
+            type="button"
+            aria-label="Open profile"
+          >
+            <UserRound size={27} strokeWidth={2.1} aria-hidden="true" />
+          </button>
+        </div>
+
         <div className="pp-title">
           <h1>Payday Planner</h1>
           <p>Plan every payday. Build your future.</p>
@@ -1871,6 +1798,9 @@ export default function PaydayPlanner({
                 {visiblePaydays.length} {visiblePaydays.length === 1 ? "payday" : "paydays"} in this cycle
               </span>
               <h2 id="paydays-title">Plan Your Paydays</h2>
+              <span className="pp-mobile-cycle-title">
+                {visiblePaydays.length} {visiblePaydays.length === 1 ? "Payday" : "Paydays"} in This Cycle
+              </span>
             </div>
             
           </div>
@@ -1954,9 +1884,7 @@ export default function PaydayPlanner({
       {selectedPriority && (
         <PriorityDetail
           priority={selectedPriority}
-          data={{ ...data, paydays: visiblePaydays }}
           onClose={() => setDialog(null)}
-          updateAllocation={updateAllocation}
           updatePriority={updatePriority}
           deletePriority={deletePriority}
         />
@@ -1979,7 +1907,6 @@ function EditPaydayDialog({ payday, onClose, onSave, onClear }) {
   const [draft, setDraft] = useState({
     label: payday.label,
     date: payday.date,
-    status: payday.status,
   });
   return (
     <Dialog title={`Edit ${payday.label}`} onClose={onClose}>
@@ -2009,19 +1936,6 @@ function EditPaydayDialog({ payday, onClose, onSave, onClear }) {
               setDraft((current) => ({ ...current, date: event.target.value }))
             }
           />
-        </label>
-        <label>
-          <span>Status</span>
-          <select
-            value={draft.status}
-            onChange={(event) =>
-              setDraft((current) => ({ ...current, status: event.target.value }))
-            }
-          >
-            <option value="Ready">Ready</option>
-            <option value="In Progress">In Progress</option>
-            <option value="Needs Review">Needs Review</option>
-          </select>
         </label>
         <div className="pp-dialog-actions">
           <button
@@ -2084,12 +1998,13 @@ function AddPriorityDialog({ currency, onClose, onAdd }) {
   const [name, setName] = useState("New Priority");
   const [bucket, setBucket] = useState("protect");
   const [totalNeededMinor, setTotalNeededMinor] = useState(0);
+  const [due, setDue] = useState("");
   return (
     <Dialog title="Add Priority" onClose={onClose}>
       <form className="pp-dialog-form" onSubmit={(event) => {
         event.preventDefault();
         if (!name.trim()) return;
-        onAdd(name.trim(), bucket, totalNeededMinor);
+        onAdd(name.trim(), bucket, totalNeededMinor, due);
       }}>
         <label>
           <span>Priority name</span>
@@ -2110,6 +2025,14 @@ function AddPriorityDialog({ currency, onClose, onAdd }) {
             ariaLabel="New priority total needed"
             valueMinor={totalNeededMinor}
             onChangeMinor={setTotalNeededMinor}
+          />
+        </label>
+        <label>
+          <span>Due date</span>
+          <input
+            type="date"
+            value={due}
+            onChange={(event) => setDue(event.target.value)}
           />
         </label>
         <button className="pp-primary-button" type="submit">
