@@ -25,6 +25,8 @@ import {
   Target,
   Trash2,
   TrendingUp,
+  Trophy,
+  WalletCards,
   X,
 } from "lucide-react";
 import { splitMinorUnitsEvenly } from "../../utils/plannerCalculations.mjs";
@@ -592,7 +594,10 @@ function MobilePlannerHeader({ navigateTo }) {
       <button type="button" aria-label="Back to home" onClick={goHome}>
         <ArrowLeft aria-hidden="true" />
       </button>
-      <h1>1040 Payday Planner</h1>
+      <div className="pp-mobile-shell-title">
+        <h1>1040 Payday Planner</h1>
+        <p>Every payday is a decision. Choose yours.</p>
+      </div>
       <span aria-hidden="true" />
     </header>
   );
@@ -658,6 +663,67 @@ function MetricStrip({ totals, currency }) {
         <Sparkles size={16} aria-hidden="true" />
         Principle totals update automatically as you assign priorities.
       </p>
+    </section>
+  );
+}
+
+function MobileCycleGlance({ totals, currency }) {
+  const assignedPercent = totals.totalIncome > 0
+    ? Math.round((totals.totalAssigned / totals.totalIncome) * 100)
+    : 0;
+  const remainingPercent = totals.totalIncome > 0
+    ? Math.round((totals.totalRemaining / totals.totalIncome) * 100)
+    : 0;
+
+  const metrics = [
+    {
+      label: "Income",
+      value: money(totals.totalIncome, currency),
+      Icon: WalletCards,
+      className: "is-income",
+    },
+    {
+      label: "Assigned",
+      value: money(totals.totalAssigned, currency),
+      detail: `${assignedPercent}%`,
+      Icon: Check,
+      className: "is-assigned",
+    },
+    {
+      label: "Left to Plan",
+      value: money(totals.totalRemaining, currency),
+      detail: `${remainingPercent}%`,
+      Icon: Target,
+      className: "is-remaining",
+    },
+    {
+      label: "Priorities Funded",
+      value: String(totals.fundedPriorities),
+      detail: "This Cycle",
+      Icon: Trophy,
+      className: "is-funded",
+    },
+  ];
+
+  return (
+    <section className="pp-mobile-cycle-glance" aria-labelledby="cycle-glance-title">
+      <h2 id="cycle-glance-title">
+        <Sparkles aria-hidden="true" />
+        This Pay Cycle at a Glance
+      </h2>
+
+      <div className="pp-mobile-cycle-glance-grid">
+        {metrics.map(({ label, value, detail, Icon, className }) => (
+          <article className={className} key={label}>
+            <span className="pp-mobile-cycle-glance-icon">
+              <Icon aria-hidden="true" />
+            </span>
+            <strong>{value}</strong>
+            <span>{label}</span>
+            {detail ? <small>{detail}</small> : null}
+          </article>
+        ))}
+      </div>
     </section>
   );
 }
@@ -1315,6 +1381,13 @@ export default function PaydayPlanner({
       totalAssigned,
       totalRemaining: totalIncome - totalAssigned,
       bucketTotals,
+      fundedPriorities: data.priorities.filter((priority) =>
+        sum(
+          visiblePaydays.map(
+            (payday) => priority.allocations[payday.id] || 0,
+          ),
+        ) > 0,
+      ).length,
     };
   }, [data, visiblePaydays]);
 
@@ -1790,6 +1863,8 @@ export default function PaydayPlanner({
           <Trash2 size={18} aria-hidden="true" />
         </button>
       </div>
+
+      <MobileCycleGlance totals={totals} currency={data.currency} />
 
       <main className="pp-main learn-index-container">
         <MetricStrip totals={totals} currency={data.currency} />
