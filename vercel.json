@@ -10,8 +10,7 @@
         }
       ],
       "destination": "https://www.1040paydays.com/:path*",
-      "statusCode": 301,
-      "preserveQueryParams": true
+      "statusCode": 301
     }
   ],
   "rewrites": [

@@ -132,7 +132,6 @@ const vercelConfig = {
       ],
       destination: "https://www.1040paydays.com/:path*",
       statusCode: 301,
-      preserveQueryParams: true,
     },
   ],
   rewrites: appRewritePaths.map((path) => ({
