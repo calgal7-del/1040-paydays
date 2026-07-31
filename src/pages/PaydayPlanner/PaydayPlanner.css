@@ -243,6 +243,49 @@
 .pp-dialog-form label { display: grid; gap: 6px; }
 .pp-dialog-form label > span { color: #41564b; font-size: 11px; font-weight: 800; }
 .pp-dialog-form label > input, .pp-dialog-form select { min-height: 44px; padding: 9px 11px; color: var(--ink); background: #fff; border: 1px solid #cbd8d0; border-radius: 7px; }
+.pp-priority-name-autocomplete {
+  position: relative;
+  min-width: 0;
+  color: var(--ink);
+  background: #fff;
+  border: 1px solid #cbd8d0;
+  border-radius: 7px;
+}
+.pp-priority-name-autocomplete:focus-within {
+  outline: 2px solid currentColor;
+  outline-offset: 1px;
+}
+.pp-priority-name-autocomplete input {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  min-width: 0;
+  min-height: 42px;
+  padding: 8px 10px;
+  color: var(--ink);
+  background: transparent;
+  border: 0;
+  border-radius: inherit;
+  font: inherit;
+  outline: 0;
+}
+.pp-priority-name-completion {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  padding: 8px 10px;
+  overflow: hidden;
+  white-space: pre;
+  pointer-events: none;
+  font: inherit;
+}
+.pp-priority-name-completion span { color: transparent; }
+.pp-priority-name-completion em {
+  color: #9aa69f;
+  font-style: normal;
+}
 .pp-dialog-form .pp-money-input input { height: 42px; font-size: 14px; }
 .pp-primary-button { min-height: 46px; display: inline-flex; gap: 7px; align-items: center; justify-content: center; border: 1px solid var(--forest); border-radius: 7px; font-weight: 800; }
 .pp-danger-button { min-height: 44px; display: inline-flex; gap: 7px; align-items: center; justify-content: center; padding: 0 12px; color: #b42318; background: #fff; border: 1px solid #efc5c1; border-radius: 7px; font-weight: 800; }
@@ -251,6 +294,11 @@
 .pp-edit-grid label { display: grid; gap: 5px; }
 .pp-edit-grid label > span { color: #41564b; font-size: 10px; font-weight: 800; }
 .pp-edit-grid input, .pp-edit-grid select { min-height: 40px; min-width: 0; padding: 8px 10px; color: var(--ink); background: #fff; border: 1px solid #cbd8d0; border-radius: 7px; }
+.pp-edit-grid .pp-priority-name-autocomplete input,
+.pp-dialog-form .pp-priority-name-autocomplete input {
+  background: transparent;
+  border: 0;
+}
 .pp-edit-date-control { display: grid; gap: 5px; }
 .pp-edit-date-control > span { color: #41564b; font-size: 10px; font-weight: 800; }
 .pp-edit-due-date { width: 100%; min-height: 40px; padding: 8px 10px; color: var(--ink); background: #fff; border: 1px solid #cbd8d0; border-radius: 7px; }

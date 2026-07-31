@@ -31,7 +31,11 @@ import {
 } from "lucide-react";
 import { splitMinorUnitsEvenly } from "../../utils/plannerCalculations.mjs";
 import { createId, createPriority } from "../../utils/plannerDefaults.mjs";
-import { principleForPriority } from "../../config/priorityPrincipleMap.mjs";
+import {
+  getPrincipleForExpense,
+  getPriorityNameSuggestion,
+  normalizePriorityName,
+} from "../../config/priorityPrincipleMap.mjs";
 import "./PaydayPlanner.css";
 import MobilePriorityCard from "../../components/MobilePriorityCard";
 
@@ -486,6 +490,67 @@ function MoneyField({
           const committed = Number.isFinite(parsed) && parsed >= 0 ? Math.round(parsed * 100) : 0;
           onChangeMinor(committed);
           setDraft((committed / 100).toFixed(2));
+        }}
+      />
+    </div>
+  );
+}
+
+function PriorityNameField({ value, onChange }) {
+  const inputRef = useRef(null);
+  const [dismissedValue, setDismissedValue] = useState("");
+  const suggestion = getPriorityNameSuggestion(value);
+  const normalizedValue = normalizePriorityName(value);
+  const suggestionIsDismissed = dismissedValue === value;
+  const canAccept = Boolean(
+    suggestion &&
+    !suggestionIsDismissed &&
+    value.trim() !== suggestion
+  );
+  const suffix = canAccept ? suggestion.slice(normalizedValue.length) : "";
+
+  const acceptSuggestion = () => {
+    if (!canAccept) return false;
+    onChange(suggestion);
+    setDismissedValue("");
+    return true;
+  };
+
+  return (
+    <div className="pp-priority-name-autocomplete">
+      {suffix ? (
+        <div className="pp-priority-name-completion" aria-hidden="true">
+          <span>{value}</span><em>{suffix}</em>
+        </div>
+      ) : null}
+      <input
+        ref={inputRef}
+        aria-autocomplete="inline"
+        autoComplete="off"
+        spellCheck="false"
+        value={value}
+        onChange={(event) => {
+          setDismissedValue("");
+          onChange(event.target.value);
+        }}
+        onKeyDown={(event) => {
+          if (event.key === "Escape" && canAccept) {
+            event.preventDefault();
+            setDismissedValue(value);
+            return;
+          }
+
+          const cursorIsAtEnd =
+            inputRef.current?.selectionStart === value.length &&
+            inputRef.current?.selectionEnd === value.length;
+          const acceptsSuggestion =
+            event.key === "Tab" ||
+            event.key === "Enter" ||
+            (event.key === "ArrowRight" && cursorIsAtEnd);
+
+          if (!acceptsSuggestion || !canAccept) return;
+          if (event.key !== "Tab") event.preventDefault();
+          acceptSuggestion();
         }}
       />
     </div>
@@ -1251,11 +1316,16 @@ function PriorityDetail({
         <div className="pp-edit-grid">
           <label>
             <span>Priority name</span>
-            <input
+            <PriorityNameField
               value={draft.name}
-              onChange={(event) =>
-                setDraft((current) => ({ ...current, name: event.target.value }))
-              }
+              onChange={(name) => {
+                const mappedBucket = getPrincipleForExpense(name);
+                setDraft((current) => ({
+                  ...current,
+                  name,
+                  ...(mappedBucket ? { bucket: mappedBucket } : {}),
+                }));
+              }}
             />
           </label>
           <label>
@@ -1331,7 +1401,7 @@ export default function PaydayPlanner({
           currency: CURRENCIES[parsed.currency] ? parsed.currency : "USD",
           priorities: (parsed.priorities || INITIAL_DATA.priorities).map((priority) => ({
             ...priority,
-            bucket: principleForPriority(priority.name, priority.bucket),
+            bucket: priority.bucket || getPrincipleForExpense(priority.name) || "protect",
             due: /^\d{4}-\d{2}-\d{2}$/.test(priority.due || "") ? priority.due : "",
             autoPaydays: priority.autoPaydays || Object.fromEntries(
               (parsed.paydays || INITIAL_DATA.paydays).map((payday) => [payday.id, false]),
@@ -1586,7 +1656,7 @@ export default function PaydayPlanner({
         {
           id: id("priority"),
           name,
-          bucket: principleForPriority(name, bucket),
+          bucket,
           due,
           frequency: "Flexible",
           totalNeededMinor,
@@ -1606,10 +1676,6 @@ export default function PaydayPlanner({
           ? {
               ...priority,
               ...changes,
-              bucket: principleForPriority(
-                changes.name ?? priority.name,
-                changes.bucket ?? priority.bucket,
-              ),
             }
           : priority,
       ),
@@ -2084,7 +2150,14 @@ function AddPriorityDialog({ currency, onClose, onAdd }) {
       }}>
         <label>
           <span>Priority name</span>
-          <input value={name} onChange={(event) => setName(event.target.value)} />
+          <PriorityNameField
+            value={name}
+            onChange={(nextName) => {
+              setName(nextName);
+              const mappedBucket = getPrincipleForExpense(nextName);
+              if (mappedBucket) setBucket(mappedBucket);
+            }}
+          />
         </label>
         <label>
           <span>Payday principle</span>
