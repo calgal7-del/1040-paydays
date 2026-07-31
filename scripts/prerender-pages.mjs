@@ -44,7 +44,14 @@ try {
   }
 
   const renderRoute = (route) => {
-    const { title, description } = pageMetadataForRoute(route);
+    const {
+      title,
+      description,
+      canonicalUrl,
+      pageType,
+      imageUrl,
+      publishedDate,
+    } = pageMetadataForRoute(route);
     const duplicateRoute = renderedTitles.get(title);
     if (duplicateRoute) {
       throw new Error(
@@ -79,6 +86,27 @@ try {
     }
     JSON.parse(structuredDataScripts[0][1]);
 
+    const articleHeadMarkup =
+      pageType === "article"
+        ? [
+            `<link rel="canonical" href="${escapeHtmlAttribute(canonicalUrl)}" />`,
+            `<meta property="og:type" content="article" />`,
+            `<meta property="og:title" content="${escapeHtmlAttribute(title)}" />`,
+            `<meta property="og:description" content="${escapeHtmlAttribute(description)}" />`,
+            `<meta property="og:url" content="${escapeHtmlAttribute(canonicalUrl)}" />`,
+            `<meta property="og:image" content="${escapeHtmlAttribute(imageUrl)}" />`,
+            `<meta property="og:site_name" content="1040 Paydays" />`,
+            `<meta name="twitter:card" content="summary_large_image" />`,
+            `<meta name="twitter:title" content="${escapeHtmlAttribute(title)}" />`,
+            `<meta name="twitter:description" content="${escapeHtmlAttribute(description)}" />`,
+            `<meta name="twitter:image" content="${escapeHtmlAttribute(imageUrl)}" />`,
+            ...(publishedDate
+              ? [
+                  `<meta property="article:published_time" content="${escapeHtmlAttribute(publishedDate)}" />`,
+                ]
+              : []),
+          ].join("\n    ")
+        : "";
     const pageHtml = indexHtml
       .replace(
         rootPlaceholder,
@@ -88,6 +116,10 @@ try {
       .replace(
         /<meta\s+name=["']description["'][^>]*>/i,
         `<meta name="description" content="${escapeHtmlAttribute(description)}" />`
+      )
+      .replace(
+        "</head>",
+        `${articleHeadMarkup ? `    ${articleHeadMarkup}\n  ` : ""}</head>`
       );
     const headMarkup = pageHtml.match(/<head>([\s\S]*?)<\/head>/i)?.[1] || "";
     const titleCount = (headMarkup.match(/<title(?:\s|>)/gi) || []).length;
@@ -96,6 +128,38 @@ try {
       throw new Error(
         `Expected "${route}" to contain exactly one title tag, found ${titleCount}.`
       );
+    }
+    if (pageType === "article") {
+      const requiredHeadTags = [
+        ["description", /<meta\s+name="description"/gi],
+        ["canonical", /<link\s+rel="canonical"/gi],
+        ["og:title", /<meta\s+property="og:title"/gi],
+        ["og:description", /<meta\s+property="og:description"/gi],
+        ["og:type", /<meta\s+property="og:type"/gi],
+        ["og:url", /<meta\s+property="og:url"/gi],
+        ["og:image", /<meta\s+property="og:image"/gi],
+        ["og:site_name", /<meta\s+property="og:site_name"/gi],
+        ["twitter:card", /<meta\s+name="twitter:card"/gi],
+        ["twitter:title", /<meta\s+name="twitter:title"/gi],
+        ["twitter:description", /<meta\s+name="twitter:description"/gi],
+        ["twitter:image", /<meta\s+name="twitter:image"/gi],
+      ];
+
+      for (const [name, pattern] of requiredHeadTags) {
+        const tagCount = (headMarkup.match(pattern) || []).length;
+        if (tagCount !== 1) {
+          throw new Error(
+            `Expected "${route}" to contain exactly one ${name} tag, found ${tagCount}.`
+          );
+        }
+      }
+      if (
+        !canonicalUrl.startsWith(`${siteUrl}/learn/`) ||
+        !imageUrl.startsWith(`${siteUrl}/`) ||
+        /localhost|127\.0\.0\.1/i.test(headMarkup)
+      ) {
+        throw new Error(`Invalid production metadata URL on "${route}".`);
+      }
     }
 
     return pageHtml;

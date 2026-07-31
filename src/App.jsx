@@ -35,7 +35,7 @@
     const MAILING_LIST_CONSENT_TEXT =
       "Join the 1040 Paydays mailing list for new articles, practical financial ideas, calculators, and occasional updates. You can unsubscribe at any time.";
     const SITE_URL = "https://www.1040paydays.com";
-    const SITE_IDENTITY_URL = "https://1040paydays.com";
+    const SITE_IDENTITY_URL = SITE_URL;
     const SITE_NAME = "1040 Paydays";
     const SITE_DESCRIPTION =
       "Estimate how much you can save from every paycheck. Use 1040 Paydays to plan savings, retirement, and future growth with a simple calculator.";
@@ -67,6 +67,8 @@
    const FEATURED_ARTICLE = {
   id: "you-only-get-about-1040-paydays",
   title: "You Only Get About 1,040 Paydays",
+  seoDescription:
+    "See why a working lifetime holds about 1,040 paydays and how treating each paycheck as a decision can change the way you plan your financial future.",
   summary:
     "Most people think about money in dollars. I think about it in paydays.",
   image: "/article-1040-paydays.png",
@@ -182,6 +184,7 @@
     const SECOND_ARTICLE = {
   id: "who-wants-to-go-home",
   title: "Who Wants to Go Home? The Hidden Cost of Leaving Work Early",
+  seoTitle: "Who Wants to Go Home? Leaving Work Early | 1040 Paydays",
   summary:
     "Leaving work early can feel like a reward, but every lost hour affects your paycheck, savings, and future. One simple question changed the way I value every hour I work.",
   image: "/article-who-wants-to-go-home.png",
@@ -1586,6 +1589,7 @@ const FIFTH_ARTICLE = {
    const FIFTEENTH_ARTICLE = {
   id: "your-house-is-full-of-money-you-just-cant-see-it-yet",
   title: "Your House Is Full of Money. You Just Can't See It Yet.",
+  seoTitle: "The Hidden Value Already in Your Home | 1040 Paydays",
   summary:
     "A search for a flashlight became a reminder that forgotten gift cards, pantry food, clothes, and everyday possessions already hold value. Sometimes the easiest money to find is already under your own roof.",
   image: "/article-house-full-of-money.png",
@@ -1726,6 +1730,7 @@ const FIFTH_ARTICLE = {
     const SIXTEENTH_ARTICLE = {
   id: "the-biggest-retirement-mistake-has-nothing-to-do-with-investing",
   title: "The Biggest Retirement Mistake Has Nothing to Do With Investing",
+  seoTitle: "The Biggest Retirement Mistake | 1040 Paydays",
   summary:
     "Retirement doesn't begin when you stop working. It begins with your very first paycheque. Every payday quietly shapes the freedom your future self will one day have.",
   image: "/article-biggest-retirement-mistake.png",
@@ -2429,6 +2434,8 @@ const FIFTH_ARTICLE = {
     const TWENTY_FIRST_ARTICLE = {
   id: "why-saying-no-feels-so-hard",
   title: "Why Saying No Feels So Hard",
+  seoDescription:
+    "Saying no to spending can feel harder than buying, but each no protects a more important yes. Learn how intentional choices can support your financial goals.",
   summary:
     "Saying no to spending can feel harder than spending itself, but every no protects a yes that matters more.",
   image: "/article-why-saying-no-feels-hard.png",
@@ -2545,6 +2552,7 @@ const FIFTH_ARTICLE = {
     const TWENTY_SECOND_ARTICLE = {
   id: "ai-is-changing-the-9-to-5-club-heres-how-to-stay-in-it",
   title: "AI Is Changing the 9-to-5 Club. Here's How to Stay In It.",
+  seoTitle: "How to Keep Your Career Relevant With AI | 1040 Paydays",
   summary:
     "Artificial intelligence is changing the workplace, but it is not the first tool to reshape our careers. The people who keep learning usually keep earning.",
   image: "/article-ai-9-to-5-club.png",
@@ -2873,6 +2881,8 @@ const FIFTH_ARTICLE = {
    const TWENTY_FOURTH_ARTICLE = {
   id: "you-saved-3-and-lost-30000",
   title: "You Saved $3 and Lost $30,000",
+  seoDescription:
+    "Small savings feel rewarding, but large renewals and financial decisions matter more. Learn why your biggest money choices deserve your closest attention.",
   summary:
     "The little savings feel good, but the biggest financial decisions deserve the most attention.",
   image: "/article-saved-3-lost-30000.png",
@@ -3278,6 +3288,7 @@ const FIFTH_ARTICLE = {
 };const TWENTY_EIGHTH_ARTICLE = {
   id: "the-years-when-compound-interest-feels-like-nothing",
   title: "The Years When Compound Interest Feels Like Nothing",
+  seoTitle: "Why Compound Interest Feels Slow at First | 1040 Paydays",
   summary:
     "The early years of investing can feel slow, but those quiet years build the foundation that makes compound growth visible later.",
   image: "/article-compound-interest-quiet-years.png",
@@ -3410,6 +3421,7 @@ const FIFTH_ARTICLE = {
     const TWENTY_NINTH_ARTICLE = {
   id: "how-to-spot-an-investment-scam-before-it-costs-you-everything",
   title: "How to Spot an Investment Scam Before It Costs You Everything",
+  seoTitle: "How to Spot an Investment Scam | 1040 Paydays",
   summary:
     "Scams change, but the way they earn your trust rarely does. Learning how scammers think can help protect the money you worked so hard to build.",
   image: "/article-investment-scam.png",
@@ -3764,6 +3776,8 @@ const THIRTIETH_ARTICLE = {
 const ELEVENTH_ARTICLE = {
   id: "the-safest-envelope-is-at-the-bank",
   title: "The Safest Envelope Is at the Bank",
+  seoDescription:
+    "Cash may feel safe close at hand, but long-term savings need stronger protection. Learn why a bank account is safer than hiding money at home.",
   summary:
     "Cash can feel safe when it is close by, but long-term savings deserve more protection than a hiding place can offer.",
   image: "/article-safest-envelope-bank.png",
@@ -4427,6 +4441,7 @@ const THIRTY_FOURTH_ARTICLE = {
    const THIRTY_FIFTH_ARTICLE = {
   id: "the-best-financial-decision-is-the-one-you-only-make-once",
   title: "The Best Financial Decision Is the One You Only Make Once",
+  seoTitle: "Automate One Better Financial Decision | 1040 Paydays",
   summary:
     "Every payday comes with enough decisions already. Automating the important ones can make saving and investing more consistent, as long as you remember to check that everything is still working.",
   image: "/article-one-decision-once.png",
@@ -4523,6 +4538,7 @@ const THIRTY_FOURTH_ARTICLE = {
 const THIRTY_SIXTH_ARTICLE = {
   id: "the-most-expensive-word-in-personal-finance-is-later",
   title: "The Most Expensive Word in Personal Finance Is 'Later'",
+  seoTitle: "The Financial Cost of Waiting Until Later | 1040 Paydays",
   summary:
     "Many expensive financial mistakes begin as small jobs we planned to do later. The longer they wait, the more likely they are to grow.",
   image: "/article-expensive-word-later.png",
@@ -5139,6 +5155,7 @@ const THIRTY_SIXTH_ARTICLE = {
     const FORTY_THIRD_ARTICLE = {
   id: "fixed-vs-variable-mortgage-rates-which-one-is-right-for-you",
   title: "Fixed vs. Variable Mortgage Rates: Which One Is Right for You?",
+  seoTitle: "Fixed vs. Variable Mortgage Rates | 1040 Paydays",
   summary:
     "Fixed and variable mortgage rates both have trade-offs. The better choice depends on your budget, your comfort with uncertainty, and the life you are actually living.",
   image: "/article-fixed-variable-mortgage.png",
@@ -5431,6 +5448,8 @@ const THIRTY_SIXTH_ARTICLE = {
     const FORTY_FIFTH_ARTICLE = {
       id: "the-most-valuable-coat-i-never-owned",
       title: "The Most Valuable Coat I Never Owned",
+      seoDescription:
+        "A returned winter coat became a lesson in intentional spending. Learn why changing your mind can be one of the smartest financial decisions you make.",
       summary: "Sometimes the smartest financial decision is changing your mind while you still have the chance.",
       image: "/article-most-valuable-coat.png",
       readTime: "3 min read",
@@ -5531,6 +5550,8 @@ const THIRTY_SIXTH_ARTICLE = {
     const FORTY_SIXTH_ARTICLE = {
       id: "the-habit-that-outlived-the-electric-bill",
       title: "The Habit That Outlived the Electric Bill",
+      seoDescription:
+        "A habit learned when money was tight became a lasting lesson about waste, gratitude, and respecting what you have already worked hard to build.",
       summary: "Some habits outlive the reasons we first learned them.",
       image: "/article-habit-outlived-electric-bill.png",
       readTime: "3 min read",
@@ -5747,6 +5768,8 @@ const THIRTY_SIXTH_ARTICLE = {
     const FORTY_EIGHTH_ARTICLE = {
       id: "the-raise-you-already-got",
       title: "The Raise You Already Got",
+      seoDescription:
+        "Workplace benefits and employee discounts can help you keep more of your paycheck. Learn how benefits you already earned can feel like a quiet raise.",
       summary: "Sometimes making more money starts with noticing the benefits and discounts you have already earned.",
       image: "/article-raise-you-already-got.png",
       readTime: "3 min read",
@@ -5935,6 +5958,8 @@ const THIRTY_SIXTH_ARTICLE = {
     const FIFTIETH_ARTICLE = {
       id: "the-kitchen-i-coveted",
       title: "The Kitchen I Coveted",
+      seoDescription:
+        "Comparison can make an ordinary home feel inadequate. Learn how seeing your own life with fresh eyes can change what you believe you need to buy.",
       summary: "Sometimes we do not need a different life. We need to see the one we already have again.",
       image: "/article-kitchen-i-coveted.png",
       readTime: "4 min read",
@@ -6305,6 +6330,8 @@ const THIRTY_SIXTH_ARTICLE = {
     const FIFTY_FOURTH_ARTICLE = {
       id: "what-your-paycheck-really-buys",
       title: "What Your Paycheck Really Buys",
+      seoDescription:
+        "Your paycheck becomes groceries, warmth, transportation, and future savings. See how past paydays quietly build the life already around you.",
       subtitle: "How Today’s Spending Can Create Future Savings",
       summary: "Your paycheck doesn't disappear. It changes shape.",
       image: "/article-what-your-paycheck-really-buys.png",
@@ -6360,6 +6387,9 @@ const THIRTY_SIXTH_ARTICLE = {
     const FIFTY_FIFTH_ARTICLE = {
       id: "the-people-youre-trying-to-impress-know-the-least-about-your-money",
       title: "The People You're Trying to Impress Know the Least About Your Money",
+      seoTitle: "Stop Spending to Impress Other People | 1040 Paydays",
+      seoDescription:
+        "The people you try to impress see only one moment, not your financial reality. Learn why buying for someone else's opinion is rarely worth the cost.",
       summary: "They see one moment. We live the whole story.",
       image: "/article-people-youre-trying-to-impress.png",
       readTime: "3 min read",
@@ -6561,6 +6591,7 @@ const THIRTY_SIXTH_ARTICLE = {
       id: "how-to-budget-when-youre-paid-every-two-weeks",
       title:
         "How to Budget When You're Paid Every Two Weeks: A Complete Guide to Biweekly Paychecks",
+      seoTitle: "How to Budget With Biweekly Paychecks | 1040 Paydays",
       subtitle:
         "Learn how to budget with a biweekly paycheck, understand three-paycheck months, and build a plan that works with your pay schedule instead of against it.",
       summary:
@@ -8009,11 +8040,28 @@ const THIRTY_SIXTH_ARTICLE = {
     };
 
     const absoluteSiteUrl = (path) => new URL(path, SITE_URL).href;
+    const truncateMetaDescription = (description, maximumLength = 160) => {
+      if (description.length <= maximumLength) return description;
+      const shortened = description.slice(0, maximumLength - 1);
+      const lastSpace = shortened.lastIndexOf(" ");
+      return `${shortened.slice(0, lastSpace).replace(/[,:;.!?\\s]+$/, "")}…`;
+    };
     const articleMetaDescription = (article) => {
-      if (!article.subtitle) return article.summary;
+      if (article.seoDescription) return article.seoDescription;
+      if (!article.subtitle) {
+        return truncateMetaDescription(article.summary);
+      }
       const subtitle = article.subtitle.trim();
       const separator = /[.!?]$/.test(subtitle) ? " " : ". ";
-      return `${subtitle}${separator}${article.summary}`;
+      const combinedDescription = `${subtitle}${separator}${article.summary}`;
+
+      if (combinedDescription.length <= 165) return combinedDescription;
+      if (article.summary.length >= 120 && article.summary.length <= 165) {
+        return article.summary;
+      }
+      if (subtitle.length >= 120 && subtitle.length <= 165) return subtitle;
+
+      return truncateMetaDescription(combinedDescription);
     };
 
     function breadcrumbSchema(items, canonicalUrl) {
@@ -8121,33 +8169,30 @@ const THIRTY_SIXTH_ARTICLE = {
         }
 
         if (article) {
-          const canonicalUrl = `${SITE_URL}/learn/${article.id}`;
-          const publicationDate = publicationDateForArticle(article);
-          const clusterForCurrentArticle = clusterForArticle(article);
+          const {
+            canonicalUrl,
+            description,
+            imageUrl,
+            publishedDate,
+          } = pageMetadataForRoute(normalizedRoute);
           const faqs = ARTICLE_FAQS[article.id] || [];
           const breadcrumbs = [
             { name: "Home", url: `${SITE_URL}/` },
             { name: "Learn", url: `${SITE_URL}/learn` },
           ];
 
-          if (clusterForCurrentArticle) {
-            breadcrumbs.push({
-              name: clusterForCurrentArticle.title,
-              url: `${SITE_URL}/learn/${clusterForCurrentArticle.slug}`,
-            });
-          }
           breadcrumbs.push({ name: article.title, url: canonicalUrl });
 
           graph.push({
             "@type": "BlogPosting",
             "@id": `${canonicalUrl}#article`,
             headline: article.title,
-            description: articleMetaDescription(article),
-            image: absoluteSiteUrl(article.image),
-            ...(publicationDate ? { datePublished: publicationDate } : {}),
+            description,
+            image: [imageUrl],
+            ...(publishedDate ? { datePublished: publishedDate } : {}),
             author: {
               "@type": "Organization",
-              name: "1040 Paydays Editorial Team",
+              name: SITE_NAME,
               url: `${SITE_URL}/about`,
             },
             publisher: { "@id": ORGANIZATION_ID },
@@ -8424,6 +8469,8 @@ const THIRTY_SIXTH_ARTICLE = {
     };
 
     function articlePageTitle(article) {
+      if (article.seoTitle) return article.seoTitle;
+
       const title = `${article.title} | 1040 Paydays`;
       if (title.length >= 45) return title;
 
@@ -8504,6 +8551,11 @@ const THIRTY_SIXTH_ARTICLE = {
         title,
         description,
         canonicalUrl: `${SITE_URL}${canonicalPath === "/" ? "/" : canonicalPath}`,
+        pageType: article ? "article" : "website",
+        imageUrl: article ? absoluteSiteUrl(article.image) : "",
+        publishedDate: article ? publicationDateForArticle(article) : "",
+        modifiedDate: article?.modifiedDate || "",
+        articleTitle: article?.title || "",
       };
     }
 
@@ -10341,11 +10393,14 @@ const THIRTY_SIXTH_ARTICLE = {
 
       useEffect(() => {
         const normalizedPath = route.length > 1 ? route.replace(/\/+$/, "") : route;
-        const routeSlug = normalizedPath.startsWith("/learn/")
-          ? normalizedPath.slice("/learn/".length)
-          : "";
-        const article = PUBLISHED_ARTICLE_BY_ID.get(routeSlug);
-        const { title, description, canonicalUrl } =
+        const {
+          title,
+          description,
+          canonicalUrl,
+          pageType,
+          imageUrl,
+          publishedDate,
+        } =
           pageMetadataForRoute(normalizedPath);
 
         const setMeta = (selector, attribute, value) => {
@@ -10363,14 +10418,24 @@ const THIRTY_SIXTH_ARTICLE = {
         setMeta('meta[name="description"]', ["name", "description"], description);
         setMeta('meta[property="og:title"]', ["property", "og:title"], title);
         setMeta('meta[property="og:description"]', ["property", "og:description"], description);
-        setMeta('meta[property="og:type"]', ["property", "og:type"], article ? "article" : "website");
+        setMeta('meta[property="og:type"]', ["property", "og:type"], pageType);
         setMeta('meta[property="og:url"]', ["property", "og:url"], canonicalUrl);
-        const publicationDate = article ? publicationDateForArticle(article) : "";
-        if (publicationDate) {
+        setMeta('meta[property="og:site_name"]', ["property", "og:site_name"], SITE_NAME);
+        setMeta('meta[name="twitter:card"]', ["name", "twitter:card"], "summary_large_image");
+        setMeta('meta[name="twitter:title"]', ["name", "twitter:title"], title);
+        setMeta('meta[name="twitter:description"]', ["name", "twitter:description"], description);
+        if (imageUrl) {
+          setMeta('meta[property="og:image"]', ["property", "og:image"], imageUrl);
+          setMeta('meta[name="twitter:image"]', ["name", "twitter:image"], imageUrl);
+        } else {
+          document.head.querySelector('meta[property="og:image"]')?.remove();
+          document.head.querySelector('meta[name="twitter:image"]')?.remove();
+        }
+        if (publishedDate) {
           setMeta(
             'meta[property="article:published_time"]',
             ["property", "article:published_time"],
-            publicationDate
+            publishedDate
           );
         } else {
           document.head
