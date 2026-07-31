@@ -121,6 +121,20 @@ const prerenderDestination = (path) =>
 
 const vercelConfig = {
   trailingSlash: false,
+  redirects: [
+    {
+      source: "/:path*",
+      has: [
+        {
+          type: "host",
+          value: "1040paydays.com",
+        },
+      ],
+      destination: "https://www.1040paydays.com/:path*",
+      statusCode: 301,
+      preserveQueryParams: true,
+    },
+  ],
   rewrites: appRewritePaths.map((path) => ({
     source: path,
     destination: publishedPathSet.has(path)

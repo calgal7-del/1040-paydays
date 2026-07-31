@@ -1,5 +1,19 @@
 {
   "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "1040paydays.com"
+        }
+      ],
+      "destination": "https://www.1040paydays.com/:path*",
+      "statusCode": 301,
+      "preserveQueryParams": true
+    }
+  ],
   "rewrites": [
     {
       "source": "/about",
