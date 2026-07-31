@@ -492,6 +492,7 @@
 const FIFTH_ARTICLE = {
   id: "rich-enough",
   title: "Rich Enough",
+  subtitle: "A Better Way to Decide What Financial Success Means",
   summary:
     "One sentence during a performance review changed the way I think about wealth forever. Real wealth isn't owning everything. It's reaching the point where your life becomes a choice.",
   image: "/article-rich-enough.png",
@@ -937,6 +938,7 @@ const FIFTH_ARTICLE = {
    const NINTH_ARTICLE = {
   id: "everyone-needs-a-float",
   title: "Everyone Needs a Float",
+  subtitle: "Why Every Budget Needs an Emergency Fund",
   summary:
     "A float isn't about earning the highest return. It's about creating enough breathing room that life's unexpected expenses don't become financial emergencies. Sometimes the best investment is peace of mind.",
   image: "/article-everyone-needs-a-float.png",
@@ -1075,6 +1077,7 @@ const FIFTH_ARTICLE = {
    const TENTH_ARTICLE = {
   id: "the-number-that-really-matters",
   title: "The Number That Really Matters",
+  subtitle: "Why the Number of Paydays You Have Left Matters",
   summary:
     "A strong salary may look impressive, but the number that shapes your future is what actually reaches your account and what you choose to do with every payday.",
   image: "/article-number-that-really-matters.png",
@@ -4970,6 +4973,7 @@ const THIRTY_SIXTH_ARTICLE = {
     const FORTY_FIRST_ARTICLE = {
   id: "why-money-flows-downhill",
   title: "Why Money Flows Downhill",
+  subtitle: "How Habits and Convenience Shape Where Your Money Goes",
   summary:
     "After a heavy rain, water always seems to find the same path. Over time I realized money isn't much different.",
   image: "/article-money-flows-downhill.png",
@@ -5049,6 +5053,7 @@ const THIRTY_SIXTH_ARTICLE = {
     const FORTY_SECOND_ARTICLE = {
   id: "money-has-a-memory",
   title: "Money Has a Memory",
+  subtitle: "How Spending Habits Follow You From One Payday to the Next",
   summary:
     "I can't remember what I gave up to pay for my MBA. I remember exactly what it gave me. Some spending disappears. Some stays with you for the rest of your life.",
   image: "/article-money-has-memory.png",
@@ -5287,6 +5292,7 @@ const THIRTY_SIXTH_ARTICLE = {
     const FORTY_FOURTH_ARTICLE = {
       id: "what-do-you-do-when-you-have-almost-nothing-left",
       title: "What Do You Do When You Have Almost Nothing Left?",
+      subtitle: "How to Make It to Payday When Money Is Tight",
       summary: "When payday is still days away and your account is almost empty, the goal is not to fix everything. It is to protect your next payday.",
       image: "/article-almost-nothing-left.png",
       readTime: "4 min read",
@@ -5617,6 +5623,7 @@ const THIRTY_SIXTH_ARTICLE = {
     const FORTY_SEVENTH_ARTICLE = {
       id: "the-room-i-chose-to-leave",
       title: "The Room I Chose to Leave",
+      subtitle: "How Lifestyle Inflation Can Quietly Change Your Life",
       summary: "Sometimes savings are not about buying more. They are about having enough freedom to walk away.",
       image: "/article-room-i-chose-to-leave.png",
       readTime: "4 min read",
@@ -5829,6 +5836,7 @@ const THIRTY_SIXTH_ARTICLE = {
     const FORTY_NINTH_ARTICLE = {
       id: "has-this-payday-finished-its-job",
       title: "Has This Payday Finished Its Job?",
+      subtitle: "How to Make Every Paycheck Work More Intentionally",
       summary: "A thoughtful way to look at the things we own: every payday is supposed to solve a problem, and once that problem is solved, its job may be finished.",
       image: "/article-has-this-payday-finished-its-job.png",
       readTime: "4 min read",
@@ -6172,6 +6180,7 @@ const THIRTY_SIXTH_ARTICLE = {
     const FIFTY_SECOND_ARTICLE = {
       id: "the-cheapest-thing-you-can-buy-is-patience",
       title: "The Cheapest Thing You Can Buy Is Patience",
+      subtitle: "Why Waiting Can Be One of Your Best Financial Decisions",
       summary:
         "Looking back, the lesson wasn't waiting for a sale. The lesson was giving the decision time.",
       image: "/article-cheapest-thing-patience.png",
@@ -6247,6 +6256,7 @@ const THIRTY_SIXTH_ARTICLE = {
     const FIFTY_THIRD_ARTICLE = {
       id: "money-is-never-just-money",
       title: "Money Is Never Just Money",
+      subtitle: "Why Every Dollar Represents a Choice",
       summary:
         "That is what gives money its weight. Not the number printed on it. The life exchanged for it.",
       image: "/article-money-is-never-just-money.png",
@@ -6295,6 +6305,7 @@ const THIRTY_SIXTH_ARTICLE = {
     const FIFTY_FOURTH_ARTICLE = {
       id: "what-your-paycheck-really-buys",
       title: "What Your Paycheck Really Buys",
+      subtitle: "How Today’s Spending Can Create Future Savings",
       summary: "Your paycheck doesn't disappear. It changes shape.",
       image: "/article-what-your-paycheck-really-buys.png",
       readTime: "4 min read",
@@ -6404,6 +6415,7 @@ const THIRTY_SIXTH_ARTICLE = {
     const FIFTY_SIXTH_ARTICLE = {
       id: "the-hardest-part-about-saving-10000",
       title: "The Hardest Part About Saving $10,000",
+      subtitle: "Why Saving Your First $10,000 Feels So Difficult",
       summary:
         "The hardest part isn't building the money. It's protecting the reason you built it in the first place.",
       image: "/article-hardest-part-saving-10000.png",
@@ -7783,6 +7795,10 @@ const THIRTY_SIXTH_ARTICLE = {
     };
 
     const absoluteSiteUrl = (path) => new URL(path, SITE_URL).href;
+    const articleMetaDescription = (article) =>
+      article.subtitle
+        ? `${article.subtitle}. ${article.summary}`
+        : article.summary;
 
     function breadcrumbSchema(items, canonicalUrl) {
       return {
@@ -7910,7 +7926,7 @@ const THIRTY_SIXTH_ARTICLE = {
             "@type": "BlogPosting",
             "@id": `${canonicalUrl}#article`,
             headline: article.title,
-            description: article.summary,
+            description: articleMetaDescription(article),
             image: absoluteSiteUrl(article.image),
             ...(publicationDate ? { datePublished: publicationDate } : {}),
             author: {
@@ -8242,7 +8258,7 @@ const THIRTY_SIXTH_ARTICLE = {
                         ? "Contact Us for Questions and Feedback | 1040 Paydays"
                         : "Savings and Retirement Calculator | 1040 Paydays";
       const description = article
-        ? article.summary
+        ? articleMetaDescription(article)
         : philosophyPage
           ? philosophyPage.metaDescription
           : cluster
@@ -9307,6 +9323,7 @@ const THIRTY_SIXTH_ARTICLE = {
                             {article.title}
                           </a>
                         </h3>
+                        <ArticleSubtitle article={article} />
                         <p>{article.summary}</p>
                         <a
                           className="reference-home-latest-link"
@@ -9614,6 +9631,7 @@ const THIRTY_SIXTH_ARTICLE = {
                             {article.title}
                           </a>
                         </h3>
+                        <ArticleSubtitle article={article} />
                         <p>{article.summary}</p>
                         <a
                           className="reference-home-latest-link"
@@ -9885,6 +9903,7 @@ const THIRTY_SIXTH_ARTICLE = {
                 <div className="editorial-cornerstone-copy">
                   <p className="editorial-kicker">Cornerstone article</p>
                   <h2 id="cornerstone-title">{cornerstoneArticle.title}</h2>
+                  <ArticleSubtitle article={cornerstoneArticle} />
                   <p>{cornerstoneArticle.summary}</p>
                   <a
                     href={`/learn/${cornerstoneArticle.id}`}
@@ -9950,6 +9969,7 @@ const THIRTY_SIXTH_ARTICLE = {
                           {article.title}
                         </a>
                       </h3>
+                      <ArticleSubtitle article={article} />
                       <p>{article.summary}</p>
                       <a
                         className="editorial-read-link"
@@ -10860,6 +10880,7 @@ const THIRTY_SIXTH_ARTICLE = {
                     <img src={article.image} alt={article.alt} />
                     <span>{publicCategoryLabel(article.category)} · {article.readTime}</span>
                     <strong>{article.title}</strong>
+                    <ArticleSubtitle article={article} />
                     <em>Read article →</em>
                   </button>
                 ))}
@@ -11245,6 +11266,16 @@ const THIRTY_SIXTH_ARTICLE = {
       );
     }
 
+    function ArticleSubtitle({ article, className = "" }) {
+      if (!article.subtitle) return null;
+
+      return (
+        <p className={`article-subtitle ${className}`.trim()}>
+          {article.subtitle}
+        </p>
+      );
+    }
+
     function LearnStartHere({ navigateTo }) {
       if (!LEARN_START_HERE_ARTICLES.length) return null;
 
@@ -11278,6 +11309,7 @@ const THIRTY_SIXTH_ARTICLE = {
                 </a>
                 <div>
                   <h3><LearnArticleLink article={article} navigateTo={navigateTo} /></h3>
+                  <ArticleSubtitle article={article} />
                   <p>{article.summary}</p>
                   <LearnArticleLink
                     article={article}
@@ -11371,6 +11403,7 @@ const THIRTY_SIXTH_ARTICLE = {
                       {" · "}{article.readTime}
                     </small>
                     <h3><LearnArticleLink article={article} navigateTo={navigateTo} /></h3>
+                    <ArticleSubtitle article={article} />
                     <p>{article.summary}</p>
                   </div>
                   <LearnArticleLink
@@ -11539,6 +11572,7 @@ const THIRTY_SIXTH_ARTICLE = {
                 <h2 id="cluster-start-heading">
                   <LearnArticleLink article={featuredArticle} navigateTo={navigateTo} />
                 </h2>
+                <ArticleSubtitle article={featuredArticle} />
                 <p>{featuredArticle.summary}</p>
                 <small>
                   {publicCategoryLabel(featuredArticle.category)} · {featuredArticle.readTime}
@@ -11583,6 +11617,7 @@ const THIRTY_SIXTH_ARTICLE = {
                       {" · "}{article.readTime}
                     </small>
                     <h3><LearnArticleLink article={article} navigateTo={navigateTo} /></h3>
+                    <ArticleSubtitle article={article} />
                     <p>{article.summary}</p>
                   </div>
                 </article>
@@ -11665,6 +11700,7 @@ const THIRTY_SIXTH_ARTICLE = {
                 <div className="learn-card-content">
                   <span>{publicCategoryLabel(article.category)} · {article.readTime}</span>
                   <h2>{article.title}</h2>
+                  <ArticleSubtitle article={article} />
                   <p>{article.summary}</p>
                   <strong>Read article <span aria-hidden="true">→</span></strong>
                 </div>
@@ -11715,7 +11751,10 @@ const THIRTY_SIXTH_ARTICLE = {
                 {recommendedArticles.map((item, index) => (
                   <li key={item.id}>
                     <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
-                    <LearnArticleLink article={item} navigateTo={navigateTo} />
+                    <div>
+                      <LearnArticleLink article={item} navigateTo={navigateTo} />
+                      <ArticleSubtitle article={item} />
+                    </div>
                   </li>
                 ))}
               </ol>
@@ -11742,6 +11781,7 @@ const THIRTY_SIXTH_ARTICLE = {
                     <div>
                       <small>{publicCategoryLabel(item.category)} · {item.readTime}</small>
                       <h3><LearnArticleLink article={item} navigateTo={navigateTo} /></h3>
+                      <ArticleSubtitle article={item} />
                     </div>
                   </article>
                 ))}
@@ -11871,6 +11911,7 @@ const THIRTY_SIXTH_ARTICLE = {
                 {article.kicker || publicCategoryLabel(article.category)}
               </p>
               <h1>{article.title}</h1>
+              <ArticleSubtitle article={article} className="article-page-subtitle" />
               {article.summary && <p className="article-summary">{article.summary}</p>}
               <div className="article-meta">
                 <span>By 1040 Paydays Editorial Team</span>
@@ -11977,6 +12018,7 @@ const THIRTY_SIXTH_ARTICLE = {
                     </LearnArticleLink>
                     <small>{publicCategoryLabel(related.category)} · {related.readTime}</small>
                     <h3><LearnArticleLink article={related} navigateTo={navigateTo} /></h3>
+                    <ArticleSubtitle article={related} />
                   </article>
                 ))}
               </div>

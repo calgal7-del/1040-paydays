@@ -16,6 +16,8 @@ const escapeHtml = (value) =>
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;");
+const escapeHtmlAttribute = (value) =>
+  escapeHtml(value).replace(/"/g, "&quot;");
 
 globalThis.window = {
   location: {
@@ -42,7 +44,7 @@ try {
   }
 
   const renderRoute = (route) => {
-    const { title } = pageMetadataForRoute(route);
+    const { title, description } = pageMetadataForRoute(route);
     const duplicateRoute = renderedTitles.get(title);
     if (duplicateRoute) {
       throw new Error(
@@ -82,7 +84,11 @@ try {
         rootPlaceholder,
         `<div id="root" data-prerendered="${route}">${markup}</div>`
       )
-      .replace(/<title>[\s\S]*?<\/title>/i, `<title>${escapeHtml(title)}</title>`);
+      .replace(/<title>[\s\S]*?<\/title>/i, `<title>${escapeHtml(title)}</title>`)
+      .replace(
+        /<meta\s+name=["']description["'][^>]*>/i,
+        `<meta name="description" content="${escapeHtmlAttribute(description)}" />`
+      );
     const headMarkup = pageHtml.match(/<head>([\s\S]*?)<\/head>/i)?.[1] || "";
     const titleCount = (headMarkup.match(/<title(?:\s|>)/gi) || []).length;
 

@@ -12576,3 +12576,86 @@ body {
     font-size: 32px;
   }
 }
+
+/* Article subtitles */
+.reference-home-latest-copy > .article-subtitle,
+.editorial-cornerstone-copy > .article-subtitle,
+.editorial-start-grid article > div > .article-subtitle,
+.learn-library-start-grid article > div > .article-subtitle,
+.learn-library-article-list .article-subtitle,
+.learn-cluster-feature div > .article-subtitle,
+.learn-cluster-article-copy > .article-subtitle,
+.learn-card-content > .article-subtitle,
+.article-sidebar .article-subtitle,
+.related-article-grid .article-subtitle,
+.mobile-home-article-strip .article-subtitle {
+  margin: 7px 0 0;
+  color: #566276;
+  font-family: Inter, Arial, sans-serif;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 650;
+  line-height: 1.4;
+}
+
+.reference-home-latest-copy > .article-subtitle + p,
+.editorial-cornerstone-copy > .article-subtitle + p,
+.editorial-start-grid article > div > .article-subtitle + p,
+.learn-library-start-grid article > div > .article-subtitle + p,
+.learn-library-article-list .article-subtitle + p,
+.learn-cluster-feature div > .article-subtitle + p,
+.learn-cluster-article-copy > .article-subtitle + p,
+.learn-card-content > .article-subtitle + p {
+  margin-top: 8px;
+}
+
+.article-page-subtitle {
+  max-width: 760px;
+  margin: 15px 0 0;
+  color: #566276;
+  font-family: Inter, Arial, sans-serif;
+  font-size: clamp(19px, 1.8vw, 23px);
+  font-weight: 550;
+  line-height: 1.42;
+}
+
+.article-page-subtitle + .article-summary {
+  margin-top: 10px;
+}
+
+.article-sidebar-numbered li > div {
+  min-width: 0;
+}
+
+.article-sidebar-numbered .article-subtitle,
+.article-sidebar-stories .article-subtitle,
+.related-article-grid .article-subtitle {
+  margin-top: 4px;
+  font-size: 11px;
+  font-weight: 550;
+  line-height: 1.35;
+}
+
+.mobile-home-article-strip .article-subtitle {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+@media (max-width: 560px) {
+  .article-page-subtitle {
+    font-size: 18px;
+    line-height: 1.4;
+  }
+
+  .reference-home-latest-copy > .article-subtitle,
+  .editorial-start-grid article > div > .article-subtitle,
+  .learn-library-start-grid article > div > .article-subtitle,
+  .learn-library-article-list .article-subtitle,
+  .learn-cluster-feature div > .article-subtitle,
+  .learn-cluster-article-copy > .article-subtitle,
+  .learn-card-content > .article-subtitle {
+    font-size: 12.5px;
+  }
+}
