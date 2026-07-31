@@ -38,7 +38,14 @@
     const SITE_IDENTITY_URL = SITE_URL;
     const SITE_NAME = "1040 Paydays";
     const SITE_DESCRIPTION =
-      "Estimate how much you can save from every paycheck. Use 1040 Paydays to plan savings, retirement, and future growth with a simple calculator.";
+      "Learn how to budget by paycheck, plan every payday, save for emergencies, and reach your financial goals with free tools, practical articles, and an interactive payday planner.";
+    const HOME_META_DESCRIPTION = SITE_DESCRIPTION;
+    const LEARN_META_DESCRIPTION =
+      "Read practical personal finance articles about biweekly budgeting, saving, debt, emergency funds, retirement, and making better decisions with every payday.";
+    const PLANNER_META_DESCRIPTION =
+      "Use the free 1040 Paydays planner to assign bills, expenses, savings, and priorities to each paycheck. Built for weekly, biweekly, and monthly pay schedules.";
+    const CALCULATOR_META_DESCRIPTION =
+      "Estimate how savings from each paycheck could grow over time. Explore contributions, investment returns, retirement projections, and long-term financial goals.";
     const ORGANIZATION_ID = `${SITE_IDENTITY_URL}/#organization`;
     const WEBSITE_ID = `${SITE_IDENTITY_URL}/#website`;
     const PAYDAY_PRINCIPLE_ICONS = {
@@ -47,6 +54,34 @@
       planYourFuture: BarChart3,
       chooseWhatMatters: Heart,
     };
+
+    const CALCULATOR_FAQS = [
+      {
+        question: "How much should I save from each paycheck?",
+        answer:
+          "The right amount depends on your income, expenses, goals, and timeline. Use the contribution field to compare several realistic payday-saving amounts.",
+      },
+      {
+        question: "Are the calculator results guaranteed?",
+        answer:
+          "No. The results are estimates for comparing scenarios. Actual returns, inflation, fees, taxes, and personal circumstances can produce different outcomes.",
+      },
+      {
+        question: "Does the calculator include taxes or investment fees?",
+        answer:
+          "The calculator subtracts the investment-fee assumption from the expected return. It does not calculate taxes. Inflation can be applied to the displayed projection with the inflation-adjusted option.",
+      },
+      {
+        question: "Can I use the calculator for an emergency fund?",
+        answer:
+          "Yes. You can use the starting balance, payday contribution, timeline, and return assumptions to explore a regular savings goal, including an emergency fund.",
+      },
+      {
+        question: "What rate of return should I use?",
+        answer:
+          "Choose a rate that fits the scenario you want to explore and compare more than one assumption. The rate is an estimate, not a promise of future performance.",
+      },
+    ];
 
     const DEFAULT_SETTINGS = {
       currency: "USD",
@@ -8097,6 +8132,21 @@ const THIRTY_SIXTH_ARTICLE = {
       };
     }
 
+    function faqPageSchema(canonicalUrl, faqs) {
+      return {
+        "@type": "FAQPage",
+        "@id": `${canonicalUrl}#faq`,
+        mainEntity: faqs.map((faq) => ({
+          "@type": "Question",
+          name: faq.question,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: faq.answer,
+          },
+        })),
+      };
+    }
+
     function structuredDataForRoute(normalizedRoute) {
       const graph = [
         {
@@ -8118,12 +8168,29 @@ const THIRTY_SIXTH_ARTICLE = {
 
       if (normalizedRoute === "/calculator") {
         const canonicalUrl = `${SITE_URL}/calculator`;
+        graph.push(
+          {
+            "@type": "WebApplication",
+            "@id": `${canonicalUrl}#calculator`,
+            name: "1040 Paydays Savings and Retirement Calculator",
+            description: CALCULATOR_META_DESCRIPTION,
+            url: canonicalUrl,
+            applicationCategory: "FinanceApplication",
+            operatingSystem: "Web",
+            isAccessibleForFree: true,
+            publisher: { "@id": ORGANIZATION_ID },
+          },
+          faqPageSchema(canonicalUrl, CALCULATOR_FAQS)
+        );
+      }
+
+      if (normalizedRoute === "/payday-planner") {
+        const canonicalUrl = `${SITE_URL}/payday-planner`;
         graph.push({
           "@type": "WebApplication",
-          "@id": `${canonicalUrl}#calculator`,
-          name: "1040 Paydays Calculator",
-          description:
-            "Build a payday-by-payday savings plan and explore how regular contributions may grow over time.",
+          "@id": `${canonicalUrl}#planner`,
+          name: "1040 Paydays Payday Planner",
+          description: PLANNER_META_DESCRIPTION,
           url: canonicalUrl,
           applicationCategory: "FinanceApplication",
           operatingSystem: "Web",
@@ -8206,18 +8273,7 @@ const THIRTY_SIXTH_ARTICLE = {
           graph.push(breadcrumbSchema(breadcrumbs, canonicalUrl));
 
           if (faqs.length) {
-            graph.push({
-              "@type": "FAQPage",
-              "@id": `${canonicalUrl}#faq`,
-              mainEntity: faqs.map((faq) => ({
-                "@type": "Question",
-                name: faq.question,
-                acceptedAnswer: {
-                  "@type": "Answer",
-                  text: faq.answer,
-                },
-              })),
-            });
+            graph.push(faqPageSchema(canonicalUrl, faqs));
           }
         }
       }
@@ -8506,11 +8562,11 @@ const THIRTY_SIXTH_ARTICLE = {
           : cluster
             ? `Personal Finance ${cluster.title} Articles | 1040 Paydays`
             : isLearnIndex
-              ? "Personal Finance Articles and Guides | 1040 Paydays"
+              ? "Personal Finance Articles and Budgeting Guides | 1040 Paydays"
               : isCalculatorRoute
-                ? "Payday Savings and Retirement Calculator | 1040 Paydays"
+                ? "Savings and Retirement Calculator | 1040 Paydays"
                 : isPaydayPlannerRoute
-                  ? "Payday Planner: Plan Each Paycheck | 1040 Paydays"
+                  ? "Free Payday Planner | Plan Bills Around Every Paycheck"
                 : isAboutRoute
                   ? "Our Payday Principles | 1040 Paydays"
                   : normalizedPath === "/privacy-policy"
@@ -8519,7 +8575,7 @@ const THIRTY_SIXTH_ARTICLE = {
                       ? "Website and Calculator Terms of Use | 1040 Paydays"
                       : normalizedPath === "/contact"
                         ? "Contact Us for Questions and Feedback | 1040 Paydays"
-                        : "Savings and Retirement Calculator | 1040 Paydays";
+                        : "1040 Paydays | Budget by Paycheck, Save More & Plan Every Payday";
       const description = article
         ? articleMetaDescription(article)
         : philosophyPage
@@ -8527,16 +8583,18 @@ const THIRTY_SIXTH_ARTICLE = {
           : cluster
             ? cluster.intro
             : isLearnIndex
-              ? "Thoughtful articles and stories to help you make better financial decisions—one payday at a time."
+              ? LEARN_META_DESCRIPTION
               : isCalculatorRoute
-                ? "Build a payday-by-payday savings plan and explore how regular contributions may grow over time."
+                ? CALCULATOR_META_DESCRIPTION
                 : isPaydayPlannerRoute
-                  ? "Assign bills, savings, goals, and everyday priorities to upcoming paydays with a private planner saved only on your device."
+                  ? PLANNER_META_DESCRIPTION
                 : isAboutRoute
                   ? "Learn the Payday Principles behind 1040 Paydays and how small, consistent financial decisions can help create more freedom, security, and choice over time."
                   : legalPage
                     ? legalPage.description
-                    : SITE_DESCRIPTION;
+                    : normalizedPath === "/"
+                      ? HOME_META_DESCRIPTION
+                      : SITE_DESCRIPTION;
       const canonicalPath =
         isLearnRoute ||
         philosophyPage ||
@@ -8552,7 +8610,17 @@ const THIRTY_SIXTH_ARTICLE = {
         description,
         canonicalUrl: `${SITE_URL}${canonicalPath === "/" ? "/" : canonicalPath}`,
         pageType: article ? "article" : "website",
-        imageUrl: article ? absoluteSiteUrl(article.image) : "",
+        imageUrl: article
+          ? absoluteSiteUrl(article.image)
+          : normalizedPath === "/"
+            ? `${SITE_URL}/home-mountain-sunrise-hero.png`
+            : isLearnIndex
+              ? absoluteSiteUrl(PUBLISHED_ARTICLES[0]?.image || "")
+              : isCalculatorRoute
+                ? `${SITE_URL}/home-calculator-planning.jpg`
+                : isPaydayPlannerRoute
+                  ? `${SITE_URL}/article-biweekly-paycheck-budget.png`
+                  : "",
         publishedDate: article ? publicationDateForArticle(article) : "",
         modifiedDate: article?.modifiedDate || "",
         articleTitle: article?.title || "",
@@ -8681,6 +8749,74 @@ const THIRTY_SIXTH_ARTICLE = {
             </div>
           </footer>
         </div>
+      );
+    }
+
+    function ToolFaqs({ faqs }) {
+      return (
+        <div className="tool-seo-faq-list">
+          {faqs.map((faq) => (
+            <details key={faq.question}>
+              <summary>{faq.question}</summary>
+              <p>{faq.answer}</p>
+            </details>
+          ))}
+        </div>
+      );
+    }
+
+    function PlannerDesktopTitle() {
+      return (
+        <div className="planner-desktop-title">
+          <h1>Plan Your Money One Paycheck at a Time</h1>
+        </div>
+      );
+    }
+
+    function ToolSeoDetails({ navigateTo }) {
+      return (
+        <section className="tool-seo-details" aria-label="About the Savings and Retirement Calculator">
+          <div className="tool-seo-details-grid">
+            <div>
+              <h2>What This Calculator Estimates</h2>
+              <p>
+                Enter a starting balance, contribution per payday, pay frequency, current age,
+                retirement age, and expected annual return. The calculator estimates future
+                value, total contributions, projected growth, and an illustrative monthly
+                retirement withdrawal.
+              </p>
+            </div>
+            <div>
+              <h2>How to Use the Results</h2>
+              <p>
+                Compare several contribution, timeline, and return scenarios. The results are
+                estimates for exploring tradeoffs, not guaranteed investment returns or a
+                personalized financial plan.
+              </p>
+              <a href="/learn/the-number-that-really-matters" onClick={(event) => {
+                event.preventDefault();
+                navigateTo("/learn/the-number-that-really-matters");
+              }}>Read why your remaining paydays matter</a>
+            </div>
+            <div>
+              <h2>Important Assumptions</h2>
+              <p>
+                The projection compounds once per selected pay period and adds each contribution
+                after that period's growth. The selected investment fee reduces the expected
+                return. Optional settings adjust inflation and contribution growth. Taxes and
+                employer matching are not calculated separately.
+              </p>
+              <a href="/learn/everyone-needs-a-float" onClick={(event) => {
+                event.preventDefault();
+                navigateTo("/learn/everyone-needs-a-float");
+              }}>Read about building an emergency fund</a>
+            </div>
+          </div>
+          <div className="tool-seo-faqs">
+            <h2>Frequently Asked Questions</h2>
+            <ToolFaqs faqs={CALCULATOR_FAQS} />
+          </div>
+        </section>
       );
     }
 
@@ -8898,12 +9034,21 @@ const THIRTY_SIXTH_ARTICLE = {
             </div>
           </header>
 
+          <section className="tool-seo-intro final-calculator-seo-intro" aria-labelledby="calculator-page-title">
+            <h1 id="calculator-page-title">See What Each Payday Could Become</h1>
+            <p>
+              Use the 1040 Paydays calculator to estimate how regular savings from each paycheck
+              may grow over time. Adjust your contribution, timeline, expected return, and
+              assumptions to explore different savings and retirement scenarios.
+            </p>
+          </section>
+
           <main className="final-calculator-main">
             <div className="final-calculator-container">
               <div className="final-calculator-shell">
                 <section className="final-calculator-card final-calculator-inputs">
                   <header>
-                    <h1>Build your payday plan.</h1>
+                    <h2>Build your payday plan.</h2>
                     <p>Just a few numbers to see your future.</p>
                   </header>
 
@@ -9168,6 +9313,8 @@ const THIRTY_SIXTH_ARTICLE = {
               </section>
             </div>
           </main>
+
+          <ToolSeoDetails navigateTo={navigateTo} />
 
           <section
             className={`reference-home-newsletter final-calculator-newsletter ${newsletterHighlighted ? "is-highlighted" : ""}`}
@@ -10801,11 +10948,12 @@ const THIRTY_SIXTH_ARTICLE = {
       }
 
       if (normalizedRoute === "/payday-planner") {
+        const plannerTitle = <PlannerDesktopTitle />;
         return renderWithStructuredData(
           <React.Suspense
             fallback={
               <main className="payday-planner-shell" aria-busy="true">
-                <h1>Payday Planner</h1>
+                {plannerTitle}
                 <p>Loading your planner…</p>
               </main>
             }
@@ -10814,6 +10962,7 @@ const THIRTY_SIXTH_ARTICLE = {
               navigateTo={navigateTo}
               mobileMenuOpen={mobileMenuOpen}
               setMobileMenuOpen={setMobileMenuOpen}
+              desktopTitle={plannerTitle}
             />
           </React.Suspense>
         );
@@ -11793,6 +11942,21 @@ const THIRTY_SIXTH_ARTICLE = {
 
             <aside className="learn-library-sidebar" aria-label="About 1040 Paydays">
               <LearnPhilosophy />
+              <section className="learn-library-tools" aria-labelledby="learn-tools-title">
+                <p className="article-sidebar-label">FREE TOOLS</p>
+                <h2 id="learn-tools-title">Put an idea into practice.</h2>
+                <p>Plan upcoming paychecks or explore how regular savings could grow.</p>
+                <div>
+                  <a href="/payday-planner" onClick={(event) => {
+                    event.preventDefault();
+                    navigateTo("/payday-planner");
+                  }}>Open the Payday Planner</a>
+                  <a href="/calculator" onClick={(event) => {
+                    event.preventDefault();
+                    navigateTo("/calculator");
+                  }}>Use the Savings Calculator</a>
+                </div>
+              </section>
               <LearnNewsletter newsletterProps={newsletterProps} />
               <LearnAbout openAbout={openAbout} />
             </aside>

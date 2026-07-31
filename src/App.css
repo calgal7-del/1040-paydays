@@ -5532,6 +5532,188 @@ a {
   }
 }
 
+/* Compact, crawlable supporting content for the two free financial tools. */
+.tool-seo-intro,
+.tool-seo-details {
+  width: min(1360px, calc(100% - 64px));
+  margin-inline: auto;
+}
+
+.tool-seo-intro {
+  display: grid;
+  grid-template-columns: minmax(260px, .72fr) minmax(420px, 1.45fr);
+  gap: 32px;
+  align-items: center;
+  padding: 18px 0;
+  border-bottom: 1px solid #dde3eb;
+}
+
+.tool-seo-intro h1 {
+  margin: 0;
+  color: #071b3d;
+  font: 700 clamp(26px, 2.4vw, 38px)/1.08 Georgia, "Times New Roman", serif;
+}
+
+.tool-seo-intro p {
+  max-width: 780px;
+  margin: 0;
+  color: #34445c;
+  font: 400 15px/1.55 Inter, Arial, sans-serif;
+}
+
+.final-calculator-seo-intro {
+  margin-top: 0;
+}
+
+.planner-desktop-title {
+  width: min(1360px, calc(100% - 64px));
+  margin: 0 auto;
+  padding: 18px 0 14px;
+  border-bottom: 1px solid #dde3eb;
+}
+
+.planner-desktop-title h1 {
+  max-width: 760px;
+  margin: 0;
+  color: #071b3d;
+  font: 700 clamp(28px, 2.6vw, 40px)/1.08 Georgia, "Times New Roman", serif;
+}
+
+.tool-seo-details {
+  padding: 40px 0 48px;
+}
+
+.tool-seo-details-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.tool-seo-details-grid > div,
+.tool-seo-faqs {
+  padding: 22px 24px;
+  background: #fff;
+  border: 1px solid #dde3eb;
+  border-radius: 8px;
+}
+
+.tool-seo-details h2,
+.learn-library-tools h2 {
+  margin: 0 0 10px;
+  color: #071b3d;
+  font: 700 22px/1.18 Georgia, "Times New Roman", serif;
+}
+
+.tool-seo-details p,
+.tool-seo-details li,
+.learn-library-tools p {
+  color: #435169;
+  font: 400 14px/1.55 Inter, Arial, sans-serif;
+}
+
+.tool-seo-details p {
+  margin: 0;
+}
+
+.tool-seo-details ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.tool-seo-details a,
+.learn-library-tools a {
+  display: inline-block;
+  margin-top: 12px;
+  color: #075ee7;
+  font-weight: 700;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.tool-seo-faqs {
+  margin-top: 24px;
+}
+
+.tool-seo-faq-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 28px;
+}
+
+.tool-seo-faq-list details {
+  padding: 13px 0;
+  border-top: 1px solid #dde3eb;
+}
+
+.tool-seo-faq-list summary {
+  color: #071b3d;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.tool-seo-faq-list details p {
+  margin-top: 8px;
+}
+
+.learn-library-tools > div {
+  display: grid;
+  gap: 2px;
+}
+
+@media (max-width: 900px) {
+  .tool-seo-intro {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .tool-seo-details-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 767px) {
+  .planner-desktop-title {
+    display: none;
+  }
+
+  .tool-seo-intro,
+  .tool-seo-details {
+    width: min(100% - 28px, 600px);
+  }
+
+  .tool-seo-intro {
+    padding: 16px 0;
+  }
+
+  .tool-seo-intro h1 {
+    font-size: 25px;
+  }
+
+  .tool-seo-intro p {
+    font-size: 14px;
+  }
+
+  .tool-seo-details {
+    padding: 30px 0 36px;
+  }
+
+  .tool-seo-details-grid > div,
+  .tool-seo-faqs {
+    padding: 18px;
+  }
+
+  .tool-seo-faq-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media print {
+  .tool-seo-intro,
+  .tool-seo-details {
+    display: none !important;
+  }
+}
+
 /* Learn editorial publication */
 .learn-route-shell {
   background: white;
@@ -9901,7 +10083,8 @@ a {
   font-family: Georgia, "Times New Roman", serif;
 }
 
-.final-calculator-inputs h1 {
+.final-calculator-inputs h1,
+.final-calculator-inputs h2 {
   font-size: clamp(20px, 1.65vw, 25px);
   line-height: 1.08;
 }

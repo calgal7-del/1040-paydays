@@ -595,7 +595,7 @@ function MobilePlannerHeader({ navigateTo }) {
         <ArrowLeft aria-hidden="true" />
       </button>
       <div className="pp-mobile-shell-title">
-        <h1>1040 Payday Planner</h1>
+        <div className="pp-mobile-shell-heading">1040 Payday Planner</div>
         <p>Every payday is a decision. Choose yours.</p>
       </div>
       <span aria-hidden="true" />
@@ -1314,6 +1314,7 @@ export default function PaydayPlanner({
   navigateTo,
   mobileMenuOpen = false,
   setMobileMenuOpen,
+  desktopTitle = null,
 }) {
   const [data, setData] = useState(INITIAL_DATA);
   const [loaded, setLoaded] = useState(false);
@@ -1708,7 +1709,7 @@ export default function PaydayPlanner({
   if (!loaded) {
     return (
       <main className="pp-loading">
-        <h1>Payday Planner</h1>
+        {desktopTitle}
         <p>Loading your plan…</p>
       </main>
     );
@@ -1731,6 +1732,7 @@ export default function PaydayPlanner({
         setMobileMenuOpen={setMobileMenuOpen}
       />
       <MobilePlannerHeader navigateTo={navigateTo} />
+      {desktopTitle}
       <div className="pp-page">
       <header className="pp-app-header pp-app-header-controls-only">
         <div className="pp-header-controls" aria-label="Planner controls">

@@ -5114,7 +5114,8 @@
     box-shadow: 0 4px 14px rgb(7 27 61 / 18%);
   }
 
-  .pp-mobile-shell-header h1 {
+  .pp-mobile-shell-header h1,
+  .pp-mobile-shell-header .pp-mobile-shell-heading {
     margin: 0;
     overflow: hidden;
     color: #fff;
@@ -5628,7 +5629,8 @@
 }
 
 @media (max-width: 360px) {
-  .pp-mobile-shell-header h1 {
+  .pp-mobile-shell-header h1,
+  .pp-mobile-shell-header .pp-mobile-shell-heading {
     font-size: 15px;
   }
 
@@ -5660,6 +5662,7 @@
     display: none;
   }
 }
+
 
 @media print {
   .pp-mobile-shell-header,
