@@ -6557,7 +6557,199 @@ const THIRTY_SIXTH_ARTICLE = {
       ],
     };
 
-    const ARTICLES = [FEATURED_ARTICLE, SECOND_ARTICLE, THIRD_ARTICLE, FOURTH_ARTICLE, FIFTH_ARTICLE, SIXTH_ARTICLE, SEVENTH_ARTICLE, EIGHTH_ARTICLE, NINTH_ARTICLE, TENTH_ARTICLE, ELEVENTH_ARTICLE, TWELFTH_ARTICLE, THIRTEENTH_ARTICLE, FOURTEENTH_ARTICLE, FIFTEENTH_ARTICLE, SIXTEENTH_ARTICLE, SEVENTEENTH_ARTICLE, EIGHTEENTH_ARTICLE, NINETEENTH_ARTICLE, TWENTIETH_ARTICLE, TWENTY_FIRST_ARTICLE, TWENTY_SECOND_ARTICLE, TWENTY_THIRD_ARTICLE, TWENTY_FOURTH_ARTICLE, TWENTY_FIFTH_ARTICLE, TWENTY_SEVENTH_ARTICLE, TWENTY_EIGHTH_ARTICLE, TWENTY_NINTH_ARTICLE, THIRTY_FIRST_ARTICLE, THIRTY_SECOND_ARTICLE, THIRTY_THIRD_ARTICLE, THIRTY_FOURTH_ARTICLE, THIRTY_FIFTH_ARTICLE, THIRTY_SIXTH_ARTICLE, THIRTY_SEVENTH_ARTICLE, THIRTY_EIGHTH_ARTICLE, THIRTY_NINTH_ARTICLE, FORTIETH_ARTICLE, FORTY_FIRST_ARTICLE, FORTY_SECOND_ARTICLE, FORTY_THIRD_ARTICLE, FORTY_FOURTH_ARTICLE, FORTY_FIFTH_ARTICLE, FORTY_SIXTH_ARTICLE, FORTY_SEVENTH_ARTICLE, FORTY_EIGHTH_ARTICLE, FORTY_NINTH_ARTICLE, FIFTIETH_ARTICLE, FIFTY_FIRST_ARTICLE, FIFTY_SECOND_ARTICLE, FIFTY_THIRD_ARTICLE, FIFTY_FOURTH_ARTICLE, FIFTY_FIFTH_ARTICLE, FIFTY_SIXTH_ARTICLE];
+    const FIFTY_SEVENTH_ARTICLE = {
+      id: "how-to-budget-when-youre-paid-every-two-weeks",
+      title:
+        "How to Budget When You're Paid Every Two Weeks: A Complete Guide to Biweekly Paychecks",
+      subtitle:
+        "Learn how to budget with a biweekly paycheck, understand three-paycheck months, and build a plan that works with your pay schedule instead of against it.",
+      summary:
+        "Monthly bills follow the calendar. A biweekly paycheck follows a 14-day cycle. The right budget works with both.",
+      image: "/article-biweekly-paycheck-budget.png",
+      readTime: "9 min read",
+      category: "Financial Basics",
+      paydayPrinciple: "Protect Tomorrow",
+      topics: ["Budgeting", "Biweekly Pay", "Cash Flow"],
+      kicker: "BUDGETING · BIWEEKLY PAY · CASH FLOW",
+      alt: "A smartphone displaying the 1040 Payday Planner with a biweekly paycheck and priorities",
+      intro: [
+        "Getting paid every two weeks sounds simple.",
+        "Budgeting with that paycheck often isn't.",
+        "Your phone bill arrives around the same time each month. Your insurance payment has a regular due date. Rent, utilities, subscriptions, and loan payments usually follow a predictable schedule.",
+        "Your paycheck doesn't.",
+        "If you're paid every two weeks, your payday keeps moving through the calendar. One month you may be paid on the 7th and the 21st. The next month your paychecks could arrive on the 4th and the 18th. Later in the year, three paychecks may fall within a single calendar month.",
+        "Many people assume the problem is their budget.",
+        "It often isn't.",
+        "The problem is timing.",
+        "Monthly bills follow the calendar. Your paycheck follows a 14-day cycle. Those two schedules are independent of each other, so they naturally drift in and out of alignment throughout the year.",
+        "One of the biggest mistakes people make is assuming their budget should reset on the first day of every month.",
+        "Your employer doesn't pay you by the month.",
+        "They pay you every 14 days.",
+        "When your budget follows the same rhythm as your paycheck instead of the calendar, cash flow becomes easier to understand. You can decide which paycheck will pay which bills before the month even begins instead of making those decisions after the money reaches your account.",
+        "That is what this guide will help you do.",
+      ],
+      sections: [
+        {
+          heading: "What Does Biweekly Pay Mean?",
+          paragraphs: [
+            "A biweekly pay schedule means you receive a paycheck every 14 days.",
+            "That is different from being paid twice each month.",
+            "Someone paid semimonthly might receive a paycheck on the 15th and the last business day of every month. Those dates stay fixed on the calendar and usually produce 24 paychecks each year.",
+            "A biweekly schedule works differently. Your paycheck arrives every two weeks, usually on the same day of the week, regardless of where that date falls on the calendar. Most years that results in 26 paychecks. Occasionally, depending on how the calendar falls, there may be 27.",
+            "Suppose your employer pays every other Friday and your first paycheck arrives on March 6.",
+          ],
+          bullets: [
+            "March 6",
+            "March 20",
+            "April 3",
+            "April 17",
+            "May 1",
+            "May 15",
+            "May 29",
+          ],
+          closingParagraphs: [
+            "Every payday is exactly 14 days after the previous one.",
+            "Notice what happened in May.",
+            "Nothing special occurred. The calendar simply lined up so that three regular paydays fell within the same month.",
+            "That simple shift is one of the biggest reasons budgeting can feel confusing. Your income keeps moving through the calendar while most of your bills stay on fixed monthly dates.",
+          ],
+        },
+        {
+          heading: "Why Budgeting Feels Harder Than It Should",
+          paragraphs: [
+            "Many people have enough income to cover their monthly expenses.",
+            "They still feel as though they're constantly waiting for the next paycheck.",
+            "The reason usually isn't the amount they earn.",
+            "It's the order in which money arrives and bills become due.",
+            "Suppose your insurance payment is due on the 18th.",
+            "Your internet bill is due on the 22nd.",
+            "Your electricity bill is due on the 24th.",
+            "If your paycheck doesn't arrive until the 20th, your monthly budget might still be perfectly balanced, but you still need enough money in your account to pay the bill due on the 18th.",
+            "A monthly budget answers one question.",
+            "Do I earn enough this month?",
+            "A paycheck budget answers another.",
+            "Will the money be in my account when each bill is due?",
+            "Those are not the same question.",
+          ],
+        },
+        {
+          heading: "Start by Learning Your Pay Schedule",
+          paragraphs: [
+            "Many employees know when their next payday is.",
+            "Fewer know all of their paydays for the year.",
+            "Your payroll department usually does.",
+            "Many employers publish an annual payroll calendar through Human Resources or an employee portal. If yours doesn't, ask.",
+            "Having every payday written on one calendar changes the way you plan.",
+            "Instead of wondering when your next paycheck arrives, you'll know exactly which paycheck will cover each bill months in advance.",
+            "That clarity removes a surprising amount of financial stress.",
+          ],
+        },
+        {
+          heading: "Know When Your Bills Usually Arrive",
+          paragraphs: [
+            "The next step is just as important.",
+            "Write down every recurring bill.",
+            "Include the due date, the average amount, and whether the date changes from month to month.",
+            "You may discover that several bills are clustered together.",
+            "You may also notice that some companies are more flexible than you expected.",
+            "Many utilities, insurance providers, phone companies, internet providers, and credit card companies offer different billing dates. Policies vary by company, but it never hurts to ask.",
+            "Moving a due date by even one week can make your paycheck schedule fit your bills much more naturally.",
+          ],
+        },
+        {
+          heading: "Budget by Paycheck Instead of by Month",
+          paragraphs: [
+            "This is one of the biggest ideas behind the 1040 Paydays philosophy.",
+            "Instead of creating one large monthly budget, divide your financial life into individual paydays.",
+            "When a paycheck arrives, assign it a purpose before spending begins.",
+            "One paycheck might cover:",
+          ],
+          bullets: ["Rent", "Internet", "Groceries", "Savings"],
+          closingParagraphs: ["The next paycheck might cover:"],
+          closingBullets: ["Insurance", "Utilities", "Fuel", "Investing"],
+          finalParagraphs: [
+            "Now each paycheck has a job.",
+            "Instead of wondering where the money went, you'll know where it was supposed to go before it even reached your account.",
+          ],
+        },
+        {
+          heading: "Build a Financial Float",
+          paragraphs: [
+            "One article on this site talks about building a float.",
+            "The idea is simple.",
+            "Eventually, today's bills are paid with money that was already sitting in your account before today's paycheck arrived.",
+            "That doesn't happen overnight.",
+            "It usually happens one payday at a time.",
+            "Each time you leave a little money unspent, your cushion grows.",
+            "Over time, the pressure begins to disappear because every bill no longer depends on the exact day your employer deposits your paycheck.",
+          ],
+        },
+        {
+          heading: "Three-Paycheck Months",
+          paragraphs: [
+            "One of the biggest advantages of a biweekly pay schedule is that some months contain three paychecks.",
+            "Many people immediately spend the extra money because it feels unexpected.",
+            "In reality, it isn't extra.",
+            "It's one of your regular annual paychecks that happened to fall inside the same calendar month.",
+            "Because many recurring bills have already been covered by the first two paychecks, a three-paycheck month can become an opportunity.",
+            "You might use it to:",
+          ],
+          bullets: [
+            "Build an emergency fund.",
+            "Pay down debt.",
+            "Invest.",
+            "Save for a vacation.",
+            "Replace aging household items before they become emergencies.",
+          ],
+          closingParagraphs: [
+            "Planning for these months ahead of time often produces better results than deciding after the paycheck arrives.",
+          ],
+        },
+        {
+          heading: "The 1040 Paydays Planner",
+          paragraphs: [
+            "The easiest way to see all of this is on paper.",
+            "The free 1040 Paydays Planner lets you enter your payday schedule, organize your recurring bills, and assign expenses to specific paydays instead of trying to manage everything inside one monthly budget.",
+            "Rather than wondering whether you'll have enough money next week, you can see your upcoming paydays and financial commitments together.",
+            "That simple change makes planning easier because you're working with the way you're actually paid.",
+          ],
+          cta: {
+            href: "/payday-planner",
+            label: "Open the Payday Planner",
+          },
+        },
+        {
+          heading: "Common Mistakes",
+          paragraphs: [
+            "People paid every two weeks often make the same mistakes.",
+          ],
+          bullets: [
+            "Waiting until payday to decide where the money should go.",
+            "Ignoring three-paycheck months.",
+            "Treating every paycheck as though it begins a new month.",
+            "Forgetting that bills and paychecks follow different schedules.",
+          ],
+          closingParagraphs: [
+            "None of these mistakes are permanent.",
+            "They simply come from trying to fit a 14-day paycheck into a calendar designed around months.",
+          ],
+        },
+        {
+          heading: "Final Thoughts",
+          paragraphs: [
+            "Learning to budget with a biweekly paycheck is not about creating a more complicated budget. It's about matching your plan to the way you're actually paid.",
+            "Once you know your payday schedule, understand when your bills are due, and assign each expense to a specific paycheck, the uncertainty begins to disappear. You'll spend less time wondering whether you'll have enough money before the next payday and more time making intentional decisions with every dollar you earn.",
+            "That is the idea behind 1040 Paydays.",
+            "A working career is made up of roughly 1,040 biweekly paydays. Each one is an opportunity to pay a bill, build savings, invest for the future, prepare for the unexpected, or simply make a better financial decision than the last time.",
+            "No single payday will determine your financial future.",
+            "The choices you make over all 1,040 of them just might.",
+            "Make every payday count.",
+          ],
+        },
+      ],
+    };
+
+    const ARTICLES = [FEATURED_ARTICLE, SECOND_ARTICLE, THIRD_ARTICLE, FOURTH_ARTICLE, FIFTH_ARTICLE, SIXTH_ARTICLE, SEVENTH_ARTICLE, EIGHTH_ARTICLE, NINTH_ARTICLE, TENTH_ARTICLE, ELEVENTH_ARTICLE, TWELFTH_ARTICLE, THIRTEENTH_ARTICLE, FOURTEENTH_ARTICLE, FIFTEENTH_ARTICLE, SIXTEENTH_ARTICLE, SEVENTEENTH_ARTICLE, EIGHTEENTH_ARTICLE, NINETEENTH_ARTICLE, TWENTIETH_ARTICLE, TWENTY_FIRST_ARTICLE, TWENTY_SECOND_ARTICLE, TWENTY_THIRD_ARTICLE, TWENTY_FOURTH_ARTICLE, TWENTY_FIFTH_ARTICLE, TWENTY_SEVENTH_ARTICLE, TWENTY_EIGHTH_ARTICLE, TWENTY_NINTH_ARTICLE, THIRTY_FIRST_ARTICLE, THIRTY_SECOND_ARTICLE, THIRTY_THIRD_ARTICLE, THIRTY_FOURTH_ARTICLE, THIRTY_FIFTH_ARTICLE, THIRTY_SIXTH_ARTICLE, THIRTY_SEVENTH_ARTICLE, THIRTY_EIGHTH_ARTICLE, THIRTY_NINTH_ARTICLE, FORTIETH_ARTICLE, FORTY_FIRST_ARTICLE, FORTY_SECOND_ARTICLE, FORTY_THIRD_ARTICLE, FORTY_FOURTH_ARTICLE, FORTY_FIFTH_ARTICLE, FORTY_SIXTH_ARTICLE, FORTY_SEVENTH_ARTICLE, FORTY_EIGHTH_ARTICLE, FORTY_NINTH_ARTICLE, FIFTIETH_ARTICLE, FIFTY_FIRST_ARTICLE, FIFTY_SECOND_ARTICLE, FIFTY_THIRD_ARTICLE, FIFTY_FOURTH_ARTICLE, FIFTY_FIFTH_ARTICLE, FIFTY_SIXTH_ARTICLE, FIFTY_SEVENTH_ARTICLE];
     const ARTICLE_BY_ID = new Map(ARTICLES.map((article) => [article.id, article]));
     const UNIQUE_ARTICLES = Array.from(ARTICLE_BY_ID.values());
     const PUBLISHED_ARTICLES = UNIQUE_ARTICLES.filter((article) =>
@@ -6692,6 +6884,28 @@ const THIRTY_SIXTH_ARTICLE = {
     }
 
     const ARTICLE_FAQS = {
+      "how-to-budget-when-youre-paid-every-two-weeks": [
+        {
+          question: "Is biweekly the same as twice a month?",
+          answer:
+            "No. Biweekly means every 14 days and usually produces 26 paychecks each year. Semimonthly means two fixed paydays each month and usually produces 24 paychecks each year.",
+        },
+        {
+          question: "Why do some months have three paychecks?",
+          answer:
+            "Because a biweekly schedule follows a 14-day cycle instead of calendar months. Depending on how the dates fall, one month may contain three regular paydays.",
+        },
+        {
+          question: "Should I change my bill due dates?",
+          answer:
+            "If a company allows it, changing a due date can make your cash flow easier to manage. Not every company offers this option, but many do.",
+        },
+        {
+          question: "Where can I find my future paydays?",
+          answer:
+            "Many employers publish annual payroll calendars through Human Resources or an employee portal. If yours doesn't, ask your payroll department.",
+        },
+      ],
       "you-only-get-about-1040-paydays": [
         {
           question: "Is 1,040 paydays an exact number?",
@@ -7795,10 +8009,12 @@ const THIRTY_SIXTH_ARTICLE = {
     };
 
     const absoluteSiteUrl = (path) => new URL(path, SITE_URL).href;
-    const articleMetaDescription = (article) =>
-      article.subtitle
-        ? `${article.subtitle}. ${article.summary}`
-        : article.summary;
+    const articleMetaDescription = (article) => {
+      if (!article.subtitle) return article.summary;
+      const subtitle = article.subtitle.trim();
+      const separator = /[.!?]$/.test(subtitle) ? " " : ". ";
+      return `${subtitle}${separator}${article.summary}`;
+    };
 
     function breadcrumbSchema(items, canonicalUrl) {
       return {
@@ -11959,6 +12175,34 @@ const THIRTY_SIXTH_ARTICLE = {
                   <section>
                     <h2>{section.heading}</h2>
                     {section.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+                    {section.bullets?.length > 0 && (
+                      <ul>
+                        {section.bullets.map((item) => <li key={item}>{item}</li>)}
+                      </ul>
+                    )}
+                    {section.closingParagraphs?.map((paragraph) => (
+                      <p key={paragraph}>{paragraph}</p>
+                    ))}
+                    {section.closingBullets?.length > 0 && (
+                      <ul>
+                        {section.closingBullets.map((item) => <li key={item}>{item}</li>)}
+                      </ul>
+                    )}
+                    {section.finalParagraphs?.map((paragraph) => (
+                      <p key={paragraph}>{paragraph}</p>
+                    ))}
+                    {section.cta && (
+                      <a
+                        className="article-inline-cta"
+                        href={section.cta.href}
+                        onClick={(event) => {
+                          event.preventDefault();
+                          navigateTo(section.cta.href);
+                        }}
+                      >
+                        {section.cta.label} <span aria-hidden="true">→</span>
+                      </a>
+                    )}
                   </section>
                   {sectionIndex === 1 && article.quote && (
                     <blockquote>

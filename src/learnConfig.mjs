@@ -186,6 +186,7 @@ export const LEARN_EDITORIAL_CONFIG = {
     "the-people-youre-trying-to-impress-know-the-least-about-your-money":
       "2026-07-25",
     "the-hardest-part-about-saving-10000": "2026-07-26",
+    "how-to-budget-when-youre-paid-every-two-weeks": "2026-07-30",
   },
 };
 

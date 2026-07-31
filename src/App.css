@@ -11797,6 +11797,40 @@ body {
   line-height: 1.74;
 }
 
+.article-body ul {
+  margin: -.2em 0 1.5em;
+  padding-left: 1.35em;
+  color: #27374e;
+  font-family: Inter, Arial, sans-serif;
+  font-size: 18px;
+  line-height: 1.65;
+}
+
+.article-body li {
+  margin-bottom: .45em;
+  padding-left: .25em;
+}
+
+.article-inline-cta {
+  min-height: 46px;
+  width: fit-content;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 4px;
+  border-radius: var(--brand-radius);
+  padding: 0 18px;
+  color: #fff;
+  background: var(--brand-navy);
+  font-family: Inter, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 750;
+}
+
+.article-inline-cta:hover {
+  background: #132b49;
+}
+
 .article-body section:first-child p:first-of-type::first-letter {
   float: none;
   margin: 0;

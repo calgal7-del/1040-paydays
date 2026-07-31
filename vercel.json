@@ -296,6 +296,10 @@
     {
       "source": "/learn/the-hardest-part-about-saving-10000",
       "destination": "/prerender-learn--the-hardest-part-about-saving-10000.html"
+    },
+    {
+      "source": "/learn/how-to-budget-when-youre-paid-every-two-weeks",
+      "destination": "/prerender-learn--how-to-budget-when-youre-paid-every-two-weeks.html"
     }
   ]
 }
