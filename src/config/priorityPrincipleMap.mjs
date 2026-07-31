@@ -23,6 +23,8 @@ export const PRIORITY_PRINCIPLE_MAP = [
   { priority: "Electricity", principle: "live" },
   { priority: "Groceries", principle: "live" },
   { priority: "Food", principle: "live" },
+  { priority: "Daycare", principle: "live" },
+  { priority: "Childcare", principle: "live" },
   { priority: "Vacation", principle: "matters" },
   { priority: "Summer Vacation Fund", principle: "matters" },
   { priority: "Date Night", principle: "matters" },
@@ -57,4 +59,44 @@ export function getPriorityNameSuggestion(value) {
 
 export function principleForPriority(priorityName, fallback = "protect") {
   return getPrincipleForExpense(priorityName) || fallback;
+}
+
+export function assignUniquePriorityName(priorities, requestedName, excludeId = "") {
+  const cleanName = String(requestedName ?? "").trim();
+  const normalizedName = normalizePriorityName(cleanName);
+  if (!normalizedName) return { priorities, name: "" };
+
+  let nextNumber = 1;
+  let hasMatchingFamily = false;
+  let displayBaseName = cleanName;
+
+  const numberedPriorities = priorities.map((priority) => {
+    if (priority.id === excludeId) return priority;
+
+    const existingName = String(priority.name ?? "").trim();
+    const normalizedExisting = normalizePriorityName(existingName);
+
+    if (normalizedExisting === normalizedName) {
+      hasMatchingFamily = true;
+      displayBaseName = existingName;
+      nextNumber = Math.max(nextNumber, 2);
+      return { ...priority, name: `${existingName} 1` };
+    }
+
+    const familyPrefix = `${normalizedName} `;
+    if (!normalizedExisting.startsWith(familyPrefix)) return priority;
+
+    const suffix = normalizedExisting.slice(familyPrefix.length);
+    if (!/^\d+$/.test(suffix)) return priority;
+
+    hasMatchingFamily = true;
+    displayBaseName = existingName.slice(0, -(suffix.length + 1));
+    nextNumber = Math.max(nextNumber, Number(suffix) + 1);
+    return priority;
+  });
+
+  return {
+    priorities: numberedPriorities,
+    name: hasMatchingFamily ? `${displayBaseName} ${nextNumber}` : cleanName,
+  };
 }

@@ -32,6 +32,7 @@ import {
 import { splitMinorUnitsEvenly } from "../../utils/plannerCalculations.mjs";
 import { createId, createPriority } from "../../utils/plannerDefaults.mjs";
 import {
+  assignUniquePriorityName,
   getPrincipleForExpense,
   getPriorityNameSuggestion,
   normalizePriorityName,
@@ -526,7 +527,10 @@ function PriorityNameField({ value, onChange }) {
       <input
         ref={inputRef}
         aria-autocomplete="inline"
+        aria-required="true"
         autoComplete="off"
+        placeholder="Enter a priority name"
+        required
         spellCheck="false"
         value={value}
         onChange={(event) => {
@@ -1364,6 +1368,7 @@ function PriorityDetail({
           <button
             className="pp-primary-button"
             type="button"
+            disabled={!draft.name.trim()}
             onClick={() => {
               if (!draft.name.trim()) return;
               updatePriority(priority.id, {
@@ -1649,37 +1654,48 @@ export default function PaydayPlanner({
   };
 
   const addPriority = (name, bucket, totalNeededMinor, due) => {
-    setData((current) => ({
-      ...current,
-      priorities: [
-        ...current.priorities,
-        {
-          id: id("priority"),
-          name,
-          bucket,
-          due,
-          frequency: "Flexible",
-          totalNeededMinor,
-          autoPaydays: Object.fromEntries(current.paydays.map((payday) => [payday.id, false])),
-          allocations: Object.fromEntries(current.paydays.map((payday) => [payday.id, 0])),
-        },
-      ],
-    }));
+    setData((current) => {
+      const namedPriority = assignUniquePriorityName(current.priorities, name);
+      return {
+        ...current,
+        priorities: [
+          ...namedPriority.priorities,
+          {
+            id: id("priority"),
+            name: namedPriority.name,
+            bucket,
+            due,
+            frequency: "Flexible",
+            totalNeededMinor,
+            autoPaydays: Object.fromEntries(current.paydays.map((payday) => [payday.id, false])),
+            allocations: Object.fromEntries(current.paydays.map((payday) => [payday.id, 0])),
+          },
+        ],
+      };
+    });
     setDialog(null);
   };
 
   const updatePriority = (priorityId, changes) => {
-    setData((current) => ({
-      ...current,
-      priorities: current.priorities.map((priority) =>
-        priority.id === priorityId
-          ? {
-              ...priority,
-              ...changes,
-            }
-          : priority,
-      ),
-    }));
+    setData((current) => {
+      const namedPriority = assignUniquePriorityName(
+        current.priorities,
+        changes.name,
+        priorityId,
+      );
+      return {
+        ...current,
+        priorities: namedPriority.priorities.map((priority) =>
+          priority.id === priorityId
+            ? {
+                ...priority,
+                ...changes,
+                name: namedPriority.name,
+              }
+            : priority,
+        ),
+      };
+    });
     setDialog(null);
   };
 
@@ -2137,7 +2153,7 @@ function AddSourceDialog({ payday, currency, onClose, onAdd }) {
 }
 
 function AddPriorityDialog({ currency, onClose, onAdd }) {
-  const [name, setName] = useState("New Priority");
+  const [name, setName] = useState("");
   const [bucket, setBucket] = useState("protect");
   const [totalNeededMinor, setTotalNeededMinor] = useState(0);
   const [due, setDue] = useState("");
