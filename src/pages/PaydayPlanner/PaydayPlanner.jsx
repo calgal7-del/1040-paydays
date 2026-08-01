@@ -655,8 +655,20 @@ function PlannerSiteHeader({
   );
 }
 
-function MobilePlannerHeader({ navigateTo }) {
+function MobilePlannerHeader({ navigateTo, mobileMenuOpen, setMobileMenuOpen }) {
   const goHome = () => navigateTo?.("/");
+  const navItems = [
+    ["Home", "/"],
+    ["Learn", "/learn"],
+    ["Calculator", "/calculator"],
+    ["Payday Planner", "/payday-planner"],
+    ["About", "/about"],
+  ];
+
+  const goTo = (path) => {
+    setMobileMenuOpen?.(false);
+    navigateTo?.(path);
+  };
 
   return (
     <header className="pp-mobile-shell-header">
@@ -667,7 +679,33 @@ function MobilePlannerHeader({ navigateTo }) {
         <div className="pp-mobile-shell-heading">1040 Payday Planner</div>
         <p>Every payday is a decision. Choose yours.</p>
       </div>
-      <span aria-hidden="true" />
+      <button
+        type="button"
+        aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+        aria-expanded={mobileMenuOpen}
+        aria-controls="planner-mobile-shell-navigation"
+        onClick={() => setMobileMenuOpen?.((open) => !open)}
+      >
+        {mobileMenuOpen ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
+      </button>
+      {mobileMenuOpen && (
+        <nav
+          className="pp-mobile-shell-nav"
+          id="planner-mobile-shell-navigation"
+          aria-label="Mobile navigation"
+        >
+          {navItems.map(([label, path]) => (
+            <button
+              type="button"
+              key={path}
+              aria-current={path === "/payday-planner" ? "page" : undefined}
+              onClick={() => goTo(path)}
+            >
+              {label}
+            </button>
+          ))}
+        </nav>
+      )}
     </header>
   );
 }
@@ -1813,7 +1851,11 @@ export default function PaydayPlanner({
         mobileMenuOpen={mobileMenuOpen}
         setMobileMenuOpen={setMobileMenuOpen}
       />
-      <MobilePlannerHeader navigateTo={navigateTo} />
+      <MobilePlannerHeader
+        navigateTo={navigateTo}
+        mobileMenuOpen={mobileMenuOpen}
+        setMobileMenuOpen={setMobileMenuOpen}
+      />
       {desktopTitle}
       <div className="pp-page">
       <header className="pp-app-header pp-app-header-controls-only">

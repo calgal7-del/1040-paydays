@@ -5210,6 +5210,42 @@
     height: 23px;
   }
 
+  .pp-mobile-shell-nav {
+    position: absolute;
+    z-index: 80;
+    top: calc(100% + 8px);
+    right: 12px;
+    width: min(248px, calc(100vw - 24px));
+    display: grid;
+    gap: 2px;
+    padding: 8px;
+    background: #fff;
+    border: 1px solid #d8e3f3;
+    border-radius: 16px;
+    box-shadow: 0 18px 48px rgb(7 27 61 / 22%);
+  }
+
+  .pp-mobile-shell-nav button {
+    width: 100%;
+    height: auto;
+    min-height: 44px;
+    display: flex;
+    justify-content: flex-start;
+    padding: 0 14px;
+    color: #071b3d;
+    background: transparent;
+    border-radius: 10px;
+    font: 800 15px/1.2 Inter, ui-sans-serif, system-ui, sans-serif;
+    text-align: left;
+  }
+
+  .pp-mobile-shell-nav button:hover,
+  .pp-mobile-shell-nav button:focus-visible,
+  .pp-mobile-shell-nav button[aria-current="page"] {
+    color: #165dca;
+    background: #eef4ff;
+  }
+
   .pp-page {
     height: auto !important;
     min-height: calc(100dvh - 82px) !important;
