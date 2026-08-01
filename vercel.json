@@ -313,6 +313,10 @@
     {
       "source": "/learn/how-to-budget-when-youre-paid-every-two-weeks",
       "destination": "/prerender-learn--how-to-budget-when-youre-paid-every-two-weeks.html"
+    },
+    {
+      "source": "/learn/why-budgeting-feels-so-hard",
+      "destination": "/prerender-learn--why-budgeting-feels-so-hard.html"
     }
   ]
 }

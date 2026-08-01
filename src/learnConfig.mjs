@@ -187,6 +187,7 @@ export const LEARN_EDITORIAL_CONFIG = {
       "2026-07-25",
     "the-hardest-part-about-saving-10000": "2026-07-26",
     "how-to-budget-when-youre-paid-every-two-weeks": "2026-07-30",
+    "why-budgeting-feels-so-hard": "2026-07-31",
   },
 };
 
