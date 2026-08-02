@@ -10682,6 +10682,17 @@ const THIRTY_SIXTH_ARTICLE = {
         window.addEventListener("popstate", handlePopState);
         return () => window.removeEventListener("popstate", handlePopState);
       }, []);
+  useEffect(() => {
+  requestAnimationFrame(() => {
+    const learnPage = document.querySelector(".learn-route-shell");
+
+    if (learnPage) {
+      learnPage.scrollTop = 0;
+    }
+
+    window.scrollTo(0, 0);
+  });
+}, [route]);
 
       useEffect(() => {
         const normalizedPath = route.length > 1 ? route.replace(/\/+$/, "") : route;
