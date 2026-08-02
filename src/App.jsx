@@ -8910,13 +8910,14 @@ const THIRTY_SIXTH_ARTICLE = {
       );
     }
 
-    function PlannerDesktopTitle() {
-      return (
-        <div className="planner-desktop-title">
-          <h1>Plan Your Money One Paycheck at a Time</h1>
-        </div>
-      );
-    }
+   function PlannerDesktopTitle() {
+  return (
+    <div className="planner-desktop-title">
+      <h1>1040 Payday Planner</h1>
+      <p>Every payday is a decision. Choose yours.</p>
+    </div>
+  );
+}
 
     function ToolSeoDetails({ navigateTo }) {
       return (

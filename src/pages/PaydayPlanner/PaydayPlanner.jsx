@@ -1856,9 +1856,11 @@ export default function PaydayPlanner({
         mobileMenuOpen={mobileMenuOpen}
         setMobileMenuOpen={setMobileMenuOpen}
       />
-      {desktopTitle}
-      <div className="pp-page">
-      <header className="pp-app-header pp-app-header-controls-only">
+    <div className="pp-desktop-hero">
+  <div className="pp-desktop-hero-inner">
+    {desktopTitle}
+
+    <header className="pp-app-header pp-app-header-controls-only">
         <div className="pp-header-controls" aria-label="Planner controls">
           <select
             className="pp-toolbar-select pp-frequency-select"
@@ -1931,8 +1933,11 @@ export default function PaydayPlanner({
           </button>
         </div>
       </header>
+    </div>
+  </div>
 
-      <div className="pp-mobile-bar" aria-label="Mobile planner controls">
+  <div className="pp-page">
+    <div className="pp-mobile-bar" aria-label="Mobile planner controls">
         <select
           className="pp-mobile-toolbar-select pp-mobile-frequency-select"
           aria-label="Pay frequency"

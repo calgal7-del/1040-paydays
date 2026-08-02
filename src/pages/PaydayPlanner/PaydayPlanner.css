@@ -5754,3 +5754,90 @@
     display: none !important;
   }
 }
+/* Desktop planner title and controls banner */
+@media (min-width: 769px) {
+  .pp-desktop-hero {
+    width: 100%;
+    background: linear-gradient(135deg, #061a3b 0%, #082653 100%) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+  }
+
+  .pp-desktop-hero-inner {
+    width: min(1360px, calc(100% - 64px));
+    min-height: 150px;
+    margin: 0 auto;
+    padding: 28px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+  }
+
+  .planner-desktop-title {
+    width: auto;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    text-align: left !important;
+    display: block;
+  }
+
+  .planner-desktop-title h1 {
+    margin: 0;
+    color: #ffffff !important;
+    text-align: left !important;
+    font-family: Inter, Arial, sans-serif;
+    font-size: clamp(34px, 3vw, 48px);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+  }
+
+  .planner-desktop-title p {
+    margin: 9px 0 0;
+    color: #f1c95b !important;
+    text-align: left !important;
+    font-family: "Shadows Into Light", cursive;
+    font-size: clamp(20px, 1.8vw, 27px);
+    line-height: 1.2;
+  }
+
+  .pp-desktop-hero .pp-app-header {
+    width: auto;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent !important;
+  }
+
+  .pp-desktop-hero .pp-header-controls {
+    margin: 0;
+  }
+
+  .pp-desktop-hero .pp-toolbar-select,
+  .pp-desktop-hero .pp-toolbar-icon {
+    color: #ffffff;
+    background: rgba(4, 20, 48, 0.35);
+    border-color: rgba(255, 255, 255, 0.35);
+  }
+
+  .pp-desktop-hero .pp-toolbar-select option {
+    color: #071b3d;
+    background: #ffffff;
+  }
+
+  .pp-desktop-hero .pp-toolbar-divider {
+    background: rgba(255, 255, 255, 0.25);
+  }
+
+  .pp-desktop-hero .pp-toolbar-icon.is-danger {
+    color: #ff6b73;
+    border-color: rgba(255, 107, 115, 0.65);
+  }
+}
+
+@media (max-width: 768px) {
+  .pp-desktop-hero {
+    display: none;
+  }
+}
